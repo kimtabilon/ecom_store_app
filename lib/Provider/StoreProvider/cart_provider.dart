@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:ecom_store_app/Provider/AuthProvider/auth_provider.dart';
+import 'package:ecom_store_app/Screens/Authentication/login.dart';
 
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
@@ -13,6 +14,29 @@ import '../../Screens/Account/cart_page.dart';
 import '../../Utils/routers.dart';
 
 class CartProvider {
+
+  static Future addToCart(sku, qty, context) async {
+    final token = await DatabaseProvider().getData('token');
+    final qoute_id = await DatabaseProvider().getData('qoute_id');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/items'));
+    request.body = json.encode({
+      "cartItem": {
+        "sku": sku,
+        "qty": qty,
+        "quote_id": qoute_id
+      }
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
+
+  }
 
   static Future<List<CartItem>> getCartItems(context) async {
     final token = await DatabaseProvider().getData('token');
@@ -39,8 +63,13 @@ class CartProvider {
         print(_items);
         return CartItem.itemsFromSnapshot(_items);
       } else {
-        AuthenticationProvider().getUserToken(email, password);
-        // PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
+        if(email=='') {
+          PageNavigator(ctx: context).nextPageOnly(page: const LoginPage());
+        } else {
+          AuthenticationProvider().getUserToken(email, password);
+          PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
+        }
+
       }
 
       return <CartItem>[];

@@ -8,6 +8,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
+import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Widgets/appbar_icons.dart';
 
 
@@ -29,7 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   Future<void> getProductInfo() async {
     try {
-      print("test123!::: ${widget.id}");
+      // print("test123!::: ${widget.id}");
       productsModel = await ProductProvider.getProductById(id: widget.id);
     } catch (error) {
       isError = true;
@@ -68,13 +69,14 @@ class _ProductDetailsState extends State<ProductDetails> {
         actions: [
           AppBarIcons(
             function: () {
-              Navigator.push(
+              CartProvider.addToCart(productsModel!.sku, "1", context);
+              /*Navigator.push(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
                   child: CartPage(),
                 ),
-              );
+              );*/
             },
             icon: Icons.add_shopping_cart,
           ),

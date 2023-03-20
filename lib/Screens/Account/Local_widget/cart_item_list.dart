@@ -24,7 +24,7 @@ class CartItemListWidget extends StatelessWidget {
         itemBuilder: (ctx, index) {
           var item = itemList[index];
           print("item:::: $item");
-          return Text('SKU: ${item.sku} - Price ${item.price}');
+          return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
           // return OrderWidget(order: orderList[index]);
           /*return ChangeNotifierProvider.value(
             value: orderList[index],

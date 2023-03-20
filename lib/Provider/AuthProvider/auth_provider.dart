@@ -172,6 +172,15 @@ class AuthenticationProvider extends ChangeNotifier {
 
           Map<String, dynamic> json = jsonDecode(response.body);
 
+          var quote_request = http.Request('POST', Uri.parse('https://dev.ecommercebusinessprime.com/index.php/rest/V1/carts/mine'));
+
+          quote_request.headers.addAll({
+            'Authorization': 'Bearer $token'
+          });
+
+          http.StreamedResponse quote_response = await quote_request.send();
+          DatabaseProvider().saveData('qoute_id', await quote_response.stream.bytesToString());
+
           ///Save users data and then navigate to homepage
           // final userId = json['id'];
           DatabaseProvider().saveData('token', token);

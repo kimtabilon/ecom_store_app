@@ -4,6 +4,7 @@ import 'category_model.dart';
 
 class ProductModel with ChangeNotifier {
   int? id;
+  String? sku;
   String? title;
   String? price;
   String? description;
@@ -12,6 +13,7 @@ class ProductModel with ChangeNotifier {
 
   ProductModel(
       {this.id,
+        this.sku,
         this.title,
         this.price,
         this.description,
@@ -20,6 +22,7 @@ class ProductModel with ChangeNotifier {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    sku = json['sku'];
     title = json['title'];
     price = json['price'];
     description = json['description'];
