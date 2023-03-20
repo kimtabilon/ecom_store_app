@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -28,7 +29,13 @@ class _CartPageState extends State<CartPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: const HomePage()
+                )
+            );
           },
         ),
       ),
