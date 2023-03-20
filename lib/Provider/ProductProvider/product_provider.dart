@@ -14,12 +14,10 @@ class ProductProvider {
       var uri = Uri.https(
           AppUrl.consoleUrl,
           "api/v1/products/$target",
-          target == "products"
-              ? {
+          {
             "offset": "0",
             "limit": limit,
-          }
-              : {});
+          });
 
       //print(uri);
 
@@ -43,9 +41,9 @@ class ProductProvider {
   }
 
   static Future<List<ProductModel>> getAllProducts(
-      {required String limit}) async {
+      {required String target, required String limit}) async {
     List temp = await getData(
-      target: "all",
+      target: target,
       limit: limit,
     );
     return ProductModel.productsFromSnapshot(temp);

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CategoryModel with ChangeNotifier {
-  int? id;
   String? name;
-  String? image;
+  String? total;
 
-  CategoryModel({this.id, this.name, this.image});
+  CategoryModel({this.name, this.total});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
     name = json['name'];
-    image = json['image'];
+    total = json['total'].toString();
   }
   static List<CategoryModel> categoriesFromSnapshot(List categoriesSnaphot) {
     // print("data ${categoriesSnaphot[0]}");

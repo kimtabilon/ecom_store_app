@@ -174,7 +174,7 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen()));
+                                          child: const FeedsScreen(target: 'All Products')));
                                 },
                                 icon: IconlyBold.arrowRight2),
                           ],
@@ -221,7 +221,7 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen()
+                                          child: const FeedsScreen(target: 'All Products',)
                                       )
                                   );
                                 },
@@ -247,8 +247,7 @@ class _GuestPageState extends State<GuestPage> {
                                 child: Text("No products has been added yet"),
                               );
                             }
-                            return FeedsGridWidget(
-                                productsList: snapshot.data!);
+                            return FeedsGridWidget(productsList: snapshot.data!);
                           }))
                     ]),
 

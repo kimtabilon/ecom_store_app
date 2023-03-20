@@ -6,7 +6,9 @@ import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Widgets/feeds_widget.dart';
 
 class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({Key? key}) : super(key: key);
+  const FeedsScreen({Key? key, required this.target}) : super(key: key);
+
+  final String target;
 
   @override
   State<FeedsScreen> createState() => _FeedsScreenState();
@@ -17,6 +19,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   List<ProductModel> productsList = [];
   int limit = 10;
   bool _isLoading = false;
+
   @override
   void initState() {
     getProducts();
@@ -42,8 +45,11 @@ class _FeedsScreenState extends State<FeedsScreen> {
 
   Future<void> getProducts() async {
     productsList = await ProductProvider.getAllProducts(
+      target: widget.target,
       limit: limit.toString(),
     );
+
+    print(productsList);
     setState(() {});
   }
 
@@ -52,7 +58,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     return Scaffold(
       appBar: AppBar(
         // elevation: 4,
-        title: const Text('All Products'),
+        title: Text(widget.target),
       ),
       body: productsList.isEmpty
           ? const Center(
