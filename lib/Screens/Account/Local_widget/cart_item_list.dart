@@ -23,8 +23,15 @@ class CartItemListWidget extends StatelessWidget {
             childAspectRatio: 0.6),*/
         itemBuilder: (ctx, index) {
           var item = itemList[index];
-          print("item:::: $item");
-          return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
+          // print("item:::: $item");
+          // return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
+          return Card(child: ListTile(
+            title: Text(item.sku!),
+            subtitle: Text('description'),
+            trailing: Text("\$${item.price!}"),
+            leading: Text(item.qty!),
+            // style: ListTitleStyle(),
+          ));
           // return OrderWidget(order: orderList[index]);
           /*return ChangeNotifierProvider.value(
             value: orderList[index],

@@ -22,7 +22,14 @@ class OrderGridWidget extends StatelessWidget {
             childAspectRatio: 0.6),*/
         itemBuilder: (ctx, index) {
           var order = orderList[index];
-          return Text('Status: ${order.status} - Order# ${order.id}');
+          return Card(child: ListTile(
+            title: Text(order.id!),
+            subtitle: Text(order.status!),
+            trailing: Icon(Icons.star_border),
+            leading: Icon(Icons.ballot),
+            // style: ListTitleStyle(),
+          ))  ;
+          // return Text('Status: ${order.status} - Order# ${order.id}');
           // return OrderWidget(order: orderList[index]);
           /*return ChangeNotifierProvider.value(
             value: orderList[index],
