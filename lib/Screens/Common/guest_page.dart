@@ -118,14 +118,17 @@ class _GuestPageState extends State<GuestPage> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
-                          color: Theme.of(context).cardColor,
+                          // color: Theme.of(context).cardColor,
+                          width: 1,
+                          color: Colors.black
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
                           width: 1,
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Colors.black
+                          // color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       suffixIcon: Icon(
@@ -181,7 +184,7 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future: ProductProvider.getOnSaleProducts(limit: "3"),
+                          future: ProductProvider.getOnSaleProducts(limit: "4"),
                           builder: ((context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -230,7 +233,7 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future: ProductProvider.getBestSellerProducts(limit: "1"),
+                          future: ProductProvider.getBestSellerProducts(limit: "4"),
                           builder: ((context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
