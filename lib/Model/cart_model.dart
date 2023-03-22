@@ -9,21 +9,21 @@ class CartItem {
     this.id,
     this.sku,
     this.qty,
-    this.description,
+    this.name,
     this.price
   });
 
   String? id;
   String? sku;
   String? qty;
-  String? description;
+  String? name;
   String? price;
 
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(
     id: json["id"].toString(),
     sku: json["sku"],
     qty: json["qty"].toString(),
-    description: json["description"],
+    name: json["name"],
     price: json["price"].toString(),
   );
 
@@ -31,7 +31,7 @@ class CartItem {
     "id": id,
     "sku": sku,
     "qty": qty,
-    "description": description,
+    "name": name,
     "price": price,
   };
 

@@ -1,9 +1,11 @@
 import 'package:ecom_store_app/Model/order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 // import '../Model/product_model.dart';
 import '../../../Model/cart_model.dart';
+import '../../Common/product_details.dart';
 import 'order_widget.dart';
 
 class CartItemListWidget extends StatelessWidget {
@@ -27,9 +29,18 @@ class CartItemListWidget extends StatelessWidget {
           // return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
           return Card(child: ListTile(
             title: Text(item.sku!),
-            subtitle: Text('description'),
+            subtitle: Text(item.name!),
             trailing: Text("\$${item.price!}"),
             leading: Text(item.qty!),
+            onTap: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: ProductDetails(id: item.sku!,),
+                ),
+              );
+            },
             // style: ListTitleStyle(),
           ));
           // return OrderWidget(order: orderList[index]);

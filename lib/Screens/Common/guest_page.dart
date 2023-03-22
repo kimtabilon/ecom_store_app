@@ -130,7 +130,7 @@ class _GuestPageState extends State<GuestPage> {
                       ),
                       suffixIcon: Icon(
                         IconlyLight.search,
-                        color: const Color.fromARGB(255, 175, 0, 120),
+                        // color: const Color.fromARGB(255, 175, 0, 120),
                       )),
                 ),
                 const SizedBox(

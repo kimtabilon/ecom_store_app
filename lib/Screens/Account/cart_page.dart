@@ -10,6 +10,7 @@ import '../../Screens/Account/add_cart_page.dart';
 import '../../Styles/colors.dart';
 import '../../Utils/routers.dart';
 import '../Authentication/splash.dart';
+import '../Common/product_details.dart';
 import 'Local_widget/cart_item_list.dart';
 
 class CartPage extends StatefulWidget {
@@ -60,7 +61,7 @@ class _CartPageState extends State<CartPage> {
                     child: Text("No products has been added yet"),
                   );
                 }
-                print(snapshot.data);
+                // print(snapshot.data);
                 return CartItemListWidget(itemList: snapshot.data!);
             }),
             Expanded(

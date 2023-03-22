@@ -23,7 +23,7 @@ class FeedsWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
           onTap: () {
-            print(productsModelProvider);
+            // print(productsModelProvider);
             Navigator.push(
               context,
               PageTransition(
@@ -78,7 +78,7 @@ class FeedsWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  productsModelProvider.title.toString(),
+                  productsModelProvider.sku.toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: const TextStyle(
@@ -88,8 +88,21 @@ class FeedsWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.01,
+              /*SizedBox(
+                height: 2,
+              ),*/
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  productsModelProvider.title.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    //  fontFamily: 'Roboto',
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
             ],
           ),
