@@ -1,16 +1,8 @@
 import 'package:ecom_store_app/Screens/Account/home_page.dart';
-import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/cart_model.dart';
-import '../../Provider/Database/db_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
-import '../../Screens/Account/Local_widget/cart_view_container.dart';
-import '../../Screens/Account/add_cart_page.dart';
-import '../../Styles/colors.dart';
-import '../../Utils/routers.dart';
-import '../Authentication/splash.dart';
-import '../Common/product_details.dart';
 import 'Local_widget/cart_item_list.dart';
 
 class CartPage extends StatefulWidget {

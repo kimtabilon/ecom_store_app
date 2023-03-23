@@ -3,62 +3,48 @@ import 'dart:developer';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import '../../Model/order_model.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
+import 'home_page.dart';
 
 
 class OrderDetails extends StatefulWidget {
   const OrderDetails({
     Key? key,
-    required this.id,
+    required this.order,
   }) : super(key: key);
-  final String id;
+  final OrderModel order;
   @override
   State<OrderDetails> createState() => _ProductDetailsState();
 }
 
 class _ProductDetailsState extends State<OrderDetails> {
   final titleStyle = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
-  ProductModel? productsModel;
-  bool isError = false;
-  String errorStr = "";
-
-  Future<void> getProductInfo() async {
-    try {
-      print("test123!::: ${widget.id}");
-      productsModel = await ProductProvider.getProductById(id: widget.id);
-    } catch (error) {
-      isError = true;
-      errorStr = error.toString();
-      log("error $error");
-    }
-    setState(() {});
-  }
-
-  @override
-  void didChangeDependencies() {
-    getProductInfo();
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Order Details'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: const HomePage()
+                )
+            );
+          },
+        ),
+      ),
       body: SafeArea(
-        child: isError
-            ? Center(
-          child: Text(
-            "An error occured $errorStr",
-            style: const TextStyle(
-                fontSize: 25, fontWeight: FontWeight.w500),
-          ),
-        )
-            : productsModel == null
-            ? const Center(
-          child: CircularProgressIndicator(),
-        )
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -66,104 +52,179 @@ class _ProductDetailsState extends State<OrderDetails> {
               const SizedBox(
                 height: 18,
               ),
-              const BackButton(),
-              Padding(
+              // const BackButton(),
+              Container(width: double.infinity, child: Card( child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      productsModel!.category!.name.toString(),
+                      "Order No.: ${widget.order.id!}",
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(
-                      height: 18,
+                    Text(
+                      "Total Due: \$${widget.order.total_due}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
                     ),
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          flex: 3,
-                          child: Text(
-                            productsModel!.title.toString(),
-                            textAlign: TextAlign.start,
-                            style: titleStyle,
-                          ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: RichText(
-                            text: TextSpan(
-                                text: '\$',
-                                style: const TextStyle(
-                                    fontSize: 25,
-                                    color: Color.fromRGBO(
-                                        33, 150, 243, 1)),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: productsModel!.price
-                                          .toString(),
-                                      style: TextStyle(
-                                          color: const Color(0xff324558),
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                ]),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Order Date: ${widget.order.order_date}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(
-                      height: 18,
+                    Text(
+                      "Payment Method: ${widget.order.payment_method}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
                     ),
+                    Text(
+                      "Shipping Method: ${widget.order.shipping_description}",
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+
                   ],
                 ),
-              ),
-              SizedBox(
-                height: size.height * 0.4,
-                child: Swiper(
-                  itemBuilder: (BuildContext context, int index) {
-                    return FancyShimmerImage(
-                      width: double.infinity,
-                      imageUrl:
-                      productsModel!.images![index].toString(),
-                      boxFit: BoxFit.contain,
-                    );
-                  },
+              ))),
 
-                  autoplay: true,
-                  itemCount: 3,
-                  pagination: const SwiperPagination(
-                    alignment: Alignment.bottomCenter,
-                    builder: DotSwiperPaginationBuilder(
-                      color: Colors.white,
-                      activeColor: Colors.red,
-                    ),
-                  ),
-                  // control: const SwiperControl(),
-                ),
-              ),
               const SizedBox(
                 height: 18,
               ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('ITEMS ORDERED')
+              ),
+              ...widget.order.items!.map((item) =>
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                      child: ListTile(
+                        title: Text(item.sku!),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(item.name!),
+                            Text("QTY: ${item.qty_ordered}")
+                          ],
+                        ),
+                        trailing: Text("\$${item.price!}"),
+                        leading: SizedBox(
+                            height: 28,
+                            width: 28,
+                            child: FutureBuilder(
+                                future: ProductProvider.getImage(sku: item.sku!),
+                                builder: (context, snapshot) {
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                      child:
+                                      Text("An error occured ${snapshot.error}"),
+                                    );
+                                  } else if (snapshot.data == null) {
+                                    return const Center(
+                                      child: Text("No Image"),
+                                    );
+                                  }
+                                  return Image.network(snapshot.data.toString());
+                                })
+                        ),
+                        // style: ListTitleStyle(),
+                      )
+                  )
+                )
+              ).toList(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Description', style: titleStyle),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    Text(
-                      productsModel!.description.toString(),
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(fontSize: 25),
-                    ),
+                    Text('SHIPPING ADDRESS'),
                   ],
                 ),
               ),
+              Container(width: double.infinity, child: Card( child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.order.shipping_address!.firstname!+" "+widget.order.shipping_address!.lastname!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.shipping_address!.street![0],
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.shipping_address!.city!+", "+widget.order.shipping_address!.region!+", "+widget.order.shipping_address!.postcode!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.shipping_address!.country_id!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.shipping_address!.telephone!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    )
+
+                  ],
+                ),
+              ))),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('BILLING ADDRESS'),
+                  ],
+                ),
+              ),
+              Container(width: double.infinity, child: Card( child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.order.billing_address!.firstname!+" "+widget.order.billing_address!.lastname!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.billing_address!.street![0],
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.billing_address!.city!+", "+widget.order.billing_address!.region!+", "+widget.order.billing_address!.postcode!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.billing_address!.country_id!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      widget.order.billing_address!.telephone!,
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                    )
+
+                  ],
+                ),
+              ))),
             ],
           ),
         ),

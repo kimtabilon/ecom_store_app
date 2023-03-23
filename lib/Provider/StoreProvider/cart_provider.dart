@@ -55,12 +55,8 @@ class CartProvider {
 
       var body = await response.stream.bytesToString();
 
-      // print(response.statusCode);
-      // print(body);
-
       if (response.statusCode == 200 || response.statusCode == 201){
         var _items = json.decode(body);
-        print(_items);
         return CartItem.itemsFromSnapshot(_items);
       } else {
         if(email=='') {
@@ -69,7 +65,6 @@ class CartProvider {
           AuthenticationProvider().getUserToken(email, password);
           PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
         }
-
       }
 
       return <CartItem>[];

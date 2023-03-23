@@ -28,8 +28,6 @@ Widget customTextField(
         child: TextFormField(
           controller: controller,
           maxLines: maxLines,
-          
-          
           decoration: InputDecoration(hintText: hint, border: InputBorder.none),
         ),
       )

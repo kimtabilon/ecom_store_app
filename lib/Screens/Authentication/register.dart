@@ -1,5 +1,6 @@
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _password = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
+  final TextEditingController _dob = TextEditingController();
 
   @override
   void dispose() {
@@ -31,6 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _password.clear();
     _firstName.clear();
     _lastName.clear();
+    _dob.clear();
     super.dispose();
   }
 
@@ -38,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Register New Customer'),
+          title: const Text('Create Account'),
           centerTitle: true,
           leading: new IconButton(
             icon: new Icon(Icons.arrow_back),
@@ -74,7 +77,45 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _lastName,
                       hint: 'Enter your last name',
                     ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        "Date of Birth",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff06051B),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                        controller: _dob, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            // icon: Icon(Icons.calendar_today), //icon of text field
+                            labelText: "Enter Date of Birth" //label text of field
+                        ),
+                        readOnly: true,  // when true user cannot edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(), //get today's date
+                              firstDate:DateTime(1950), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101)
+                          );
+                          if(pickedDate != null ){
+                            print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
+                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                            print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                            //You can format date as per your need
 
+                            setState(() {
+                              _dob.text = formattedDate; //set foratted date to TextField value.
+                            });
+                          }else{
+                            print("Date is not selected");
+                          }
+                        }
+                    ),
+                    SizedBox(height: 20,),
                     customTextField(
                       title: 'Email',
                       controller: _email,
@@ -104,7 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (_email.text.isEmpty ||
                               _password.text.isEmpty ||
                               _firstName.text.isEmpty ||
-                              _lastName.text.isEmpty) {
+                              _lastName.text.isEmpty ||
+                              _dob.text.isEmpty) {
                             showMessage(
                                 message: "All fields are required",
                                 context: context);
@@ -112,6 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             auth.registerUser(
                                 firstName: _firstName.text.trim(),
                                 lastName: _lastName.text.trim(),
+                                dob: _dob.text.trim(),
                                 email: _email.text.trim(),
                                 password: _password.text.trim(),
                                 context: context);

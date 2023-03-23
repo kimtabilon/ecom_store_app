@@ -53,13 +53,13 @@ class _ProductDetailsState extends State<ProductDetails> {
       appBar: AppBar(
         // elevation: 1,
         backgroundColor: const Color.fromRGBO(16,69,114,1),
-        title: const Text('Ecommerce Business Prime',
+        title: const Text('Product Details',
           style: TextStyle(
               color: Colors.white,
               fontSize: 20
           ),
         ),
-        centerTitle: true,
+        // centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

@@ -10,7 +10,7 @@ import '../../Screens/Account/Local_widget/cart_view_container.dart';
 import '../../Screens/Account/add_cart_page.dart';
 import '../../Styles/colors.dart';
 import '../../Utils/routers.dart';
-import 'Local_widget/order_grid.dart';
+import 'Local_widget/order_list.dart';
 import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text("No order has been added yet"),
                     );
                   }
-                  return OrderGridWidget(orderList: snapshot.data!);
+                  return OrderListWidget(orderList: snapshot.data!);
 
                   /*if (snapshot.hasError) {
                     return const Center(child: Text('Error Occured'));

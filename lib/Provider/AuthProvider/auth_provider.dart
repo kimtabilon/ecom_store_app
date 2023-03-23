@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../Constants/access.dart';
 import '../../Constants/url.dart';
 import 'package:http/http.dart' as http;
 import '../../Provider/Database/db_provider.dart';
@@ -12,7 +13,7 @@ import '../../Utils/routers.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   ///Base Url
-  final requestBaseUrl = AppUrl.storeUrl;
+  // final requestBaseUrl = AppUrl.storeUrl;
 
   ///Setter
   bool _isLoading = false;
@@ -27,23 +28,57 @@ class AuthenticationProvider extends ChangeNotifier {
     required String password,
     required String firstName,
     required String lastName,
+    required String dob,
     BuildContext? context,
   }) async {
     _isLoading = true;
     notifyListeners();
 
-    String url = "$requestBaseUrl/users/";
+    // String url = "$requestBaseUrl/users/";
 
-    final body = {
+    /*final body = {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
       "password": password
     };
-    print(body);
+    print(body);*/
 
     try {
-      http.Response req =
+      var headers = {
+        'Authorization': 'Bearer g03aipbqdylr520oi59n07hcjh3d5kzg',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/customers'));
+      request.body = json.encode({
+        "customer": {
+          "email": email,
+          "firstname": firstName,
+          "lastname": lastName,
+          "dob": dob
+        },
+        "password": password
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        // print(await response.stream.bytesToString());
+        _isLoading = false;
+        _resMessage = "Account created!";
+        notifyListeners();
+        PageNavigator(ctx: context).nextPageOnly(page: const LoginPage());
+      }
+      else {
+        // print(response.reasonPhrase);
+        _resMessage = response.reasonPhrase.toString();
+        _isLoading = false;
+        notifyListeners();
+      }
+
+      // =========================
+      /*http.Response req =
           await http.post(Uri.parse(url), body: json.encode(body));
 
       if (req.statusCode == 200 || req.statusCode == 201) {
@@ -59,7 +94,7 @@ class AuthenticationProvider extends ChangeNotifier {
         print(res);
         _isLoading = false;
         notifyListeners();
-      }
+      }*/
     } on SocketException catch (_) {
       _isLoading = false;
       _resMessage = "Internet connection is not available`";
@@ -104,18 +139,15 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   void getAdminToken() async {
-    var body = jsonEncode({'username': 'admin', 'password': 'Ecom@2022'});
-    var uri = Uri.https(AppUrl.storeUrl, "rest/V1/integration/admin/token");
-
     try {
-      http.Response tokenResponse = await http.post(
-          uri,
-          headers: { "Content-Type": "application/json; charset=UTF-8"},
-          body: body
+      http.Response adminTokenResponse = await http.post(
+          Uri.https(AppUrl.storeUrl, "rest/V1/integration/admin/token"),
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+          body: jsonEncode({'username': AppAccess.username, 'password': AppAccess.password})
       );
-      if (tokenResponse.statusCode == 200 || tokenResponse.statusCode == 201) {
-        final token = tokenResponse.body.replaceAll('"', '');
-        DatabaseProvider().saveData('admin_token',token);
+      // print(adminTokenResponse.statusCode);
+      if (adminTokenResponse.statusCode == 200 || adminTokenResponse.statusCode == 201) {
+        DatabaseProvider().saveData('admin_token', adminTokenResponse.body.replaceAll('"',''));
       }
     } on SocketException catch (_) {
       _isLoading = false;
@@ -139,6 +171,8 @@ class AuthenticationProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
+    AuthenticationProvider().getAdminToken();
+
     try {
       http.Response tokenResponse = await http.post(
           Uri.https(AppUrl.storeUrl, "rest/V1/integration/customer/token"),
@@ -158,13 +192,6 @@ class AuthenticationProvider extends ChangeNotifier {
             }
         );
 
-        //get admin token
-        http.Response adminTokenResponse = await http.post(
-            Uri.https(AppUrl.storeUrl, "rest/V1/integration/admin/token"),
-            headers: { "Content-Type": "application/json; charset=UTF-8" },
-            body: jsonEncode({'username': 'admin', 'password': 'Ecom@2022'})
-        );
-
         if (response.statusCode == 200 || response.statusCode == 201) {
           _isLoading = false;
           _resMessage = "Login successfull!";
@@ -172,19 +199,19 @@ class AuthenticationProvider extends ChangeNotifier {
 
           Map<String, dynamic> json = jsonDecode(response.body);
 
-          var quote_request = http.Request('POST', Uri.parse('https://dev.ecommercebusinessprime.com/index.php/rest/V1/carts/mine'));
+          /*var quote_request = http.Request('POST', Uri.parse('https://dev.ecommercebusinessprime.com/index.php/rest/V1/carts/mine'));
 
           quote_request.headers.addAll({
             'Authorization': 'Bearer $token'
           });
 
           http.StreamedResponse quote_response = await quote_request.send();
-          DatabaseProvider().saveData('qoute_id', await quote_response.stream.bytesToString());
+          DatabaseProvider().saveData('qoute_id', await quote_response.stream.bytesToString());*/
 
           ///Save users data and then navigate to homepage
           // final userId = json['id'];
           DatabaseProvider().saveData('token', token);
-          DatabaseProvider().saveData('admin_token', adminTokenResponse.body.replaceAll('"',''));
+
           DatabaseProvider().saveData('user_id', json['id'].toString());
           DatabaseProvider().saveData('name', json['firstname'].toString() + " " + json['lastname'].toString());
           DatabaseProvider().saveData('email', json['email'].toString());

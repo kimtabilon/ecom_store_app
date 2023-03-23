@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ecom_store_app/Model/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -5,6 +7,7 @@ import 'package:provider/provider.dart';
 
 // import '../Model/product_model.dart';
 import '../../../Model/cart_model.dart';
+import '../../../Provider/ProductProvider/product_provider.dart';
 import '../../Common/product_details.dart';
 import 'order_widget.dart';
 
@@ -29,9 +32,39 @@ class CartItemListWidget extends StatelessWidget {
           // return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
           return Card(child: ListTile(
             title: Text(item.sku!),
-            subtitle: Text(item.name!),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.name!),
+                Text("QTY: ${item.qty!}")
+              ],
+            ),
             trailing: Text("\$${item.price!}"),
-            leading: Text(item.qty!),
+            leading: SizedBox(
+              height: 28,
+              width: 28,
+              child: FutureBuilder(
+                future: ProductProvider.getImage(sku: item.sku!),
+                builder: (context, snapshot) {
+
+                  if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child:
+                      Text("An error occured ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data == null) {
+                    return const Center(
+                      child: Text("No Image"),
+                    );
+                  }
+                  return Image.network(snapshot.data.toString());
+                })
+            ),
             onTap: () {
               Navigator.push(
                 context,
