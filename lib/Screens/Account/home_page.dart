@@ -18,63 +18,66 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Customer Account'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 18,
-            ),
-            FutureBuilder(
-                future: DatabaseProvider().getData('name'),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text("Hi ${snapshot.data}");
-                  } else {
-                    return Text("Hi ...");
-                  }
-                }
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            const Text("My Purchases",
-              style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 18,
               ),
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            FutureBuilder<List<OrderModel>>(
-                future: OrderProvider.getOrders(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    Center(
-                      child:
-                      Text("An error occured ${snapshot.error}"),
-                    );
-                  } else if (snapshot.data == null) {
-                    const Center(
-                      child: Text("No order has been added yet"),
-                    );
+              FutureBuilder(
+                  future: DatabaseProvider().getData('name'),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text("Hi ${snapshot.data}");
+                    } else {
+                      return Text("Hi ...");
+                    }
                   }
-                  return OrderListWidget(orderList: snapshot.data!);
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              const Text("My Purchases",
+                style: TextStyle(
+                  fontSize: 24, fontWeight: FontWeight.bold
+                ),
+              ),
+              const SizedBox(
+                height: 18,
+              ),
+              FutureBuilder<List<OrderModel>>(
+                  future: OrderProvider.getOrders(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      Center(
+                        child:
+                        Text("An error occured ${snapshot.error}"),
+                      );
+                    } else if (snapshot.data == null) {
+                      const Center(
+                        child: Text("No order has been added yet"),
+                      );
+                    }
+                    return OrderListWidget(orderList: snapshot.data!);
 
-                }),
-          ]
-        )
+                  }),
+            ]
+          )
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

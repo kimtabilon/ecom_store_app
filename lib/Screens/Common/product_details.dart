@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
@@ -8,12 +9,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../Constants/url.dart';
+import '../../Model/cart_model.dart';
 import '../../Model/product_model.dart';
+import '../../Provider/AuthProvider/auth_provider.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
-import 'package:expandable_search_bar/expandable_search_bar.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -42,6 +48,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     setState(() {});
   }
+
+
 
   @override
   void didChangeDependencies() {
@@ -76,10 +84,23 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         actions: [
           AnimatedSearchBar(),
-          Icon(
-            Icons.shopping_cart_checkout_rounded,
-            size: 48,
-            color: Colors.lightGreen,
+          InkWell(
+              onTap: () {
+                PageNavigator(ctx: context).nextPage(page: const CartPage());
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children:const [
+                      Icon(
+                        Icons.shopping_cart_checkout_rounded,
+                        size: 36,
+                        color: Colors.lightGreen,
+                      ),
+                    ]
+                ),
+              )
           ),
           AppBarIcons(
             function: () {
@@ -176,7 +197,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -205,36 +226,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: RichText(
-                                            text: TextSpan(
-                                                text: "Manufacturer: ",
-                                                style: const TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: productsModel!.manufacturer.toString(),
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.normal
-                                                      )
-                                                  ),
-                                                ]
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -263,7 +255,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "Manufacturer: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.manufacturer.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -372,8 +393,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 400),
-      width: _folded ? 56 : 250,
-      height: _folded ? 28 : 28,
+      width: _folded ? 60 : 250,
+      height: 56,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
         color: _folded ? Color.fromRGBO(16,69,114,1) : Colors.white,
@@ -479,7 +500,7 @@ class ItemBottomNavBar extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  CartProvider.addToCart(sku, "1");
+                  CartProvider.addToCart(sku, context);
                   // Navigator.pop(context);
                 },
                 icon: Icon(CupertinoIcons.cart_badge_plus),
@@ -514,9 +535,9 @@ Widget listItem({required String title, required List<String> arrdesc}) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
@@ -527,8 +548,9 @@ Widget listItem({required String title, required List<String> arrdesc}) {
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         children: <Widget>[
@@ -545,6 +567,7 @@ Widget cardWidget({required List<String> arrdesc}) {
     itemCount: arrdesc!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -573,9 +596,9 @@ Widget specList({required String title, required List<String> speclist, required
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
@@ -587,7 +610,8 @@ Widget specList({required String title, required List<String> speclist, required
           title,
           style: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.bold,
+              color: Colors.white
           ),
         ),
         children: <Widget>[
@@ -604,6 +628,7 @@ Widget specCont({required List<String> speccontent}){
     itemCount: speccontent!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -633,9 +658,9 @@ Widget specInfo({required String title, required List<String> specList, required
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
@@ -646,8 +671,9 @@ Widget specInfo({required String title, required List<String> specList, required
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
           ),
         ),
         children: <Widget>[
@@ -664,6 +690,7 @@ Widget specInfoCont({required List<String> specinfo}){
     itemCount: specinfo!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(

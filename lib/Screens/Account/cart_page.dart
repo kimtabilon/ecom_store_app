@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Screens/Account/checkout_cart_page.dart';
 import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -61,7 +62,10 @@ class _CartPageState extends State<CartPage> {
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                       onPressed: () {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
+                        );
                       },
                       child: const Text('Checkout'),
                       style: ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Provider/CheckoutProvider/checkout_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Provider/AuthProvider/auth_provider.dart';
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => DatabaseProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => CheckoutProvider()),
         // ChangeNotifierProvider(create: (_) => DeleteCartProvider()),
       ],
       child: MaterialApp(
