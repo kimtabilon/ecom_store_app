@@ -530,7 +530,7 @@ Widget listItem({required String title, required List<String> arrdesc}) {
   return Material(
     color: Colors.transparent,
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
@@ -589,7 +589,7 @@ Widget specList({required String title, required List<String> speclist, required
   return Material(
     color: Colors.transparent,
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
@@ -649,7 +649,7 @@ Widget specInfo({required String title, required List<String> specList, required
   return Material(
     color: Colors.transparent,
     child: Theme(
-      data: ThemeData(accentColor: Colors.black),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         key: expansionTileKey,
         onExpansionChanged: (value) {
