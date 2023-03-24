@@ -1,10 +1,5 @@
-
 import 'dart:convert';
-
-import 'package:ecom_store_app/Provider/AuthProvider/auth_provider.dart';
-
 import '../../Constants/url.dart';
-import '../../Model/cart_model.dart';
 import '../../Model/order_model.dart';
 import '../../Provider/Database/db_provider.dart';
 import 'package:http/http.dart' as http;

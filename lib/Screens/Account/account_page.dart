@@ -1,46 +1,60 @@
+import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Utils/snack_message.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class AccountPage extends StatefulWidget {
+  const AccountPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _AccountPageState extends State<AccountPage> {
   final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _new_password = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
   final TextEditingController _dob = TextEditingController();
 
+  void autoFillForm() async {
+    _email.text = await DatabaseProvider().getData('email');
+    _firstName.text = await DatabaseProvider().getData('firstname');
+    _lastName.text = await DatabaseProvider().getData('lastname');
+    _dob.text = await DatabaseProvider().getData('dob');
+    _new_password.text = await DatabaseProvider().getData('password');
+  }
+
   @override
-  void dispose() {
-    _email.clear();
-    _password.clear();
-    _firstName.clear();
-    _lastName.clear();
-    _dob.clear();
-    super.dispose();
+  void initState() {
+    super.initState();
+    autoFillForm();
   }
 
   @override
   Widget build(BuildContext context) {
-    AuthenticationProvider().getAdminToken();
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Create Account'),
-          centerTitle: true,
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+        title: const Text('My Account'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageTransition(
+                    type: PageTransitionType.fade,
+                    child: const HomePage()
+                )
+            );
+          },
+        )
       ),
       body: CustomScrollView(
         slivers: [
@@ -72,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextField(
                         controller: _dob, //editing controller of this TextField
                         decoration: const InputDecoration(
-                            // icon: Icon(Icons.calendar_today), //icon of text field
+                          // icon: Icon(Icons.calendar_today), //icon of text field
                             labelText: "Enter Date of Birth" //label text of field
                         ),
                         readOnly: true,  // when true user cannot edit text
@@ -105,47 +119,47 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     customTextField(
                       title: 'Password',
-                      controller: _password,
+                      controller: _new_password,
                       hint: 'Enter your secured password',
                     ),
 
                     ///Button
                     Consumer<AuthenticationProvider>(
                         builder: (context, auth, child) {
-                      WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        if (auth.resMessage != '') {
-                          showMessage(
-                              message: auth.resMessage, context: context);
+                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                            if (auth.resMessage != '') {
+                              showMessage(
+                                  message: auth.resMessage, context: context);
 
-                          ///Clear the response message to avoid duplicate
-                          auth.clear();
-                        }
-                      });
-                      return customButton(
-                        text: 'Register',
-                        tap: () {
-                          if (_email.text.isEmpty ||
-                              _password.text.isEmpty ||
-                              _firstName.text.isEmpty ||
-                              _lastName.text.isEmpty ||
-                              _dob.text.isEmpty) {
-                            showMessage(
-                                message: "All fields are required",
-                                context: context);
-                          } else {
-                            auth.registerUser(
-                                firstName: _firstName.text.trim(),
-                                lastName: _lastName.text.trim(),
-                                dob: _dob.text.trim(),
-                                email: _email.text.trim(),
-                                password: _password.text.trim(),
-                                context: context);
-                          }
-                        },
-                        context: context,
-                        status: auth.isLoading,
-                      );
-                    }),
+                              ///Clear the response message to avoid duplicate
+                              auth.clear();
+                            }
+                          });
+                          return customButton(
+                            text: 'Update',
+                            tap: () {
+                              if (_email.text.isEmpty ||
+                                  _new_password.text.isEmpty ||
+                                  _firstName.text.isEmpty ||
+                                  _lastName.text.isEmpty ||
+                                  _dob.text.isEmpty) {
+                                showMessage(
+                                    message: "All fields are required",
+                                    context: context);
+                              } else {
+                                auth.updateUser(
+                                    firstName: _firstName.text.trim(),
+                                    lastName: _lastName.text.trim(),
+                                    dob: _dob.text.trim(),
+                                    email: _email.text.trim(),
+                                    password: _new_password.text.trim(),
+                                    context: context);
+                              }
+                            },
+                            context: context,
+                            status: auth.isLoading,
+                          );
+                        }),
 
                     const SizedBox(
                       height: 10,

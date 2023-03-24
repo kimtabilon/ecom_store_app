@@ -1,9 +1,3 @@
-// To parse this JSON data, do
-//
-//     final taskModel = taskModelFromJson(jsonString);
-
-import 'dart:convert';
-
 class CartItem {
   CartItem({
     this.id,
@@ -13,16 +7,16 @@ class CartItem {
     this.price
   });
 
-  String? id;
+  int? id;
   String? sku;
-  String? qty;
+  int? qty;
   String? name;
   String? price;
 
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(
-    id: json["id"].toString(),
+    id: json["item_id"],
     sku: json["sku"],
-    qty: json["qty"].toString(),
+    qty: json["qty"],
     name: json["name"],
     price: json["price"].toString(),
   );

@@ -1,12 +1,7 @@
-import 'dart:developer';
-
-import 'package:card_swiper/card_swiper.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
-import '../../Model/product_model.dart';
-import '../../Provider/ProductProvider/product_provider.dart';
+import 'Local_widget/cart_image_widget.dart';
 import 'home_page.dart';
 
 
@@ -109,31 +104,7 @@ class _ProductDetailsState extends State<OrderDetails> {
                           ],
                         ),
                         trailing: Text("\$${item.price!}"),
-                        leading: SizedBox(
-                            height: 28,
-                            width: 28,
-                            child: FutureBuilder(
-                                future: ProductProvider.getImage(sku: item.sku!),
-                                builder: (context, snapshot) {
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else if (snapshot.hasError) {
-                                    return Center(
-                                      child:
-                                      Text("An error occured ${snapshot.error}"),
-                                    );
-                                  } else if (snapshot.data == null) {
-                                    return const Center(
-                                      child: Text("No Image"),
-                                    );
-                                  }
-                                  return Image.network(snapshot.data.toString());
-                                })
-                        ),
+                        leading: CartItemImageWidget(sku: item.sku!),
                         // style: ListTitleStyle(),
                       )
                   )
