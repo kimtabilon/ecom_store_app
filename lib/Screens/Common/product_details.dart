@@ -11,6 +11,7 @@ import 'package:page_transition/page_transition.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
 import 'package:expandable_search_bar/expandable_search_bar.dart';
@@ -76,10 +77,23 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         actions: [
           AnimatedSearchBar(),
-          Icon(
-            Icons.shopping_cart_checkout_rounded,
-            size: 48,
-            color: Colors.lightGreen,
+          InkWell(
+              onTap: () {
+                PageNavigator(ctx: context).nextPage(page: const CartPage());
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children:const [
+                      Icon(
+                        Icons.shopping_cart_checkout_rounded,
+                        size: 36,
+                        color: Colors.lightGreen,
+                      ),
+                    ]
+                ),
+              )
           ),
           AppBarIcons(
             function: () {
@@ -372,8 +386,8 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 400),
-      width: _folded ? 56 : 250,
-      height: _folded ? 28 : 28,
+      width: _folded ? 60 : 250,
+      height: 56,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
         color: _folded ? Color.fromRGBO(16,69,114,1) : Colors.white,
