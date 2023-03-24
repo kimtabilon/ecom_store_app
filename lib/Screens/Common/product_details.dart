@@ -26,11 +26,11 @@ class _ProductDetailsState extends State<ProductDetails> {
   final titleStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   ProductModel? productsModel;
   bool isError = false;
+  bool isLoading = false;
   String errorStr = "";
 
   Future<void> getProductInfo() async {
     try {
-      // print("test123!::: ${widget.id}");
       productsModel = await ProductProvider.getProductById(id: widget.id);
     } catch (error) {
       isError = true;
@@ -70,11 +70,17 @@ class _ProductDetailsState extends State<ProductDetails> {
           Padding(
             padding: EdgeInsets.all(10),
             child:ElevatedButton.icon(
-                onPressed: (){
-                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                onPressed: () async {
+                  isLoading = true;
+                  setState(() {});
+                  bool addCart = await CartProvider.addToCart(productsModel!.sku, context);
+                  if(addCart) {
+                    isLoading = false;
+                    setState(() {});
+                  }
                 },
                 icon: Icon(Icons.shopping_cart_outlined),
-                label: Text('Add to Cart'),
+                label: Text(isLoading ? 'Adding...' :'Add to Cart'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(74,166,44,1),
                   foregroundColor: Colors.white,
