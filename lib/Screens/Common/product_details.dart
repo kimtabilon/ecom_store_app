@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
@@ -8,13 +9,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../Constants/url.dart';
+import '../../Model/cart_model.dart';
 import '../../Model/product_model.dart';
+import '../../Provider/AuthProvider/auth_provider.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
-import 'package:expandable_search_bar/expandable_search_bar.dart';
+import 'package:http/http.dart' as http;
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -43,6 +48,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     setState(() {});
   }
+
+
 
   @override
   void didChangeDependencies() {
@@ -215,6 +222,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             ),
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
                                         Flexible(
                                           child: RichText(
                                             text: TextSpan(
@@ -265,6 +280,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             ),
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
                                         Flexible(
                                           child: RichText(
                                             text: TextSpan(
