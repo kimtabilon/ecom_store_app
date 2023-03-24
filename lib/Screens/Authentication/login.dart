@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                         PageNavigator(ctx: context)
                             .nextPage(page: const RegisterPage());
                       },
-                      child: const Text('Register Instead'),
+                      child: const Text('Tap here to Create Account'),
                     )
                   ],
                 )),

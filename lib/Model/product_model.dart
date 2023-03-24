@@ -7,6 +7,7 @@ class ProductModel with ChangeNotifier {
   String? sku;
   String? title;
   String? price;
+  String? manufacturer;
   String? description;
   CategoryModel? category;
   List<String>? images;
@@ -16,6 +17,7 @@ class ProductModel with ChangeNotifier {
         this.sku,
         this.title,
         this.price,
+        this.manufacturer,
         this.description,
         this.category,
         this.images});
@@ -25,6 +27,7 @@ class ProductModel with ChangeNotifier {
     sku = json['sku'];
     title = json['title'];
     price = json['price'];
+    manufacturer = json['manufacturer'];
     description = json['description'];
     category = json['category'] != null
         ? CategoryModel.fromJson(json['category'])

@@ -1,9 +1,17 @@
+import 'dart:convert';
+
 import 'package:ecom_store_app/Model/order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 // import '../Model/product_model.dart';
 import '../../../Model/cart_model.dart';
+import '../../../Provider/ProductProvider/product_provider.dart';
+import '../../../Provider/StoreProvider/cart_provider.dart';
+import '../../Common/product_details.dart';
+import 'cart_image_widget.dart';
+import 'cart_item_tile.dart';
 import 'order_widget.dart';
 
 class CartItemListWidget extends StatelessWidget {
@@ -16,27 +24,9 @@ class CartItemListWidget extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: itemList.length,
-        /*gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            crossAxisSpacing: 0.0,
-            mainAxisSpacing: 0.0,
-            childAspectRatio: 0.6),*/
         itemBuilder: (ctx, index) {
           var item = itemList[index];
-          // print("item:::: $item");
-          // return Text('SKU: ${item.sku} - Price ${item.price} (qty:${item.qty})');
-          return Card(child: ListTile(
-            title: Text(item.sku!),
-            subtitle: Text('description'),
-            trailing: Text("\$${item.price!}"),
-            leading: Text(item.qty!),
-            // style: ListTitleStyle(),
-          ));
-          // return OrderWidget(order: orderList[index]);
-          /*return ChangeNotifierProvider.value(
-            value: orderList[index],
-            child: const OrderWidget(),
-          );*/
+          return CartItemTileWidget(item: item);
         });
   }
 }

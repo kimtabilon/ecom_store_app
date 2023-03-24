@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SaleWidget extends StatelessWidget {
@@ -78,9 +80,9 @@ class SaleWidget extends StatelessWidget {
               child: Image.network(
 
                 // height: double.infinity,
-                "https://ebpconsole.ecommercebusinessprime.com/storage/ecom_app/banner${i+1}.png",
+                "https://ebpconsole.ecommercebusinessprime.com/storage/ecom_app/banner${i+1}.png?${Random().nextInt(1000)}",
                 width: double.infinity,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
           ),

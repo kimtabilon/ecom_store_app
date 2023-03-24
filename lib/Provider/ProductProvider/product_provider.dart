@@ -8,6 +8,29 @@ import '../../Model/product_model.dart';
 import '../../Model/user_model.dart';
 
 class ProductProvider {
+  static Future<String> getImage(
+      {required String sku}) async {
+    try {
+      var uri = Uri.https(
+          AppUrl.consoleUrl,
+          "api/v1/product/image/$sku"
+      );
+
+      var response = await http.get(uri);
+
+      //print("response ${jsonDecode(response.body)}");
+      var data = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      return data["image"];
+    } catch (error) {
+      log("An error occured $error");
+      throw error.toString();
+    }
+  }
+
   static Future<List<dynamic>> getData(
       {required String target, String? limit}) async {
     try {

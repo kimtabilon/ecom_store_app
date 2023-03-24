@@ -23,14 +23,14 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  final titleStyle = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
+  final titleStyle = const TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   ProductModel? productsModel;
   bool isError = false;
+  bool isLoading = false;
   String errorStr = "";
 
   Future<void> getProductInfo() async {
     try {
-      // print("test123!::: ${widget.id}");
       productsModel = await ProductProvider.getProductById(id: widget.id);
     } catch (error) {
       isError = true;
@@ -53,13 +53,13 @@ class _ProductDetailsState extends State<ProductDetails> {
       appBar: AppBar(
         // elevation: 1,
         backgroundColor: const Color.fromRGBO(16,69,114,1),
-        title: const Text('Ecommerce Business Prime',
+        title: const Text('Product Details',
           style: TextStyle(
               color: Colors.white,
               fontSize: 20
           ),
         ),
-        centerTitle: true,
+        // centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -67,19 +67,61 @@ class _ProductDetailsState extends State<ProductDetails> {
           },
         ),
         actions: [
-          AppBarIcons(
+          Padding(
+            padding: EdgeInsets.all(10),
+            child:ElevatedButton.icon(
+                onPressed: () async {
+                  isLoading = true;
+                  setState(() {});
+                  bool addCart = await CartProvider.addToCart(productsModel!.sku, context);
+                  if(addCart) {
+                    isLoading = false;
+                    setState(() {});
+                  }
+                },
+                icon: Icon(Icons.shopping_cart_outlined),
+                label: Text(isLoading ? 'Adding...' :'Add to Cart'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(74,166,44,1),
+                  foregroundColor: Colors.white,
+                ),
+            )
+          ),
+          /*SizedBox.fromSize(
+            size: Size(156,56),
+            child: ClipOval(
+              child: Material(
+                color: Colors.amberAccent,
+                child: InkWell(
+                  splashColor: Colors.green,
+                  onTap: () {
+
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.shopping_cart),
+                      Text('Add to cart')
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          )*/
+          /*AppBarIcons(
             function: () {
               CartProvider.addToCart(productsModel!.sku, "1", context);
-              /*Navigator.push(
+              *//*Navigator.push(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
                   child: CartPage(),
                 ),
-              );*/
+              );*//*
             },
             icon: Icons.add_shopping_cart,
-          ),
+
+          ),*/
         ],
       ),
       body: SafeArea(
@@ -109,11 +151,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              /*Text(
                                 productsModel!.category!.name.toString(),
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
-                              ),
+                              ),*/
                               const SizedBox(
                                 height: 18,
                               ),
@@ -189,14 +231,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Description', style: titleStyle),
+                              Row(children: [
+                                Text('SKU: ',style: const TextStyle(fontSize: 18)),
+                                Text(productsModel!.sku!, style: titleStyle),
+                              ],),
+                              Row(children: [
+                                Text('Manufacturer: ',style: const TextStyle(fontSize: 18)),
+                                Text(productsModel!.manufacturer!, style: titleStyle),
+                              ],),
                               const SizedBox(
                                 height: 18,
                               ),
+                              Text('Category: ',style: const TextStyle(fontSize: 18)),
+                              Text(productsModel!.category!.name!,
+                                style: titleStyle,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                              const SizedBox(
+                                height: 18,
+                              ),
+                              Text('Description:', style: titleStyle),
                               Text(
                                 productsModel!.description.toString(),
                                 textAlign: TextAlign.start,
-                                style: const TextStyle(fontSize: 25),
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ],
                           ),

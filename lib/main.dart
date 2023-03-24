@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Provider/AuthProvider/auth_provider.dart';
 import 'Provider/Database/db_provider.dart';
-// import 'Provider/StoreProvider/add_to_cart_provider.dart';
-// import 'Provider/StoreProvider/delete_cart_provider.dart';
+import 'Provider/StoreProvider/cart_provider.dart';
 import 'Styles/colors.dart';
-import 'Screens/Authentication/splash.dart';
 import 'Screens/Common/guest_page.dart';
 
 void main() {
@@ -21,7 +19,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => DatabaseProvider()),
-        // ChangeNotifierProvider(create: (_) => AddToCartProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
         // ChangeNotifierProvider(create: (_) => DeleteCartProvider()),
       ],
       child: MaterialApp(
