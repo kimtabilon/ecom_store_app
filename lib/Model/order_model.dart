@@ -1,14 +1,4 @@
-// To parse this JSON data, do
-//
-//     final taskModel = taskModelFromJson(jsonString);
-
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-
-// OrderModel cartModelFromJson(String str) => OrderModel.fromJson(json.decode(str));
-
-// String cartModelToJson(OrderModel data) => json.encode(data.toJson());
 
 class OrderModel extends ChangeNotifier {
   OrderModel({

@@ -1,12 +1,6 @@
-import 'dart:developer';
-
-import 'package:card_swiper/card_swiper.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
-import '../../Model/product_model.dart';
-import '../../Provider/ProductProvider/product_provider.dart';
 import 'Local_widget/cart_image_widget.dart';
 import 'home_page.dart';
 

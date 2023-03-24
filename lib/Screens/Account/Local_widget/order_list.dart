@@ -1,11 +1,7 @@
 import 'package:ecom_store_app/Model/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
-
-// import '../Model/product_model.dart';
 import '../order_details_page.dart';
-import 'order_widget.dart';
 
 class OrderListWidget extends StatelessWidget {
   const OrderListWidget({Key? key, required this.orderList})

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../Screens/Account/cart_details_page.dart';
-import '../../../Styles/colors.dart';
-import '../../../Utils/routers.dart';
 
 class CartField extends StatefulWidget {
   CartField(

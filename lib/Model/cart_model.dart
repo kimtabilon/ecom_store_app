@@ -1,9 +1,3 @@
-// To parse this JSON data, do
-//
-//     final taskModel = taskModelFromJson(jsonString);
-
-import 'dart:convert';
-
 class CartItem {
   CartItem({
     this.id,

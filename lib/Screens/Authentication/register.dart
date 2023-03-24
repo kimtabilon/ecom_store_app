@@ -1,17 +1,10 @@
-import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
-import '../../Screens/Authentication/login.dart';
-import '../../Utils/routers.dart';
 import '../../Utils/snack_message.dart';
-import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
-import '../Account/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -48,18 +41,6 @@ class _RegisterPageState extends State<RegisterPage> {
             icon: new Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          /*leading: AppBarIcons(
-            function: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: const GuestPage(),
-                ),
-              );
-            },
-            icon: IconlyBold.home,
-          ),*/
       ),
       body: CustomScrollView(
         slivers: [

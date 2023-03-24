@@ -3,19 +3,12 @@ import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
-// import '../consts/global_colors.dart';
-import '../../Provider/StoreProvider/order_provider.dart';
 import '../../Screens/Common/categories_screen.dart';
 import '../../Screens/Common/feeds_screen.dart';
-// import '../screens/user_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
-
-import '../../Screens/Account/home_page.dart';
-
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
-import '../../Widgets/feeds_widget.dart';
 import '../../Widgets/sale_widget.dart';
 
 class GuestPage extends StatefulWidget {
@@ -27,15 +20,11 @@ class GuestPage extends StatefulWidget {
 
 class _GuestPageState extends State<GuestPage> {
   late TextEditingController _textEditingController;
-  // List<ProductsModel> productsList = [];
   @override
   void initState() {
     _textEditingController = TextEditingController();
     super.initState();
 
-    /*Future.delayed(const Duration(seconds: 1), () {
-      GetUserOrder().getOrder();
-    });*/
   }
 
 
@@ -45,16 +34,6 @@ class _GuestPageState extends State<GuestPage> {
     super.dispose();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   getProducts();
-  //   super.didChangeDependencies();
-  // }
-
-  // Future<void> getProducts() async {
-  //   productsList = await APIHandler.getAllProducts();
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +53,8 @@ class _GuestPageState extends State<GuestPage> {
               ),
             ),
             centerTitle: true,
-            leading: AppBarIcons(
-              function: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const CategoriesScreen(),
-                  ),
-                );
-              },
-              icon: IconlyBold.category,
+            leading: Image.network(
+              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-ecom.png',
             ),
             actions: [
               AppBarIcons(
@@ -105,33 +75,38 @@ class _GuestPageState extends State<GuestPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 18,
-                ),
-                TextField(
-                  controller: _textEditingController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      hintText: "Search",
-                      filled: true,
-                      fillColor: Theme.of(context).cardColor,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: Theme.of(context).cardColor,
+                Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(width: 0.8),
+                          ),
+                          hintText: "Search",
+                          prefixIcon: AppBarIcons(
+                            function: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: const CategoriesScreen(),
+                                ),
+                              );
+                            },
+                            icon: IconlyBold.category,
+                          ),
+                          suffixIcon: Icon(
+                            IconlyLight.search,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                      suffixIcon: Icon(
-                        IconlyLight.search,
-                        // color: const Color.fromARGB(255, 175, 0, 120),
-                      )),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 18,
@@ -155,7 +130,6 @@ class _GuestPageState extends State<GuestPage> {
                           // control: const SwiperControl(),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -181,7 +155,7 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future: ProductProvider.getOnSaleProducts(limit: "3"),
+                          future: ProductProvider.getOnSaleProducts(limit: "4"),
                           builder: ((context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -230,7 +204,7 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future: ProductProvider.getBestSellerProducts(limit: "1"),
+                          future: ProductProvider.getBestSellerProducts(limit: "4"),
                           builder: ((context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
