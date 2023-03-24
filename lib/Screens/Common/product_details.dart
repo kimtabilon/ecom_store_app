@@ -190,7 +190,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
@@ -215,43 +215,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: RichText(
-                                            text: TextSpan(
-                                                text: "Manufacturer: ",
-                                                style: const TextStyle(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black
-                                                ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text: productsModel!.manufacturer.toString(),
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.normal
-                                                      )
-                                                  ),
-                                                ]
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
                                         Flexible(
                                           child: RichText(
                                             text: TextSpan(
@@ -277,10 +240,31 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "Manufacturer: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.manufacturer.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
                                         Flexible(
                                           child: RichText(
                                             text: TextSpan(
@@ -528,7 +512,7 @@ Widget listItem({required String title, required List<String> arrdesc}) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
@@ -541,8 +525,9 @@ Widget listItem({required String title, required List<String> arrdesc}) {
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         children: <Widget>[
@@ -559,6 +544,7 @@ Widget cardWidget({required List<String> arrdesc}) {
     itemCount: arrdesc!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -587,7 +573,7 @@ Widget specList({required String title, required List<String> speclist, required
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
@@ -601,7 +587,8 @@ Widget specList({required String title, required List<String> speclist, required
           title,
           style: TextStyle(
               fontSize: 17,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.bold,
+              color: Colors.white
           ),
         ),
         children: <Widget>[
@@ -618,6 +605,7 @@ Widget specCont({required List<String> speccontent}){
     itemCount: speccontent!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
@@ -647,7 +635,7 @@ Widget specInfo({required String title, required List<String> specList, required
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Colors.transparent,
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
@@ -660,8 +648,9 @@ Widget specInfo({required String title, required List<String> specList, required
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
           ),
         ),
         children: <Widget>[
@@ -678,6 +667,7 @@ Widget specInfoCont({required List<String> specinfo}){
     itemCount: specinfo!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
+        color: Colors.white,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
