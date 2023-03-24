@@ -109,239 +109,239 @@ class _ProductDetailsState extends State<ProductDetails> {
                   : ListView(
                       children: [
                         Stack(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(0),
-                    child: SizedBox(
-                      height: size.height * 0.4,
-                      child: Swiper(
-                        itemBuilder: (BuildContext context, int index) {
-                          return FancyShimmerImage(
-                            width: double.infinity,
-                            imageUrl: productsModel!.images![index].toString(),
-                            boxFit: BoxFit.fill,
-                          );
-                        },
-                        autoplay: true,
-                        itemCount: productsModel!.images!.length,
-                        pagination: const SwiperPagination(
-                            alignment: Alignment.bottomCenter,
-                            builder: DotSwiperPaginationBuilder(
-                                color: Colors.black,
-                                activeColor: Colors.blueAccent
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(0),
+                              child: SizedBox(
+                                height: size.height * 0.4,
+                                child: Swiper(
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return FancyShimmerImage(
+                                      width: double.infinity,
+                                      imageUrl: productsModel!.images![index].toString(),
+                                      boxFit: BoxFit.fill,
+                                    );
+                                  },
+                                  autoplay: true,
+                                  itemCount: productsModel!.images!.length,
+                                  pagination: const SwiperPagination(
+                                      alignment: Alignment.bottomCenter,
+                                      builder: DotSwiperPaginationBuilder(
+                                          color: Colors.black,
+                                          activeColor: Colors.blueAccent
+                                      )
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topLeft,
+                              widthFactor: 1,
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white.withOpacity(0.1),
+                                backgroundImage: NetworkImage(ManufLogo[0]),
+                              ),
                             )
+                          ],
                         ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    widthFactor: 1,
-                    child: CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Colors.white.withOpacity(0.1),
-                      backgroundImage: NetworkImage(ManufLogo[0]),
-                    ),
-                  )
-                ],
-              ),
                         Arc(
-                edge: Edge.TOP,
-                arcType: ArcType.CONVEY,
-                height: 25,
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 45,
-                              bottom: 15
-                          ),
-                          child: Text(
-                            productsModel!.title.toString(),
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
+                          edge: Edge.TOP,
+                          arcType: ArcType.CONVEY,
+                          height: 25,
+                          child: Container(
+                            width: double.infinity,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 45,
+                                        bottom: 15
+                                    ),
+                                    child: Text(
+                                      productsModel!.title.toString(),
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "SKU: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.sku.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "Manufacturer: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.manufacturer.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "UPC: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.upc.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "Availability: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.instock.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            text: TextSpan(
+                                                text: "Product Condition: ",
+                                                style: const TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: productsModel!.condition.toString(),
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.normal
+                                                      )
+                                                  ),
+                                                ]
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          ListView(
+                                            shrinkWrap: true,
+                                            primary: false,
+                                            children: [
+                                              listItem(
+                                                  title: "Product Description",
+                                                  arrdesc: productsModel!.arrdesc!
+                                              ),
+                                              specList(
+                                                title: "Product Specification",
+                                                speclist: productsModel!.speclist!,
+                                                speccontent: productsModel!.speccontent!,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "SKU: ",
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: productsModel!.sku.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Manufacturer: ",
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: productsModel!.manufacturer.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "UPC: ",
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: productsModel!.upc.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Availability: ",
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: productsModel!.instock.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "Product Condition: ",
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: productsModel!.condition.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.normal
-                                            )
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                              children: [
-                                ListView(
-                                  shrinkWrap: true,
-                                  primary: false,
-                                  children: [
-                                    listItem(
-                                        title: "Product Description",
-                                        arrdesc: productsModel!.arrdesc!
-                                    ),
-                                    specList(
-                                      title: "Product Specification",
-                                      speclist: productsModel!.speclist!,
-                                      speccontent: productsModel!.speccontent!,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
                       ],
                     ),
       ),
