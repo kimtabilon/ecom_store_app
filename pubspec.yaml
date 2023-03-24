@@ -42,6 +42,7 @@ dependencies:
   provider: ^6.0.3
   http: ^0.13.5
   intl: ^0.18.0
+  clippy_flutter: ^2.0.0-nullsafety.1
 
 dev_dependencies:
   flutter_test:
