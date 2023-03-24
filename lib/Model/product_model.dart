@@ -20,6 +20,8 @@ class ProductModel with ChangeNotifier {
   String? manuflogo;
   List<String>? speclist;
   List<String>? speccontent;
+  List<String>? specinfolist;
+  List<String>? specinfocontent;
 
   ProductModel({
     this.id,
@@ -37,7 +39,9 @@ class ProductModel with ChangeNotifier {
     this.arrdesc,
     this.manuflogo,
     this.speclist,
-    this.speccontent
+    this.speccontent,
+    this.specinfolist,
+    this.specinfocontent
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -63,6 +67,8 @@ class ProductModel with ChangeNotifier {
     manuflogo = json['manuf_logo'];
     speclist = json['spec_list'].cast<String>();
     speccontent = json['spec_list_content'].cast<String>();
+    specinfolist = json['spec_info_list'].cast<String>();
+    specinfocontent = json['spec_info_content'].cast<String>();
   }
   static List<ProductModel> productsFromSnapshot(List productSnaphot) {
     return productSnaphot.map((data) {

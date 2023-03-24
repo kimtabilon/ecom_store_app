@@ -332,6 +332,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                 speclist: productsModel!.speclist!,
                                                 speccontent: productsModel!.speccontent!,
                                               ),
+                                              specInfo(
+                                                  title: "Product Information",
+                                                  specList: productsModel!.specinfolist!,
+                                                  specinfo: productsModel!.specinfocontent!
+                                              )
                                             ],
                                           ),
                                         ],
@@ -532,6 +537,66 @@ Widget specCont({required List<String> speccontent}){
                 child: RichText(
                   text: TextSpan(
                     text: speccontent![index],
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget specInfo({required String title, required List<String> specList, required List<String> specinfo}) {
+  final GlobalKey expansionTileKey = GlobalKey();
+
+  return Material(
+    color: Colors.transparent,
+    child: Theme(
+      data: ThemeData(accentColor: Colors.black),
+      child: ExpansionTile(
+        key: expansionTileKey,
+        onExpansionChanged: (value) {
+          if (value) {
+            _scrollToSelectedContent(expansionTileKey: expansionTileKey);
+          }
+        },
+        title: Text(
+          title,
+          style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        children: <Widget>[
+          specInfoCont(specinfo: specinfo)
+        ],
+      ),
+    ),
+  );
+}
+
+Widget specInfoCont({required List<String> specinfo}){
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: specinfo!.length,
+    itemBuilder: (BuildContext context, int index){
+      return Container(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: RichText(
+                  text: TextSpan(
+                    text: specinfo![index],
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
