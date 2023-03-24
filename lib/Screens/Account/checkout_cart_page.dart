@@ -37,8 +37,8 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
   final TextEditingController _address2 = TextEditingController();
   final TextEditingController _address3 = TextEditingController();
 
-  final TextEditingController _country = TextEditingController();
-  final TextEditingController _province = TextEditingController();
+  final TextEditingController _country = TextEditingController(text:'US');
+  final TextEditingController _province = TextEditingController(text:'New York');
   final TextEditingController _city = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
   final TextEditingController _number = TextEditingController();
