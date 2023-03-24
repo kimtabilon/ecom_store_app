@@ -33,47 +33,47 @@ class _CartPageState extends State<CartPage> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(children: [
+          padding: const EdgeInsets.all(20),
+          child: Column(children: [
             FutureBuilder<List<CartItem>>(
-              future: CartProvider.getCartItems(context),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  Center(
-                    child:
-                    Text("An error occured ${snapshot.error}"),
-                  );
-                } else if (snapshot.data == null) {
-                  const Center(
-                    child: Text("No products has been added yet"),
-                  );
-                }
-                // print(snapshot.data);
-                return CartItemListWidget(itemList: snapshot.data!);
-            }),
+                future: CartProvider.getCartItems(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child:
+                      Text("An error occured ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data!.length == 0) {
+                    return const Center(
+                      child: Text("No products has been added yet"),
+                    );
+                  }
+                  // print(snapshot.data);
+                  return CartItemListWidget(itemList: snapshot.data!);
+                }),
             Expanded(
-              child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
+                child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
                       onPressed: () {
 
                       },
                       child: const Text('Checkout'),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(16,69,114,1),
-                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
-                    ),
-                  )
-              )
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromRGBO(16,69,114,1),
+                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                      ),
+                    )
+                )
             )
           ]
-        )
+          )
       ),
       /*floatingActionButton: FloatingActionButton(
         mini: true,

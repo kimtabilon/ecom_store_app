@@ -81,7 +81,7 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> getUserToken(email, password) async {
+  Future<bool> getUserToken() async {
     final email = await DatabaseProvider().getData('email');
     final password = await DatabaseProvider().getData('password');
 
@@ -140,7 +140,7 @@ class AuthenticationProvider extends ChangeNotifier {
   Future<bool> getUserAccount() async {
     var token = await DatabaseProvider().getData('token');
     if(token=='') {
-      AuthenticationProvider().getUserToken(await DatabaseProvider().getData('email'), await DatabaseProvider().getData('password'));
+      AuthenticationProvider().getUserToken();
       token = await DatabaseProvider().getData('token');
     }
     try {
