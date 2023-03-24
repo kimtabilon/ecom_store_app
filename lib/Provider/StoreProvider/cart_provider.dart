@@ -24,29 +24,31 @@ class CartProvider extends ChangeNotifier {
     if(token=='') {
       showMessage(message: "Please login to continue", context: context);
       return false;
-    }
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/items'));
-    request.body = json.encode({
-      "cartItem": {
-        "sku": sku,
-        "qty": 1,
-        "quote_id": qoute_id
+    } else {
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/items'));
+      request.body = json.encode({
+        "cartItem": {
+          "sku": sku,
+          "qty": 1,
+          "quote_id": qoute_id
+        }
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        showMessage(message: "$sku has been added to cart", context: context);
       }
-    });
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      showMessage(message: "$sku has been added to cart", context: context);
+      else {
+        showMessage(message: response.reasonPhrase, context: context);
+      }
     }
-    else {
-      showMessage(message: response.reasonPhrase, context: context);
-    }
+
     return true;
     // PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
 
