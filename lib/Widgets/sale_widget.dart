@@ -82,7 +82,7 @@ class SaleWidget extends StatelessWidget {
                 // height: double.infinity,
                 "https://ebpconsole.ecommercebusinessprime.com/storage/ecom_app/banner${i+1}.png?${Random().nextInt(1000)}",
                 width: double.infinity,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           ),
