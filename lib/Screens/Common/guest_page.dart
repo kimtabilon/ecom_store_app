@@ -119,21 +119,21 @@ class _GuestPageState extends State<GuestPage> {
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
                           // color: Theme.of(context).cardColor,
-                          width: 1,
-                          color: Colors.black
+                            width: 1,
+                            color: Colors.black
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: BorderSide(
-                          width: 1,
-                          color: Colors.black
+                            width: 1,
+                            color: Colors.black
                           // color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                       suffixIcon: Icon(
                         IconlyLight.search,
-                        // color: const Color.fromARGB(255, 175, 0, 120),
+                        color: const Color.fromARGB(255, 175, 0, 120),
                       )),
                 ),
                 const SizedBox(
