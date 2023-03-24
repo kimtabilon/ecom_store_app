@@ -29,7 +29,7 @@ class DatabaseProvider extends ChangeNotifier {
     } else {
       _data = '';
       notifyListeners();
-      return 'N/A';
+      return '';
     }
   }
 
