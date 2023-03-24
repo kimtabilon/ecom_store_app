@@ -479,7 +479,7 @@ class ItemBottomNavBar extends StatelessWidget {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  CartProvider.addToCart(sku, "1", context);
+                  CartProvider.addToCart(sku, "1");
                   // Navigator.pop(context);
                 },
                 icon: Icon(CupertinoIcons.cart_badge_plus),
