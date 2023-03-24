@@ -36,7 +36,7 @@ class CategoriesScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 0.0,
                     mainAxisSpacing: 0.0,
-                    childAspectRatio: 1.2,
+                    childAspectRatio: 0.6,
                   ),
                   itemBuilder: (ctx, index) {
                     return ChangeNotifierProvider.value(

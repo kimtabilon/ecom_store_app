@@ -112,9 +112,10 @@ class FeedsWidget extends StatelessWidget {
                               color: Colors.lightGreen,
                             ),
                           ),
-                          const Icon(
-                            IconlyBold.heart,
-                            color: Colors.red,
+                          Image.network(
+                            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                            color: Colors.lightGreen,
+                            width: 22,
                           ),
                         ],
                       ),

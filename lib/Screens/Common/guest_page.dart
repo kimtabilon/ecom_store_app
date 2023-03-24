@@ -74,17 +74,8 @@ class _GuestPageState extends State<GuestPage> {
               ),
             ),
             centerTitle: true,
-            leading: AppBarIcons(
-              function: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const CategoriesScreen(),
-                  ),
-                );
-              },
-              icon: IconlyBold.category,
+            leading: Image.network(
+              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-ecom.png',
             ),
             actions: [
               AppBarIcons(
@@ -105,36 +96,38 @@ class _GuestPageState extends State<GuestPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 18,
-                ),
-                TextField(
-                  controller: _textEditingController,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      hintText: "Search",
-                      filled: true,
-                      fillColor: Theme.of(context).cardColor,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          // color: Theme.of(context).cardColor,
-                            width: 1,
-                            color: Colors.black
+                Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(width: 0.8),
+                          ),
+                          hintText: "Search",
+                          prefixIcon: AppBarIcons(
+                            function: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: const CategoriesScreen(),
+                                ),
+                              );
+                            },
+                            icon: IconlyBold.category,
+                          ),
+                          suffixIcon: Icon(
+                            IconlyLight.search,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                            width: 1,
-                            color: Colors.black
-                          // color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                      suffixIcon: Icon(
-                        IconlyLight.search,
-                        color: const Color.fromARGB(255, 175, 0, 120),
-                      )),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 18,
@@ -158,7 +151,6 @@ class _GuestPageState extends State<GuestPage> {
                           // control: const SwiperControl(),
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
