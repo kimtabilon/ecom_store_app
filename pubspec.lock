@@ -97,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  expandable_search_bar:
+    dependency: "direct main"
+    description:
+      name: expandable_search_bar
+      sha256: "8f1bde484317a00805b6ada0dde4e3656f5a8dd28959e8cd0835149da3682c02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   fake_async:
     dependency: transitive
     description:

@@ -12,7 +12,8 @@ import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Widgets/appbar_icons.dart';
-
+import '../Authentication/splash.dart';
+import 'package:expandable_search_bar/expandable_search_bar.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -61,13 +62,12 @@ class _ProductDetailsState extends State<ProductDetails> {
       appBar: AppBar(
         // elevation: 1,
         backgroundColor: const Color.fromRGBO(16,69,114,1),
-        title: const Text('Ecommerce Business Prime',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 20
-          ),
+        title: Image.network(
+          'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-ecom.png',
+          cacheWidth: 48,
+          width: 48,
         ),
-        centerTitle: true,
+        centerTitle: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -75,18 +75,23 @@ class _ProductDetailsState extends State<ProductDetails> {
           },
         ),
         actions: [
+          AnimatedSearchBar(),
+          Icon(
+            Icons.shopping_cart_checkout_rounded,
+            size: 48,
+            color: Colors.lightGreen,
+          ),
           AppBarIcons(
             function: () {
-              CartProvider.addToCart(productsModel!.sku, "1", context);
-              /*Navigator.push(
+              Navigator.push(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  child: CartPage(),
+                  child: SplashScreen(),
                 ),
-              );*/
+              );
             },
-            icon: Icons.add_shopping_cart,
+            icon: IconlyBold.profile,
           ),
         ],
       ),
@@ -351,6 +356,77 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
       ),
       bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku),
+    );
+  }
+}
+
+class AnimatedSearchBar extends StatefulWidget {
+  @override
+  _AnimatedSearchBarState createState() => _AnimatedSearchBarState();
+}
+
+class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
+  bool _folded = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 400),
+      width: _folded ? 56 : 250,
+      height: _folded ? 28 : 28,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        color: _folded ? Color.fromRGBO(16,69,114,1) : Colors.white,
+        boxShadow: kElevationToShadow[6],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(left: 10),
+              child: !_folded
+                  ? TextField(
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                        border: InputBorder.none,
+                        hintText: "Search",
+                        prefixIcon: Icon(
+                          IconlyLight.search,
+                          color: Colors.green,
+                        ),
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 400),
+            child: Material(
+              type: MaterialType.transparency,
+              child: InkWell(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(_folded ? 28 : 0),
+                  topRight: Radius.circular(28),
+                  bottomLeft: Radius.circular(_folded ? 28 : 0),
+                  bottomRight: Radius.circular(28),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Icon(
+                    _folded ? Icons.search : Icons.close,
+                    color: Colors.lightGreen,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    _folded = !_folded;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
