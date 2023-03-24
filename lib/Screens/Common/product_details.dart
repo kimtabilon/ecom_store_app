@@ -1,15 +1,10 @@
 import 'dart:developer';
-
 import 'package:card_swiper/card_swiper.dart';
-import 'package:ecom_store_app/Screens/Account/cart_page.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:page_transition/page_transition.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
-import '../../Widgets/appbar_icons.dart';
 
 
 class ProductDetails extends StatefulWidget {

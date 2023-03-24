@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Screens/Authentication/register.dart';
 import '../../Utils/routers.dart';
 import '../../Utils/snack_message.dart';
-import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
-import '../Account/home_page.dart';
 import '../Common/guest_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -53,18 +50,6 @@ class _LoginPageState extends State<LoginPage> {
               );
             },
           ),
-          /*leading: AppBarIcons(
-            function: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: const GuestPage(),
-                ),
-              );
-            },
-            icon: IconlyBold.home,
-          ),*/
       ),
       body: CustomScrollView(
         slivers: [

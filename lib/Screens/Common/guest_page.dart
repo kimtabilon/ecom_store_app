@@ -3,19 +3,12 @@ import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
-// import '../consts/global_colors.dart';
-import '../../Provider/StoreProvider/order_provider.dart';
 import '../../Screens/Common/categories_screen.dart';
 import '../../Screens/Common/feeds_screen.dart';
-// import '../screens/user_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
-
-import '../../Screens/Account/home_page.dart';
-
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
-import '../../Widgets/feeds_widget.dart';
 import '../../Widgets/sale_widget.dart';
 
 class GuestPage extends StatefulWidget {
@@ -27,15 +20,11 @@ class GuestPage extends StatefulWidget {
 
 class _GuestPageState extends State<GuestPage> {
   late TextEditingController _textEditingController;
-  // List<ProductsModel> productsList = [];
   @override
   void initState() {
     _textEditingController = TextEditingController();
     super.initState();
 
-    /*Future.delayed(const Duration(seconds: 1), () {
-      GetUserOrder().getOrder();
-    });*/
   }
 
 
@@ -45,16 +34,6 @@ class _GuestPageState extends State<GuestPage> {
     super.dispose();
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   getProducts();
-  //   super.didChangeDependencies();
-  // }
-
-  // Future<void> getProducts() async {
-  //   productsList = await APIHandler.getAllProducts();
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
