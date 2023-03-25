@@ -7,9 +7,11 @@ import '../../Screens/Common/categories_screen.dart';
 import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/sale_widget.dart';
+import '../Account/cart_page.dart';
 
 class GuestPage extends StatefulWidget {
   const GuestPage({Key? key}) : super(key: key);
@@ -46,17 +48,40 @@ class _GuestPageState extends State<GuestPage> {
           appBar: AppBar(
             // elevation: 1,
             backgroundColor: const Color.fromRGBO(16,69,114,1),
-            title: const Text('Ecommerce Business Prime',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20
-              ),
-            ),
-            centerTitle: true,
+            // title: const Text('Ecommerce Business Prime',
+            //   style: TextStyle(
+            //       color: Colors.white,
+            //       fontSize: 20
+            //   ),
+            // ),
+            // centerTitle: true,
             leading: Image.network(
               'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-ecom.png',
             ),
             actions: [
+              InkWell(
+                  onTap: () {
+                    PageNavigator(ctx: context).nextPage(page: const CartPage());
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children:const [
+                          Icon(
+                            Icons.shopping_cart_checkout_rounded,
+                            size: 36,
+                            color: Colors.lightGreen,
+                          ),
+                        ]
+                    ),
+                  )
+              ),
+              Icon(
+                Icons.question_mark,
+                size: 36,
+                color: Colors.lightGreen,
+              ),
               AppBarIcons(
                 function: () {
                   Navigator.push(
