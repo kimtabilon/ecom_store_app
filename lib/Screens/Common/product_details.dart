@@ -8,6 +8,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:geolocation/geolocation.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
@@ -496,6 +497,25 @@ class ItemBottomNavBar extends StatelessWidget {
 
   final String price;
   final String sku;
+
+  /*
+  Stream<LocationResult> currentLocation(
+    {
+      required LocationAccuracy accuracy,
+      bool inBackground = false,
+      LocationPermission permission = const LocationPermission(),
+      LocationOptionsAndroid androidOptions = LocationOptionsAndroid.defaultSingle,
+      LocationOptions iosOptions = const LocationOptionsIOS();
+    }
+  ) => _locationChannel.locationUpdates(_LocationUpdatesRequests(
+    _LocationUpdateStrategy.current,
+    permission,
+    accuracy,
+    inBackground,
+    androidOptions,
+    iosOptions,
+  ));
+  */
 
   @override
   Widget build(BuildContext context){
