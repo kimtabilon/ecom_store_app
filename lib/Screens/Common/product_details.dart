@@ -22,6 +22,7 @@ import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -96,11 +97,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: EdgeInsets.fromLTRB(5, 15, 1, 5),
                 child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children:const [
-                      Icon(
-                        Icons.shopping_cart_checkout_rounded,
-                        size: 30,
-                        color: Colors.lightGreen,
+                    children: [
+                      Stack(
+                        children: [
+                          Icon(
+                              Icons.shopping_cart_checkout_rounded,
+                              size: 30,
+                              color: Colors.lightGreen
+                          ),
+                          /*
+                          Positioned(
+                            bottom: 12.0,
+                            right: 0.0,
+                            child: Center(
+                              child: Text(
+                                c.qty.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                            ),
+                          )
+                          */
+                        ],
                       ),
                     ]
                 ),
@@ -257,6 +279,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
+                            /*
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -322,6 +345,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ],
                             ),
+                            */
                           ],
                         ),
                       ),
@@ -482,7 +506,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString()),
+      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString(),),
     );
   }
 }
@@ -652,38 +676,63 @@ class ItemBottomNavBar extends StatelessWidget {
                 ),
               ),
               */
-              OutlinedButton.icon(
-                onPressed: () {
-                  CartProvider.addToCart(sku, qty, context);
-                  print(qty);
-                },
-                icon: const Icon(
-                  CupertinoIcons.cart_badge_plus,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Add To Cart",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'QTY: ',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      DropdownQTY(),
+                    ],
                   ),
-                ),
-                style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(20),
-                    backgroundColor: Colors.lightGreen,
-                    padding: EdgeInsets.symmetric(vertical: 13, horizontal: 15),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)
-                    )
-                ),
-              )
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  Flexible(
+                    child: Stack(
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () {
+                            CartProvider.addToCart(sku, qty, context);
+                            print(qty);
+                          },
+                          icon: const Icon(
+                            CupertinoIcons.cart_badge_plus,
+                            color: Colors.white,
+                          ),
+                          label: Text(
+                            "Add To Cart",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(20),
+                              backgroundColor: Colors.lightGreen,
+                              padding: EdgeInsets.symmetric(vertical: 13, horizontal: 15),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ],
           ),
         )
     );
   }
 
+  setState(String? Function() param0) {}
 }
 
 Widget listItem({required String title, required List<String> arrdesc}) {
@@ -694,6 +743,8 @@ Widget listItem({required String title, required List<String> arrdesc}) {
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
+        iconColor: Colors.white,
+        collapsedIconColor: Colors.white,
         key: expansionTileKey,
         onExpansionChanged: (value) {
           if (value) {
@@ -755,6 +806,8 @@ Widget specList({required String title, required List<String> speclist, required
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
+        iconColor: Colors.white,
+        collapsedIconColor: Colors.white,
         key: expansionTileKey,
         onExpansionChanged: (value) {
           if (value) {
@@ -817,6 +870,8 @@ Widget specInfo({required String title, required List<String> specList, required
     child: Theme(
       data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
+        iconColor: Colors.white,
+        collapsedIconColor: Colors.white,
         key: expansionTileKey,
         onExpansionChanged: (value) {
           if (value) {

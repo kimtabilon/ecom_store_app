@@ -28,13 +28,13 @@ class CategoryWidget extends StatelessWidget {
           );
         },
         child: Align(
-            alignment: Alignment.center,
+            alignment: Alignment.centerLeft,
             child: Text(
               categoriesModelProvider.name.toString() + " (${categoriesModelProvider.total})",
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
                 backgroundColor: const Color(0xFFFfFFFf).withOpacity(0.5),
               ),
             )
