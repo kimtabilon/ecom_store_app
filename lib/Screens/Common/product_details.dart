@@ -8,7 +8,6 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:geolocation/geolocation.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
@@ -49,8 +48,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     setState(() {});
   }
-
-
 
   @override
   void didChangeDependencies() {
@@ -498,30 +495,11 @@ class ItemBottomNavBar extends StatelessWidget {
   final String price;
   final String sku;
 
-  /*
-  Stream<LocationResult> currentLocation(
-    {
-      required LocationAccuracy accuracy,
-      bool inBackground = false,
-      LocationPermission permission = const LocationPermission(),
-      LocationOptionsAndroid androidOptions = LocationOptionsAndroid.defaultSingle,
-      LocationOptions iosOptions = const LocationOptionsIOS();
-    }
-  ) => _locationChannel.locationUpdates(_LocationUpdatesRequests(
-    _LocationUpdateStrategy.current,
-    permission,
-    accuracy,
-    inBackground,
-    androidOptions,
-    iosOptions,
-  ));
-  */
-
   @override
   Widget build(BuildContext context){
     return BottomAppBar(
         child: Container(
-          height: 100,
+          height: 120,
           padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
           decoration: BoxDecoration(
               color: Colors.white,
@@ -544,6 +522,7 @@ class ItemBottomNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     child: RichText(
                       text: TextSpan(
                           text: 'You pay: \$',
@@ -563,6 +542,7 @@ class ItemBottomNavBar extends StatelessWidget {
                     ),
                   ),
                   Flexible(
+                    fit: FlexFit.tight,
                     child: RichText(
                       text: TextSpan(
                           text: 'Enter your location',

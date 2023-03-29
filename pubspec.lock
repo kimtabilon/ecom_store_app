@@ -192,14 +192,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  geolocation:
-    dependency: "direct main"
-    description:
-      name: geolocation
-      sha256: c04c58a379c501983585ee1a1957585d0fbb489b6daac6315ae39399a3f1c09f
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
   http:
     dependency: "direct main"
     description:
@@ -316,10 +308,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_foundation
-      sha256: "12eee51abdf4d34c590f043f45073adbb45514a108bd9db4491547a2fd891059"
+      sha256: "818b2dc38b0f178e0ea3f7cf3b28146faab11375985d815942a68eee11c2d0f7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   path_provider_linux:
     dependency: transitive
     description:
@@ -501,14 +493,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
-  streams_channel:
-    dependency: transitive
-    description:
-      name: streams_channel
-      sha256: "1374e6442fbd8f812c443fad925edcb547e32808ae51159ee3b25f55da6dac2d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   string_scanner:
     dependency: transitive
     description:
