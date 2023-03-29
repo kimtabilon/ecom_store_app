@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:ecom_store_app/Model/category_model.dart';
 import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -12,7 +13,7 @@ import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/sale_widget.dart';
 import '../Account/cart_page.dart';
-
+import 'package:provider/provider.dart';
 class GuestPage extends StatefulWidget {
   const GuestPage({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class GuestPage extends StatefulWidget {
 
 class _GuestPageState extends State<GuestPage> {
   late TextEditingController _textEditingController;
+  final TextEditingController _searchText = TextEditingController();
   @override
   void initState() {
     _textEditingController = TextEditingController();
@@ -40,6 +42,7 @@ class _GuestPageState extends State<GuestPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final categoriesModelProvider = Provider.of<CategoryModel>(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -105,6 +108,7 @@ class _GuestPageState extends State<GuestPage> {
                     Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
+                        controller: _searchText,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                           border: OutlineInputBorder(
@@ -124,9 +128,24 @@ class _GuestPageState extends State<GuestPage> {
                             },
                             icon: IconlyBold.category,
                           ),
-                          suffixIcon: Icon(
-                            IconlyLight.search,
-                            color: Colors.green,
+                          suffixIcon: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
+                            mainAxisSize: MainAxisSize.min, // added line
+                            children: <Widget>[
+                              IconButton(
+                                icon:   const Icon(
+                                    IconlyLight.search,
+                                    color: Colors.green,
+                                    ) ,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true')),
+                                  );
+                                },
+
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -173,7 +192,7 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen(target: 'All Products')));
+                                          child: const FeedsScreen(target: 'All Products',itemSearch: 'false')));
                                 },
                                 icon: IconlyBold.arrowRight2),
                           ],
@@ -220,7 +239,7 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen(target: 'All Products',)
+                                          child: const FeedsScreen(target: 'All Products',itemSearch: 'false')
                                       )
                                   );
                                 },

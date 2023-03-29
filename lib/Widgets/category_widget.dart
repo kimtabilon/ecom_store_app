@@ -23,7 +23,7 @@ class CategoryWidget extends StatelessWidget {
             context,
             PageTransition(
               type: PageTransitionType.fade,
-              child: FeedsScreen(target: categoriesModelProvider.name.toString()),
+              child: FeedsScreen(target: categoriesModelProvider.name.toString(),itemSearch: 'false'),
             ),
           );
         },
