@@ -11,38 +11,103 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Catalog")),
+        appBar: AppBar(title: const Text("Menu")),
         body: FutureBuilder<List<CategoryModel>>(
-            future: ProductProvider.getAllCategories(),
-            builder: ((context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                Center(
-                  child: Text("An error occured ${snapshot.error}"),
-                );
-              } else if (snapshot.data == null) {
-                const Center(
-                  child: Text("No products has been added yet"),
-                );
-              }
-              return GridView.builder(
-                  shrinkWrap: true,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: snapshot.data!.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 0.0,
-                    mainAxisSpacing: 0.0,
-                    childAspectRatio: 0.6,
-                  ),
-                  itemBuilder: (ctx, index) {
-                    return ChangeNotifierProvider.value(
-                        value: snapshot.data![index],
-                        child: const CategoryWidget());
-                  });
-            })));
+          future: ProductProvider.getAllCategories(),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              Center(
+                child: Text("An error occurred ${snapshot.error}"),
+              );
+            } else if (snapshot.data == null) {
+              const Center(
+                child: Text("No products has been added yet"),
+              );
+            }
+            return Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                width: double.infinity,
+                height: double.infinity,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          child: Text(
+                            "About Us",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Material(
+                      child: ExpansionTile(
+                        title: Text(
+                          "Catalog",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17
+                          ),
+                        ),
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 500,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: ListView.builder(
+                                      primary: false,
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index) {
+                                        return ChangeNotifierProvider.value(
+                                          value: snapshot.data![index],
+                                          child: const CategoryWidget(),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          child: Text(
+                            "Help Center",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        )
+    );
   }
 }

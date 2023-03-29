@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.18.0
   clippy_flutter: ^2.0.0-nullsafety.1
   expandable_search_bar: ^0.0.2
+  geolocation: ^1.1.2
 
 dev_dependencies:
   flutter_test:
