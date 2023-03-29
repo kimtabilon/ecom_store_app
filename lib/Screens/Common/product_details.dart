@@ -545,9 +545,9 @@ class ItemBottomNavBar extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: RichText(
                       text: TextSpan(
-                          text: 'Enter your location',
+                          text: 'Entable location service',
                           style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               color: Colors.black
                           ),
                       ),
