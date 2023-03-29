@@ -81,7 +81,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Navigator.pop(context);
           },
         ),
-        leadingWidth: 20,
+        leadingWidth: 25,
         actions: [
           AnimatedSearchBar(),
           InkWell(
