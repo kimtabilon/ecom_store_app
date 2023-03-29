@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:clippy_flutter/arc.dart';
 import 'package:ecom_store_app/Screens/Account/cart_page.dart';
+import 'package:ecom_store_app/Screens/Common/product_qty.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -48,6 +50,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     setState(() {});
   }
+
+  final MyController c = Get.put(MyController());
 
   @override
   void didChangeDependencies() {
@@ -253,6 +257,71 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               ),
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  padding: EdgeInsets.all(0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      CupertinoIcons.minus,
+                                      size: 15,
+                                    ), onPressed: () {
+                                        c.decrement();
+                                      },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: Obx(
+                                    ()=>Text("${c.qty.toString()}",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                  )),
+                                ),
+                                Container(
+                                  width: 30,
+                                  height: 30,
+                                  padding: EdgeInsets.all(0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 3,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      CupertinoIcons.plus,
+                                      size: 15,
+                                    ), onPressed: () {
+                                      c.increment();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -413,7 +482,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku),
+      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString()),
     );
   }
 }
@@ -490,10 +559,11 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 }
 
 class ItemBottomNavBar extends StatelessWidget {
-  const ItemBottomNavBar({Key? key, required this.price, required this.sku}) : super(key: key);
+  const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty}) : super(key: key);
 
   final String price;
   final String sku;
+  final String qty;
 
   @override
   Widget build(BuildContext context){
@@ -584,7 +654,8 @@ class ItemBottomNavBar extends StatelessWidget {
               */
               OutlinedButton.icon(
                 onPressed: () {
-                  CartProvider.addToCart(sku, context);
+                  CartProvider.addToCart(sku, qty, context);
+                  print(qty);
                 },
                 icon: const Icon(
                   CupertinoIcons.cart_badge_plus,
