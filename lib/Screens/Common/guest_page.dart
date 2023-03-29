@@ -59,7 +59,9 @@ class _GuestPageState extends State<GuestPage> {
             // ),
             // centerTitle: true,
             leading: Image.network(
-              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-ecom.png',
+              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+              cacheWidth: 30,
+              width: 30,
             ),
             actions: [
               InkWell(

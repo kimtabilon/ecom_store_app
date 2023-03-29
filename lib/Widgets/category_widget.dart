@@ -37,8 +37,8 @@ class CategoryWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 backgroundColor: const Color(0xFFFfFFFf).withOpacity(0.5),
               ),
-            ),
-          )
+            )
+        )
       )
     );
   }
