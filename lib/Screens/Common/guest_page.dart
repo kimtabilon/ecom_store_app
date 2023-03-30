@@ -69,13 +69,13 @@ class _GuestPageState extends State<GuestPage> {
                     PageNavigator(ctx: context).nextPage(page: const CartPage());
                   },
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
                     child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children:const [
                           Icon(
                             Icons.shopping_cart_checkout_rounded,
-                            size: 36,
+                            size: 28,
                             color: Colors.lightGreen,
                           ),
                         ]
@@ -84,9 +84,10 @@ class _GuestPageState extends State<GuestPage> {
               ),
               Icon(
                 Icons.question_mark,
-                size: 36,
+                size: 28,
                 color: Colors.lightGreen,
               ),
+              /*
               AppBarIcons(
                 function: () {
                   Navigator.push(
@@ -98,6 +99,31 @@ class _GuestPageState extends State<GuestPage> {
                   );
                 },
                 icon: IconlyBold.profile,
+              ),
+              */
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SplashScreen(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
+                    child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children:const [
+                          Icon(
+                            IconlyBold.profile,
+                            size: 28,
+                            color: Colors.lightGreen,
+                          ),
+                        ]
+                    ),
+                  )
               ),
             ],
           ),
