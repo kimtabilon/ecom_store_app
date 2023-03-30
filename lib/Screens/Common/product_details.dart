@@ -16,6 +16,7 @@ import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
@@ -583,7 +584,7 @@ class ItemBottomNavBar extends StatelessWidget {
               ),
               */
               OutlinedButton.icon(
-                onPressed: () {
+                onPressed: () async {
                   CartProvider.addToCart(sku, context);
                 },
                 icon: const Icon(
