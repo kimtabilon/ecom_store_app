@@ -63,12 +63,12 @@ class ProductModel with ChangeNotifier {
     instock = json['instock'] == 0
         ? "Out of Stock"
         : "In Stock";
-    arrdesc = json['arr_desc'].cast<String>();
+    arrdesc = json['arr_desc'].isNotEmpty ? json['arr_desc'].cast<String>() : [''];
     manuflogo = json['manuf_logo'];
-    speclist = json['spec_list'].cast<String>();
-    speccontent = json['spec_list_content'].cast<String>();
-    specinfolist = json['spec_info_list'].cast<String>();
-    specinfocontent = json['spec_info_content'].cast<String>();
+    speclist = json['spec_list'].isNotEmpty ? json['spec_list'].cast<String>() : [''];
+    speccontent = json['spec_list_content'].isNotEmpty ? json['spec_list_content'].cast<String>() : [''];
+    specinfolist = json['spec_info_list'].isNotEmpty ? json['spec_info_list'].cast<String>() : [''];
+    specinfocontent = json['spec_info_content'].isNotEmpty ? json['spec_info_content'].cast<String>() : [''];
   }
   static List<ProductModel> productsFromSnapshot(List productSnaphot) {
     return productSnaphot.map((data) {

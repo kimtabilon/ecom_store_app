@@ -85,7 +85,7 @@ class GuestCartProvider extends ChangeNotifier {
         }
       });
     }
-    
+
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
     print(await response.stream.bytesToString());

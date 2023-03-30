@@ -10,7 +10,7 @@ import 'guest_cart_provider.dart';
 
 class CartProvider extends ChangeNotifier {
 
-  static Future<bool> addToCart(sku, context) async {
+  static Future<bool> addToCart(sku, qty, context) async {
     final token = await DatabaseProvider().getData('token');
 
     if(token=='') {
@@ -32,7 +32,7 @@ class CartProvider extends ChangeNotifier {
         request.body = json.encode({
           "cartItem": {
             "sku": sku,
-            "qty": 1,
+            "qty": qty,
             "quote_id": qoute_id
           }
         });

@@ -105,7 +105,7 @@ class FeedsWidget extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
-                              CartProvider.addToCart(productsModelProvider.sku, context);
+                              CartProvider.addToCart(productsModelProvider.sku, "1", context);
                             },
                             child: const Icon(
                               Icons.add_shopping_cart,

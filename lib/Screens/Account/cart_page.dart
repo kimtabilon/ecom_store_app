@@ -59,25 +59,45 @@ class _CartPageState extends State<CartPage> {
                   // print(snapshot.data);
                   return CartItemListWidget(itemList: snapshot.data!);
                 }),
-            Expanded(
-                child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
-                        );
-                      },
-                      child: const Text('Checkout'),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(16,69,114,1),
-                          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
-                      ),
-                    )
-                )
-            )
+            FutureBuilder<List<CartItem>>(
+                future: CartProvider.getCartItems(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child:
+                      Text("An error occured ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data!.length == 0) {
+                    return const Center(
+                      child: Text(""),
+                    );
+                  }
+                  // print(snapshot.data);
+                  return Expanded(
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
+                              );
+                            },
+                            child: const Text('Checkout'),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromRGBO(16,69,114,1),
+                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                            ),
+                          )
+                      )
+                  );
+                }),
           ]
           )
       ),

@@ -28,30 +28,30 @@ class CategoriesScreen extends StatelessWidget {
                 child: Text("No products has been added yet"),
               );
             }
-            return Padding(
-              padding: EdgeInsets.all(5),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                width: double.infinity,
-                height: double.infinity,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                          child: Text(
-                            "About Us",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Wrap(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        child: Text(
+                          "About Us",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
+                  ),
+                  /*
                     Material(
                       child: ExpansionTile(
+                        initiallyExpanded: true,
+                        iconColor: Colors.transparent,
+                        collapsedIconColor: Colors.transparent,
                         title: Text(
                           "Catalog",
                           style: TextStyle(
@@ -88,22 +88,70 @@ class CategoriesScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          child: Text(
-                            "Help Center",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
+                    */
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        child: Text(
+                          "Catalog",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
-                        )
-                      ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: ListView.builder(
+                      primary: false,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return ChangeNotifierProvider.value(
+                          value: snapshot.data![index],
+                          child: const CategoryWidget(),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                  /*
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: ListView.builder(
+                          primary: false,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider.value(
+                              value: snapshot.data![index],
+                              child: const CategoryWidget(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    */
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        child: Text(
+                          "Help Center",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             );
           }),

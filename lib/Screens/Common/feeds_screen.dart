@@ -6,10 +6,10 @@ import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Widgets/feeds_widget.dart';
 
 class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({Key? key, required this.target}) : super(key: key);
+  const FeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
 
   final String target;
-
+  final String itemSearch;
   @override
   State<FeedsScreen> createState() => _FeedsScreenState();
 }
@@ -44,10 +44,19 @@ class _FeedsScreenState extends State<FeedsScreen> {
   }
 
   Future<void> getProducts() async {
-    productsList = await ProductProvider.getAllProducts(
-      target: widget.target,
-      limit: limit.toString(),
-    );
+    productsList = [];
+    if(widget.itemSearch == "true"){
+      productsList = await ProductProvider.searchProducts(
+        target: widget.target,
+        limit: limit.toString(),
+      );
+    }else{
+      productsList = await ProductProvider.getAllProducts(
+        target: widget.target,
+        limit: limit.toString(),
+      );
+    }
+
 
     // print(productsList);
     setState(() {});
