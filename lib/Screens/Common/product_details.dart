@@ -640,7 +640,7 @@ class ItemBottomNavBar extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: RichText(
                       text: TextSpan(
-                          text: 'Entable location service',
+                          text: 'Enable location service',
                           style: const TextStyle(
                               fontSize: 15,
                               color: Colors.black
@@ -677,22 +677,6 @@ class ItemBottomNavBar extends StatelessWidget {
                 ),
               ),
               */
-/*<<<<<<< HEAD
-              OutlinedButton.icon(
-                onPressed: () async {
-                  CartProvider.addToCart(sku, context);
-                },
-                icon: const Icon(
-                  CupertinoIcons.cart_badge_plus,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Add To Cart",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white
-=======*/
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -707,7 +691,6 @@ class ItemBottomNavBar extends StatelessWidget {
                       ),
                       DropdownQTY(),
                     ],
-// >>>>>>> 06680f37fe7ca708f212816e8e1546b4f11638eb
                   ),
                   Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Flexible(
