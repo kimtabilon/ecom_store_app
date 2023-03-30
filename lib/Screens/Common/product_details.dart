@@ -17,6 +17,7 @@ import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../Authentication/splash.dart';
@@ -676,6 +677,22 @@ class ItemBottomNavBar extends StatelessWidget {
                 ),
               ),
               */
+/*<<<<<<< HEAD
+              OutlinedButton.icon(
+                onPressed: () async {
+                  CartProvider.addToCart(sku, context);
+                },
+                icon: const Icon(
+                  CupertinoIcons.cart_badge_plus,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "Add To Cart",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+=======*/
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -690,6 +707,7 @@ class ItemBottomNavBar extends StatelessWidget {
                       ),
                       DropdownQTY(),
                     ],
+// >>>>>>> 06680f37fe7ca708f212816e8e1546b4f11638eb
                   ),
                   Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Flexible(

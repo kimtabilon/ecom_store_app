@@ -3,7 +3,9 @@ import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/cart_model.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import 'Local_widget/cart_item_list.dart';
 
 class CartPage extends StatefulWidget {

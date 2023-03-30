@@ -81,6 +81,37 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> initateGuest() async {
+    var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts'));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      var masked_id = await response.stream.bytesToString();
+      masked_id = masked_id.replaceAll('"', '');
+      DatabaseProvider().saveData('is_guest','yes');
+      DatabaseProvider().saveData('masked_id', masked_id);
+      DatabaseProvider().saveData('name', 'Guest');
+
+      var guestRequest = http.Request('GET', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id'));
+      http.StreamedResponse guestData = await guestRequest.send();
+      print(guestData.stream.bytesToString());
+      if (guestData.statusCode == 200) {
+        var json = jsonDecode(await guestData.stream.bytesToString());
+        print(json);
+        DatabaseProvider().saveData('qoute_id', json.id.toString());
+        return true;
+      } else {
+        print(guestData.reasonPhrase);
+      }
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+    return false;
+  }
+
   Future<bool> getUserToken() async {
     final email = await DatabaseProvider().getData('email');
     final password = await DatabaseProvider().getData('password');

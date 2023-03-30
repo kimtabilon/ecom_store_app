@@ -6,6 +6,7 @@ import '../../Model/cart_model.dart';
 import '../../Provider/Database/db_provider.dart';
 import 'package:http/http.dart' as http;
 import '../../Utils/snack_message.dart';
+import 'guest_cart_provider.dart';
 
 class CartProvider extends ChangeNotifier {
 
@@ -13,8 +14,9 @@ class CartProvider extends ChangeNotifier {
     final token = await DatabaseProvider().getData('token');
 
     if(token=='') {
-      showMessage(message: "Please login to continue", context: context);
-      return true;
+      return GuestCartProvider.addToCart(sku, context);
+      // showMessage(message: "Please login to continue", context: context);
+      // return true;
     } else {
       Future<bool> refreshToken = AuthenticationProvider().getUserToken();
       Future<bool> getQouteId = getCartId();
@@ -38,10 +40,11 @@ class CartProvider extends ChangeNotifier {
 
         http.StreamedResponse response = await request.send();
 
-        print(response.statusCode);
-
         if (response.statusCode == 200) {
           showMessage(message: "$sku has been added to cart", context: context);
+          var cart_total_items = await DatabaseProvider().getData('cart_total_items');
+          var new_total = int.parse(cart_total_items)+1;
+          DatabaseProvider().saveData('cart_total_items', new_total.toString());
         } else {
           showMessage(message: "Oops, something went wrong! Please try again later.", context: context);
         }
@@ -55,6 +58,11 @@ class CartProvider extends ChangeNotifier {
   static Future<int> updateCart(id, qty, action, context) async {
     final token = await DatabaseProvider().getData('token');
     final qoute_id = await DatabaseProvider().getData('qoute_id');
+
+    //GUEST
+    if(token=='') {
+      return GuestCartProvider.updateCart(id, qty, action, context);
+    }
 
     var headers = {
       'Authorization': 'Bearer $token',
@@ -100,16 +108,19 @@ class CartProvider extends ChangeNotifier {
       Future<bool> getQouteId = getCartId();
       if(await refreshToken && await getQouteId) {
         showMessage(message: "Oops, something went wrong. Please try again.", context: context);
-        new_qty = qty;
       }
     }
 
-    return new_qty;
+    return qty;
 
   }
 
   static Future<List<CartItem>> getCartItems(context) async {
-
+    final token = await DatabaseProvider().getData('token');
+    if(token == '') {
+      return GuestCartProvider.getCartItems(context);
+    }
+    // print("User Cart");
     try {
       Future<bool> refresh_token = AuthenticationProvider().getUserToken();
       if(await refresh_token) {
