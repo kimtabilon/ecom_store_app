@@ -60,8 +60,8 @@ class _GuestPageState extends State<GuestPage> {
             // centerTitle: true,
             leading: Image.network(
               'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-              cacheWidth: 30,
-              width: 30,
+              cacheWidth: 40,
+              width: 40,
             ),
             actions: [
               InkWell(
@@ -176,6 +176,12 @@ class _GuestPageState extends State<GuestPage> {
                             ],
                           ),
                         ),
+                        onSubmitted: (String str) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true')),
+                          );
+                        },
                       ),
                     ),
                   ],

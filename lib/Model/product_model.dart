@@ -49,7 +49,7 @@ class ProductModel with ChangeNotifier {
     this.sprice,
     this.chk_accessories,
     this.chk_relatedproducts,
-    this.chk_moreproducts
+    this.chk_moreproducts,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
