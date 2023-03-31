@@ -8,8 +8,10 @@ import 'package:ecom_store_app/Screens/Common/product_qty.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
 import '../../Model/product_model.dart';
@@ -20,10 +22,13 @@ import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
+import '../../Widgets/feeds_grid.dart';
+import '../../Widgets/feeds_widget.dart';
 import '../Authentication/splash.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -67,6 +72,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     late final String price = (productsModel == null ? 'null' : productsModel!.price.toString());
     late final String sku = (productsModel == null ? 'null' : productsModel!.sku.toString());
     late final String logo = (productsModel == null ? 'null' : productsModel!.manuflogo.toString());
+    late final String sprice = (productsModel == null ? 'null' : productsModel!.sprice.toString());
 
     List ManufLogo = [logo];
 
@@ -229,6 +235,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                 ),
+                /*
                 Align(
                   alignment: Alignment.topLeft,
                   widthFactor: 1,
@@ -237,6 +244,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                     backgroundColor: Colors.white.withOpacity(0.1),
                     backgroundImage: NetworkImage(ManufLogo[0]),
                   ),
+                ),
+                */
+                Align(
+                  alignment: Alignment.topLeft,
+                  widthFactor: 1,
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Image(
+                      image: NetworkImage(ManufLogo[0]),
+                    ),
+                  )
                 )
               ],
             ),
@@ -358,35 +376,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Flexible(
                               child: RichText(
                                 text: TextSpan(
-                                    text: "UPC: ",
-                                    style: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black
-                                    ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: productsModel!.upc.toString(),
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.normal
-                                          )
-                                      ),
-                                    ]
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: RichText(
-                                text: TextSpan(
                                     text: "Manufacturer: ",
                                     style: const TextStyle(
                                         fontSize: 17,
@@ -416,7 +405,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Flexible(
                               child: RichText(
                                 text: TextSpan(
-                                    text: "Availability: ",
+                                    text: "UPC: ",
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
@@ -424,7 +413,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: productsModel!.instock.toString(),
+                                          text: productsModel!.upc.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal
@@ -454,6 +443,35 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: productsModel!.condition.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal
+                                          )
+                                      ),
+                                    ]
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: RichText(
+                                text: TextSpan(
+                                    text: "Availability: ",
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: productsModel!.instock.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal
@@ -499,6 +517,827 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ],
                           )
                       ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          children: [
+                            if(productsModel!.chk_accessories != "0") ...[
+                              Text(
+                                "Accessories",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 5
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ] else if(productsModel!.chk_relatedproducts != "0") ...[
+                              Text(
+                                "Related Products",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 5
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ] else if(productsModel!.chk_moreproducts != "0") ...[
+                              Text(
+                                "More Products",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 5
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.black
+                                        ),
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    width: 170,
+                                    height: 310,
+                                    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Theme.of(context).cardColor,
+                                              child: InkWell(
+                                                borderRadius: BorderRadius.circular(20),
+                                                onTap: () {
+                                                  // print(productsModel);
+                                                  Navigator.push(
+                                                    context,
+                                                    PageTransition(
+                                                      type: PageTransitionType.fade,
+                                                      child: ProductDetails(id: productsModel!.id.toString()),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 10),
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      child: FancyShimmerImage(
+                                                        height: size.height * 0.2,
+                                                        width: double.infinity,
+                                                        errorWidget: const Icon(
+                                                          IconlyBold.danger,
+                                                          color: Colors.red,
+                                                          size: 28,
+                                                        ),
+                                                        imageUrl: productsModel!.images![0],
+                                                        boxFit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.sku.toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Text(
+                                                        productsModel!.title!.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        maxLines: 2,
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          //  fontFamily: 'Roboto',
+                                                          // fontWeight: FontWeight.w700,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: size.height * 0.01,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Flexible(
+                                                            child: RichText(
+                                                                text: TextSpan(
+                                                                    text: "\$",
+                                                                    style: const TextStyle(
+                                                                        fontWeight: FontWeight.w500,
+                                                                        color: Color.fromRGBO(
+                                                                            0, 0, 0, 1.0)),
+                                                                    children: <TextSpan>[
+                                                                      TextSpan(
+                                                                          text: "${productsModel!.price}",
+                                                                          style: TextStyle(
+                                                                              color: const Color(0xff324558),
+                                                                              fontWeight: FontWeight.w600)),
+                                                                    ])
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                },
+                                                                child: const Icon(
+                                                                  Icons.add_shopping_cart,
+                                                                  color: Colors.lightGreen,
+                                                                ),
+                                                              ),
+                                                              Image.network(
+                                                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                                                color: Colors.lightGreen,
+                                                                width: 22,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ]
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -507,7 +1346,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString(),),
+      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString(), sprice: sprice),
     );
   }
 }
@@ -584,11 +1423,12 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 }
 
 class ItemBottomNavBar extends StatelessWidget {
-  const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty}) : super(key: key);
+  const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty, required this.sprice}) : super(key: key);
 
   final String price;
   final String sku;
   final String qty;
+  final String sprice;
 
   @override
   Widget build(BuildContext context){
@@ -616,26 +1456,53 @@ class ItemBottomNavBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: RichText(
-                      text: TextSpan(
-                          text: 'You pay: \$',
-                          style: const TextStyle(
+                  if(sprice != 'null') ...[
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: RichText(
+                        text: TextSpan(
+                            text: 'You Pay: \$' + sprice,
+                            style: const TextStyle(
                               fontSize: 20,
-                              color: Colors.black
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: price,
-                                style: TextStyle(
-                                    color: Colors.black
-                                )
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold
                             ),
-                          ]
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '\$' + price,
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontStyle: FontStyle.italic
+                                  )
+                              ),
+                            ]
+                        ),
                       ),
                     ),
-                  ),
+                  ] else ...[
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: RichText(
+                        text: TextSpan(
+                            text: 'You Pay: \$',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: price,
+                                  style: TextStyle(
+                                    color: Colors.black
+                                  )
+                              ),
+                            ]
+                        ),
+                      ),
+                    ),
+                  ],
                   Flexible(
                     fit: FlexFit.tight,
                     child: RichText(
@@ -681,18 +1548,29 @@ class ItemBottomNavBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        'QTY: ',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(5, 2, 5, 1),
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5)
                       ),
-                      DropdownQTY(),
-                    ],
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          'QTY: ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white
+                          ),
+                        ),
+                        DropdownQTY(),
+                      ],
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  // Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Flexible(
                     child: Stack(
                       children: [
@@ -718,7 +1596,10 @@ class ItemBottomNavBar extends StatelessWidget {
                               backgroundColor: Colors.lightGreen,
                               padding: EdgeInsets.symmetric(vertical: 13, horizontal: 15),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5)
+                                  )
                               )
                           ),
                         ),
@@ -738,6 +1619,7 @@ class ItemBottomNavBar extends StatelessWidget {
 
 Widget listItem({required String title, required List<String> arrdesc}) {
   final GlobalKey expansionTileKey = GlobalKey();
+  // debugPaintSizeEnabled = false;
 
   return Material(
     color: Color.fromRGBO(16,69,114,1),
@@ -770,17 +1652,29 @@ Widget listItem({required String title, required List<String> arrdesc}) {
 
 Widget cardWidget({required List<String> arrdesc}) {
   return ListView.builder(
+    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: arrdesc!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
-        color: Colors.white,
+        margin: EdgeInsets.all(0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.only(top: 0, left: 5, right: 5),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
+                child: Text(
+                  "* " + arrdesc![index] + "\n",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black
+                  ),
+                ),
+                /*
                 child: RichText(
                   text: TextSpan(
                     text: "* " + arrdesc![index],
@@ -790,6 +1684,7 @@ Widget cardWidget({required List<String> arrdesc}) {
                     ),
                   ),
                 ),
+                 */
               ),
             ],
           ),
@@ -824,34 +1719,49 @@ Widget specList({required String title, required List<String> speclist, required
           ),
         ),
         children: <Widget>[
-          specCont(speccontent: speccontent)
+          specCont(speclist: speclist, speccontent: speccontent)
         ],
       ),
     ),
   );
 }
 
-Widget specCont({required List<String> speccontent}){
+Widget specCont({required List<String> speclist, required List<String> speccontent}){
   return ListView.builder(
+    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: speccontent!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
-        color: Colors.white,
+        margin: EdgeInsets.all(0.0),
+        decoration: BoxDecoration(
+          color: Colors.white
+        ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.only(top: 0, left: 5, right: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: RichText(
+                  textAlign:TextAlign.left,
                   text: TextSpan(
-                    text: speccontent![index],
+                    text: speclist![index],
                     style: const TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: speccontent![index],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                        )
+                      ),
+                    ]
                   ),
                 ),
               ),
@@ -888,25 +1798,53 @@ Widget specInfo({required String title, required List<String> specList, required
           ),
         ),
         children: <Widget>[
-          specInfoCont(specinfo: specinfo)
+          specInfoCont(speclist: specList ,specinfo: specinfo)
         ],
       ),
     ),
   );
 }
 
-Widget specInfoCont({required List<String> specinfo}){
+Widget specInfoCont({required List<String> speclist, required List<String> specinfo}){
   return ListView.builder(
+    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: specinfo!.length,
     itemBuilder: (BuildContext context, int index){
       return Container(
-        color: Colors.white,
+        margin: EdgeInsets.all(0.0),
+        decoration: BoxDecoration(
+          color: Colors.white
+        ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.only(top: 0, left: 10, right: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Flexible(
+                child: RichText(
+                  textAlign:TextAlign.left,
+                  text: TextSpan(
+                      text: speclist![index],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: specinfo![index],
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            )
+                        ),
+                      ]
+                  ),
+                ),
+              ),
+              /*
               Flexible(
                 child: RichText(
                   text: TextSpan(
@@ -919,6 +1857,7 @@ Widget specInfoCont({required List<String> specinfo}){
                   ),
                 ),
               ),
+              */
             ],
           ),
         ),

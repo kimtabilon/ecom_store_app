@@ -31,6 +31,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
+      dropdownColor: Colors.lightGreen,
       value: dropdownValue,
       items: <String>[
         '1','2','3','4','5','6','7','8','9','10'
@@ -41,7 +42,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
             value,
             style: TextStyle(
               fontSize: 20,
-              color: Colors.black
+              color: Colors.white
             ),
           ),
         );

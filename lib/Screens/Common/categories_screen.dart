@@ -32,20 +32,6 @@ class CategoriesScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Wrap(
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                        child: Text(
-                          "About Us",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                   /*
                     Material(
                       child: ExpansionTile(
@@ -103,6 +89,11 @@ class CategoriesScreen extends StatelessWidget {
                       )
                     ],
                   ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    height: 1,
+                    color: Colors.black,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: ListView.builder(
@@ -117,6 +108,11 @@ class CategoriesScreen extends StatelessWidget {
                         );
                       },
                     ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    height: 1,
+                    color: Colors.black,
                   ),
                   /*
                     Flexible(
@@ -137,6 +133,20 @@ class CategoriesScreen extends StatelessWidget {
                       ),
                     ),
                     */
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        child: Text(
+                          "About Us",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   Row(
                     children: [
                       Padding(

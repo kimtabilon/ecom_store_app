@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.18.0
   clippy_flutter: ^2.0.0-nullsafety.1
   expandable_search_bar: ^0.0.2
+  carousel_slider: ^4.2.1
   get:
 
 dev_dependencies:

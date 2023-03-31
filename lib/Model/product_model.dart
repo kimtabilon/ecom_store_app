@@ -22,6 +22,10 @@ class ProductModel with ChangeNotifier {
   List<String>? speccontent;
   List<String>? specinfolist;
   List<String>? specinfocontent;
+  String? sprice;
+  String? chk_accessories;
+  String? chk_relatedproducts;
+  String? chk_moreproducts;
 
   ProductModel({
     this.id,
@@ -41,7 +45,11 @@ class ProductModel with ChangeNotifier {
     this.speclist,
     this.speccontent,
     this.specinfolist,
-    this.specinfocontent
+    this.specinfocontent,
+    this.sprice,
+    this.chk_accessories,
+    this.chk_relatedproducts,
+    this.chk_moreproducts
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -60,7 +68,7 @@ class ProductModel with ChangeNotifier {
     condition = json['pcondition'] == "new"
         ? "New"
         : "Renewed";
-    instock = json['instock'] == 0
+    instock = json['instock'] == "0"
         ? "Out of Stock"
         : "In Stock";
     arrdesc = json['arr_desc'].isNotEmpty ? json['arr_desc'].cast<String>() : [''];
@@ -69,6 +77,12 @@ class ProductModel with ChangeNotifier {
     speccontent = json['spec_list_content'].isNotEmpty ? json['spec_list_content'].cast<String>() : [''];
     specinfolist = json['spec_info_list'].isNotEmpty ? json['spec_info_list'].cast<String>() : [''];
     specinfocontent = json['spec_info_content'].isNotEmpty ? json['spec_info_content'].cast<String>() : [''];
+    sprice = json['sprice'] == "0"
+      ? "null"
+      : json['sprice'];
+    chk_accessories = json['chk_accessories'];
+    chk_relatedproducts = json['chk_relatedproducts'];
+    chk_moreproducts = json['chk_moreproducts'];
   }
   static List<ProductModel> productsFromSnapshot(List productSnaphot) {
     return productSnaphot.map((data) {
