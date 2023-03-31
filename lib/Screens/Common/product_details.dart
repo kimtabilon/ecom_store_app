@@ -1463,7 +1463,7 @@ class ItemBottomNavBar extends StatelessWidget {
                         text: TextSpan(
                             text: 'You Pay: \$' + sprice,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Colors.black,
                               fontWeight: FontWeight.bold
                             ),
