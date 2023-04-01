@@ -82,22 +82,19 @@ class _GuestPageState extends State<GuestPage> {
                         ),
                       )
                         : Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: const Icon(Icons.shopping_cart_outlined,
-                            size: 28, color: Colors.lightGreen),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: const Icon(
+                            Icons.shopping_cart_outlined,
+                            size: 28,
+                            color: Colors.lightGreen
+                        ),
                       );
                   })
-              ),
-              const SizedBox(
-                width: 5,
               ),
               const Icon(
                 Icons.question_mark,
                 size: 28,
                 color: Colors.lightGreen,
-              ),
-              const SizedBox(
-                width: 5,
               ),
               InkWell(
                   onTap: () {
@@ -110,7 +107,7 @@ class _GuestPageState extends State<GuestPage> {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 14, 5, 0),
+                    padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
                     child:
                         Column(mainAxisSize: MainAxisSize.min, children: const [
                       Icon(

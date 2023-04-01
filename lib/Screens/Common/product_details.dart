@@ -29,6 +29,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:badges/badges.dart' as badges;
 
 import 'feeds_screen.dart';
 
@@ -103,37 +104,57 @@ class _ProductDetailsState extends State<ProductDetails> {
         actions: [
           AnimatedSearchBar(),
           InkWell(
+            onTap: () {
+              PageNavigator(ctx: context).nextPage(page: const CartPage());
+            },
+            child: Consumer<CartProvider>(builder: (context, cart, child) {
+              return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 14, 5, 0),
+                      child: badges.Badge(
+                        badgeContent: Text(
+                          cart.cart_total_items,
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: const Icon(
+                            Icons.shopping_cart_checkout_rounded,
+                            size: 30,
+                            color: Colors.lightGreen,
+                          )
+                        )
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                      child: const Icon(
+                        Icons.shopping_cart_checkout_rounded,
+                        size: 28,
+                        color: Colors.lightGreen
+                      )
+                    );
+            })
+          ),
+          /*
+          InkWell(
               onTap: () {
                 PageNavigator(ctx: context).nextPage(page: const CartPage());
               },
               child: Padding(
-                padding: EdgeInsets.fromLTRB(5, 15, 1, 5),
+                padding: EdgeInsets.fromLTRB(0, 15, 1, 0),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Stack(
                     children: [
                       Icon(Icons.shopping_cart_checkout_rounded,
-                          size: 30, color: Colors.lightGreen),
-                      /*
-                          Positioned(
-                            bottom: 12.0,
-                            right: 0.0,
-                            child: Center(
-                              child: Text(
-                                c.qty.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.red,
-                                ),
-                              ),
-                            ),
-                          )
-                          */
+                          size: 28, color: Colors.lightGreen),
                     ],
                   ),
                 ]),
               )),
+          */
           InkWell(
               onTap: () {
                 Navigator.push(
@@ -145,11 +166,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                 );
               },
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
-                child: Column(mainAxisSize: MainAxisSize.min, children: const [
+                padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
+                child:
+                Column(mainAxisSize: MainAxisSize.min, children: const [
                   Icon(
                     IconlyBold.profile,
-                    size: 30,
+                    size: 28,
                     color: Colors.lightGreen,
                   ),
                 ]),
@@ -1755,9 +1777,12 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   bottomRight: Radius.circular(28),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: _folded
+                      ? const EdgeInsets.only(top: 11, bottom: 10, left: 10)
+                      : const EdgeInsets.only(top: 11, bottom: 10, left: 5),
                   child: Icon(
                     _folded ? Icons.search : Icons.close,
+                    size: 30,
                     color: Colors.lightGreen,
                   ),
                 ),
