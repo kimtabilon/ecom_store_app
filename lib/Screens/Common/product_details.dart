@@ -69,6 +69,18 @@ class _ProductDetailsState extends State<ProductDetails> {
     super.didChangeDependencies();
   }
 
+  ValueNotifier<String> _myString = ValueNotifier<String>('');
+  var _sku = '0';
+  var _price = '0';
+  var _sprice = '0';
+  var _name = '0';
+
+  @override
+  initState() {
+    // update _controller with value whenever _myString changes
+    _myString.addListener(() => _sku = _myString.value);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -82,6 +94,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         (productsModel == null ? 'null' : productsModel!.sprice.toString());
 
     List ManufLogo = [logo];
+    int _current = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -524,10 +537,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         ),
                                       ],
                                     )),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
+                                if(productsModel!.chk_accessories != '0') ...[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        /*
                                       if (productsModel!.chk_accessories !=
                                           "0") ...[
                                         Text(
@@ -1700,10 +1716,261 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             ),
                                           ],
                                         ),
-                                      ]
-                                    ],
+                                      ],
+          */
+                                        Text(
+                                          "Accessories",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    width: 200,
+                                    height: MediaQuery.of(context).size.height * 0.32,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        CarouselSlider.builder(
+                                          options: CarouselOptions(
+                                            autoPlay: false,
+                                            disableCenter: true,
+                                            onPageChanged: (index, reason) {
+                                              setState(() {
+                                                c.curr.value = index;
+                                                _current = c.curr.value;
+
+                                                _sku = productsModel!.accessories_sku![index].toString();
+                                                _name = productsModel!.accessories_name![index].toString();
+                                                _price = productsModel!.accessories_price![index].toString();
+                                                _sprice = productsModel!.accessories_sprice![index].toString();
+                                              });
+                                            },
+                                          ),
+                                          itemBuilder: (ctx, index, realIdx) {
+                                            return Container(
+                                              child: Image.network(
+                                                productsModel!.accessories_img![index].toString()
+                                              ),
+                                            );
+                                          }, itemCount: productsModel!.accessories_img!.length,
+                                        ),
+                                        if(_sku == '0') ...[
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                child: Text(
+                                                  productsModel!.accessories_sku![_current].toString(),
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.grey
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ] else ...[
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                child: Text(
+                                                  _sku,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.grey
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                        const SizedBox(height: 10),
+                                        if(_name == '0') ...[
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Flexible(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                  child: Text(
+                                                    productsModel!.accessories_name![_current].toString(),
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      //  fontFamily: 'Roboto',
+                                                      // fontWeight: FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ] else ...[
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Flexible(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                  child: Text(
+                                                    _name,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 2,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      //  fontFamily: 'Roboto',
+                                                      // fontWeight: FontWeight.w700,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                        SizedBox(
+                                          height: size.height * 0.01,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 10, right: 5, top: 8),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              if(_sprice == '0' && _price == '0') ...[
+                                                if (productsModel!.accessories_sprice![_current].toString() != 'null' && productsModel!.accessories_sprice![_current].toString() != '0') ...[
+                                                  Flexible(
+                                                    fit: FlexFit.tight,
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          text: 'Price: \$' + productsModel!.accessories_sprice![_current].toString(),
+                                                          style: const TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.bold),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                                text: '\$' + productsModel!.accessories_price![_current].toString(),
+                                                                style: TextStyle(
+                                                                    color: Colors.grey,
+                                                                    decoration: TextDecoration.lineThrough,
+                                                                    fontStyle: FontStyle.italic)),
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                ] else ...[
+                                                  Flexible(
+                                                    fit: FlexFit.tight,
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          text: 'Price: \$',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.bold),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                                text: productsModel!.accessories_price![_current].toString(),
+                                                                style: TextStyle(color: Colors.black)),
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ] else ...[
+                                                if (_sprice != 'null' && _sprice != '0') ...[
+                                                  Flexible(
+                                                    fit: FlexFit.tight,
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          text: 'Price: \$' + _sprice,
+                                                          style: const TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.bold),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                                text: '\$' + _price,
+                                                                style: TextStyle(
+                                                                    color: Colors.grey,
+                                                                    decoration: TextDecoration.lineThrough,
+                                                                    fontStyle: FontStyle.italic)),
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                ] else ...[
+                                                  Flexible(
+                                                    fit: FlexFit.tight,
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          text: 'Price: \$',
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              color: Colors.black,
+                                                              fontWeight: FontWeight.bold),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                                text: _price,
+                                                                style: TextStyle(color: Colors.black)),
+                                                          ]),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ],
+                                              if(_sku == '0') ...[
+                                                Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        Future<bool> isAdded = CartProvider().addToCart(productsModel!.accessories_sku![_current].toString(), "1", context);
+                                                        if(await isAdded) {
+                                                          Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                        }
+                                                      },
+                                                      child: const Icon(
+                                                        Icons.add_shopping_cart,
+                                                        color: Colors.lightGreen,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ] else ...[
+                                                Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () async {
+                                                        Future<bool> isAdded = CartProvider().addToCart(_sku, "1", context);
+                                                        if(await isAdded) {
+                                                          Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                        }
+                                                      },
+                                                      child: const Icon(
+                                                        Icons.add_shopping_cart,
+                                                        color: Colors.lightGreen,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ]
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ],
                               ],
                             ),
                           ),
@@ -1801,13 +2068,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
 }
 
 class ItemBottomNavBar extends StatelessWidget {
-  const ItemBottomNavBar(
-      {Key? key,
-      required this.price,
-      required this.sku,
-      required this.qty,
-      required this.sprice})
-      : super(key: key);
+  const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty, required this.sprice}) : super(key: key);
 
   final String price;
   final String sku;
@@ -2053,10 +2314,7 @@ Widget cardWidget({required List<String> arrdesc}) {
   );
 }
 
-Widget specList(
-    {required String title,
-    required List<String> speclist,
-    required List<String> speccontent}) {
+Widget specList({required String title, required List<String> speclist, required List<String> speccontent}) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
@@ -2087,8 +2345,7 @@ Widget specList(
   );
 }
 
-Widget specCont(
-    {required List<String> speclist, required List<String> speccontent}) {
+Widget specCont({required List<String> speclist, required List<String> speccontent}) {
   return ListView.builder(
     padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
@@ -2131,10 +2388,7 @@ Widget specCont(
   );
 }
 
-Widget specInfo(
-    {required String title,
-    required List<String> specList,
-    required List<String> specinfo}) {
+Widget specInfo({required String title, required List<String> specList, required List<String> specinfo}) {
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
@@ -2165,8 +2419,7 @@ Widget specInfo(
   );
 }
 
-Widget specInfoCont(
-    {required List<String> speclist, required List<String> specinfo}) {
+Widget specInfoCont({required List<String> speclist, required List<String> specinfo}) {
   return ListView.builder(
     padding: EdgeInsets.all(0.0),
     shrinkWrap: true,

@@ -26,9 +26,24 @@ class ProductModel with ChangeNotifier {
   String? chk_accessories;
   String? chk_relatedproducts;
   String? chk_moreproducts;
-  List<String>? accessories;
-  List<String>? related_products;
-  List<String>? more_products;
+  List<String>? accessories_img;
+  List<String>? related_products_img;
+  List<String>? more_products_img;
+  List<int>? accessories_id;
+  List<int>? related_products_id;
+  List<int>? more_products_id;
+  List<String>? accessories_sku;
+  List<String>? related_products_sku;
+  List<String>? more_products_sku;
+  List<String>? accessories_name;
+  List<String>? related_products_name;
+  List<String>? more_products_name;
+  List<String>? accessories_price;
+  List<String>? related_products_price;
+  List<String>? more_products_price;
+  List<String>? accessories_sprice;
+  List<String>? related_products_sprice;
+  List<String>? more_products_sprice;
 
   ProductModel({
     this.id,
@@ -53,9 +68,24 @@ class ProductModel with ChangeNotifier {
     this.chk_accessories,
     this.chk_relatedproducts,
     this.chk_moreproducts,
-    this.accessories,
-    this.related_products,
-    this.more_products
+    this.accessories_img,
+    this.related_products_img,
+    this.more_products_img,
+    this.accessories_id,
+    this.related_products_id,
+    this.more_products_id,
+    this.accessories_sku,
+    this.related_products_sku,
+    this.more_products_sku,
+    this.accessories_name,
+    this.related_products_name,
+    this.more_products_name,
+    this.accessories_price,
+    this.related_products_price,
+    this.more_products_price,
+    this.accessories_sprice,
+    this.related_products_sprice,
+    this.more_products_sprice
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -89,15 +119,24 @@ class ProductModel with ChangeNotifier {
     chk_accessories = json['chk_accessories'];
     chk_relatedproducts = json['chk_relatedproducts'];
     chk_moreproducts = json['chk_moreproducts'];
-    accessories = json['accessories'] != ''
-        ? json['accessories'].cast<String>()
-        : [''];
-    related_products = json['related_products'] != ''
-        ? json['related_products'].cast<String>()
-        : [''];
-    more_products = json['more_products'] != ''
-        ? json['more_products'].cast<String>()
-        : [''];
+    accessories_img = json['accessories_img'].isNotEmpty ? json['accessories_img'].cast<String>() : [''];
+    related_products_img = json['related_products_img'].isNotEmpty ? json['related_products_img'].cast<String>() : [''];
+    more_products_img = json['more_products_img'].isNotEmpty ? json['more_products_img'].cast<String>() : [''];
+    accessories_id = json['accessories_id'].isNotEmpty ? json['accessories_id'].cast<int>() : [];
+    related_products_id = json['related_products_id'].isNotEmpty ? json['related_products_id'].cast<int>() : [];
+    more_products_id = json['more_products_id'].isNotEmpty ? json['more_products_id'].cast<int>() : [];
+    accessories_sku = json['accessories_sku'].isNotEmpty ? json['accessories_sku'].cast<String>() : [''];
+    related_products_sku = json['related_products_sku'].isNotEmpty ? json['related_products_sku'].cast<String>() : [''];
+    more_products_sku = json['more_products_sku'].isNotEmpty ? json['more_products_sku'].cast<String>() : [''];
+    accessories_name = json['accessories_name'].isNotEmpty ? json['accessories_name'].cast<String>() : [''];
+    related_products_name = json['related_products_name'].isNotEmpty ? json['related_products_name'].cast<String>() : [''];
+    more_products_name = json['more_products_name'].isNotEmpty ? json['more_products_name'].cast<String>() : [''];
+    accessories_price = json['accessories_price'].isNotEmpty ? json['accessories_price'].cast<String>() : [''];
+    related_products_price = json['related_products_price'].isNotEmpty ? json['related_products_price'].cast<String>() : [''];
+    more_products_price = json['more_products_price'].isNotEmpty ? json['more_products_price'].cast<String>() : [''];
+    accessories_sprice = json['accessories_sprice'].isNotEmpty ? json['accessories_sprice'].cast<String>() : [''];
+    related_products_sprice = json['related_products_sprice'].isNotEmpty ? json['related_products_sprice'].cast<String>() : [''];
+    more_products_sprice = json['more_products_sprice'].isNotEmpty ? json['more_products_sprice'].cast<String>() : [''];
   }
   static List<ProductModel> productsFromSnapshot(List productSnaphot) {
     return productSnaphot.map((data) {

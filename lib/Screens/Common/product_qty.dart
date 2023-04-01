@@ -16,6 +16,11 @@ class MyController extends GetxController {
       qty.value = 1;
     }
   }
+
+  var curr = 1.obs;
+  change() {
+    qty.value = qty.value;
+  }
 }
 
 class DropdownQTY extends StatefulWidget {
