@@ -48,10 +48,15 @@ class CartProvider extends ChangeNotifier {
         http.StreamedResponse response = await request.send();
         var body = await response.stream.bytesToString();
 
+        print(body);
+
         if (response.statusCode == 200) {
           showMessage(message: "$sku has been added to cart", context: context);
 
           var data = json.decode(body);
+
+          print(data);
+
           if(data['qty']==1) {
             var cart_total_items = await DatabaseProvider().getData('cart_total_items');
             var new_total = '1';
