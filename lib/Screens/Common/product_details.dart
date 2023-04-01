@@ -75,6 +75,18 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _sprice = '0';
   var _name = '0';
 
+  var _sku2 = '0';
+  var _price2 = '0';
+  var _sprice2 = '0';
+  var _name2 = '0';
+
+  var _sku3 = '0';
+  var _price3 = '0';
+  var _sprice3 = '0';
+  var _name3 = '0';
+
+  final CarouselController _controller = CarouselController();
+
   @override
   initState() {
     // update _controller with value whenever _myString changes
@@ -95,6 +107,80 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     List ManufLogo = [logo];
     int _current = 0;
+    int _current2 = 0;
+    int _current3 = 0;
+    int _curr = 0;
+
+
+    // var min = 0;
+
+    late final List<Widget> imageSliders = productsModel!.accessories_img!
+        .map((item) => Container(
+      child: Container(
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(10)
+        ),
+        margin: EdgeInsets.all(5.0),
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Stack(
+              children: <Widget>[
+                Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                Positioned(
+                  top: 70.0,
+                  left: 0.0,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if(_sku == '0') ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                child: Text(
+                                  productsModel!.accessories_sku![_curr].toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ] else ...[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                child: Text(
+                                  _sku,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ]
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    ))
+        .toList();
+
+    // var max = imageSliders.length - 1;
+    // print(max);
 
     return Scaffold(
       appBar: AppBar(
@@ -1728,244 +1814,844 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    width: 200,
-                                    height: MediaQuery.of(context).size.height * 0.32,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
-                                      borderRadius: BorderRadius.circular(10)
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        CarouselSlider.builder(
-                                          options: CarouselOptions(
-                                            autoPlay: false,
-                                            disableCenter: true,
-                                            onPageChanged: (index, reason) {
-                                              setState(() {
-                                                c.curr.value = index;
-                                                _current = c.curr.value;
-
-                                                _sku = productsModel!.accessories_sku![index].toString();
-                                                _name = productsModel!.accessories_name![index].toString();
-                                                _price = productsModel!.accessories_price![index].toString();
-                                                _sprice = productsModel!.accessories_sprice![index].toString();
-                                              });
-                                            },
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.previousPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_left,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
                                           ),
-                                          itemBuilder: (ctx, index, realIdx) {
-                                            return Container(
-                                              child: Image.network(
-                                                productsModel!.accessories_img![index].toString()
-                                              ),
-                                            );
-                                          }, itemCount: productsModel!.accessories_img!.length,
                                         ),
-                                        if(_sku == '0') ...[
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          padding: EdgeInsets.all(5.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.black),
+                                              borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          child: Column(
                                             children: [
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                                child: Text(
-                                                  productsModel!.accessories_sku![_current].toString(),
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.grey
-                                                  ),
+                                              CarouselSlider.builder(
+                                                options: CarouselOptions(
+                                                  autoPlay: false,
+                                                  disableCenter: true,
+                                                  onPageChanged: (index, reason) {
+                                                    setState(() {
+                                                      c.curr.value = index;
+                                                      _current = c.curr.value;
+
+                                                      _sku = productsModel!.accessories_sku![index].toString();
+                                                      _name = productsModel!.accessories_name![index].toString();
+                                                      _price = productsModel!.accessories_price![index].toString();
+                                                      _sprice = productsModel!.accessories_sprice![index].toString();
+                                                    });
+                                                  },
                                                 ),
+                                                carouselController: _controller,
+                                                itemBuilder: (ctx, index, realIdx) {
+                                                  return Container(
+                                                    child: Image.network(
+                                                        productsModel!.accessories_img![index].toString()
+                                                    ),
+                                                  );
+                                                }, itemCount: productsModel!.accessories_img!.length,
                                               ),
-                                            ],
-                                          )
-                                        ] else ...[
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                                child: Text(
-                                                  _sku,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.grey
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                        const SizedBox(height: 10),
-                                        if(_name == '0') ...[
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Flexible(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
-                                                  child: Text(
-                                                    productsModel!.accessories_name![_current].toString(),
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      //  fontFamily: 'Roboto',
-                                                      // fontWeight: FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ] else ...[
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Flexible(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
-                                                  child: Text(
-                                                    _name,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    maxLines: 2,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      //  fontFamily: 'Roboto',
-                                                      // fontWeight: FontWeight.w700,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                        SizedBox(
-                                          height: size.height * 0.01,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 10, right: 5, top: 8),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              if(_sprice == '0' && _price == '0') ...[
-                                                if (productsModel!.accessories_sprice![_current].toString() != 'null' && productsModel!.accessories_sprice![_current].toString() != '0') ...[
-                                                  Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: RichText(
-                                                      text: TextSpan(
-                                                          text: 'Price: \$' + productsModel!.accessories_sprice![_current].toString(),
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold),
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: '\$' + productsModel!.accessories_price![_current].toString(),
-                                                                style: TextStyle(
-                                                                    color: Colors.grey,
-                                                                    decoration: TextDecoration.lineThrough,
-                                                                    fontStyle: FontStyle.italic)),
-                                                          ]),
-                                                    ),
-                                                  ),
-                                                ] else ...[
-                                                  Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: RichText(
-                                                      text: TextSpan(
-                                                          text: 'Price: \$',
-                                                          style: const TextStyle(
-                                                              fontSize: 14,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold),
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: productsModel!.accessories_price![_current].toString(),
-                                                                style: TextStyle(color: Colors.black)),
-                                                          ]),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ] else ...[
-                                                if (_sprice != 'null' && _sprice != '0') ...[
-                                                  Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: RichText(
-                                                      text: TextSpan(
-                                                          text: 'Price: \$' + _sprice,
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold),
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: '\$' + _price,
-                                                                style: TextStyle(
-                                                                    color: Colors.grey,
-                                                                    decoration: TextDecoration.lineThrough,
-                                                                    fontStyle: FontStyle.italic)),
-                                                          ]),
-                                                    ),
-                                                  ),
-                                                ] else ...[
-                                                  Flexible(
-                                                    fit: FlexFit.tight,
-                                                    child: RichText(
-                                                      text: TextSpan(
-                                                          text: 'Price: \$',
-                                                          style: const TextStyle(
-                                                              fontSize: 14,
-                                                              color: Colors.black,
-                                                              fontWeight: FontWeight.bold),
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: _price,
-                                                                style: TextStyle(color: Colors.black)),
-                                                          ]),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ],
                                               if(_sku == '0') ...[
                                                 Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        Future<bool> isAdded = CartProvider().addToCart(productsModel!.accessories_sku![_current].toString(), "1", context);
-                                                        if(await isAdded) {
-                                                          Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                                        }
-                                                      },
-                                                      child: const Icon(
-                                                        Icons.add_shopping_cart,
-                                                        color: Colors.lightGreen,
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.accessories_sku![_current].toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
-                                                ),
+                                                )
                                               ] else ...[
                                                 Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
                                                   children: [
-                                                    InkWell(
-                                                      onTap: () async {
-                                                        Future<bool> isAdded = CartProvider().addToCart(_sku, "1", context);
-                                                        if(await isAdded) {
-                                                          Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                                        }
-                                                      },
-                                                      child: const Icon(
-                                                        Icons.add_shopping_cart,
-                                                        color: Colors.lightGreen,
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        _sku,
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
+                                                )
+                                              ],
+                                              const SizedBox(height: 10),
+                                              if(_name == '0') ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          productsModel!.accessories_name![_current].toString(),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ] else ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          _name,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 10, right: 5, top: 8),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    if(_sprice == '0' && _price == '0') ...[
+                                                      if (productsModel!.accessories_sprice![_current].toString() != 'null' && productsModel!.accessories_sprice![_current].toString() != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + productsModel!.accessories_sprice![_current].toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + productsModel!.accessories_price![_current].toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: productsModel!.accessories_price![_current].toString(),
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ] else ...[
+                                                      if (_sprice != 'null' && _sprice != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + _sprice,
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + _price,
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: _price,
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ],
+                                                    if(_sku == '0') ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(productsModel!.accessories_sku![_current].toString(), "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ] else ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(_sku, "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]
+                                                  ],
                                                 ),
-                                              ]
+                                              )
                                             ],
                                           ),
-                                        )
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.nextPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_right,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ] else if(productsModel!.chk_relatedproducts != '0') ...[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Related Products",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
                                       ],
                                     ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.previousPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_left,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          padding: EdgeInsets.all(5.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.black),
+                                              borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              CarouselSlider.builder(
+                                                options: CarouselOptions(
+                                                  autoPlay: false,
+                                                  disableCenter: true,
+                                                  onPageChanged: (index, reason) {
+                                                    setState(() {
+                                                      c.curr.value = index;
+                                                      _current2 = c.curr.value;
+
+                                                      _sku2 = productsModel!.related_products_sku![index].toString();
+                                                      _name2 = productsModel!.related_products_name![index].toString();
+                                                      _price2 = productsModel!.related_products_price![index].toString();
+                                                      _sprice2 = productsModel!.related_products_sprice![index].toString();
+                                                    });
+                                                  },
+                                                ),
+                                                carouselController: _controller,
+                                                itemBuilder: (ctx, index, realIdx) {
+                                                  return Container(
+                                                    child: Image.network(
+                                                        productsModel!.related_products_img![index].toString()
+                                                    ),
+                                                  );
+                                                }, itemCount: productsModel!.related_products_img!.length,
+                                              ),
+                                              if(_sku2 == '0') ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.related_products_sku![_current2].toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ] else ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        _sku,
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                              const SizedBox(height: 10),
+                                              if(_name2 == '0') ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          productsModel!.related_products_name![_current2].toString(),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ] else ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          _name,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 10, right: 5, top: 8),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    if(_sprice2 == '0' && _price2 == '0') ...[
+                                                      if (productsModel!.related_products_sprice![_current2].toString() != 'null' && productsModel!.related_products_sprice![_current2].toString() != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + productsModel!.related_products_sprice![_current2].toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + productsModel!.related_products_price![_current2].toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: productsModel!.related_products_price![_current2].toString(),
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ] else ...[
+                                                      if (_sprice2 != 'null' && _sprice2 != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + _sprice,
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + _price,
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: _price,
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ],
+                                                    if(_sku2 == '0') ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(productsModel!.related_products_sku![_current2].toString(), "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ] else ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(_sku, "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.nextPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_right,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ] else if(productsModel!.chk_moreproducts != '0') ...[
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "More Products",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.previousPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_left,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          padding: EdgeInsets.all(5.0),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.black),
+                                              borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              CarouselSlider.builder(
+                                                options: CarouselOptions(
+                                                  autoPlay: false,
+                                                  disableCenter: true,
+                                                  onPageChanged: (index, reason) {
+                                                    setState(() {
+                                                      c.curr.value = index;
+                                                      _current = c.curr.value;
+
+                                                      _sku3 = productsModel!.more_products_sku![index].toString();
+                                                      _name3 = productsModel!.more_products_name![index].toString();
+                                                      _price3 = productsModel!.more_products_price![index].toString();
+                                                      _sprice3 = productsModel!.more_products_sprice![index].toString();
+                                                    });
+                                                  },
+                                                ),
+                                                carouselController: _controller,
+                                                itemBuilder: (ctx, index, realIdx) {
+                                                  return Container(
+                                                    child: Image.network(
+                                                        productsModel!.more_products_img![index].toString()
+                                                    ),
+                                                  );
+                                                }, itemCount: productsModel!.more_products_img!.length,
+                                              ),
+                                              if(_sku3 == '0') ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        productsModel!.more_products_sku![_current].toString(),
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ] else ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
+                                                      child: Text(
+                                                        _sku,
+                                                        style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.grey
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                              const SizedBox(height: 10),
+                                              if(_name3 == '0') ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          productsModel!.more_products_name![_current].toString(),
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ] else ...[
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
+                                                        child: Text(
+                                                          _name,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 2,
+                                                          style: const TextStyle(
+                                                            fontSize: 14,
+                                                            //  fontFamily: 'Roboto',
+                                                            // fontWeight: FontWeight.w700,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                              SizedBox(
+                                                height: size.height * 0.01,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 10, right: 5, top: 8),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    if(_sprice3 == '0' && _price3 == '0') ...[
+                                                      if (productsModel!.more_products_sprice![_current].toString() != 'null' && productsModel!.more_products_sprice![_current].toString() != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + productsModel!.more_products_sprice![_current].toString(),
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + productsModel!.more_products_price![_current].toString(),
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: productsModel!.more_products_price![_current].toString(),
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ] else ...[
+                                                      if (_sprice3 != 'null' && _sprice3 != '0') ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$' + _sprice,
+                                                                style: const TextStyle(
+                                                                    fontSize: 16,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: '\$' + _price,
+                                                                      style: TextStyle(
+                                                                          color: Colors.grey,
+                                                                          decoration: TextDecoration.lineThrough,
+                                                                          fontStyle: FontStyle.italic)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ] else ...[
+                                                        Flexible(
+                                                          fit: FlexFit.tight,
+                                                          child: RichText(
+                                                            text: TextSpan(
+                                                                text: 'Price: \$',
+                                                                style: const TextStyle(
+                                                                    fontSize: 14,
+                                                                    color: Colors.black,
+                                                                    fontWeight: FontWeight.bold),
+                                                                children: <TextSpan>[
+                                                                  TextSpan(
+                                                                      text: _price,
+                                                                      style: TextStyle(color: Colors.black)),
+                                                                ]),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ],
+                                                    if(_sku3 == '0') ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(productsModel!.more_products_sku![_current].toString(), "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ] else ...[
+                                                      Row(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () async {
+                                                              Future<bool> isAdded = CartProvider().addToCart(_sku, "1", context);
+                                                              if(await isAdded) {
+                                                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                                              }
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.add_shopping_cart,
+                                                              color: Colors.lightGreen,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ]
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: InkWell(
+                                          onTap: () => _controller.nextPage(),
+                                          child: Icon(
+                                            Icons.keyboard_arrow_right,
+                                            color: Colors.lightGreen,
+                                            size: 30,
+                                            shadows: kElevationToShadow[6],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(
                                     height: 10,

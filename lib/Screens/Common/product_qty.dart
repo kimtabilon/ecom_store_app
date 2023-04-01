@@ -19,7 +19,17 @@ class MyController extends GetxController {
 
   var curr = 1.obs;
   change() {
-    qty.value = qty.value;
+    curr.value = curr.value;
+  }
+
+  var curr2 = 1.obs;
+  change2() {
+    curr2.value = curr2.value;
+  }
+
+  var curr3 = 1.obs;
+  change3() {
+    curr3.value = curr3.value;
   }
 }
 
