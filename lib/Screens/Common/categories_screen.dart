@@ -78,7 +78,7 @@ class CategoriesScreen extends StatelessWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
                         child: Text(
                           "Catalog",
                           style: TextStyle(
@@ -90,7 +90,7 @@ class CategoriesScreen extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
                     height: 1,
                     color: Colors.black,
                   ),
@@ -110,7 +110,7 @@ class CategoriesScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
                     height: 1,
                     color: Colors.black,
                   ),

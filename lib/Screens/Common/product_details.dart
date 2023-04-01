@@ -30,6 +30,8 @@ import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'feeds_screen.dart';
+
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
     Key? key,
@@ -83,8 +85,8 @@ class _ProductDetailsState extends State<ProductDetails> {
         backgroundColor: const Color.fromRGBO(16,69,114,1),
         title: Image.network(
           'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-          width: 30,
-          cacheWidth: 30,
+          width: 40,
+          cacheWidth: 40,
         ),
         centerTitle: false,
         leading: IconButton(
@@ -1366,15 +1368,15 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
       width: _folded ? 60 : 250,
       height: 56,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(10),
         color: _folded ? Color.fromRGBO(16,69,114,1) : Colors.white,
-        boxShadow: kElevationToShadow[6],
+        boxShadow: kElevationToShadow[5],
       ),
       child: Row(
         children: [
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 10),
+              padding: EdgeInsets.only(left: 0),
               child: !_folded
                   ? TextField(
                       decoration: InputDecoration(
@@ -1386,6 +1388,12 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                           color: Colors.green,
                         ),
                       ),
+                      onSubmitted: (String str) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FeedsScreen(target: str,itemSearch: 'true')),
+                        );
+                      },
                     )
                   : null,
             ),
@@ -1402,7 +1410,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                   bottomRight: Radius.circular(28),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Icon(
                     _folded ? Icons.search : Icons.close,
                     color: Colors.lightGreen,
@@ -1463,7 +1471,7 @@ class ItemBottomNavBar extends StatelessWidget {
                         text: TextSpan(
                             text: 'You Pay: \$' + sprice,
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Colors.black,
                               fontWeight: FontWeight.bold
                             ),
