@@ -65,10 +65,12 @@ class _GuestPageState extends State<GuestPage> {
                   onTap: () {
                     PageNavigator(ctx: context).nextPage(page: const CartPage());
                   },
-                  child: Consumer<CartProvider>(builder: (context, cart, child) {
-                    return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                        ? Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
+
+                  child: Consumer<CartProvider>(
+                    builder: (context, cart, child) {
+                      return cart.cart_total_items!='' && cart.cart_total_items!='0' ? Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+
                         child: badges.Badge(
                           badgeContent: Text(
                             cart.cart_total_items,
