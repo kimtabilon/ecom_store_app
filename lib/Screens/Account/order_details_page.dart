@@ -21,6 +21,8 @@ class _ProductDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(widget.order.toJson());
+    // return Text("Order No.: ${widget.order.id!}",);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order Details'),
@@ -196,36 +198,35 @@ class _ProductDetailsState extends State<OrderDetails> {
                   ],
                 ),
               ))),
-              Expanded(
-                  child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
+              SizedBox(height: 30,),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
 
-                            },
-                            child: const Text('Return'),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromRGBO(16,69,114,1),
-                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
+                        },
+                        child: const Text('RMA'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(16,69,114,1),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                        ),
+                      ),
+                      /*ElevatedButton(
+                        onPressed: () {
 
-                            },
-                            child: const Text('Download Invoice'),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromRGBO(16,69,114,1),
-                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
-                            ),
-                          )
-                        ],
-                      )
+                        },
+                        child: const Text('Download Invoice'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(16,69,114,1),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                        ),
+                      )*/
+                    ],
                   )
               )
             ],
