@@ -17,13 +17,49 @@ class OrderListWidget extends StatelessWidget {
         itemBuilder: (ctx, index) {
           var order = orderList[index];
           return Card(child: ListTile(
-            title: Text("Order No.: ${order.id!}"),
+            title: RichText(
+                text: TextSpan(
+                    text: 'Order No.: ',
+                    style: TextStyle(color:Colors.black87, fontSize: 13, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: order.id,
+                          style: TextStyle(color:Colors.black87, fontSize: 15, fontWeight: FontWeight.normal)
+                      )
+                    ]
+                )
+            ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Order Date: ${order.order_date}"),
-                Text("Total: \$${order.total_due}"),
+                // Text("Order Date: ${order.order_date}"),
+                RichText(
+                    text: TextSpan(
+                        text: 'Order Date: ',
+                        style: TextStyle(color:Colors.black87, fontSize: 13, fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: order.order_date,
+                              style: TextStyle(color:Colors.black87, fontSize: 15, fontWeight: FontWeight.normal)
+                          )
+                        ]
+                    )
+                ),
+                // Text("Total: \$${order.total_due}"),
+                RichText(
+                  text: TextSpan(
+                      text: 'Total: ',
+                      style: TextStyle(color: Colors.black87, fontSize: 15, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: '\$${order.total_due}',
+                            style: TextStyle(color: Colors.black87, fontSize: 17, fontWeight: FontWeight.normal)
+                        )
+                      ]
+                  )
+                )
               ],
+
             ),
             trailing: Padding(
               padding: EdgeInsets.all(5),

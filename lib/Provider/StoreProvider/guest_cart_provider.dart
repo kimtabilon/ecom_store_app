@@ -35,14 +35,25 @@ class GuestCartProvider extends ChangeNotifier {
 
     http.StreamedResponse response = await request.send();
 
+    var body = await response.stream.bytesToString();
+
     if (response.statusCode == 200) {
+      var data = json.decode(body);
+      if(data['qty']==1) {
+        var cart_total_items = await DatabaseProvider().getData('cart_total_items');
+        var new_total = '1';
+        if (cart_total_items!='') {
+          new_total = (int.parse(cart_total_items)+1).toString();
+        }
+        DatabaseProvider().saveData('cart_total_items', new_total);
+      }
+
       showMessage(message: "$sku has been added to cart", context: context);
-      var cart_total_items = await DatabaseProvider().getData('cart_total_items');
-      var new_total = int.parse(cart_total_items)+1;
-      DatabaseProvider().saveData('cart_total_items', new_total.toString());
     } else {
+      print(body);
       showMessage(message: "Oops, something went wrong! Please try again later.", context: context);
     }
+
 
     return true;
     // PageNavigator(ctx: context).nextPageOnly(page: const CartPage());
@@ -68,17 +79,15 @@ class GuestCartProvider extends ChangeNotifier {
     }
     if(new_qty==0) {
       request = http.Request('DELETE', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id/items/$id'));
-      print(request);
       request.body = json.encode([
         {
           "quote_id": qoute_id
         }
       ]);
       var _cart_total_items = await DatabaseProvider().getData('cart_total_items');
-      DatabaseProvider().saveData('cart_total_items', _cart_total_items.toString());
+      DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
     } else {
       request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id/items/$id'));
-      print(request);
       request.body = json.encode({
         "cartItem": {
           "qty": new_qty

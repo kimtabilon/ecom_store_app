@@ -59,7 +59,7 @@ class _CartPageState extends State<CartPage> {
                   // print(snapshot.data);
                   return CartItemListWidget(itemList: snapshot.data!);
                 }),
-            FutureBuilder<List<CartItem>>(
+            /*FutureBuilder<List<CartItem>>(
                 future: CartProvider.getCartItems(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState ==
@@ -97,7 +97,34 @@ class _CartPageState extends State<CartPage> {
                           )
                       )
                   );
+                }),*/
+            FutureBuilder<String>(
+                future: DatabaseProvider().getData('cart_total_items'),
+                builder: (context, snapshot) {
+                  if (snapshot.data != '' && snapshot.data != '0') {
+                    return Expanded(
+                        child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
+                                );
+                              },
+                              child: const Text('Checkout'),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color.fromRGBO(16,69,114,1),
+                                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                  textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                              ),
+                            )
+                        )
+                    );
+                  }
+                  return SizedBox(width: 1,);
                 }),
+
           ]
           )
       ),
