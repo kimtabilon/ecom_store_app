@@ -196,6 +196,38 @@ class _ProductDetailsState extends State<OrderDetails> {
                   ],
                 ),
               ))),
+              Expanded(
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+
+                            },
+                            child: const Text('Return'),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromRGBO(16,69,114,1),
+                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+
+                            },
+                            child: const Text('Download Invoice'),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromRGBO(16,69,114,1),
+                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                            ),
+                          )
+                        ],
+                      )
+                  )
+              )
             ],
           ),
         ),

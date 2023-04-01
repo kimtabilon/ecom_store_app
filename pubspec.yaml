@@ -47,6 +47,7 @@ dependencies:
   expandable_search_bar: ^0.0.2
   carousel_slider: ^4.2.1
   get:
+  badges: ^3.0.3
 
 dev_dependencies:
   flutter_test:

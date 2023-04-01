@@ -10,13 +10,20 @@ import 'guest_cart_provider.dart';
 
 class CartProvider extends ChangeNotifier {
 
-  static Future<bool> addToCart(sku, qty, context) async {
+  String _cart_total_items = '0';
+  String get cart_total_items => _cart_total_items;
+
+
+  void refreshCartTotal() async {
+    _cart_total_items = await DatabaseProvider().getData('cart_total_items');
+    notifyListeners();
+  }
+
+  Future<bool> addToCart(sku, qty, context) async {
     final token = await DatabaseProvider().getData('token');
 
     if(token=='') {
       return GuestCartProvider.addToCart(sku, context);
-      // showMessage(message: "Please login to continue", context: context);
-      // return true;
     } else {
       Future<bool> refreshToken = AuthenticationProvider().getUserToken();
       Future<bool> getQouteId = getCartId();
@@ -39,12 +46,21 @@ class CartProvider extends ChangeNotifier {
         request.headers.addAll(headers);
 
         http.StreamedResponse response = await request.send();
+        var body = await response.stream.bytesToString();
 
         if (response.statusCode == 200) {
           showMessage(message: "$sku has been added to cart", context: context);
-          var cart_total_items = await DatabaseProvider().getData('cart_total_items');
-          var new_total = int.parse(cart_total_items)+1;
-          DatabaseProvider().saveData('cart_total_items', new_total.toString());
+
+          var data = json.decode(body);
+          if(data['qty']==1) {
+            var cart_total_items = await DatabaseProvider().getData('cart_total_items');
+            var new_total = '1';
+            if (cart_total_items!='') {
+              new_total = (int.parse(cart_total_items)+1).toString();
+            }
+            DatabaseProvider().saveData('cart_total_items', new_total);
+          }
+
         } else {
           showMessage(message: "Oops, something went wrong! Please try again later.", context: context);
         }
@@ -86,7 +102,7 @@ class CartProvider extends ChangeNotifier {
         }
       ]);
       var _cart_total_items = await DatabaseProvider().getData('cart_total_items');
-      DatabaseProvider().saveData('cart_total_items', _cart_total_items.toString());
+      DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
     } else {
       request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/items/$id'));
       request.body = json.encode({
@@ -118,6 +134,7 @@ class CartProvider extends ChangeNotifier {
   static Future<List<CartItem>> getCartItems(context) async {
     final token = await DatabaseProvider().getData('token');
     if(token == '') {
+      DatabaseProvider().saveData('name', 'Guest');
       return GuestCartProvider.getCartItems(context);
     }
     // print("User Cart");

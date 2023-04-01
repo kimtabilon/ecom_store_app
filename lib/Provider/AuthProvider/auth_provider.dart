@@ -12,10 +12,10 @@ import '../../Screens/Account/home_page.dart';
 import '../../Utils/routers.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
-  ///Base Url
+  //Base Url
   // final requestBaseUrl = AppUrl.storeUrl;
 
-  ///Setter
+  //Setter
   bool _isLoading = false;
   String _resMessage = '';
 
@@ -95,11 +95,14 @@ class AuthenticationProvider extends ChangeNotifier {
 
       var guestRequest = http.Request('GET', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id'));
       http.StreamedResponse guestData = await guestRequest.send();
-      print(guestData.stream.bytesToString());
+      // print(guestData.stream.bytesToString());
+      var body = await guestData.stream.bytesToString();
+      // print("body123!: "+body);
       if (guestData.statusCode == 200) {
-        var json = jsonDecode(await guestData.stream.bytesToString());
-        print(json);
-        DatabaseProvider().saveData('qoute_id', json.id.toString());
+        // var json = jsonDecode(body);
+
+        // print("json123!: "+json);
+        DatabaseProvider().saveData('qoute_id', json.decode(body)['id'].toString());
         return true;
       } else {
         print(guestData.reasonPhrase);

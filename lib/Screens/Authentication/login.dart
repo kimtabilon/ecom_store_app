@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
+import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Screens/Authentication/register.dart';
 import '../../Utils/routers.dart';
 import '../../Utils/snack_message.dart';
@@ -110,7 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                             .nextPage(page: const RegisterPage());
                       },
                       child: const Text('Tap here to Create Account'),
-                    )
+                    ),
+
                   ],
                 )),
           )

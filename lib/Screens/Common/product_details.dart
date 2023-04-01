@@ -636,7 +636,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -765,7 +765,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -907,7 +907,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -1036,7 +1036,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -1178,7 +1178,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -1307,7 +1307,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  CartProvider.addToCart(productsModel!.sku, "1", context);
+                                                                  CartProvider().addToCart(productsModel!.sku, "1", context);
                                                                 },
                                                                 child: const Icon(
                                                                   Icons.add_shopping_cart,
@@ -1520,7 +1520,7 @@ class ItemBottomNavBar extends StatelessWidget {
               /*
               ElevatedButton.icon(
                 onPressed: () {
-                  CartProvider.addToCart(sku, context);
+                  CartProvider().addToCart(sku, context);
                   // Navigator.pop(context);
                 },
                 icon: Icon(CupertinoIcons.cart_badge_plus),
@@ -1576,7 +1576,7 @@ class ItemBottomNavBar extends StatelessWidget {
                       children: [
                         OutlinedButton.icon(
                           onPressed: () {
-                            CartProvider.addToCart(sku, qty, context);
+                            CartProvider().addToCart(sku, qty, context);
                             print(qty);
                           },
                           icon: const Icon(
