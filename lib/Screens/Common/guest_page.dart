@@ -36,7 +36,6 @@ class _GuestPageState extends State<GuestPage> {
     });
   }
 
-
   @override
   void dispose() {
     _textEditingController.dispose();
@@ -55,7 +54,7 @@ class _GuestPageState extends State<GuestPage> {
       },
       child: Scaffold(
           appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(16,69,114,1),
+            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
             leading: Image.network(
               'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
               cacheWidth: 40,
@@ -66,34 +65,40 @@ class _GuestPageState extends State<GuestPage> {
                   onTap: () {
                     PageNavigator(ctx: context).nextPage(page: const CartPage());
                   },
-                  child: Consumer<CartProvider>(
-                    builder: (context, cart, child) {
-                      return cart.cart_total_items!='' && cart.cart_total_items!='0' ? Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Consumer<CartProvider>(builder: (context, cart, child) {
+                    return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                        ? Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 14, 0, 0),
                         child: badges.Badge(
-                          badgeContent: Text(cart.cart_total_items, style: TextStyle(color: Colors.white),),
-                          child: const Icon(
-                              Icons.shopping_cart_outlined,
-                              size: 28,
-                              color: Colors.lightGreen
+                          badgeContent: Text(
+                            cart.cart_total_items,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: const Icon(Icons.shopping_cart_outlined,
+                                size: 28, color: Colors.lightGreen),
                           ),
                         ),
-                      ) : const Icon(
-                          Icons.shopping_cart_outlined,
-                          size: 28,
-                          color: Colors.lightGreen
+                      )
+                        : Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: const Icon(Icons.shopping_cart_outlined,
+                            size: 28, color: Colors.lightGreen),
                       );
-                    }
-                  )
+                  })
               ),
-              const SizedBox(width: 15,),
+              const SizedBox(
+                width: 5,
+              ),
               const Icon(
                 Icons.question_mark,
                 size: 28,
                 color: Colors.lightGreen,
               ),
-              const SizedBox(width: 15,),
-
+              const SizedBox(
+                width: 5,
+              ),
               InkWell(
                   onTap: () {
                     Navigator.push(
@@ -105,19 +110,16 @@ class _GuestPageState extends State<GuestPage> {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 14, 0, 0),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children:const [
-                          Icon(
-                            IconlyBold.profile,
-                            size: 28,
-                            color: Colors.lightGreen,
-                          ),
-                        ]
-                    ),
-                  )
-              ),
+                    padding: EdgeInsets.fromLTRB(0, 14, 5, 0),
+                    child:
+                        Column(mainAxisSize: MainAxisSize.min, children: const [
+                      Icon(
+                        IconlyBold.profile,
+                        size: 28,
+                        color: Colors.lightGreen,
+                      ),
+                    ]),
+                  )),
             ],
           ),
           body: Padding(
@@ -126,7 +128,6 @@ class _GuestPageState extends State<GuestPage> {
               children: [
                 Stack(
                   children: <Widget>[
-
                     Padding(
                       padding: EdgeInsets.all(0),
                       child: TextField(
@@ -151,21 +152,24 @@ class _GuestPageState extends State<GuestPage> {
                             icon: IconlyBold.category,
                           ),
                           suffixIcon: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // added line
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween, // added line
                             mainAxisSize: MainAxisSize.min, // added line
                             children: <Widget>[
                               IconButton(
-                                icon:   const Icon(
-                                    IconlyLight.search,
-                                    color: Colors.green,
-                                    ) ,
+                                icon: const Icon(
+                                  IconlyLight.search,
+                                  color: Colors.green,
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true')),
+                                    MaterialPageRoute(
+                                        builder: (context) => FeedsScreen(
+                                            target: _searchText.text.trim(),
+                                            itemSearch: 'true')),
                                   );
                                 },
-
                               ),
                             ],
                           ),
@@ -173,7 +177,10 @@ class _GuestPageState extends State<GuestPage> {
                         onSubmitted: (String str) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true')),
+                            MaterialPageRoute(
+                                builder: (context) => FeedsScreen(
+                                    target: _searchText.text.trim(),
+                                    itemSearch: 'true')),
                           );
                         },
                       ),
@@ -191,7 +198,7 @@ class _GuestPageState extends State<GuestPage> {
                         child: Swiper(
                           itemCount: 3,
                           itemBuilder: (ctx, index) {
-                            return SaleWidget(i:index);
+                            return SaleWidget(i: index);
                           },
                           autoplay: true,
                           pagination: const SwiperPagination(
@@ -220,7 +227,9 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen(target: 'All Products',itemSearch: 'false')));
+                                          child: const FeedsScreen(
+                                              target: 'All Products',
+                                              itemSearch: 'false')));
                                 },
                                 icon: IconlyBold.arrowRight2),
                           ],
@@ -237,20 +246,20 @@ class _GuestPageState extends State<GuestPage> {
                             } else if (snapshot.hasError) {
                               Center(
                                 child:
-                                Text("An error occured ${snapshot.error}"),
+                                    Text("An error occured ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
                               const Center(
                                 child: Text("No products has been added yet"),
                               );
                             }
-                            return FeedsGridWidget(productsList: snapshot.data!);
+                            return FeedsGridWidget(
+                                productsList: snapshot.data!);
                           })),
-                      const Divider(
-                          color: Colors.white10
-                      ),
+                      const Divider(color: Colors.white10),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 20.0),
                         child: Row(
                           children: [
                             const Text(
@@ -267,16 +276,17 @@ class _GuestPageState extends State<GuestPage> {
                                       context,
                                       PageTransition(
                                           type: PageTransitionType.fade,
-                                          child: const FeedsScreen(target: 'All Products',itemSearch: 'false')
-                                      )
-                                  );
+                                          child: const FeedsScreen(
+                                              target: 'All Products',
+                                              itemSearch: 'false')));
                                 },
                                 icon: IconlyBold.arrowRight2),
                           ],
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future: ProductProvider.getBestSellerProducts(limit: "4"),
+                          future:
+                              ProductProvider.getBestSellerProducts(limit: "4"),
                           builder: ((context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -286,17 +296,17 @@ class _GuestPageState extends State<GuestPage> {
                             } else if (snapshot.hasError) {
                               Center(
                                 child:
-                                Text("An error occured ${snapshot.error}"),
+                                    Text("An error occured ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
                               const Center(
                                 child: Text("No products has been added yet"),
                               );
                             }
-                            return FeedsGridWidget(productsList: snapshot.data!);
+                            return FeedsGridWidget(
+                                productsList: snapshot.data!);
                           }))
                     ]),
-
                   ),
                 )
               ],
