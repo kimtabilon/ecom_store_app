@@ -9,7 +9,7 @@ import '../../Utils/snack_message.dart';
 
 class GuestCartProvider extends ChangeNotifier {
 
-  static Future<bool> addToCart(sku, context) async {
+  static Future<bool> addToCart(sku, qty, context) async {
     var masked_id = await DatabaseProvider().getData('masked_id');
     var qoute_id = await DatabaseProvider().getData('qoute_id');
     if(masked_id=='') {
@@ -28,7 +28,7 @@ class GuestCartProvider extends ChangeNotifier {
       "cart_item": {
         "quote_id": qoute_id,
         "sku": sku,
-        "qty": 1
+        "qty": qty
       }
     });
     request.headers.addAll(headers);

@@ -1521,6 +1521,7 @@ class ItemBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
+    final token = DatabaseProvider().getData('token');
 
     return BottomAppBar(
         child: Container(
@@ -1648,7 +1649,12 @@ class ItemBottomNavBar extends StatelessWidget {
                   children: [
                     OutlinedButton.icon(
                       onPressed: () {
-                        CartProvider().addToCart(sku, a.qty.value, context);
+                        print(token);
+                        if(token=='') {
+                          GuestCartProvider.addToCart(sku, a.qty.value, context);
+                        } else {
+                          CartProvider().addToCart(sku, a.qty.value, context);
+                        }
                         print(a.qty.value);
                       },
                       icon: const Icon(

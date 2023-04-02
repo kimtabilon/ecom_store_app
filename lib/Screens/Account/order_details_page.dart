@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Screens/Common/rma_details.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
@@ -216,6 +217,14 @@ class _ProductDetailsState extends State<OrderDetails> {
 
                           String ex = await RMAProvider.getRMA(orderno: "${widget.order.id!}", sku: "${widget.order.items![0].sku}");
                           print(ex);
+
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: RMADetails(id: "${widget.order.id!}"),
+                            ),
+                          );
                         },
                         child: const Text('RMA'),
                         style: ElevatedButton.styleFrom(

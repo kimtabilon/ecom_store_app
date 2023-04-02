@@ -23,7 +23,7 @@ class CartProvider extends ChangeNotifier {
     final token = await DatabaseProvider().getData('token');
 
     if(token=='') {
-      return GuestCartProvider.addToCart(sku, context);
+      return GuestCartProvider.addToCart(sku, qty, context);
     } else {
       Future<bool> refreshToken = AuthenticationProvider().getUserToken();
       Future<bool> getQouteId = getCartId();
