@@ -111,76 +111,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     int _current3 = 0;
     int _curr = 0;
 
-    /*
-    var min = 0;
-    late final List<Widget> imageSliders = productsModel!.accessories_img!
-        .map((item) => Container(
-      child: Container(
-        padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(10)
-        ),
-        margin: EdgeInsets.all(5.0),
-        child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Stack(
-              children: <Widget>[
-                Image.network(item, fit: BoxFit.cover, width: 1000.0),
-                Positioned(
-                  top: 70.0,
-                  left: 0.0,
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if(_sku == '0') ...[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                child: Text(
-                                  productsModel!.accessories_sku![_curr].toString(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ] else ...[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
-                                child: Text(
-                                  _sku,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ]
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )),
-      ),
-    ))
-        .toList();
-    var max = imageSliders.length - 1;
-    print(max);
-    */
-
     return Scaffold(
       appBar: AppBar(
         // elevation: 1,
@@ -1594,33 +1524,6 @@ class ItemBottomNavBar extends StatelessWidget {
               ),
             ],
           ),
-          /*
-              ElevatedButton.icon(
-                onPressed: () {
-                  CartProvider().addToCart(sku, context);
-                  // Navigator.pop(context);
-                },
-                icon: Icon(CupertinoIcons.cart_badge_plus),
-                label: Text(
-                  "Add To Cart",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
-                    padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 13, horizontal: 15)
-                    ),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)
-                        )
-                    ),
-                ),
-              ),
-              */
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
