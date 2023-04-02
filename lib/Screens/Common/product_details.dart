@@ -555,7 +555,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         ),
                                       ],
                                     )),
-                                if(productsModel!.chk_accessories != '0') ...[
+                                if(productsModel!.chk_accessories != '0' && productsModel!.accessories_img!.isNotEmpty != '0') ...[
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
@@ -841,7 +841,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   const SizedBox(
                                     height: 10,
                                   )
-                                ] else if(productsModel!.chk_relatedproducts != '0') ...[
+                                ] else if(productsModel!.chk_relatedproducts != '0' && productsModel!.related_products_id!.isNotEmpty) ...[
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
@@ -1127,7 +1127,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   const SizedBox(
                                     height: 10,
                                   )
-                                ] else if(productsModel!.chk_moreproducts != '0') ...[
+                                ] else if(productsModel!.chk_moreproducts != '0' && productsModel!.more_products_id!.isNotEmpty) ...[
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
