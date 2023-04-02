@@ -172,6 +172,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     ///Button
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
+                          // print(auth);
                           WidgetsBinding.instance!.addPostFrameCallback((_) {
                             if (auth.resMessage != '') {
                               showMessage(

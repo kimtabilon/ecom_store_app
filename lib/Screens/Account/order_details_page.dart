@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
 import 'Local_widget/cart_image_widget.dart';
 import 'home_page.dart';
+import '../../Provider/RMA/rma_provider.dart';
 
 
 class OrderDetails extends StatefulWidget {
@@ -23,6 +24,7 @@ class _ProductDetailsState extends State<OrderDetails> {
     Size size = MediaQuery.of(context).size;
     print(widget.order.toJson());
     // return Text("Order No.: ${widget.order.id!}",);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order Details'),
@@ -198,15 +200,22 @@ class _ProductDetailsState extends State<OrderDetails> {
                   ],
                 ),
               ))),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          print("${widget.order.id!}");
+                          print("${widget.order.items![0].sku}");
+                          print("${widget.order.customer_email}");
 
+                          String ex = await RMAProvider.getRMA(orderno: "${widget.order.id!}", sku: "${widget.order.items![0].sku}");
+                          print(ex);
                         },
                         child: const Text('RMA'),
                         style: ElevatedButton.styleFrom(

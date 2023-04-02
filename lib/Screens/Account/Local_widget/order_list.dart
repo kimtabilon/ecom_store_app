@@ -39,7 +39,7 @@ class OrderListWidget extends StatelessWidget {
                         style: TextStyle(color:Colors.black87, fontSize: 13, fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                              text: order.order_date,
+                              text: order.order_date?.substring(0, 10),
                               style: TextStyle(color:Colors.black87, fontSize: 15, fontWeight: FontWeight.normal)
                           )
                         ]
