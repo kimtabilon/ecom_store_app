@@ -38,7 +38,7 @@ class _GuestPageState extends State<GuestPage> {
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    // _textEditingController.dispose();
     super.dispose();
   }
 
