@@ -33,11 +33,15 @@ class _GuestPageState extends State<GuestPage> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Image.network(
-              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-              cacheWidth: 40,
-              width: 40,
+            leading: Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Image.network(
+                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                cacheWidth: 40,
+                width: 40,
+              ),
             ),
+            leadingWidth: 70,
             actions: [
               const CartIconWidget(),
               const Icon(
