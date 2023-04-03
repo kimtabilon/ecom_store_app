@@ -36,6 +36,7 @@ class CheckoutProvider extends ChangeNotifier {
     required String address3,
     required String country,
     required String province,
+    required String provinceCode,
     required String city,
     required String zip,
     required String phone,
@@ -48,13 +49,8 @@ class CheckoutProvider extends ChangeNotifier {
     String adminToken = await DatabaseProvider().getData('admin token');
     var masked_id = await DatabaseProvider().getData('masked_id');
     var qoute_id = await DatabaseProvider().getData('qoute_id');
-    if(masked_id=='') {
-      final initateGuest = await AuthenticationProvider().initateGuest();
-      if(initateGuest) {
-        masked_id = await DatabaseProvider().getData('masked_id');
-        qoute_id = await DatabaseProvider().getData('qoute_id');
-      }
-    }
+
+
 
 
     if(masked_id != '') {
@@ -68,7 +64,7 @@ class CheckoutProvider extends ChangeNotifier {
           "addressInformation": {
             "shipping_address": {
               "region": province,
-              "regionId": 43,
+              "regionId": provinceCode,
               "country_id": country,
               "street": [
                 address1,
@@ -84,7 +80,7 @@ class CheckoutProvider extends ChangeNotifier {
             },
             "billing_address": {
               "region": province,
-              "regionId": 43,
+              "regionId": provinceCode,
               "country_id": country,
               "street": [
                 address1,
@@ -104,8 +100,9 @@ class CheckoutProvider extends ChangeNotifier {
         });
         request.headers.addAll(headers);
 
-        http.StreamedResponse response = await request.send();
-
+        // http.StreamedResponse response = await request.send();
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
           // print(await response.stream.bytesToString());
           _isLoading = false;
@@ -120,14 +117,15 @@ class CheckoutProvider extends ChangeNotifier {
             address3,
             country,
             province,
+            provinceCode,
             city,
             zip,
             phone,
           ));
         }
         else {
-          // print(response.reasonPhrase);
-          _resMessage = response.reasonPhrase.toString();
+          // print(response.body);
+          _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
         }
@@ -157,7 +155,7 @@ class CheckoutProvider extends ChangeNotifier {
           "addressInformation": {
             "shipping_address": {
               "region": province,
-              "regionId": 43,
+              "regionId": provinceCode,
               "country_id": country,
               "street": [
                 address1,
@@ -192,7 +190,8 @@ class CheckoutProvider extends ChangeNotifier {
         });
         request.headers.addAll(headers);
 
-        http.StreamedResponse response = await request.send();
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
           // print(await response.stream.bytesToString());
@@ -208,6 +207,7 @@ class CheckoutProvider extends ChangeNotifier {
             address3,
             country,
             province,
+            provinceCode,
             city,
             zip,
             phone,
@@ -215,7 +215,7 @@ class CheckoutProvider extends ChangeNotifier {
         }
         else {
           // print(response.reasonPhrase);
-          _resMessage = response.reasonPhrase.toString();
+          _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
         }
@@ -246,9 +246,15 @@ class CheckoutProvider extends ChangeNotifier {
     required String city,
     required String country,
     required String province,
+    required String provinceCode,
     required String zip,
     required String phone,
     required String paymentOption,
+    String? cardNumber,
+    String? expMonth,
+    String? expYear,
+    String? cardCode,
+    String? cardType,
     BuildContext? context,
   }) async {
     _isLoading = true;
@@ -259,58 +265,203 @@ class CheckoutProvider extends ChangeNotifier {
 
     var masked_id = await DatabaseProvider().getData('masked_id');
     var qoute_id = await DatabaseProvider().getData('qoute_id');
-    if(masked_id=='') {
-      final initateGuest = await AuthenticationProvider().initateGuest();
-      if(initateGuest) {
-        masked_id = await DatabaseProvider().getData('masked_id');
-        qoute_id = await DatabaseProvider().getData('qoute_id');
-      }
-    }
 
-    if(masked_id != '') {
+
+    if(paymentOption == "authnetcim"){
+
+      if(cardType == "CardType.visa"){
+        cardType = "VI";
+      }
+      if(cardType == "CardType.master"){
+        cardType = "MC";
+      }
+      if(cardType == "CardType.americanExpress"){
+        cardType = "AE";
+      }
+
+
       try {
-        var headers = {
-          'Authorization': 'Bearer $adminToken',
-          'Content-Type': 'application/json'
-        };
-        var request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
+        var request = http.Request('POST', Uri.parse('https://api2.authorize.net/xml/v1/request.api'));
         request.body = json.encode({
-          "paymentMethod": {
-            "method": paymentOption
-          },
-          "billing_address": {
-            "email": email,
-            "region": province,
-            "country_id": country,
-            "regionId": 43,
-            "street": [
-              address1,
-              address2,
-              address3
-            ],
-            "postcode": zip,
-            "city": city,
-            "telephone": phone,
-            "firstname": firstName,
-            "lastname": lastName
+          "securePaymentContainerRequest":{
+            "merchantAuthentication":{
+              "name":"2n92m7hABh5",
+              "clientKey":"2ND8wGg4pr7sYzc4VQ9SrQnNpptK3b5y5K3j9R8R24RkCA5a2aU4YGt56B6DMnJg"
+            },
+            "data":{
+              "type":"TOKEN","id":"fafbbfa7-f96d-4d9d-4e29-63c554d3a094",
+              "token":{
+                "cardNumber": cardNumber,
+                "expirationDate":expMonth!+"20"+expYear.toString(),
+                "cardCode": cardCode
+              }
+            }
           }
         });
-        request.headers.addAll(headers);
 
-        http.StreamedResponse response = await request.send();
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
-          // print(await response.stream.bytesToString());
-          _isLoading = false;
-          _resMessage = "Your order has been placed!";
-          notifyListeners();
-          PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
-            email,
-          ));
+          var data = jsonDecode(response.body);
+          print(data['opaqueData']['dataDescriptor']);
+
+
+
+          if(masked_id != '') {
+            try {
+              var headers = {
+                'Authorization': 'Bearer $adminToken',
+                'Content-Type': 'application/json'
+              };
+
+              var last_4 = cardNumber.toString().substring(cardNumber.toString().length - 4);
+              var request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
+              request.body = json.encode({
+                "paymentMethod": {
+                  "method": paymentOption,
+                  "additional_data": {
+                    "acceptjs_key": data['opaqueData']['dataDescriptor'],
+                    "acceptjs_value": data['opaqueData']['dataValue'],
+                    "cc_bin": cardNumber.toString().substring(0, 5),
+                    "cc_cid": cardCode,
+                    "cc_exp_month": expMonth,
+                    "cc_exp_year": "20"+expYear.toString(),
+                    "cc_last_4": last_4,
+                    "cc_type": cardType,
+                    "save": false
+                  }
+                },
+                "billing_address": {
+                  "email": email,
+                  "region": province,
+                  "country_id": country,
+                  "regionId": provinceCode,
+                  "street": [
+                    address1,
+                    address2,
+                    address3
+                  ],
+                  "postcode": zip,
+                  "city": city,
+                  "telephone": phone,
+                  "firstname": firstName,
+                  "lastname": lastName
+                }
+              });
+              request.headers.addAll(headers);
+
+              var streamedResponse = await request.send();
+              var response = await http.Response.fromStream(streamedResponse);
+
+              if (response.statusCode == 200) {
+                // print(await response.stream.bytesToString());
+                _isLoading = false;
+                _resMessage = "Your order has been placed!";
+                notifyListeners();
+                PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+                  email,
+                ));
+              }
+              else {
+                // print(response.reasonPhrase);
+                _resMessage = response.body.toString();
+                _isLoading = false;
+                notifyListeners();
+              }
+
+            } on SocketException catch (_) {
+              _isLoading = false;
+              _resMessage = "Internet connection is not available`";
+              notifyListeners();
+            } catch (e) {
+              _isLoading = false;
+              _resMessage = "Please try again";
+              notifyListeners();
+
+            }
+          }else{
+            try {
+              var headers = {
+                'Authorization': 'Bearer $token',
+                'Content-Type': 'application/json'
+              };
+              var last_4 = cardNumber.toString().substring(cardNumber.toString().length - 4);
+              var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
+              request.body = json.encode({
+                "paymentMethod": {
+                  "method": paymentOption,
+                  "additional_data":{
+                    "acceptjs_key": data['opaqueData']['dataDescriptor'],
+                    "acceptjs_value": data['opaqueData']['dataValue'],
+                    "cc_bin": cardNumber.toString().substring(0, 5),
+                    "cc_cid": cardCode,
+                    "cc_exp_month": expMonth,
+                    "cc_exp_year": "20"+expYear.toString(),
+                    "cc_last_4": last_4,
+                    "cc_type": cardType,
+                    "save": false
+                  }
+                },
+                "billing_address": {
+                  "email": email,
+                  "region": province,
+                  "country_id": country,
+                  "region_id": provinceCode,
+                  "street": [
+                    address1,
+                    address2,
+                    address3
+                  ],
+                  "postcode": zip,
+                  "city": city,
+                  "telephone": phone,
+                  "firstname": firstName,
+                  "lastname": lastName
+                }
+              });
+              request.headers.addAll(headers);
+
+              var streamedResponse = await request.send();
+              var response = await http.Response.fromStream(streamedResponse);
+
+              if (response.statusCode == 200) {
+                // print(await response.stream.bytesToString());
+                _isLoading = false;
+                _resMessage = "Your order has been placed!";
+                notifyListeners();
+                PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+                  email,
+                ));
+              }
+              else {
+                // print(response.reasonPhrase);
+                _resMessage = response.body.toString();
+                _isLoading = false;
+                notifyListeners();
+              }
+
+            } on SocketException catch (_) {
+              _isLoading = false;
+              _resMessage = "Internet connection is not available`";
+              notifyListeners();
+            } catch (e) {
+              _isLoading = false;
+              _resMessage = "Please try again";
+              notifyListeners();
+
+            }
+          }
+
+
+
+
+
+
         }
         else {
           // print(response.reasonPhrase);
-          _resMessage = response.reasonPhrase.toString();
+          _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
         }
@@ -325,65 +476,140 @@ class CheckoutProvider extends ChangeNotifier {
         notifyListeners();
 
       }
+
+
     }else{
-      try {
-        var headers = {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json'
-        };
-        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
-        request.body = json.encode({
-          "paymentMethod": {
-            "method": paymentOption
-          },
-          "billing_address": {
-            "email": email,
-            "region": province,
-            "country_id": country,
-            "region_id": 43,
-            "street": [
-              address1,
-              address2,
-              address3
-            ],
-            "postcode": zip,
-            "city": city,
-            "telephone": phone,
-            "firstname": firstName,
-            "lastname": lastName
+
+
+      if(masked_id != '') {
+        try {
+          var headers = {
+            'Authorization': 'Bearer $adminToken',
+            'Content-Type': 'application/json'
+          };
+          var request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
+          request.body = json.encode({
+            "paymentMethod": {
+              "method": paymentOption
+            },
+            "billing_address": {
+              "email": email,
+              "region": province,
+              "country_id": country,
+              "regionId": provinceCode,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "telephone": phone,
+              "firstname": firstName,
+              "lastname": lastName
+            }
+          });
+          request.headers.addAll(headers);
+
+          var streamedResponse = await request.send();
+          var response = await http.Response.fromStream(streamedResponse);
+
+          if (response.statusCode == 200) {
+            // print(await response.stream.bytesToString());
+            _isLoading = false;
+            _resMessage = "Your order has been placed!";
+            notifyListeners();
+            PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+              email,
+            ));
           }
-        });
-        request.headers.addAll(headers);
+          else {
+            // print(response.reasonPhrase);
+            _resMessage = response.body.toString();
+            _isLoading = false;
+            notifyListeners();
+          }
 
-        http.StreamedResponse response = await request.send();
-
-        if (response.statusCode == 200) {
-          // print(await response.stream.bytesToString());
+        } on SocketException catch (_) {
           _isLoading = false;
-          _resMessage = "Your order has been placed!";
+          _resMessage = "Internet connection is not available`";
           notifyListeners();
-          PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
-            email,
-          ));
-        }
-        else {
-          // print(response.reasonPhrase);
-          _resMessage = response.reasonPhrase.toString();
+        } catch (e) {
           _isLoading = false;
+          _resMessage = "Please try again";
           notifyListeners();
+
         }
+      }else{
+        try {
+          var headers = {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json'
+          };
+          var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
+          request.body = json.encode({
+            "paymentMethod": {
+              "method": paymentOption
+            },
+            "billing_address": {
+              "email": email,
+              "region": province,
+              "country_id": country,
+              "region_id": provinceCode,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "telephone": phone,
+              "firstname": firstName,
+              "lastname": lastName
+            }
+          });
+          request.headers.addAll(headers);
 
-      } on SocketException catch (_) {
-        _isLoading = false;
-        _resMessage = "Internet connection is not available`";
-        notifyListeners();
-      } catch (e) {
-        _isLoading = false;
-        _resMessage = "Please try again";
-        notifyListeners();
+          var streamedResponse = await request.send();
+          var response = await http.Response.fromStream(streamedResponse);
 
+          if (response.statusCode == 200) {
+            // print(await response.stream.bytesToString());
+            _isLoading = false;
+            _resMessage = "Your order has been placed!";
+            notifyListeners();
+            PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+              email,
+            ));
+          }
+          else {
+            // print(response.reasonPhrase);
+            _resMessage = response.body.toString();
+            _isLoading = false;
+            notifyListeners();
+          }
+
+        } on SocketException catch (_) {
+          _isLoading = false;
+          _resMessage = "Internet connection is not available`";
+          notifyListeners();
+        } catch (e) {
+          _isLoading = false;
+          _resMessage = "Please try again";
+          notifyListeners();
+
+        }
       }
+
+
+
+
     }
+
+
+
+
+
 
   }
 

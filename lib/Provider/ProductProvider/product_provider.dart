@@ -174,6 +174,44 @@ class ProductProvider {
   // }
 
 
+  static Future<List> getDeliveryMulti({
+    required String sku,
+    required String qty,
+    required String lat,
+    required String lng,
+    required String state,
+    required String postal,
+  }) async {
+    try {
+      var uri = Uri.https(
+          AppUrl.consoleUrl,
+          "content/deliverymultisku/$sku/$qty/$lat/$lng/$state/0/0/$postal");
+
+      //print(uri);
+
+      var response = await http.get(uri);
+
+      // print("response ${jsonDecode(response.body)}");
+      var data = jsonDecode(response.body);
+
+      List tempList = [];
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      tempList.add(data);
+      // for (var v in data) {
+      //   tempList.add(v);
+      //   // print("V $v \n\n");
+      // }
+      // return data['date'];
+      return tempList;
+    } catch (error) {
+      log("An error occured $error");
+      throw error.toString();
+    }
+  }
+
+
   static Future<List> getDelivery({
     required String sku,
     required String qty,

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../Model/cart_model.dart';
 import '../../Provider/CheckoutProvider/checkout_provider.dart';
 import '../../Provider/Database/db_provider.dart';
+import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Screens/Account/Local_widget/cart_view_container.dart';
 import '../../Screens/Account/add_cart_page.dart';
@@ -38,16 +39,24 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
   final TextEditingController _address3 = TextEditingController();
 
   final TextEditingController _country = TextEditingController(text:'US');
-  final TextEditingController _province = TextEditingController(text:'New York');
+  final TextEditingController _province = TextEditingController();
   final TextEditingController _city = TextEditingController();
   final TextEditingController _zipcode = TextEditingController();
+  final TextEditingController _provinceCode = TextEditingController(text:'0');
   final TextEditingController _number = TextEditingController();
+
   final String ShipOption = 'freeshipping';
   final shippingOption = {
     'freeshipping': '\$0.00 - Fast & Free Delivery',
   };
 
-  final RegionID = {
+  final countryOption = {
+    'US': 'United States',
+  };
+
+
+  final RegionId = {
+    '0': 'Select State/Province',
     '1': 'Alabama',
     '2': 'Alaska',
     '3': 'American Samoa',
@@ -115,6 +124,46 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
     '65': 'Wyoming',
   };
 
+  String? zipField;
+  String? stateField;
+  String transitDay = "";
+  String estimatedDay = "";
+  void _getCurrentLocation() async {
+    List getItems = await CartProvider.getCartItems(context);
+    String skuList = "";
+    int skuCount = 0;
+    num totalQty = 0;
+    getItems.forEach((item) {
+      // print('id: ${item.id}, title: ${item.title}');
+      // print(item.qty);
+      if(skuCount > 0){
+        skuList += item.sku.toString()+",";
+      }else{
+        skuList += item.sku.toString();
+      }
+
+      totalQty += item.qty;
+      skuCount++;
+    });
+
+    List getDays = await ProductProvider.getDeliveryMulti(
+      sku: skuList,
+      qty: totalQty.toString(),
+      lat: '0',
+      lng: '0',
+      state: stateField.toString(),
+      postal: zipField.toString(),
+    );
+
+
+    setState(() {
+      transitDay = "Fast & Free Delivery:"+getDays[0][0][1]['transit'].toString()+" Days Transit";
+      estimatedDay = "Estimated Delivery Date:"+getDays[0][0][1]['date'].toString();
+    });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,26 +225,122 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                       controller: _address3,
                       // hint: 'Enter your First Name',
                     ),
-                    customTextField(
-                      title: 'Country',
-                      controller: _country,
-                      hint: 'Enter Country',
+                    // customTextField(
+                    //   title: 'Country',
+                    //   controller: _country,
+                    //   hint: 'Enter Country',
+                    // ),
+
+                    Text("Country"),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: lightGrey,
+                      ),
+                      child:  DropdownButton(
+                        items: countryOption.entries
+                            .map<DropdownMenuItem<String>>(
+                                (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                              value: e.key,
+                              child: Text(e.value),
+                            ))
+                            .toList(),
+                        onChanged: (Value) {
+                          setState(() {
+                            _country.text = Value.toString();
+                          });
+
+                        },
+                        value: _country.text,
+                      ),
                     ),
-                    customTextField(
-                      title: 'State/Province',
-                      controller: _province,
-                      hint: 'Enter State/Province',
+
+                    // customTextField(
+                    //   title: 'State/Province',
+                    //   controller: _province,
+                    //   hint: 'Enter State/Province',
+                    // ),
+
+                    Text("State/Province"),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: lightGrey,
+                      ),
+                      child:  DropdownButton(
+                        items: RegionId.entries
+                            .map<DropdownMenuItem<String>>(
+                                (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                              value: e.key,
+                              child: Text(e.value),
+                            ))
+                            .toList(),
+                        onChanged: (Value) {
+                          setState(() {
+                            _province.text = RegionId[Value].toString();
+                            _provinceCode.text = Value.toString();
+
+                            stateField = RegionId[Value].toString();
+                            _getCurrentLocation();
+                          });
+                        },
+                        value: _provinceCode.text,
+
+                      ),
                     ),
+
                     customTextField(
                       title: 'City',
                       controller: _city,
                       hint: 'Enter City',
                     ),
-                    customTextField(
-                      title: 'Zip/Postal Code',
-                      controller: _zipcode,
-                      hint: 'Enter Zip',
+                    // TextField(
+                    //   title: 'Zip/Postal Code',
+                    //   controller: _zipcode,
+                    //   hint: 'Enter Zip',
+                    //   onChanged: (value) => updateButtonState(value),
+                    // ),
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Zip/Postal Code',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: lightGrey,
+                          ),
+                          child: TextFormField(
+                            controller: _zipcode,
+                            maxLines: 1,
+                            decoration: InputDecoration(hintText: 'Enter Zip', border: InputBorder.none),
+                            onChanged: (value){
+                              setState(() {
+                                zipField = value.toString();
+                                _getCurrentLocation();
+                              });
+
+                            },
+                          ),
+                        )
+                      ],
                     ),
+
+
+
                     customTextField(
                       title: 'Phone Number',
                       controller: _number,
@@ -224,7 +369,28 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                       ),
                     ),
 
-
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
+                              text: TextSpan(
+                                text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
                     // CreditCardForm(
                     //   theme: CreditCardLightTheme(),
@@ -239,6 +405,32 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     // ),
 
                     ///Button
+
+                    // FutureBuilder<List<CartItem>>(
+                    //     future: CartProvider.getCartItems(context),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return const Center(
+                    //           child: CircularProgressIndicator(),
+                    //         );
+                    //       } else if (snapshot.hasError) {
+                    //         return Center(
+                    //           child:
+                    //           Text("An error occured ${snapshot.error}"),
+                    //         );
+                    //       } else if (snapshot.data!.length == 0) {
+                    //         return const Center(
+                    //           child: Text("No products has been added yet"),
+                    //         );
+                    //       }
+                    //       // print(snapshot.data);
+                    //       return CartItemListWidget(itemList: snapshot.data!);
+                    //     }),
+
+
+
+
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
                           // print(auth);
@@ -260,6 +452,10 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                                   _country.text.isEmpty ||
                                   _province.text.isEmpty ||
                                   _company.text.isEmpty ||
+                                  _provinceCode.text == '0' ||
+                                  _number.text.isEmpty ||
+                                  _address1.text.isEmpty ||
+                                  _city.text.isEmpty ||
                                   _zipcode.text.isEmpty) {
                                 showMessage(
                                     message: "All fields are required",
@@ -275,6 +471,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                                     address3: _address3.text.trim(),
                                     country: _country.text.trim(),
                                     province: _province.text.trim(),
+                                    provinceCode: _provinceCode.text.trim(),
                                     city: _city.text.trim(),
                                     zip: _zipcode.text.trim(),
                                     phone : _number.text.trim(),

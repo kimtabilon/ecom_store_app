@@ -30,6 +30,7 @@ class CheckoutPaymentPage extends StatefulWidget {
   final String address3;
   final String country;
   final String province;
+  final String provinceCode;
   final String city;
   final String zip;
   final String phone;
@@ -42,6 +43,7 @@ class CheckoutPaymentPage extends StatefulWidget {
       this.address3,
       this.country,
       this.province,
+      this.provinceCode,
       this.city,
       this.zip,
       this.phone,
@@ -52,10 +54,17 @@ class CheckoutPaymentPage extends StatefulWidget {
 }
 
 class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
-
+  String? cardNumber;
+  String? expMonth;
+  String? expYear;
+  String? cardCode;
+  String? cardType;
+  bool creditOpt = false;
   String PayOption = 'banktransfer';
+
   final PaymentOption = {
     'banktransfer': 'Bank Transfer Payment',
+    'authnetcim': 'Credit Card (Authorize.Net CIM)',
   };
   @override
   Widget build(BuildContext context) {
@@ -104,6 +113,12 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                         onChanged: (Value) {
                           print(Value);
                           setState(() {
+                            if(Value.toString() == "authnetcim"){
+                              creditOpt = true;
+                            }else{
+                              creditOpt = false;
+                            }
+
                             PayOption = Value.toString();
                           });
                         },
@@ -112,17 +127,24 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                     ),
 
 
-                    // CreditCardForm(
-                    //   theme: CreditCardLightTheme(),
-                    //   onChanged: (CreditCardResult result) {
-                    //     print(result.cardNumber);
-                    //     print(result.cardHolderName);
-                    //     print(result.expirationMonth);
-                    //     print(result.expirationYear);
-                    //     print(result.cardType);
-                    //     print(result.cvc);
-                    //   },
-                    // ),
+                    creditOpt ? CreditCardForm(
+                      theme: CreditCardLightTheme(),
+                      onChanged: (CreditCardResult result) {
+                        // print(result.cardNumber);
+                        // print(result.cardHolderName);
+                        // print(result.expirationMonth);
+                        // print(result.expirationYear);
+                        // print(result.cardType);
+                        // print(result.cvc);
+                        setState(() {
+                          cardNumber = result.cardNumber;
+                          expMonth = result.expirationMonth;
+                          expYear = result.expirationYear;
+                          cardCode = result.cvc;
+                          cardType = result.cardType.toString();
+                        });
+                      },
+                    ): Container(),
 
                     ///Button
                     Consumer<CheckoutProvider>(
@@ -139,21 +161,72 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           return customButton(
                             text: 'PLACE ORDER',
                             tap: () {
+                                  if (PayOption == "authnetcim") {
 
-                                auth.paymentInfo(
-                                    firstName: widget.firstName.trim(),
-                                    lastName: widget.lastName.trim(),
-                                    email: widget.email.trim(),
-                                    address1: widget.address1.trim(),
-                                    address2: widget.address2.trim(),
-                                    address3: widget.address3.trim(),
-                                    country: widget.country.trim(),
-                                    province: widget.province.trim(),
-                                    city: widget.city.trim(),
-                                    zip: widget.zip.trim(),
-                                    phone : widget.phone.trim(),
-                                    paymentOption : PayOption.trim(),
-                                    context: context);
+
+                                    if (cardNumber.toString().isEmpty ||
+                                        expMonth.toString().isEmpty ||
+                                        expYear.toString().isEmpty ||
+                                        cardCode.toString().isEmpty ||
+                                        cardType.toString().isEmpty) {
+
+                                        showMessage(
+                                            message: "All fields are required",
+                                            context: context);
+
+                                    }else{
+
+                                      auth.paymentInfo(
+                                          firstName: widget.firstName.trim(),
+                                          lastName: widget.lastName.trim(),
+                                          email: widget.email.trim(),
+                                          address1: widget.address1.trim(),
+                                          address2: widget.address2.trim(),
+                                          address3: widget.address3.trim(),
+                                          country: widget.country.trim(),
+                                          province: widget.province.trim(),
+                                          provinceCode: widget.provinceCode.trim(),
+                                          city: widget.city.trim(),
+                                          zip: widget.zip.trim(),
+                                          phone : widget.phone.trim(),
+                                          paymentOption : PayOption.trim(),
+                                          cardNumber: cardNumber,
+                                          expMonth: expMonth,
+                                          expYear: expYear,
+                                          cardCode: cardCode,
+                                          cardType: cardType,
+                                          context: context);
+
+
+
+                                    }
+
+
+
+
+                                  } else {
+                                    auth.paymentInfo(
+                                        firstName: widget.firstName.trim(),
+                                        lastName: widget.lastName.trim(),
+                                        email: widget.email.trim(),
+                                        address1: widget.address1.trim(),
+                                        address2: widget.address2.trim(),
+                                        address3: widget.address3.trim(),
+                                        country: widget.country.trim(),
+                                        province: widget.province.trim(),
+                                        provinceCode: widget.provinceCode.trim(),
+                                        city: widget.city.trim(),
+                                        zip: widget.zip.trim(),
+                                        phone : widget.phone.trim(),
+                                        paymentOption : PayOption.trim(),
+                                        cardNumber: cardNumber,
+                                        expMonth: expMonth,
+                                        expYear: expYear,
+                                        cardCode: cardCode,
+                                        cardType: cardType,
+                                        context: context);
+                                  }
+
 
                             },
                             context: context,
