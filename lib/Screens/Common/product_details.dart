@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Constants/url.dart';
@@ -1398,9 +1400,11 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  FeedsScreen(target: str, itemSearch: 'true')),
+                                  FeedsScreen(target: str, itemSearch: 'true')
+                          ),
                         );
                       },
+
                     )
                   : null,
             ),
@@ -1422,7 +1426,6 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                       : const EdgeInsets.only(top: 11, bottom: 10, left: 5),
                   child: Icon(
                     _folded ? Icons.search : Icons.close,
-                    size: 30,
                     color: Colors.lightGreen,
                   ),
                 ),
@@ -1440,7 +1443,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   }
 }
 
-class ItemBottomNavBar extends StatelessWidget {
+class ItemBottomNavBar extends StatefulWidget {
   const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty, required this.sprice}) : super(key: key);
 
   final String price;
@@ -1449,13 +1452,69 @@ class ItemBottomNavBar extends StatelessWidget {
   final String sprice;
 
   @override
+  State<ItemBottomNavBar> createState() => _ItemBottomNavBarState();
+}
+
+class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
+  late Position _position;
+  late LocationPermission permission;
+  late Geocoding geoCoding;
+  String transitDay = "Enable Location Service";
+  String estimatedDay = "";
+  void _getCurrentLocation() async {
+    Position position = await _determinePosition();
+    setState(() {
+      _position = position;
+
+    });
+    // print(_position);
+
+    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
+    geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    // print(geoCoding.address.state);
+    // print(geoCoding.address.postalCode);
+
+
+    List getDays = await ProductProvider.getDelivery(
+      sku: widget.sku,
+      qty: widget.qty,
+      lat: _position.latitude.toString(),
+      lng: _position.longitude.toString(),
+      state: geoCoding.address.state.toString(),
+      postal: geoCoding.address.postalCode.toString(),
+    );
+    setState(() {
+      transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+      estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+    });
+
+  }
+
+  Future<Position> _determinePosition() async {
+    permission = await Geolocator.checkPermission();
+    if(permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if(permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+  @override
+  void didChangeDependencies() {
+    _getCurrentLocation();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-
+    final TextEditingController _zipText = TextEditingController();
     return BottomAppBar(
         child: Container(
-      height: 120,
+      height: 150,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1475,19 +1534,19 @@ class ItemBottomNavBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              if (sprice != 'null' && sprice != '0' && sprice != price) ...[
+              if (widget.sprice != 'null' && widget.sprice != '0' && widget.sprice != widget.price) ...[
                 Flexible(
                   fit: FlexFit.tight,
                   child: RichText(
                     text: TextSpan(
-                        text: 'You Pay: \$' + sprice,
+                        text: 'You Pay: \$' + widget.sprice,
                         style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                              text: '\$' + price,
+                              text: '\$' + widget.price,
                               style: TextStyle(
                                   color: Colors.grey,
                                   decoration: TextDecoration.lineThrough,
@@ -1507,7 +1566,7 @@ class ItemBottomNavBar extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                              text: price,
+                              text: widget.price,
                               style: TextStyle(color: Colors.black)),
                         ]),
                   ),
@@ -1515,10 +1574,66 @@ class ItemBottomNavBar extends StatelessWidget {
               ],
               Flexible(
                 fit: FlexFit.tight,
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Enable location service',
-                    style: const TextStyle(fontSize: 15, color: Colors.black),
+                child: TextField(
+                  controller: _zipText,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 0.8),
+                    ),
+                    hintText: "ZIP",
+                    suffixIcon: Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween, // added line
+                      mainAxisSize: MainAxisSize.min, // added line
+                      children: <Widget>[
+                        IconButton(
+                          icon: const Icon(
+                            IconlyLight.search,
+                            color: Colors.green,
+                          ),
+                          onPressed: () async {
+                            List getDays = await ProductProvider.getDelivery(
+                              sku: widget.sku,
+                              qty: widget.qty,
+                              lat: '0',
+                              lng: '0',
+                              state: '0',
+                              postal: _zipText.text.toString(),
+                            );
+                            setState(() {
+                              transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+                              estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  onSubmitted: (String str) {
+
+                  },
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  child: RichText(
+                    text: TextSpan(
+                      text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -1529,7 +1644,7 @@ class ItemBottomNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 1),
+                padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
                 decoration: BoxDecoration(
                   color: Colors.lightGreen,
                   borderRadius: BorderRadius.only(
@@ -1540,7 +1655,7 @@ class ItemBottomNavBar extends StatelessWidget {
                   children: [
                     Text(
                       'QTY: ',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     DropdownQTY(),
                   ],
@@ -1554,9 +1669,9 @@ class ItemBottomNavBar extends StatelessWidget {
                       onPressed: () {
                         print(token);
                         if(token=='') {
-                          GuestCartProvider.addToCart(sku, a.qty.value, context);
+                          GuestCartProvider.addToCart(widget.sku, a.qty.value, context);
                         } else {
-                          CartProvider().addToCart(sku, a.qty.value, context);
+                          CartProvider().addToCart(widget.sku, a.qty.value, context);
                         }
                         print(a.qty.value);
                       },
@@ -1590,8 +1705,6 @@ class ItemBottomNavBar extends StatelessWidget {
       ),
     ));
   }
-
-  setState(String? Function() param0) {}
 }
 
 Widget listItem({required String title, required List<String> arrdesc}) {
@@ -1639,16 +1752,11 @@ Widget cardWidget({required List<String> arrdesc}) {
           color: Colors.white,
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 0, left: 5, right: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: Text(
-                  "* " + arrdesc![index] + "\n",
-                  style: TextStyle(fontSize: 14, color: Colors.black),
-                ),
-                /*
                 child: RichText(
                   text: TextSpan(
                     text: "* " + arrdesc![index],
@@ -1658,7 +1766,6 @@ Widget cardWidget({required List<String> arrdesc}) {
                     ),
                   ),
                 ),
-                 */
               ),
             ],
           ),
@@ -1668,15 +1775,13 @@ Widget cardWidget({required List<String> arrdesc}) {
   );
 }
 
-Widget specList({required String title, required List<String> speclist, required List<String> speccontent}) {
+Widget specList({required String title, required List<String> speclist, required List<String> speccontent}){
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Color.fromRGBO(16, 69, 114, 1),
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         iconColor: Colors.white,
         collapsedIconColor: Colors.white,
@@ -1689,49 +1794,41 @@ Widget specList({required String title, required List<String> speclist, required
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
         ),
         children: <Widget>[
-          specCont(speclist: speclist, speccontent: speccontent)
+          specCont(speccontent: speccontent)
         ],
       ),
     ),
   );
 }
 
-Widget specCont({required List<String> speclist, required List<String> speccontent}) {
+Widget specCont({required List<String> speccontent}){
   return ListView.builder(
-    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: speccontent!.length,
-    itemBuilder: (BuildContext context, int index) {
+    itemBuilder: (BuildContext context, int index){
       return Container(
-        margin: EdgeInsets.all(0.0),
-        decoration: BoxDecoration(color: Colors.white),
+        color: Colors.white,
         child: Padding(
-          padding: EdgeInsets.only(top: 0, left: 5, right: 5),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: RichText(
-                  textAlign: TextAlign.left,
                   text: TextSpan(
-                      text: speclist![index],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: speccontent![index],
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                            )),
-                      ]),
+                    text: speccontent![index],
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -1746,11 +1843,9 @@ Widget specInfo({required String title, required List<String> specList, required
   final GlobalKey expansionTileKey = GlobalKey();
 
   return Material(
-    color: Color.fromRGBO(16, 69, 114, 1),
+    color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
       child: ExpansionTile(
         iconColor: Colors.white,
         collapsedIconColor: Colors.white,
@@ -1763,52 +1858,31 @@ Widget specInfo({required String title, required List<String> specList, required
         title: Text(
           title,
           style: TextStyle(
-              fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
         ),
         children: <Widget>[
-          specInfoCont(speclist: specList, specinfo: specinfo)
+          specInfoCont(specinfo: specinfo)
         ],
       ),
     ),
   );
 }
 
-Widget specInfoCont({required List<String> speclist, required List<String> specinfo}) {
+Widget specInfoCont({required List<String> specinfo}){
   return ListView.builder(
-    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: specinfo!.length,
-    itemBuilder: (BuildContext context, int index) {
+    itemBuilder: (BuildContext context, int index){
       return Container(
-        margin: EdgeInsets.all(0.0),
-        decoration: BoxDecoration(color: Colors.white),
+        color: Colors.white,
         child: Padding(
-          padding: EdgeInsets.only(top: 0, left: 10, right: 10),
+          padding: EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: RichText(
-                  textAlign: TextAlign.left,
-                  text: TextSpan(
-                      text: speclist![index],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: specinfo![index],
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black,
-                            )),
-                      ]),
-                ),
-              ),
-              /*
               Flexible(
                 child: RichText(
                   text: TextSpan(
@@ -1821,7 +1895,6 @@ Widget specInfoCont({required List<String> speclist, required List<String> speci
                   ),
                 ),
               ),
-              */
             ],
           ),
         ),
@@ -1835,8 +1908,7 @@ void _scrollToSelectedContent({required GlobalKey expansionTileKey}) {
 
   if (keyContext != null) {
     Future.delayed(Duration(milliseconds: 200)).then((value) {
-      Scrollable.ensureVisible(keyContext,
-          duration: Duration(milliseconds: 200));
+      Scrollable.ensureVisible(keyContext,duration: Duration(milliseconds: 200));
     });
   }
 }

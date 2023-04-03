@@ -12,6 +12,7 @@ import '../../Screens/Account/checkout_result_page.dart';
 import '../../Screens/Authentication/login.dart';
 import '../../Screens/Account/home_page.dart';
 import '../../Utils/routers.dart';
+import '../AuthProvider/auth_provider.dart';
 
 class CheckoutProvider extends ChangeNotifier {
   ///Base Url
@@ -44,89 +45,194 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
 
     String token = await DatabaseProvider().getData('token');
-
-    try {
-      var headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json'
-      };
-      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/shipping-information'));
-      request.body = json.encode({
-        "addressInformation": {
-          "shipping_address": {
-            "region": province,
-            "country_id": country,
-            "street": [
-              address1,
-              address2,
-              address3
-            ],
-            "postcode": zip,
-            "city": city,
-            "firstname": firstName,
-            "lastname": lastName,
-            "email": email,
-            "telephone": phone
-          },
-          "billing_address": {
-            "region": province,
-            "country_id": country,
-            "street": [
-              address1,
-              address2,
-              address3
-            ],
-            "postcode": zip,
-            "city": city,
-            "firstname": firstName,
-            "lastname": lastName,
-            "email": email,
-            "telephone": phone
-          },
-          "shipping_carrier_code": "freeshipping",
-          "shipping_method_code": "freeshipping"
-        }
-      });
-      request.headers.addAll(headers);
-
-      http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        // print(await response.stream.bytesToString());
-        _isLoading = false;
-        _resMessage = "Shipping Info saved!";
-        notifyListeners();
-        PageNavigator(ctx: context).nextPageOnly(page: CheckoutPaymentPage(
-          email,
-          firstName,
-          lastName,
-          address1,
-          address2,
-          address3,
-          country,
-          province,
-          city,
-          zip,
-          phone,
-        ));
+    String adminToken = await DatabaseProvider().getData('admin token');
+    var masked_id = await DatabaseProvider().getData('masked_id');
+    var qoute_id = await DatabaseProvider().getData('qoute_id');
+    if(masked_id=='') {
+      final initateGuest = await AuthenticationProvider().initateGuest();
+      if(initateGuest) {
+        masked_id = await DatabaseProvider().getData('masked_id');
+        qoute_id = await DatabaseProvider().getData('qoute_id');
       }
-      else {
-        // print(response.reasonPhrase);
-        _resMessage = response.reasonPhrase.toString();
-        _isLoading = false;
-        notifyListeners();
-      }
-
-    } on SocketException catch (_) {
-      _isLoading = false;
-      _resMessage = "Internet connection is not available`";
-      notifyListeners();
-    } catch (e) {
-      _isLoading = false;
-      _resMessage = "Please try again";
-      notifyListeners();
-
     }
+
+
+    if(masked_id != '') {
+      try {
+        var headers = {
+          'Authorization': 'Bearer $adminToken',
+          'Content-Type': 'application/json'
+        };
+        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/shipping-information'));
+        request.body = json.encode({
+          "addressInformation": {
+            "shipping_address": {
+              "region": province,
+              "regionId": 43,
+              "country_id": country,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "firstname": firstName,
+              "lastname": lastName,
+              "email": email,
+              "telephone": phone
+            },
+            "billing_address": {
+              "region": province,
+              "regionId": 43,
+              "country_id": country,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "firstname": firstName,
+              "lastname": lastName,
+              "email": email,
+              "telephone": phone
+            },
+            "shipping_carrier_code": "freeshipping",
+            "shipping_method_code": "freeshipping"
+          }
+        });
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+
+        if (response.statusCode == 200) {
+          // print(await response.stream.bytesToString());
+          _isLoading = false;
+          _resMessage = "Shipping Info saved!";
+          notifyListeners();
+          PageNavigator(ctx: context).nextPageOnly(page: CheckoutPaymentPage(
+            email,
+            firstName,
+            lastName,
+            address1,
+            address2,
+            address3,
+            country,
+            province,
+            city,
+            zip,
+            phone,
+          ));
+        }
+        else {
+          // print(response.reasonPhrase);
+          _resMessage = response.reasonPhrase.toString();
+          _isLoading = false;
+          notifyListeners();
+        }
+
+      } on SocketException catch (_) {
+        _isLoading = false;
+        _resMessage = "Internet connection is not available`";
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _resMessage = "Please try again";
+        notifyListeners();
+
+      }
+
+    }else{
+
+
+
+      try {
+        var headers = {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        };
+        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/shipping-information'));
+        request.body = json.encode({
+          "addressInformation": {
+            "shipping_address": {
+              "region": province,
+              "regionId": 43,
+              "country_id": country,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "firstname": firstName,
+              "lastname": lastName,
+              "email": email,
+              "telephone": phone
+            },
+            "billing_address": {
+              "region": province,
+              "country_id": country,
+              "street": [
+                address1,
+                address2,
+                address3
+              ],
+              "postcode": zip,
+              "city": city,
+              "firstname": firstName,
+              "lastname": lastName,
+              "email": email,
+              "telephone": phone
+            },
+            "shipping_carrier_code": "freeshipping",
+            "shipping_method_code": "freeshipping"
+          }
+        });
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+
+        if (response.statusCode == 200) {
+          // print(await response.stream.bytesToString());
+          _isLoading = false;
+          _resMessage = "Shipping Info saved!";
+          notifyListeners();
+          PageNavigator(ctx: context).nextPageOnly(page: CheckoutPaymentPage(
+            email,
+            firstName,
+            lastName,
+            address1,
+            address2,
+            address3,
+            country,
+            province,
+            city,
+            zip,
+            phone,
+          ));
+        }
+        else {
+          // print(response.reasonPhrase);
+          _resMessage = response.reasonPhrase.toString();
+          _isLoading = false;
+          notifyListeners();
+        }
+
+      } on SocketException catch (_) {
+        _isLoading = false;
+        _resMessage = "Internet connection is not available`";
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _resMessage = "Please try again";
+        notifyListeners();
+
+      }
+    }
+
+
   }
 
 
@@ -149,64 +255,136 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
 
     String token = await DatabaseProvider().getData('token');
+    String adminToken = await DatabaseProvider().getData('admin token');
 
-    try {
-      var headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json'
-      };
-      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
-      request.body = json.encode({
-        "paymentMethod": {
-          "method": paymentOption
-        },
-        "billing_address": {
-          "email": email,
-          "region": province,
-          "country_id": country,
-          "region_id": 43,
-          "street": [
-            address1,
-            address2,
-            address3
-          ],
-          "postcode": zip,
-          "city": city,
-          "telephone": phone,
-          "firstname": firstName,
-          "lastname": lastName
-        }
-      });
-      request.headers.addAll(headers);
-
-      http.StreamedResponse response = await request.send();
-
-      if (response.statusCode == 200) {
-        // print(await response.stream.bytesToString());
-        _isLoading = false;
-        _resMessage = "Your order has been placed!";
-        notifyListeners();
-        PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
-          email,
-        ));
+    var masked_id = await DatabaseProvider().getData('masked_id');
+    var qoute_id = await DatabaseProvider().getData('qoute_id');
+    if(masked_id=='') {
+      final initateGuest = await AuthenticationProvider().initateGuest();
+      if(initateGuest) {
+        masked_id = await DatabaseProvider().getData('masked_id');
+        qoute_id = await DatabaseProvider().getData('qoute_id');
       }
-      else {
-        // print(response.reasonPhrase);
-        _resMessage = response.reasonPhrase.toString();
-        _isLoading = false;
-        notifyListeners();
-      }
-
-    } on SocketException catch (_) {
-      _isLoading = false;
-      _resMessage = "Internet connection is not available`";
-      notifyListeners();
-    } catch (e) {
-      _isLoading = false;
-      _resMessage = "Please try again";
-      notifyListeners();
-
     }
+
+    if(masked_id != '') {
+      try {
+        var headers = {
+          'Authorization': 'Bearer $adminToken',
+          'Content-Type': 'application/json'
+        };
+        var request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
+        request.body = json.encode({
+          "paymentMethod": {
+            "method": paymentOption
+          },
+          "billing_address": {
+            "email": email,
+            "region": province,
+            "country_id": country,
+            "regionId": 43,
+            "street": [
+              address1,
+              address2,
+              address3
+            ],
+            "postcode": zip,
+            "city": city,
+            "telephone": phone,
+            "firstname": firstName,
+            "lastname": lastName
+          }
+        });
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+
+        if (response.statusCode == 200) {
+          // print(await response.stream.bytesToString());
+          _isLoading = false;
+          _resMessage = "Your order has been placed!";
+          notifyListeners();
+          PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+            email,
+          ));
+        }
+        else {
+          // print(response.reasonPhrase);
+          _resMessage = response.reasonPhrase.toString();
+          _isLoading = false;
+          notifyListeners();
+        }
+
+      } on SocketException catch (_) {
+        _isLoading = false;
+        _resMessage = "Internet connection is not available`";
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _resMessage = "Please try again";
+        notifyListeners();
+
+      }
+    }else{
+      try {
+        var headers = {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json'
+        };
+        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
+        request.body = json.encode({
+          "paymentMethod": {
+            "method": paymentOption
+          },
+          "billing_address": {
+            "email": email,
+            "region": province,
+            "country_id": country,
+            "region_id": 43,
+            "street": [
+              address1,
+              address2,
+              address3
+            ],
+            "postcode": zip,
+            "city": city,
+            "telephone": phone,
+            "firstname": firstName,
+            "lastname": lastName
+          }
+        });
+        request.headers.addAll(headers);
+
+        http.StreamedResponse response = await request.send();
+
+        if (response.statusCode == 200) {
+          // print(await response.stream.bytesToString());
+          _isLoading = false;
+          _resMessage = "Your order has been placed!";
+          notifyListeners();
+          PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+            email,
+          ));
+        }
+        else {
+          // print(response.reasonPhrase);
+          _resMessage = response.reasonPhrase.toString();
+          _isLoading = false;
+          notifyListeners();
+        }
+
+      } on SocketException catch (_) {
+        _isLoading = false;
+        _resMessage = "Internet connection is not available`";
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _resMessage = "Please try again";
+        notifyListeners();
+
+      }
+    }
+
   }
 
 
