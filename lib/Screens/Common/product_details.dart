@@ -1503,6 +1503,12 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   }
 
   @override
+  void didChangeDependencies() {
+    _getCurrentLocation();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
