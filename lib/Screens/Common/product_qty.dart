@@ -76,7 +76,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
             child: Text(
               value,
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.white
               ),
             ),
