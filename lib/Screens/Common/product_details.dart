@@ -1575,18 +1575,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               ],
               Flexible(
                 fit: FlexFit.tight,
-                child: RichText(
-                  text: TextSpan(
-                    text: transitDay.toString()+'\n'+estimatedDay.toString(),
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                fit: FlexFit.tight,
                 child: TextField(
                   controller: _searchText,
                   decoration: InputDecoration(
@@ -1607,42 +1595,40 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             color: Colors.green,
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FeedsScreen(
-                                      target: _searchText.text.trim(),
-                                      itemSearch: 'true')),
-                            );
+
                           },
                         ),
                       ],
                     ),
                   ),
+                  onSubmitted: (String str) {
+
+                  },
                 ),
               ),
             ],
           ),
-          /*
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Flexible(
-                fit: FlexFit.tight,
-                child: RichText(
-                  text: TextSpan(
-                    text: transitDay.toString()+'\n'+estimatedDay.toString(),
-                    style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black
+              Align(
+                alignment: Alignment.center,
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  child: RichText(
+                    text: TextSpan(
+                      text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                      style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black
+                      ),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          */
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
