@@ -64,6 +64,8 @@ class _DropdownQTYState extends State<DropdownQTY> {
     print(dropdownValue);
     if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) <= 10) {
       return DropdownButton<String>(
+        iconDisabledColor: Colors.white,
+        iconEnabledColor: Colors.white,
         dropdownColor: Colors.lightGreen,
         value: dropdownValue,
         items: <String>[

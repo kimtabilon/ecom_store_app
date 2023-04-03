@@ -1612,7 +1612,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 1),
+                padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
                 decoration: BoxDecoration(
                   color: Colors.lightGreen,
                   borderRadius: BorderRadius.only(
@@ -1623,7 +1623,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                   children: [
                     Text(
                       'QTY: ',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     DropdownQTY(),
                   ],
