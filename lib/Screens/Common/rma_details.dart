@@ -15,6 +15,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
+import '../../Model/order_model.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/Database/db_provider.dart';
@@ -25,6 +26,7 @@ import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/feeds_widget.dart';
+import '../Account/Local_widget/cart_image_widget.dart';
 import '../Authentication/splash.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -32,21 +34,28 @@ import 'package:flutter/foundation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'feeds_screen.dart';
+import 'package:flutter/src/rendering/box.dart';
 
 class RMADetails extends StatefulWidget {
   const RMADetails({
     Key? key,
-    required this.id,
+    required this.order,
   }) : super(key: key);
-  final String id;
+  final OrderModel order;
   @override
   State<RMADetails> createState() => _RMADetailsState();
 }
 
 class _RMADetailsState extends State<RMADetails> {
+  int min = 1;
+  int max = 1;
+  TextEditingController _textEditingController = TextEditingController();
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.order.toJson());
+
     return Scaffold(
       appBar: AppBar(
         // elevation: 1,
@@ -157,21 +166,124 @@ class _RMADetailsState extends State<RMADetails> {
         ],
       ),
       backgroundColor: const Color(0xFFEDECF2),
-      body: SingleChildScrollView(
-        child: Container(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Center(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Align(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
                   child: Text(
-                    "Return Management Form",
+                      "Return Management Form",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
                     ),
                   ),
                 )
+              ),
+              const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('ITEMS ORDERED')
+              ),
+              ...widget.order.items!.map((item) =>
+                  Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                          child: ListTile(
+                            title: Text(item.sku!),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(item.name!),
+                                Text("QTY: ${item.qty_ordered}"),
+                                Row(
+                                  children: [
+                                    Text("Return QTY: "),
+                                    Container(
+                                      width: 20,
+                                      child: TextField(
+                                        controller: _textEditingController,
+                                        decoration: InputDecoration(
+                                          hintText: "${item.qty_ordered}"
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        onChanged: (String value) {
+                                          print('Changed');
+                                          int x;
+                                          try {
+                                            x = int.parse(value);
+                                            max = int.parse(item.qty_ordered.toString());
+                                          } catch (error) {
+                                            x = min;
+                                            max = int.parse(item.qty_ordered.toString());
+                                          }
+                                          if (x < min) {
+                                            x = min;
+                                          } else if (x > max) {
+                                            x = max;
+                                          }
+
+                                          _textEditingController.value = TextEditingValue(
+                                            text: x.toString(),
+                                            selection: TextSelection.fromPosition(
+                                              TextPosition(offset: _textEditingController.value.selection.baseOffset),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text("Add To List: "),
+                                    Checkbox(
+                                      value: isChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          if(isChecked == false){
+                                            isChecked = true;
+                                          } else {
+                                            isChecked = false;
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            trailing: Text("\$${item.price!}"),
+                            leading: CartItemImageWidget(sku: item.sku!),
+                            // style: ListTitleStyle(),
+                          )
+                      )
+                  )
+              ).toList(),
+              SizedBox(
+                height: 30,
+              ),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: const Text('Submit RMA'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(16,69,114,1),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                        ),
+                      ),
+                    ],
+                  )
               )
             ],
           ),
@@ -179,5 +291,4 @@ class _RMADetailsState extends State<RMADetails> {
       ),
     );
   }
-
 }

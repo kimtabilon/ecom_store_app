@@ -214,19 +214,27 @@ class _ProductDetailsState extends State<OrderDetails> {
                           print("${widget.order.id!}");
                           print("${widget.order.items![0].sku}");
                           print("${widget.order.customer_email}");
+                          print("${widget.order.status}");
 
                           String ex = await RMAProvider.getRMA(orderno: "${widget.order.id!}", sku: "${widget.order.items![0].sku}");
                           print(ex);
 
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: RMADetails(id: "${widget.order.id!}"),
-                            ),
-                          );
+                          var status = "${widget.order.status}";
+                          if (status == "complete") {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: RMADetails(order: widget.order),
+                              ),
+                            );
+                          } else {
+                            print(status);
+                            print("Unable to return the order!");
+                            Text("Unable to return the order!");
+                          }
                         },
-                        child: const Text('RMA'),
+                        child: const Text('File RMA'),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color.fromRGBO(16,69,114,1),
                             padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
