@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/cart_icon.dart';
 import '../../Widgets/search_field.dart';
+import 'help_center_form.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key}) : super(key: key);
@@ -35,7 +36,8 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Image.network(
+            leading: BackButton(),
+            title: Image.network(
               'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
               cacheWidth: 40,
               width: 40,
@@ -86,15 +88,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                             width: double.infinity,
                             padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                             decoration: const BoxDecoration(
-                              color: Colors.black12
-                              /*image: DecorationImage(
-                                image: AssetImage("assets/images/bulb.jpg"),
+                              color: Colors.black12,
+                              image: DecorationImage(
+                                image: NetworkImage('https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/help-center/banner-bg-help-center-mobile.webp'),
                                 fit: BoxFit.cover,
-                              ),*/
+                              ),
                             ),
                             child: Column(children: const [
-                                Text("Help Center", style: TextStyle(fontSize: 30),),
-                                Text("Get instant answers to EBP’s most common questions", style: TextStyle(fontSize: 18),),
+                                Text("Help Center", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                                Text("Get instant answers to EBP’s most common questions", style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
                             ])
                         ),
                         const SizedBox(height: 30,),
@@ -129,7 +131,8 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                         const SizedBox(height: 20,),
                         const Text("Get In Touch", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                         const SizedBox(height: 10,),
-                        const Text("Still have questions? You may reach us through the given channels or send us a direct message here.", style: TextStyle(fontSize: 18),),
+                        const Text("Still have questions? You may reach us through the given channels or send us a direct message here.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                        const HelpCenterForm(),
                         const SizedBox(height: 20,),
                         const Text("Store Hours", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
                         const Text("Monday thru Friday - 8:30AM to 5PM PST", style: TextStyle(fontSize: 15,)),

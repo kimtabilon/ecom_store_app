@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/cart_icon.dart';
 import '../../Widgets/search_field.dart';
+import 'package:video_player/video_player.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({Key? key}) : super(key: key);
@@ -25,6 +26,32 @@ class _AboutUsPageState extends State<AboutUsPage> {
     {'title':'No Sales Tax in Most States', 'icon':Icons.payments_outlined},
   ];
 
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = VideoPlayerController.network(
+      'https://www.youtube.com/embed/gT477pdGGTA?autoplay=1&mute=0',
+    );
+
+    // Initialize the controller and store the Future for later use.
+    _initializeVideoPlayerFuture = _controller.initialize();
+
+    // Use the controller to loop the video.
+    _controller.setLooping(true);
+  }
+
+  @override
+  void dispose() {
+    // Ensure disposing of the VideoPlayerController to free up resources.
+    _controller.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,7 +63,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Image.network(
+            leading: BackButton(),
+            title: Image.network(
               'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
               cacheWidth: 40,
               width: 40,
@@ -75,10 +103,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const SearchFieldWidget(),
-                const SizedBox(
-                  height: 18,
-                ),
+                // const SearchFieldWidget(),
+                // const SizedBox(height: 18, ),
                 Expanded(
                   child: SingleChildScrollView(
                       child: Column(
@@ -111,6 +137,80 @@ class _AboutUsPageState extends State<AboutUsPage> {
                               )
                           ),
                           const SizedBox(height: 30,),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                // If the video is playing, pause it.
+                                if (_controller.value.isPlaying) {
+                                  _controller.pause();
+                                } else {
+                                  // If the video is paused, play it.
+                                  _controller.play();
+                                }
+                              });
+                            },
+                            child: _controller.value.isPlaying
+                                ? FutureBuilder(
+                                    future: _initializeVideoPlayerFuture,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.done) {
+                                        // If the VideoPlayerController has finished initialization, use
+                                        // the data it provides to limit the aspect ratio of the video.
+                                        return AspectRatio(
+                                          aspectRatio: _controller.value.aspectRatio,
+                                          // Use the VideoPlayer widget to display the video.
+                                          child: VideoPlayer(_controller),
+                                        );
+                                      } else {
+                                        // If the VideoPlayerController is still initializing, show a
+                                        // loading spinner.
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      }
+                                    },
+                                  )
+                                : Image.network(
+                              // height: double.infinity,
+                              "https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/about-us/about-video-preview.webp",
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          /*InkWell(
+                            onTap: () {
+                              setState(() {
+                                // If the video is playing, pause it.
+                                if (_controller.value.isPlaying) {
+                                  _controller.pause();
+                                } else {
+                                  // If the video is paused, play it.
+                                  _controller.play();
+                                }
+                              });
+                            },
+                            child: FutureBuilder(
+                              future: _initializeVideoPlayerFuture,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) {
+                                  // If the VideoPlayerController has finished initialization, use
+                                  // the data it provides to limit the aspect ratio of the video.
+                                  return AspectRatio(
+                                    aspectRatio: _controller.value.aspectRatio,
+                                    // Use the VideoPlayer widget to display the video.
+                                    child: VideoPlayer(_controller),
+                                  );
+                                } else {
+                                  // If the VideoPlayerController is still initializing, show a
+                                  // loading spinner.
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          ),*/
+                          const SizedBox(height: 30,),
                           const Text("Our Company", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                           SizedBox(height: 15,),
                           const Text("Founded in 2014, EcommerceBusinessPrime, Inc. is an exclusive online store in partnership with the leading brands in IT and office electronics. Our curated selection of brands and manufacturers of IT and office electronics have over 1 million products to choose from.", style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
@@ -136,6 +236,13 @@ class _AboutUsPageState extends State<AboutUsPage> {
                           const Text("Conquering Vertical Markets", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
                           SizedBox(height: 10,),
                           const Text("EcommerceBusinessPrime caters to both retail and wholesale buyers providing comprehensive IT solutions in key vertical markets: education, government, health, and corporate sectors.", style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
+                          const SizedBox(height: 30,),
+                          Image.network(
+                            // height: double.infinity,
+                            "https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/about-us/about-vertical.webp",
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
                           const SizedBox(height: 30,),
                           Card(
                             color: Color.fromRGBO(16,69,114,1),
@@ -180,6 +287,17 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                   ),
                                 );
                               }),
+                          const SizedBox(height: 30,),
+                          Card(
+                            color: Color.fromRGBO(16,69,114,1),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                              child: Column(
+                                children: const [
+                                  Text("Got questions about us and our process? We’ve compiled the frequently asked questions and answered them in one place for your convenience.", style: TextStyle(fontSize: 18,color: Colors.white), textAlign: TextAlign.center,),
+                                ],
+                              ),
+                            ),),
                           const SizedBox(height: 50,),
                         ],
                       )

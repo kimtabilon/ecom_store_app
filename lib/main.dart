@@ -1,7 +1,5 @@
 import 'package:ecom_store_app/Model/category_model.dart';
 import 'package:ecom_store_app/Provider/CheckoutProvider/checkout_provider.dart';
-import 'package:ecom_store_app/Screens/Pages/about_us.dart';
-import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Provider/AuthProvider/auth_provider.dart';
@@ -38,7 +36,6 @@ class App extends StatelessWidget {
                 FloatingActionButtonThemeData(backgroundColor: primaryColor),
             primaryColor: primaryColor),
         home: const GuestPage(),
-        // home: const AboutUsPage(),
       ),
     );
   }
