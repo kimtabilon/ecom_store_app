@@ -1515,7 +1515,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
     return BottomAppBar(
         child: Container(
-      height: 120,
+      height: 150,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1579,7 +1579,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                   text: TextSpan(
                     text: transitDay.toString()+'\n'+estimatedDay.toString(),
                     style: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         color: Colors.black
                     ),
                   ),
@@ -1587,6 +1587,26 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               ),
             ],
           ),
+          /*
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                child: RichText(
+                  text: TextSpan(
+                    text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          */
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
