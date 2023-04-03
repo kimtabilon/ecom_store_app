@@ -2,8 +2,10 @@ import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/cart_icon.dart';
 import '../../Widgets/search_field.dart';
+import '../Common/guest_page.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key}) : super(key: key);
@@ -35,10 +37,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Image.network(
-              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-              cacheWidth: 40,
-              width: 40,
+            leading: InkWell(
+              onTap: () {
+                PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              },
+              child: Image.network(
+                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                cacheWidth: 40,
+                width: 40,
+              ),
             ),
             actions: [
               const CartIconWidget(),
