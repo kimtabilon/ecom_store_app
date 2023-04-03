@@ -1469,7 +1469,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     });
     // print(_position);
 
-    Coordinate coordinate = Coordinate(latitude: 33.712277, longitude: -117.859155);
+    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
     geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
     // print(geoCoding.address.state);
     // print(geoCoding.address.postalCode);
@@ -1512,7 +1512,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-
+    final TextEditingController _searchText = TextEditingController();
     return BottomAppBar(
         child: Container(
       height: 120,
@@ -1581,6 +1581,42 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colors.black
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                fit: FlexFit.tight,
+                child: TextField(
+                  controller: _searchText,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      borderSide: BorderSide(width: 0.8),
+                    ),
+                    hintText: "ZIP",
+                    suffixIcon: Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween, // added line
+                      mainAxisSize: MainAxisSize.min, // added line
+                      children: <Widget>[
+                        IconButton(
+                          icon: const Icon(
+                            IconlyLight.search,
+                            color: Colors.green,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FeedsScreen(
+                                      target: _searchText.text.trim(),
+                                      itemSearch: 'true')),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
