@@ -1,20 +1,17 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:ecom_store_app/Screens/Authentication/splash.dart';
+import 'package:ecom_store_app/Widgets/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../Provider/StoreProvider/cart_provider.dart';
-import '../../Screens/Common/categories_screen.dart';
 import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
-import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/sale_widget.dart';
-import '../Account/cart_page.dart';
-import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badges;
+import '../../Widgets/search_field.dart';
+
 
 class GuestPage extends StatefulWidget {
   const GuestPage({Key? key}) : super(key: key);
@@ -24,29 +21,10 @@ class GuestPage extends StatefulWidget {
 }
 
 class _GuestPageState extends State<GuestPage> {
-  late TextEditingController _textEditingController;
-  final TextEditingController _searchText = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-    });
-  }
-
-  @override
-  void dispose() {
-    // _textEditingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    // String cart_total_items = Provider.of<CartProvider>(context).cart_total_items;
 
     return GestureDetector(
       onTap: () {
@@ -61,38 +39,7 @@ class _GuestPageState extends State<GuestPage> {
               width: 40,
             ),
             actions: [
-              InkWell(
-                  onTap: () {
-                    PageNavigator(ctx: context).nextPage(page: const CartPage());
-                  },
-
-                  child: Consumer<CartProvider>(
-                    builder: (context, cart, child) {
-                      return cart.cart_total_items!='' && cart.cart_total_items!='0' ? Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-
-                        child: badges.Badge(
-                          badgeContent: Text(
-                            cart.cart_total_items,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: const Icon(Icons.shopping_cart_outlined,
-                                size: 28, color: Colors.lightGreen),
-                          ),
-                        ),
-                      )
-                        : Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: const Icon(
-                            Icons.shopping_cart_outlined,
-                            size: 28,
-                            color: Colors.lightGreen
-                        ),
-                      );
-                  })
-              ),
+              const CartIconWidget(),
               const Icon(
                 Icons.question_mark,
                 size: 28,
@@ -125,67 +72,7 @@ class _GuestPageState extends State<GuestPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Stack(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(0),
-                      child: TextField(
-                        controller: _searchText,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(width: 0.8),
-                          ),
-                          hintText: "Search",
-                          prefixIcon: AppBarIcons(
-                            function: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: const CategoriesScreen(),
-                                ),
-                              );
-                            },
-                            icon: IconlyBold.category,
-                          ),
-                          suffixIcon: Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween, // added line
-                            mainAxisSize: MainAxisSize.min, // added line
-                            children: <Widget>[
-                              IconButton(
-                                icon: const Icon(
-                                  IconlyLight.search,
-                                  color: Colors.green,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => FeedsScreen(
-                                            target: _searchText.text.trim(),
-                                            itemSearch: 'true')),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                        onSubmitted: (String str) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FeedsScreen(
-                                    target: _searchText.text.trim(),
-                                    itemSearch: 'true')),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                const SearchFieldWidget(),
                 const SizedBox(
                   height: 18,
                 ),
