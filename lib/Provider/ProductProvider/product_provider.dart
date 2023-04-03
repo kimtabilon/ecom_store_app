@@ -221,6 +221,10 @@ class ProductProvider {
     required String postal,
   }) async {
     try {
+      if(state == ''){
+        state = '0';
+      }
+
       var uri = Uri.https(
           AppUrl.consoleUrl,
           "content/delivery/$sku/$qty/$lat/$lng/$state/0/0/$postal");
