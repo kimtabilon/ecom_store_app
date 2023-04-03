@@ -52,6 +52,9 @@ class _RMADetailsState extends State<RMADetails> {
   TextEditingController _textEditingController = TextEditingController();
   bool isChecked = false;
 
+  List<bool> _isChecked = [];
+  int i = 0;
+
   @override
   Widget build(BuildContext context) {
     // print(widget.order.toJson());
