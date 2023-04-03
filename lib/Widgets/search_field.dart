@@ -32,12 +32,12 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 15.0),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
+                borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(width: 0.8),
               ),
               hintText: "Search",
               prefixIcon: Padding(
-                padding: EdgeInsets.only(bottom: 2),
+                padding: EdgeInsets.only(bottom: 3),
                 child: AppBarIcons(
                   function: () {
                     Navigator.push(
