@@ -1483,7 +1483,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
       state: geoCoding.address.state.toString(),
       postal: geoCoding.address.postalCode.toString(),
     );
-    print(getDays[0]['transit']);
     setState(() {
       transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
@@ -1512,7 +1511,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-    final TextEditingController _searchText = TextEditingController();
+    final TextEditingController _zipText = TextEditingController();
     return BottomAppBar(
         child: Container(
       height: 150,
@@ -1576,7 +1575,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               Flexible(
                 fit: FlexFit.tight,
                 child: TextField(
-                  controller: _searchText,
+                  controller: _zipText,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
                     border: OutlineInputBorder(
@@ -1594,8 +1593,19 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             IconlyLight.search,
                             color: Colors.green,
                           ),
-                          onPressed: () {
-
+                          onPressed: () async {
+                            List getDays = await ProductProvider.getDelivery(
+                              sku: widget.sku,
+                              qty: widget.qty,
+                              lat: '0',
+                              lng: '0',
+                              state: '0',
+                              postal: _zipText.text.toString(),
+                            );
+                            setState(() {
+                              transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+                              estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                            });
                           },
                         ),
                       ],

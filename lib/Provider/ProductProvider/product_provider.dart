@@ -184,7 +184,7 @@ class ProductProvider {
     try {
       var uri = Uri.https(
           AppUrl.consoleUrl,
-          "content/delivery/$sku/$qty/$lat/$lng/$state/$postal");
+          "content/delivery/$sku/$qty/$lat/$lng/$state/0/0/$postal");
 
       //print(uri);
 
