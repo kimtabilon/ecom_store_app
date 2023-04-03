@@ -115,7 +115,7 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
           height: 44.0,
           decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.pink, Colors.green])),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () { send; },
             style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
             child: Text('Send'),
           ),
