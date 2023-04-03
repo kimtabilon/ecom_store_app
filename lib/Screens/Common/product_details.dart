@@ -1515,7 +1515,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     final TextEditingController _searchText = TextEditingController();
     return BottomAppBar(
         child: Container(
-      height: 120,
+      height: 150,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -1579,7 +1579,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                   text: TextSpan(
                     text: transitDay.toString()+'\n'+estimatedDay.toString(),
                     style: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         color: Colors.black
                     ),
                   ),
@@ -1623,12 +1623,32 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               ),
             ],
           ),
+          /*
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                child: RichText(
+                  text: TextSpan(
+                    text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.black
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          */
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 1),
+                padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
                 decoration: BoxDecoration(
                   color: Colors.lightGreen,
                   borderRadius: BorderRadius.only(
@@ -1639,7 +1659,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                   children: [
                     Text(
                       'QTY: ',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     DropdownQTY(),
                   ],
