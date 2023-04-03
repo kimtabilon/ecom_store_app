@@ -93,6 +93,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   initState() {
     // update _controller with value whenever _myString changes
     _myString.addListener(() => _sku = _myString.value);
+
+
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 // import '../consts/global_colors.dart';
 import '../Model/category_model.dart';
+import '../Screens/Common/category_feeds_screen.dart';
 import '../Screens/Common/feeds_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -14,6 +15,14 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final categoriesModelProvider = Provider.of<CategoryModel>(context);
+
+    List<CategoryModel> x(List categoriesSnaphot) {
+      print("data ${categoriesSnaphot[0]}");
+      return categoriesSnaphot.map((data) {
+        return CategoryModel.fromJson(data);
+      }).toList();
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
         child: InkWell(
@@ -23,7 +32,7 @@ class CategoryWidget extends StatelessWidget {
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  child: FeedsScreen(target: categoriesModelProvider.name.toString(),itemSearch: 'false'),
+                  child: CategoryFeedsScreen(target: categoriesModelProvider.name.toString(),itemSearch: 'false'),
                 ),
               );
             },
