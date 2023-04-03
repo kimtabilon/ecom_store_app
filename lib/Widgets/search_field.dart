@@ -36,37 +36,43 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                 borderSide: BorderSide(width: 0.8),
               ),
               hintText: "Search",
-              prefixIcon: AppBarIcons(
-                function: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const CategoriesScreen(),
-                    ),
-                  );
-                },
-                icon: IconlyBold.category,
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(bottom: 2),
+                child: AppBarIcons(
+                  function: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: const CategoriesScreen(),
+                      ),
+                    );
+                  },
+                  icon: IconlyBold.category,
+                ),
               ),
               suffixIcon: Row(
                 mainAxisAlignment:
                 MainAxisAlignment.spaceBetween, // added line
                 mainAxisSize: MainAxisSize.min, // added line
                 children: <Widget>[
-                  IconButton(
-                    icon: const Icon(
-                      IconlyLight.search,
-                      color: Colors.green,
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: IconButton(
+                      icon: const Icon(
+                        IconlyLight.search,
+                        color: Colors.green,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FeedsScreen(
+                                  target: _searchText.text.trim(),
+                                  itemSearch: 'true')),
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => FeedsScreen(
-                                target: _searchText.text.trim(),
-                                itemSearch: 'true')),
-                      );
-                    },
                   ),
                 ],
               ),

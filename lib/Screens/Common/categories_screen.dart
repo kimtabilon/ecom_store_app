@@ -62,32 +62,6 @@ class CategoriesScreen extends StatelessWidget {
               child: Wrap(
                 children: [
                   Row(
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const GuestPage(),
-                            ),
-                          );
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                          child: Text(
-                            "Home",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
                     children: const [
                       Padding(
                         padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
