@@ -3,6 +3,7 @@ import 'package:ecom_store_app/Provider/CheckoutProvider/checkout_provider.dart'
 import 'package:ecom_store_app/Screens/Pages/about_us.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
+import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:provider/provider.dart';
 import 'Provider/AuthProvider/auth_provider.dart';
 import 'Provider/Database/db_provider.dart';
@@ -10,7 +11,8 @@ import 'Provider/StoreProvider/cart_provider.dart';
 import 'Styles/colors.dart';
 import 'Screens/Common/guest_page.dart';
 
-void main() {
+Future<void> main() async {
+  await NominatimGeocoding.init();
   runApp(const App());
 }
 

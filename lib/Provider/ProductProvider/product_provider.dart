@@ -97,6 +97,43 @@ class ProductProvider {
     }
   }
 
+  static Future<ProductModel> deliveryData(
+      {required String sku,
+        required String qty,
+        required String lat,
+        required String lng,
+        required String state,
+        required String postal}) async {
+    try {
+      var uri = Uri.https(
+          AppUrl.consoleUrl,
+          "content/delivery/$sku/$qty/$lat/$lng/$state/$postal");
+
+      //print(uri);
+
+      var response = await http.get(uri);
+
+      // print("response ${jsonDecode(response.body)}");
+      var data = jsonDecode(response.body);
+
+      List tempList = [];
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      tempList.add(data);
+      // for (var v in data) {
+      //   tempList.add(v);
+      //   // print("V $v \n\n");
+      // }
+      // return data['date'];
+      return ProductModel.fromJson(data);
+    } catch (error) {
+      log("An error occured $error");
+      throw error.toString();
+    }
+  }
+
+
   static Future<List<ProductModel>> getAllProducts(
       {required String target, required String limit}) async {
     List temp = await getData(
@@ -115,6 +152,65 @@ class ProductProvider {
     );
     return ProductModel.productsFromSnapshot(temp);
   }
+
+
+  // static Future<List<ProductModel>> getDelivery(
+  //     {required String sku,
+  //       required String qty,
+  //       required String lat,
+  //       required String lng,
+  //       required String state,
+  //       required String postal}) async {
+  //   ProductModel temp = await deliveryData(
+  //     sku: sku,
+  //     qty: qty,
+  //     lat: lat,
+  //     lng: lng,
+  //     state: state,
+  //     postal: postal,
+  //   );
+  //   return ProductModel.productsFromSnapshot(temp);
+  // }
+
+
+  static Future<List> getDelivery({
+    required String sku,
+    required String qty,
+    required String lat,
+    required String lng,
+    required String state,
+    required String postal,
+  }) async {
+    try {
+      var uri = Uri.https(
+          AppUrl.consoleUrl,
+          "content/delivery/$sku/$qty/$lat/$lng/$state/$postal");
+
+      //print(uri);
+
+      var response = await http.get(uri);
+
+      // print("response ${jsonDecode(response.body)}");
+      var data = jsonDecode(response.body);
+
+      List tempList = [];
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      tempList.add(data);
+      // for (var v in data) {
+      //   tempList.add(v);
+      //   // print("V $v \n\n");
+      // }
+      // return data['date'];
+      return tempList;
+    } catch (error) {
+      log("An error occured $error");
+      throw error.toString();
+    }
+  }
+
+
 
 
   static Future<List<ProductModel>> getOnSaleProducts(
