@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../Model/product_model.dart';
@@ -35,7 +36,11 @@ class _FeedsScreenState extends State<FeedsScreen> {
         _isLoading = true;
         print("_isLoading $_isLoading");
         limit += 10;
-        await getProducts();
+        if(!mounted) {
+          super.dispose();
+        } else {
+          await getProducts();
+        }
         _isLoading = false;
         print("limit $limit");
       }

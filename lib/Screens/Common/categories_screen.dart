@@ -1,9 +1,13 @@
+import 'package:ecom_store_app/Screens/Pages/about_us.dart';
+import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Model/category_model.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
+import 'guest_page.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -11,7 +15,9 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Menu")),
+        appBar: AppBar(
+            title: const Text("Menu"),
+        ),
         body: FutureBuilder<List<CategoryModel>>(
           future: ProductProvider.getAllCategories(),
           builder: ((context, snapshot) {
@@ -34,10 +40,36 @@ class CategoriesScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const GuestPage(),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          child: Text(
+                            "Home",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: const [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
                         child: Text(
-                          "About Us",
+                          "Catalog",
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold
@@ -46,62 +78,10 @@ class CategoriesScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  /*
-                    Material(
-                      child: ExpansionTile(
-                        initiallyExpanded: true,
-                        iconColor: Colors.transparent,
-                        collapsedIconColor: Colors.transparent,
-                        title: Text(
-                          "Catalog",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17
-                          ),
-                        ),
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 500,
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: ListView.builder(
-                                      primary: false,
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      itemCount: snapshot.data!.length,
-                                      itemBuilder: (context, index) {
-                                        return ChangeNotifierProvider.value(
-                                          value: snapshot.data![index],
-                                          child: const CategoryWidget(),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    */
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                        child: Text(
-                          "Catalog",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      )
-                    ],
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                    height: 1,
+                    color: Colors.black,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 15),
@@ -118,34 +98,58 @@ class CategoriesScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  /*
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: ListView.builder(
-                          primary: false,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return ChangeNotifierProvider.value(
-                              value: snapshot.data![index],
-                              child: const CategoryWidget(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    */
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                    height: 1,
+                    color: Colors.black,
+                  ),
                   Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                        child: Text(
-                          "Help Center",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const AboutUsPage(),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          child: Text(
+                            "About Us",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const HelpCenterPage(),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          child: Text(
+                            "Help Center",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
                           ),
                         ),
                       )

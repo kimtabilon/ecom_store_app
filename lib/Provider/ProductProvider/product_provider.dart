@@ -42,12 +42,14 @@ class ProductProvider {
             "limit": limit,
           });
 
-      //print(uri);
+      // print(uri);
 
       var response = await http.get(uri);
+      // print(response.body.toString());
 
       //print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
+
       List tempList = [];
       if (response.statusCode != 200) {
         throw data["message"];
@@ -74,7 +76,7 @@ class ProductProvider {
             "limit": limit,
           });
 
-      //print(uri);
+      // print(uri);
 
       var response = await http.get(uri);
 

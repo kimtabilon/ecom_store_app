@@ -45,11 +45,15 @@ dependencies:
   intl: ^0.18.0
   clippy_flutter: ^2.0.0-nullsafety.1
   expandable_search_bar: ^0.0.2
+  carousel_slider: ^4.2.1
   get:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   geocoder_buddy: ^1.0.1
   nominatim_geocoding: ^0.0.6
+
+  badges: ^3.0.3
+
 
 dev_dependencies:
   flutter_test:

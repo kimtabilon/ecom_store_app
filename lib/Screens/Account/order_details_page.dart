@@ -1,8 +1,10 @@
+import 'package:ecom_store_app/Screens/Common/rma_details.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
 import 'Local_widget/cart_image_widget.dart';
 import 'home_page.dart';
+import '../../Provider/RMA/rma_provider.dart';
 
 
 class OrderDetails extends StatefulWidget {
@@ -21,6 +23,9 @@ class _ProductDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(widget.order.toJson());
+    // return Text("Order No.: ${widget.order.id!}",);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order Details'),
@@ -196,6 +201,60 @@ class _ProductDetailsState extends State<OrderDetails> {
                   ],
                 ),
               ))),
+              SizedBox(
+                height: 30,
+              ),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          print("${widget.order.id!}");
+                          print("${widget.order.items![0].sku}");
+                          print("${widget.order.customer_email}");
+                          print("${widget.order.status}");
+
+                          String ex = await RMAProvider.getRMA(orderno: "${widget.order.id!}", sku: "${widget.order.items![0].sku}");
+                          print(ex);
+
+                          var status = "${widget.order.status}";
+                          if (status == "complete") {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: RMADetails(order: widget.order),
+                              ),
+                            );
+                          } else {
+                            print(status);
+                            print("Unable to return the order!");
+                            Text("Unable to return the order!");
+                          }
+                        },
+                        child: const Text('File RMA'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(16,69,114,1),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                        ),
+                      ),
+                      /*ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: const Text('Download Invoice'),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromRGBO(16,69,114,1),
+                            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
+                        ),
+                      )*/
+                    ],
+                  )
+              )
             ],
           ),
         ),

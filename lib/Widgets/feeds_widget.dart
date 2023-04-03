@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Provider/Database/db_provider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -25,12 +26,12 @@ class FeedsWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              print(productsModelProvider);
+              // print(productsModelProvider);
               Navigator.push(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  child: ProductDetails(id: productsModelProvider.id.toString(),),
+                  child: ProductDetails(id: productsModelProvider!.id!.toString()),
                 ),
               );
             },
@@ -104,8 +105,12 @@ class FeedsWidget extends StatelessWidget {
                       Row(
                         children: [
                           InkWell(
-                            onTap: () {
-                              CartProvider.addToCart(productsModelProvider.sku, "1", context);
+                            onTap: () async {
+                              Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
+                              if(await isAdded) {
+                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                              }
+
                             },
                             child: const Icon(
                               Icons.add_shopping_cart,

@@ -8,11 +8,18 @@ class DatabaseProvider extends ChangeNotifier {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   String _data = '';
+  // String _cart_total_items = '0';
 
   String get data => _data;
+  // String get cart_total_items => _cart_total_items;
 
   // COMMON
   void saveData(String key, String value) async {
+    /*if(key=='cart_total_items') {
+      print("trigger -> cart_total_items: $value");
+      _cart_total_items = value;
+      notifyListeners();
+    }*/
     SharedPreferences pref = await _pref;
     print("saved: $key -> $value");
     pref.setString(key, value);
@@ -24,11 +31,16 @@ class DatabaseProvider extends ChangeNotifier {
     if (value.containsKey(key)) {
       String data = value.getString(key)!;
       _data = data;
-      notifyListeners();
+
+      /*if(key=='cart_total_items') {
+        _cart_total_items = data;
+      }*/
+
+      // notifyListeners();
       return data;
     } else {
       _data = '';
-      notifyListeners();
+      // notifyListeners();
       return '';
     }
   }
