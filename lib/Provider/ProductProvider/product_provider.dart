@@ -93,7 +93,7 @@ class ProductProvider {
       return tempList;
     } catch (error) {
       log("An error occured $error");
-      rethrow;
+      throw error.toString();
     }
   }
 

@@ -78,7 +78,6 @@ class SaleWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(0),
               child: Image.network(
-
                 // height: double.infinity,
                 "https://ebpconsole.ecommercebusinessprime.com/storage/ecom_app/banner${i+1}.png?${Random().nextInt(1000)}",
                 width: double.infinity,
