@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Model/category_model.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
@@ -16,7 +17,29 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text("Menu"),
+          title: const Text("Menu"),
+          centerTitle: true,
+          leading: Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              IconButton(
+                icon: Image.network(
+                  'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                  width: 40,
+                  cacheWidth: 40,
+                ),
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                },
+              )
+            ],
+          ),
+          leadingWidth: 100,
         ),
         body: FutureBuilder<List<CategoryModel>>(
           future: ProductProvider.getAllCategories(),
