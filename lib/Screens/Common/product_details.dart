@@ -9,6 +9,9 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:geocoder_buddy/geocoder_buddy.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
@@ -41,6 +44,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool isError = false;
   String errorStr = "";
 
+
+
+
   Future<void> getProductInfo() async {
     try {
       // print("test123!::: ${widget.id}");
@@ -67,7 +73,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     late final String price = (productsModel == null ? 'null' : productsModel!.price.toString());
     late final String sku = (productsModel == null ? 'null' : productsModel!.sku.toString());
     late final String logo = (productsModel == null ? 'null' : productsModel!.manuflogo.toString());
-
     List ManufLogo = [logo];
 
     return Scaffold(
@@ -507,7 +512,10 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(price: price, sku: sku, qty: c.qty.toString(),),
+      bottomNavigationBar: ItemBottomNavBar(
+        price: price,
+        sku: sku,
+        qty: c.qty.toString()),
     );
   }
 }
@@ -583,12 +591,77 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
   }
 }
 
-class ItemBottomNavBar extends StatelessWidget {
-  const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty}) : super(key: key);
+class ItemBottomNavBar extends StatefulWidget {
+  const ItemBottomNavBar({Key? key, required this.price,
+    required this.sku,
+    required this.qty}) : super(key: key);
 
   final String price;
   final String sku;
   final String qty;
+
+  @override
+  State<ItemBottomNavBar> createState() => _ItemBottomNavBarState();
+}
+
+class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
+
+  late Position _position;
+  late LocationPermission permission;
+  late Geocoding geoCoding;
+  String transitDay = "Enable Location Service";
+  String estimatedDay = "";
+  void _getCurrentLocation() async {
+    Position position = await _determinePosition();
+    setState(() {
+      _position = position;
+
+    });
+    // print(_position);
+
+    Coordinate coordinate = Coordinate(latitude: 33.712277, longitude: -117.859155);
+    geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    // print(geoCoding.address.state);
+    // print(geoCoding.address.postalCode);
+
+
+    List getDays = await ProductProvider.getDelivery(
+      sku: widget.sku,
+      qty: widget.qty,
+      lat: _position.latitude.toString(),
+      lng: _position.longitude.toString(),
+      state: geoCoding.address.state.toString(),
+      postal: geoCoding.address.postalCode.toString(),
+    );
+    print(getDays[0]['transit']);
+    setState(() {
+      transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+      estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+    });
+
+  }
+
+  Future<Position> _determinePosition() async {
+
+
+    permission = await Geolocator.checkPermission();
+
+    if(permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if(permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+  @override
+  void didChangeDependencies() {
+    _getCurrentLocation();
+    super.didChangeDependencies();
+  }
+
 
   @override
   Widget build(BuildContext context){
@@ -627,7 +700,7 @@ class ItemBottomNavBar extends StatelessWidget {
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                                text: price,
+                                text: widget.price,
                                 style: TextStyle(
                                     color: Colors.black
                                 )
@@ -640,7 +713,7 @@ class ItemBottomNavBar extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: RichText(
                       text: TextSpan(
-                          text: 'Entable location service',
+                          text: transitDay.toString()+'\n'+estimatedDay.toString(),
                           style: const TextStyle(
                               fontSize: 15,
                               color: Colors.black
@@ -715,8 +788,8 @@ class ItemBottomNavBar extends StatelessWidget {
                       children: [
                         OutlinedButton.icon(
                           onPressed: () {
-                            CartProvider.addToCart(sku, qty, context);
-                            print(qty);
+                            CartProvider.addToCart(widget.sku, widget.qty, context);
+                            print(widget.qty);
                           },
                           icon: const Icon(
                             CupertinoIcons.cart_badge_plus,
@@ -750,7 +823,7 @@ class ItemBottomNavBar extends StatelessWidget {
     );
   }
 
-  setState(String? Function() param0) {}
+
 }
 
 Widget listItem({required String title, required List<String> arrdesc}) {
