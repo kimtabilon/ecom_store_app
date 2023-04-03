@@ -150,6 +150,7 @@ class ProductProvider {
       target: target,
       limit: limit,
     );
+
     return ProductModel.productsFromSnapshot(temp);
   }
 

@@ -68,6 +68,7 @@ class CheckoutProvider extends ChangeNotifier {
           "addressInformation": {
             "shipping_address": {
               "region": province,
+              "regionId": 43,
               "country_id": country,
               "street": [
                 address1,
@@ -83,6 +84,7 @@ class CheckoutProvider extends ChangeNotifier {
             },
             "billing_address": {
               "region": province,
+              "regionId": 43,
               "country_id": country,
               "street": [
                 address1,
@@ -155,6 +157,7 @@ class CheckoutProvider extends ChangeNotifier {
           "addressInformation": {
             "shipping_address": {
               "region": province,
+              "regionId": 43,
               "country_id": country,
               "street": [
                 address1,
@@ -267,10 +270,10 @@ class CheckoutProvider extends ChangeNotifier {
     if(masked_id != '') {
       try {
         var headers = {
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer $adminToken',
           'Content-Type': 'application/json'
         };
-        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
+        var request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/guest-carts/$masked_id/order'));
         request.body = json.encode({
           "paymentMethod": {
             "method": paymentOption
@@ -279,7 +282,7 @@ class CheckoutProvider extends ChangeNotifier {
             "email": email,
             "region": province,
             "country_id": country,
-            "region_id": 43,
+            "regionId": 43,
             "street": [
               address1,
               address2,
