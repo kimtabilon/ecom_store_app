@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:clippy_flutter/arc.dart';
 import 'package:ecom_store_app/Screens/Account/cart_page.dart';
+import 'package:ecom_store_app/Screens/Common/feeds_screen.dart';
 import 'package:ecom_store_app/Screens/Common/product_qty.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -555,6 +556,17 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                           color: Colors.green,
                         ),
                       ),
+
+                      onSubmitted: (String str) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  FeedsScreen(target: str, itemSearch: 'true')
+                          ),
+                        );
+                      },
+
                     )
                   : null,
             ),
@@ -788,7 +800,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                       children: [
                         OutlinedButton.icon(
                           onPressed: () {
-                            CartProvider.addToCart(widget.sku, widget.qty, context);
+                            CartProvider().addToCart(widget.sku, widget.qty, context);
                             print(widget.qty);
                           },
                           icon: const Icon(
