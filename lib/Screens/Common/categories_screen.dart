@@ -28,10 +28,9 @@ class CategoriesScreen extends StatelessWidget {
                 },
               ),
               IconButton(
+                iconSize: 40,
                 icon: Image.network(
                   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                  width: 40,
-                  cacheWidth: 40,
                 ),
                 onPressed: () {
                   PageNavigator(ctx: context).nextPage(page: const GuestPage());
@@ -39,7 +38,7 @@ class CategoriesScreen extends StatelessWidget {
               )
             ],
           ),
-          leadingWidth: 100,
+          leadingWidth: 110,
         ),
         body: FutureBuilder<List<CategoryModel>>(
           future: ProductProvider.getAllCategories(),
