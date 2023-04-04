@@ -18,6 +18,8 @@ class FeedsWidget extends StatelessWidget {
     final productsModelProvider = Provider.of<ProductModel>(context);
 
     Size size = MediaQuery.of(context).size;
+    print("Height: ${size.height}");
+    print("Width: ${size.width}");
     return Padding(
         padding: const EdgeInsets.all(2.0),
         child: Material(
@@ -42,7 +44,9 @@ class FeedsWidget extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: FancyShimmerImage(
-                    height: size.height * 0.1,
+                    height: size.width > 600
+                        ? size.height * 0.23
+                        : size.height * 0.1,
                     width: double.infinity,
                     errorWidget: const Icon(
                       IconlyBold.danger,
@@ -55,7 +59,16 @@ class FeedsWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                  child: Text(
+                  child: size.width > 600
+                      ? Text(
+                    productsModelProvider.sku.toString(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      fontSize: 20
+                    ),
+                  )
+                      : Text(
                     productsModelProvider.sku.toString(),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -66,7 +79,18 @@ class FeedsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
+                  child: size.width > 600
+                      ? Text(
+                    productsModelProvider.title.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      //  fontFamily: 'Roboto',
+                      // fontWeight: FontWeight.w700,
+                    ),
+                  )
+                      : Text(
                     productsModelProvider.title.toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -85,45 +109,92 @@ class FeedsWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
-                        child: RichText(
-                            text: TextSpan(
-                                text: "\$",
-                                style: const TextStyle(
+                      if(size.width > 600) ...[
+                        Flexible(
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "\$",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontSize: 27
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: "${productsModelProvider.price}",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600)
+                                    ),
+                                  ])
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
+                                if(await isAdded) {
+                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                }
+                              },
+                              child: const Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.lightGreen,
+                                size: 35,
+                              ),
+                            ),
+                            Image.network(
+                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                              color: Colors.lightGreen,
+                              width: 30,
+                            ),
+                          ],
+                        ),
+                      ] else ...[
+                        Flexible(
+                          child: RichText(
+                              text: TextSpan(
+                                  text: "\$",
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: Color.fromRGBO(
-                                        0, 0, 0, 1.0)),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: "${productsModelProvider.price}",
-                                      style: TextStyle(
-                                          color: const Color(0xff324558),
-                                          fontWeight: FontWeight.w600)),
-                                ])
+                                        0, 0, 0, 1.0
+                                    ),
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: "${productsModelProvider.price}",
+                                        style: TextStyle(
+                                            color: const Color(0xff324558),
+                                            fontWeight: FontWeight.w600)
+                                    ),
+                                  ])
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () async {
-                              Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                              if(await isAdded) {
-                                Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                              }
+                        Row(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
+                                if(await isAdded) {
+                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                }
 
-                            },
-                            child: const Icon(
-                              Icons.add_shopping_cart,
-                              color: Colors.lightGreen,
+                              },
+                              child: const Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.lightGreen,
+                              ),
                             ),
-                          ),
-                          Image.network(
-                            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                            color: Colors.lightGreen,
-                            width: 22,
-                          ),
-                        ],
-                      ),
+                            Image.network(
+                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                              color: Colors.lightGreen,
+                              width: 28,
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),

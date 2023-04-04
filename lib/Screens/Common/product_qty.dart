@@ -62,61 +62,135 @@ class _DropdownQTYState extends State<DropdownQTY> {
   @override
   Widget build(BuildContext context) {
     print(dropdownValue);
-    if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) <= 10) {
-      return DropdownButton<String>(
-        iconDisabledColor: Colors.white,
-        iconEnabledColor: Colors.white,
-        dropdownColor: Colors.lightGreen,
-        value: dropdownValue,
-        items: <String>[
-          '1','2','3','4','5','6','7','8','9','10','11'
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white
+
+    Size size = MediaQuery.of(context).size;
+
+    if(size.width > 600) {
+      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) <= 10) {
+        return DropdownButton<String>(
+          iconDisabledColor: Colors.white,
+          iconEnabledColor: Colors.white,
+          dropdownColor: Colors.lightGreen,
+          value: dropdownValue,
+          items: <String>[
+            '1','2','3','4','5','6','7','8','9','10','11'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+                style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white
+                ),
               ),
-            ),
-          );
-        }).toList(),
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownValue = newValue!;
-            int newQTY = int.parse(newValue!);
-            c.qty.value = newQTY;
-            print(c.qty.value);
-          });
-        },
-      );
-    } else {
-      return Container(
-        width: 30,
-        child: TextField(
-          style: TextStyle(
-            color: Colors.white
-          ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-            border: InputBorder.none,
-            hintText: dropdownValue,
-            hintStyle: TextStyle(
-              color: Colors.white
-            ),
-            helperStyle: TextStyle(
-              color: Colors.white
-            )
-          ),
-          onSubmitted: (String str) {
-            dropdownValue = str;
-            int newQTY = int.parse(str!);
-            c.qty.value = newQTY;
-            print(c.qty.value);
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+              int newQTY = int.parse(newValue!);
+              c.qty.value = newQTY;
+              print(c.qty.value);
+            });
           },
-        ),
-      );
+        );
+      } else {
+        return Container(
+          width: 30,
+          child: TextField(
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20
+            ),
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                border: InputBorder.none,
+                hintText: dropdownValue,
+                hintStyle: TextStyle(
+                    color: Colors.white
+                ),
+                helperStyle: TextStyle(
+                    color: Colors.white
+                )
+            ),
+            onSubmitted: (String str) {
+              dropdownValue = str;
+              int newQTY = int.parse(str!);
+              c.qty.value = newQTY;
+              print(c.qty.value);
+            },
+          ),
+        );
+      }
+    } else {
+      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) <= 10) {
+        return DropdownButton<String>(
+          iconDisabledColor: Colors.white,
+          iconEnabledColor: Colors.white,
+          dropdownColor: Colors.lightGreen,
+          value: dropdownValue,
+          items: <String>[
+            '1','2','3','4','5','6','7','8','9','10','11'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: size.width > 600
+                  ? Text(
+                value,
+                style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white
+                ),
+              )
+                  : Text(
+                value,
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white
+                ),
+              ),
+            );
+          }).toList(),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+              int newQTY = int.parse(newValue!);
+              c.qty.value = newQTY;
+              print(c.qty.value);
+            });
+          },
+        );
+      } else {
+        return Container(
+          width: 30,
+          child: TextField(
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 24
+            ),
+            decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                border: InputBorder.none,
+                hintText: dropdownValue,
+                hintStyle: TextStyle(
+                    color: Colors.white
+                ),
+                helperStyle: TextStyle(
+                    color: Colors.white
+                )
+            ),
+            onSubmitted: (String str) {
+              dropdownValue = str;
+              int newQTY = int.parse(str!);
+              c.qty.value = newQTY;
+              print(c.qty.value);
+            },
+          ),
+        );
+      }
     }
+
+
   }
 }
