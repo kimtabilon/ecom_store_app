@@ -107,7 +107,7 @@ class _GuestPageState extends State<GuestPage> {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
                     child: const Icon(
                       IconlyBold.profile,
                       size: 28,
