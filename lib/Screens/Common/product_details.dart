@@ -142,7 +142,9 @@ class _ProductDetailsState extends State<ProductDetails> {
           },
         ) 
             : IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+              Icons.arrow_back,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -1896,7 +1898,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                       Padding(
                                                         padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
                                                         child: Text(
-                                                          productsModel!.more_products_sku![_current2].toString(),
+                                                          productsModel!.more_products_sku![_current3].toString(),
                                                           style: TextStyle(
                                                               fontWeight: FontWeight.bold,
                                                               color: Colors.grey,
@@ -1933,7 +1935,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         child: Padding(
                                                           padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
                                                           child: Text(
-                                                            productsModel!.more_products_name![_current2].toString(),
+                                                            productsModel!.more_products_name![_current3].toString(),
                                                             overflow: TextOverflow.ellipsis,
                                                             maxLines: 2,
                                                             style: const TextStyle(
@@ -1977,19 +1979,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       if(_sprice3 == '0' && _price3 == '0') ...[
-                                                        if (productsModel!.more_products_sprice![_current2].toString() != 'null' && productsModel!.more_products_sprice![_current2].toString() != '0' && productsModel!.more_products_sprice![_current2].toString() != productsModel!.more_products_price![_current2].toString()) ...[
+                                                        if (productsModel!.more_products_sprice![_current3].toString() != 'null' && productsModel!.more_products_sprice![_current3].toString() != '0' && productsModel!.more_products_sprice![_current3].toString() != productsModel!.more_products_price![_current3].toString()) ...[
                                                           Flexible(
                                                             fit: FlexFit.tight,
                                                             child: RichText(
                                                               text: TextSpan(
-                                                                  text: 'Price: \$' + productsModel!.more_products_sprice![_current2].toString(),
+                                                                  text: 'Price: \$' + productsModel!.more_products_sprice![_current3].toString(),
                                                                   style: const TextStyle(
                                                                       fontSize: 22,
                                                                       color: Colors.black,
                                                                       fontWeight: FontWeight.bold),
                                                                   children: <TextSpan>[
                                                                     TextSpan(
-                                                                        text: '\$' + productsModel!.more_products_price![_current2].toString(),
+                                                                        text: '\$' + productsModel!.more_products_price![_current3].toString(),
                                                                         style: TextStyle(
                                                                             color: Colors.grey,
                                                                             decoration: TextDecoration.lineThrough,
@@ -2009,7 +2011,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                                       fontWeight: FontWeight.bold),
                                                                   children: <TextSpan>[
                                                                     TextSpan(
-                                                                        text: productsModel!.more_products_price![_current2].toString(),
+                                                                        text: productsModel!.more_products_price![_current3].toString(),
                                                                         style: TextStyle(color: Colors.black)),
                                                                   ]),
                                                             ),
@@ -2060,7 +2062,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           children: [
                                                             InkWell(
                                                               onTap: () async {
-                                                                Future<bool> isAdded = CartProvider().addToCart(productsModel!.more_products_sku![_current2].toString(), "1", context);
+                                                                Future<bool> isAdded = CartProvider().addToCart(productsModel!.more_products_sku![_current3].toString(), "1", context);
                                                                 if(await isAdded) {
                                                                   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
                                                                 }
@@ -2163,7 +2165,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                       Padding(
                                                         padding: EdgeInsets.fromLTRB(10, 8, 0, 0),
                                                         child: Text(
-                                                          productsModel!.more_products_sku![_current2].toString(),
+                                                          productsModel!.more_products_sku![_current3].toString(),
                                                           style: TextStyle(
                                                               fontWeight: FontWeight.bold,
                                                               color: Colors.grey
@@ -2198,7 +2200,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                         child: Padding(
                                                           padding: const EdgeInsets.fromLTRB(10, 8, 10, 0),
                                                           child: Text(
-                                                            productsModel!.more_products_name![_current2].toString(),
+                                                            productsModel!.more_products_name![_current3].toString(),
                                                             overflow: TextOverflow.ellipsis,
                                                             maxLines: 2,
                                                             style: const TextStyle(
@@ -2242,19 +2244,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       if(_sprice3 == '0' && _price3 == '0') ...[
-                                                        if (productsModel!.more_products_sprice![_current2].toString() != 'null' && productsModel!.more_products_sprice![_current2].toString() != '0' && productsModel!.more_products_sprice![_current2].toString() != productsModel!.more_products_price![_current2].toString()) ...[
+                                                        if (productsModel!.more_products_sprice![_current3].toString() != 'null' && productsModel!.more_products_sprice![_current3].toString() != '0' && productsModel!.more_products_sprice![_current3].toString() != productsModel!.more_products_price![_current3].toString()) ...[
                                                           Flexible(
                                                             fit: FlexFit.tight,
                                                             child: RichText(
                                                               text: TextSpan(
-                                                                  text: 'Price: \$' + productsModel!.more_products_sprice![_current2].toString(),
+                                                                  text: 'Price: \$' + productsModel!.more_products_sprice![_current3].toString(),
                                                                   style: const TextStyle(
                                                                       fontSize: 16,
                                                                       color: Colors.black,
                                                                       fontWeight: FontWeight.bold),
                                                                   children: <TextSpan>[
                                                                     TextSpan(
-                                                                        text: '\$' + productsModel!.more_products_price![_current2].toString(),
+                                                                        text: '\$' + productsModel!.more_products_price![_current3].toString(),
                                                                         style: TextStyle(
                                                                             color: Colors.grey,
                                                                             decoration: TextDecoration.lineThrough,
@@ -2274,7 +2276,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                                       fontWeight: FontWeight.bold),
                                                                   children: <TextSpan>[
                                                                     TextSpan(
-                                                                        text: productsModel!.more_products_price![_current2].toString(),
+                                                                        text: productsModel!.more_products_price![_current3].toString(),
                                                                         style: TextStyle(color: Colors.black)),
                                                                   ]),
                                                             ),
@@ -2325,7 +2327,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           children: [
                                                             InkWell(
                                                               onTap: () async {
-                                                                Future<bool> isAdded = CartProvider().addToCart(productsModel!.more_products_sku![_current2].toString(), "1", context);
+                                                                Future<bool> isAdded = CartProvider().addToCart(productsModel!.more_products_sku![_current3].toString(), "1", context);
                                                                 if(await isAdded) {
                                                                   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
                                                                 }
@@ -2535,6 +2537,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                     child: Icon(
                       _folded ? Icons.search : Icons.close,
                       color: Colors.lightGreen,
+                      size: 30,
                     ),
                   ),
                   onTap: () {
@@ -2595,7 +2598,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
       postal: geoCoding.address.postalCode.toString(),
     );
     setState(() {
-      transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+      // transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
     });
 
@@ -2948,7 +2951,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                       fit: FlexFit.loose,
                       child: RichText(
                         text: TextSpan(
-                          text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                          // text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                          text: estimatedDay.toString(),
                           style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black
