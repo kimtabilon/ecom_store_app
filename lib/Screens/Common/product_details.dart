@@ -2390,8 +2390,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ],
                   ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(
-          price: price, sku: sku, qty: c.qty.toString(), sprice: sprice, width: size.width),
+      bottomNavigationBar: productsModel != null ? ItemBottomNavBar(
+          price: price, sku: sku, qty: c.qty.toString(), sprice: sprice, width: size.width):
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
@@ -2572,9 +2575,9 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   late Position _position;
   late LocationPermission permission;
   late Geocoding geoCoding;
-  String transitDay = "Enable Location Service";
+  final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
-
+  bool locationLoading = false;
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
     setState(() {
@@ -2598,8 +2601,9 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
       postal: geoCoding.address.postalCode.toString(),
     );
     setState(() {
-      // transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+      locationLoading = true;
+      _zipText.text = geoCoding.address.postalCode.toString();
     });
 
   }
@@ -2617,7 +2621,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
   @override
   void didChangeDependencies() {
-    _getCurrentLocation();
+   _getCurrentLocation();
     super.didChangeDependencies();
   }
 
@@ -2625,7 +2629,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-    final TextEditingController _zipText = TextEditingController();
+
 
     if(widget.width > 600) {
       return SingleChildScrollView(
@@ -2713,6 +2717,10 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                       color: Colors.green,
                                     ),
                                     onPressed: () async {
+                                      setState(() {
+                                        locationLoading = false;
+                                      });
+
                                       List getDays = await ProductProvider.getDelivery(
                                         sku: widget.sku,
                                         qty: widget.qty,
@@ -2722,8 +2730,9 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                         postal: _zipText.text.toString(),
                                       );
                                       setState(() {
-                                        transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+
                                         estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        locationLoading = true;
                                       });
                                     },
                                   ),
@@ -2731,6 +2740,11 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                               ),
                             ),
                             onSubmitted: (String str) async {
+
+                              setState(() {
+                                locationLoading = false;
+                              });
+
                               List getDays = await ProductProvider.getDelivery(
                                 sku: widget.sku,
                                 qty: widget.qty,
@@ -2740,23 +2754,24 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 postal: _zipText.text.toString(),
                               );
                               setState(() {
-                                transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
                                 estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                locationLoading = true;
                               });
                             },
                           ),
                         ),
                       ],
                     ),
-                    Row(
+                    locationLoading ? Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Flexible(
                           fit: FlexFit.loose,
                           child: RichText(
                             text: TextSpan(
-                              text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                              text: estimatedDay.toString(),
                               style: const TextStyle(
                                   fontSize: 20,
                                   color: Colors.black
@@ -2765,6 +2780,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                           ),
                         ),
                       ],
+                    ): Center(
+                      child: CircularProgressIndicator(),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -2919,6 +2936,10 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                   color: Colors.green,
                                 ),
                                 onPressed: () async {
+                                  setState(() {
+                                    locationLoading = false;
+                                  });
+
                                   List getDays = await ProductProvider.getDelivery(
                                     sku: widget.sku,
                                     qty: widget.qty,
@@ -2928,8 +2949,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                     postal: _zipText.text.toString(),
                                   );
                                   setState(() {
-                                    transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
                                     estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                    locationLoading = true;
                                   });
                                 },
                               ),
@@ -2945,13 +2966,14 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Flexible(
                       fit: FlexFit.loose,
                       child: RichText(
                         text: TextSpan(
-                          // text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                          // text: estimatedDay.toString(),
                           text: estimatedDay.toString(),
                           style: const TextStyle(
                               fontSize: 14,
