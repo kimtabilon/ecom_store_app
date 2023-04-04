@@ -1,5 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:ecom_store_app/Screens/Authentication/splash.dart';
+import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:ecom_store_app/Utils/routers.dart';
 import 'package:ecom_store_app/Widgets/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -31,7 +33,54 @@ class _GuestPageState extends State<GuestPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          appBar: AppBar(
+          appBar: size.width > 600
+              ? AppBar(
+            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
+            leading: Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Image.network(
+                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                cacheWidth: 50,
+                width: 50,
+              ),
+            ),
+            leadingWidth: 70,
+            actions: [
+              const CartIconWidget(),
+              IconButton(
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+                },
+                icon: const Icon(
+                  Icons.question_mark,
+                  size: 35,
+                  color: Colors.lightGreen,
+                ),
+              ),
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SplashScreen(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 12, 5, 0),
+                    child:
+                    Column(mainAxisSize: MainAxisSize.min, children: const [
+                      Icon(
+                        IconlyBold.profile,
+                        size: 35,
+                        color: Colors.lightGreen,
+                      ),
+                    ]),
+                  )),
+            ],
+          )
+              : AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
             leading: Padding(
               padding: EdgeInsets.only(right: 10),
@@ -62,7 +111,7 @@ class _GuestPageState extends State<GuestPage> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
                     child:
-                        Column(mainAxisSize: MainAxisSize.min, children: const [
+                    Column(mainAxisSize: MainAxisSize.min, children: const [
                       Icon(
                         IconlyBold.profile,
                         size: 28,
@@ -103,25 +152,67 @@ class _GuestPageState extends State<GuestPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            const Text(
-                              "On Sale!",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
+                            if(size.width > 600) ...[
+                              const Text(
+                                "On Sale!",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 30,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            AppBarIcons(
-                                function: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const FeedsScreen(
-                                              target: 'All Products',
-                                              itemSearch: 'false')));
-                                },
-                                icon: IconlyBold.arrowRight2),
+                              const Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: Icon(
+                                      IconlyBold.arrowRight2,
+                                    color: Colors.lightGreen,
+                                    size: 35,
+                                    shadows: kElevationToShadow[6],
+                                  ),
+                              ),
+                              /*
+                              AppBarIcons(
+                                  function: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: IconlyBold.arrowRight2,
+                              ),
+                              */
+                            ] else ...[
+                              const Text(
+                                "On Sale!",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const Spacer(),
+                              AppBarIcons(
+                                  function: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: IconlyBold.arrowRight2),
+                            ],
                           ],
                         ),
                       ),
@@ -152,25 +243,66 @@ class _GuestPageState extends State<GuestPage> {
                             horizontal: 8.0, vertical: 20.0),
                         child: Row(
                           children: [
-                            const Text(
-                              "Best Seller",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
+                            if(size.width > 600) ...[
+                              const Text(
+                                "Best Seller",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 30,
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            AppBarIcons(
-                                function: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const FeedsScreen(
-                                              target: 'All Products',
-                                              itemSearch: 'false')));
-                                },
-                                icon: IconlyBold.arrowRight2),
+                              const Spacer(),
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: Icon(
+                                      IconlyBold.arrowRight2,
+                                    color: Colors.lightGreen,
+                                    size: 35,
+                                    shadows: kElevationToShadow[5],
+                                  )
+                              ),
+                              /*
+                              AppBarIcons(
+                                  function: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: IconlyBold.arrowRight2),
+                              */
+                            ] else ...[
+                              const Text(
+                                "Best Seller",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const Spacer(),
+                              AppBarIcons(
+                                  function: () {
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: const FeedsScreen(
+                                                target: 'All Products',
+                                                itemSearch: 'false')));
+                                  },
+                                  icon: IconlyBold.arrowRight2),
+                            ]
                           ],
                         ),
                       ),

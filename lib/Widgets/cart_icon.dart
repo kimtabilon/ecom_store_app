@@ -25,37 +25,65 @@ class _CartIconWidgetState extends State<CartIconWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return InkWell(
         onTap: () {
           PageNavigator(ctx: context).nextPage(page: const CartPage());
         },
-
         child: Consumer<CartProvider>(
             builder: (context, cart, child) {
-              return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                  ? Padding(
-                padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+              if(size.width > 600) {
+                return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                    ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
 
-                child: badges.Badge(
-                  badgeContent: Text(
-                    cart.cart_total_items,
-                    style: const TextStyle(color: Colors.white),
+                  child: badges.Badge(
+                    badgeContent: Text(
+                      cart.cart_total_items,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Icon(Icons.shopping_cart_outlined,
+                          size: 35, color: Colors.lightGreen),
+                    ),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Icon(Icons.shopping_cart_outlined,
-                        size: 28, color: Colors.lightGreen),
+                )
+                    : const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 35,
+                      color: Colors.lightGreen
                   ),
-                ),
-              )
-                  : const Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 28,
-                    color: Colors.lightGreen
-                ),
-              );
+                );
+              } else {
+                return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                    ? Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+
+                  child: badges.Badge(
+                    badgeContent: Text(
+                      cart.cart_total_items,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Icon(Icons.shopping_cart_outlined,
+                          size: 28, color: Colors.lightGreen),
+                    ),
+                  ),
+                )
+                    : const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 28,
+                      color: Colors.lightGreen
+                  ),
+                );
+              }
             })
     );
   }
