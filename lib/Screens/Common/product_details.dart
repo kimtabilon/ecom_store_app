@@ -208,7 +208,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 )
                     : Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: const Icon(
                         Icons.shopping_cart_checkout_rounded,
                         size: 28,
@@ -258,15 +258,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ]),
               ) 
                   : Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
-                child:
-                Column(mainAxisSize: MainAxisSize.min, children: const [
-                  Icon(
-                    IconlyBold.profile,
-                    size: 28,
-                    color: Colors.lightGreen,
-                  ),
-                ]),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: const Icon(
+                  IconlyBold.profile,
+                  size: 28,
+                  color: Colors.lightGreen,
+                ),
               )
           ) 
           /*
@@ -2585,12 +2582,10 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     });
     // print(_position);
 
-    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
-
     print(_zipText.text);
-    if(_zipText.text == '') {
-      geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-    }
+    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
+    geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    
     // print(geoCoding.address.state);
     // print(geoCoding.address.postalCode);
 
