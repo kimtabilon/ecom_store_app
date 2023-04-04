@@ -8,43 +8,83 @@ class CartItemImageWidget extends StatelessWidget {
   final String sku;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 28,
-        width: 28,
-        child: FutureBuilder(
-            future: ProductProvider.getImage(sku: sku),
-            builder: (context, snapshot) {
+    Size size = MediaQuery.of(context).size;
 
-              if (snapshot.connectionState ==
-                  ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child:
-                  Text("An error occured ${snapshot.error}"),
-                );
-              } else if (snapshot.data == null) {
-                return const Center(
-                  child: Text("No Image"),
-                );
-              }
-              Size size = MediaQuery.of(context).size;
+    if(size.width > 600) {
+      return SizedBox(
+          height: 35,
+          width: 35,
+          child: FutureBuilder(
+              future: ProductProvider.getImage(sku: sku),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child:
+                    Text("An error occured ${snapshot.error}"),
+                  );
+                } else if (snapshot.data == null) {
+                  return const Center(
+                    child: Text("No Image"),
+                  );
+                }
 
-              return FancyShimmerImage(
-                height: size.height * 0.2,
-                width: double.infinity,
-                errorWidget: const Icon(
-                  IconlyBold.danger,
-                  color: Colors.red,
-                  size: 28,
-                ),
-                imageUrl: snapshot.data.toString(),
-                boxFit: BoxFit.contain,
-              );
-            })
-    );
+                return FancyShimmerImage(
+                  height: size.height * 0.2,
+                  width: double.infinity,
+                  errorWidget: const Icon(
+                    IconlyBold.danger,
+                    color: Colors.red,
+                    size: 28,
+                  ),
+                  imageUrl: snapshot.data.toString(),
+                  boxFit: BoxFit.contain,
+                );
+              })
+      );
+    } else {
+      return SizedBox(
+          height: 28,
+          width: 28,
+          child: FutureBuilder(
+              future: ProductProvider.getImage(sku: sku),
+              builder: (context, snapshot) {
+
+                if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child:
+                    Text("An error occured ${snapshot.error}"),
+                  );
+                } else if (snapshot.data == null) {
+                  return const Center(
+                    child: Text("No Image"),
+                  );
+                }
+                Size size = MediaQuery.of(context).size;
+
+                return FancyShimmerImage(
+                  height: size.height * 0.2,
+                  width: double.infinity,
+                  errorWidget: const Icon(
+                    IconlyBold.danger,
+                    color: Colors.red,
+                    size: 28,
+                  ),
+                  imageUrl: snapshot.data.toString(),
+                  boxFit: BoxFit.contain,
+                );
+              })
+      );
+    }
   }
 }
 

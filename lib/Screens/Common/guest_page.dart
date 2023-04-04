@@ -27,6 +27,7 @@ class _GuestPageState extends State<GuestPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(size.width);
 
     return GestureDetector(
       onTap: () {
@@ -37,7 +38,7 @@ class _GuestPageState extends State<GuestPage> {
               ? AppBar(
             backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
             leading: Padding(
-              padding: EdgeInsets.only(right: 10),
+              padding: EdgeInsets.only(left: 5),
               child: Image.network(
                 'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
                 cacheWidth: 50,

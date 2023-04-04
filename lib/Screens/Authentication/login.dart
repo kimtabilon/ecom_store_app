@@ -30,13 +30,114 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    Size size = MediaQuery.of(context).size;
+
+    if(size.width > 600) {
+      return Scaffold(
+        appBar: AppBar(
           title: const Text('Login to continue',
-            style: TextStyle(
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 35,
+              )
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(
+                Icons.arrow_back,
+              size: 35,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: const GuestPage(),
+                ),
+              );
+            },
+          ),
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    children: [
+                      customTextField(
+                        title: 'Email',
+                        controller: _email,
+                        hint: 'Enter you valid email address',
+                      ),
+                      customTextField(
+                        title: 'Password',
+                        controller: _password,
+                        hint: 'Enter your secured password',
+                      ),
+
+                      ///Button
+                      Consumer<AuthenticationProvider>(
+                          builder: (context, auth, child) {
+                            WidgetsBinding.instance!.addPostFrameCallback((_) {
+                              if (auth.resMessage != '') {
+                                showMessage(
+                                    message: auth.resMessage, context: context);
+
+                                ///Clear the response message to avoid duplicate
+                                auth.clear();
+                              }
+                            });
+                            return customButton(
+                              text: 'Login',
+                              tap: () {
+                                if (_email.text.isEmpty || _password.text.isEmpty) {
+                                  showMessage(
+                                      message: "All fields are required",
+                                      context: context);
+                                } else {
+                                  auth.loginUser(
+                                      context: context,
+                                      email: _email.text.trim(),
+                                      password: _password.text.trim());
+                                }
+                              },
+                              context: context,
+                              status: auth.isLoading,
+                            );
+                          }),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          PageNavigator(ctx: context)
+                              .nextPage(page: const RegisterPage());
+                        },
+                        child: const Text(
+                            'Tap here to Create Account',
+                          style: TextStyle(
+                            fontSize: 20
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  )),
+            )
+          ],
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Login to continue',
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
-            )
+              )
           ),
           centerTitle: true,
           leading: IconButton(
@@ -51,73 +152,74 @@ class _LoginPageState extends State<LoginPage> {
               );
             },
           ),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Container(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  children: [
-                    customTextField(
-                      title: 'Email',
-                      controller: _email,
-                      hint: 'Enter you valid email address',
-                    ),
-                    customTextField(
-                      title: 'Password',
-                      controller: _password,
-                      hint: 'Enter your secured password',
-                    ),
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    children: [
+                      customTextField(
+                        title: 'Email',
+                        controller: _email,
+                        hint: 'Enter you valid email address',
+                      ),
+                      customTextField(
+                        title: 'Password',
+                        controller: _password,
+                        hint: 'Enter your secured password',
+                      ),
 
-                    ///Button
-                    Consumer<AuthenticationProvider>(
-                        builder: (context, auth, child) {
-                      WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        if (auth.resMessage != '') {
-                          showMessage(
-                              message: auth.resMessage, context: context);
+                      ///Button
+                      Consumer<AuthenticationProvider>(
+                          builder: (context, auth, child) {
+                            WidgetsBinding.instance!.addPostFrameCallback((_) {
+                              if (auth.resMessage != '') {
+                                showMessage(
+                                    message: auth.resMessage, context: context);
 
-                          ///Clear the response message to avoid duplicate
-                          auth.clear();
-                        }
-                      });
-                      return customButton(
-                        text: 'Login',
-                        tap: () {
-                          if (_email.text.isEmpty || _password.text.isEmpty) {
-                            showMessage(
-                                message: "All fields are required",
-                                context: context);
-                          } else {
-                            auth.loginUser(
-                                context: context,
-                                email: _email.text.trim(),
-                                password: _password.text.trim());
-                          }
+                                ///Clear the response message to avoid duplicate
+                                auth.clear();
+                              }
+                            });
+                            return customButton(
+                              text: 'Login',
+                              tap: () {
+                                if (_email.text.isEmpty || _password.text.isEmpty) {
+                                  showMessage(
+                                      message: "All fields are required",
+                                      context: context);
+                                } else {
+                                  auth.loginUser(
+                                      context: context,
+                                      email: _email.text.trim(),
+                                      password: _password.text.trim());
+                                }
+                              },
+                              context: context,
+                              status: auth.isLoading,
+                            );
+                          }),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      GestureDetector(
+                        onTap: () {
+                          PageNavigator(ctx: context)
+                              .nextPage(page: const RegisterPage());
                         },
-                        context: context,
-                        status: auth.isLoading,
-                      );
-                    }),
+                        child: const Text('Tap here to Create Account'),
+                      ),
 
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        PageNavigator(ctx: context)
-                            .nextPage(page: const RegisterPage());
-                      },
-                      child: const Text('Tap here to Create Account'),
-                    ),
-
-                  ],
-                )),
-          )
-        ],
-      ),
-    );
+                    ],
+                  )),
+            )
+          ],
+        ),
+      );
+    }
   }
 }
