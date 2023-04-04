@@ -2749,17 +2749,14 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Flexible(
-                            fit: FlexFit.tight,
-                            child: RichText(
-                              text: TextSpan(
-                                text: transitDay.toString()+'\n'+estimatedDay.toString(),
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black
-                                ),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: RichText(
+                            text: TextSpan(
+                              text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black
                               ),
                             ),
                           ),

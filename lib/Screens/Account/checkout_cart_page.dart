@@ -373,18 +373,15 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Flexible(
-                            fit: FlexFit.tight,
-                            child: RichText(
-                              text: TextSpan(
-                                text: transitDay.toString()+'\n'+estimatedDay.toString(),
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                ),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: RichText(
+                            text: TextSpan(
+                              text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
