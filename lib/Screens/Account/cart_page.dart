@@ -18,11 +18,36 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping Cart'),
+        title: size.width > 600
+            ? const Text(
+                'Shopping Cart',
+                style: TextStyle(
+                  fontSize: 35
+                ),
+              )
+            : const Text('Shopping Cart'),
         centerTitle: true,
-        leading: IconButton(
+        leading: size.width > 600
+            ? IconButton(
+          icon: Icon(
+              Icons.arrow_back,
+            size: 35,
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const HomePage()
+                  )
+              );
+            },
+          )
+            : IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
@@ -112,7 +137,12 @@ class _CartPageState extends State<CartPage> {
                                   MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
                                 );
                               },
-                              child: const Text('Checkout'),
+                              child: const Text(
+                                  'Checkout',
+                                style: TextStyle(
+                                  fontSize: 25
+                                ),
+                              ),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color.fromRGBO(16,69,114,1),
                                   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
