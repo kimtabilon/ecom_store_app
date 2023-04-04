@@ -5,17 +5,18 @@ import 'package:provider/provider.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Widgets/feeds_widget.dart';
+import '../../Widgets/search_feeds_widget.dart';
 
-class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
+class SearchFeedsScreen extends StatefulWidget {
+  const SearchFeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
 
   final String target;
   final String itemSearch;
   @override
-  State<FeedsScreen> createState() => _FeedsScreenState();
+  State<SearchFeedsScreen> createState() => _SearchFeedsScreenState();
 }
 
-class _FeedsScreenState extends State<FeedsScreen> {
+class _SearchFeedsScreenState extends State<SearchFeedsScreen> {
   final ScrollController _scrollController = ScrollController();
   List<ProductModel> productsList = [];
   int limit = 10;
@@ -113,7 +114,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   itemBuilder: (ctx, index) {
                     return ChangeNotifierProvider.value(
                         value: productsList[index],
-                        child: const FeedsWidget());
+                        child: const SearchFeedsWidget());
                   }),
               if (_isLoading)
                 const Center(child: CircularProgressIndicator()),
@@ -148,7 +149,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   itemBuilder: (ctx, index) {
                     return ChangeNotifierProvider.value(
                         value: productsList[index],
-                        child: const FeedsWidget());
+                        child: const SearchFeedsWidget());
                   }),
               if (_isLoading)
                 const Center(child: CircularProgressIndicator()),

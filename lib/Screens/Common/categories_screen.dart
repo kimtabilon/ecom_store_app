@@ -15,147 +15,298 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Menu"),
-          centerTitle: true,
-          leading: Row(
-            children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              IconButton(
-                iconSize: 40,
-                icon: Image.network(
-                  'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+    Size size = MediaQuery.of(context).size;
+
+    if(size.width > 600) {
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text("Menu"),
+            centerTitle: true,
+            leading: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                onPressed: () {
-                  PageNavigator(ctx: context).nextPage(page: const GuestPage());
-                },
-              )
-            ],
+                IconButton(
+                  iconSize: 40,
+                  icon: Image.network(
+                    'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                  ),
+                  onPressed: () {
+                    PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                  },
+                )
+              ],
+            ),
+            leadingWidth: 110,
           ),
-          leadingWidth: 110,
-        ),
-        body: FutureBuilder<List<CategoryModel>>(
-          future: ProductProvider.getAllCategories(),
-          builder: ((context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              Center(
-                child: Text("An error occurred ${snapshot.error}"),
-              );
-            } else if (snapshot.data == null) {
-              const Center(
-                child: Text("No products has been added yet"),
-              );
-            }
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Wrap(
-                children: [
-                  Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-                        child: Text(
-                          "Catalog",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
+          body: FutureBuilder<List<CategoryModel>>(
+            future: ProductProvider.getAllCategories(),
+            builder: ((context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                Center(
+                  child: Text("An error occurred ${snapshot.error}"),
+                );
+              } else if (snapshot.data == null) {
+                const Center(
+                  child: Text("No products has been added yet"),
+                );
+              }
+              return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Wrap(
+                  children: [
+                    Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                          child: Text(
+                            "Catalog",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                    height: 1,
-                    color: Colors.black,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: ListView.builder(
-                      primary: false,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return ChangeNotifierProvider.value(
-                          value: snapshot.data![index],
-                          child: const CategoryWidget(),
-                        );
-                      },
+                        )
+                      ],
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                    height: 1,
-                    color: Colors.black,
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const AboutUsPage(),
-                            ),
+                    Container(
+                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: ListView.builder(
+                        primary: false,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                            value: snapshot.data![index],
+                            child: const CategoryWidget(),
                           );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8.0),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const AboutUsPage(),
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                            child: Text(
+                              "About Us",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8.0),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const HelpCenterPage(),
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                            child: Text(
+                              "Help Center",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+          )
+      );
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: const Text("Menu"),
+            centerTitle: true,
+            leading: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                IconButton(
+                  iconSize: 40,
+                  icon: Image.network(
+                    'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                  ),
+                  onPressed: () {
+                    PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                  },
+                )
+              ],
+            ),
+            leadingWidth: 110,
+          ),
+          body: FutureBuilder<List<CategoryModel>>(
+            future: ProductProvider.getAllCategories(),
+            builder: ((context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                Center(
+                  child: Text("An error occurred ${snapshot.error}"),
+                );
+              } else if (snapshot.data == null) {
+                const Center(
+                  child: Text("No products has been added yet"),
+                );
+              }
+              return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Wrap(
+                  children: [
+                    Row(
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
                           child: Text(
-                            "About Us",
+                            "Catalog",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const HelpCenterPage(),
-                            ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: ListView.builder(
+                        primary: false,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return ChangeNotifierProvider.value(
+                            value: snapshot.data![index],
+                            child: const CategoryWidget(),
                           );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                          child: Text(
-                            "Help Center",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8.0),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const AboutUsPage(),
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                            child: Text(
+                              "About Us",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }),
-        )
-    );
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          borderRadius: BorderRadius.circular(8.0),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const HelpCenterPage(),
+                              ),
+                            );
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                            child: Text(
+                              "Help Center",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+          )
+      );
+    }
   }
 }

@@ -10,8 +10,8 @@ import '../Provider/StoreProvider/cart_provider.dart';
 import '../Screens/Common/product_details.dart';
 import 'appbar_icons.dart';
 
-class CategoryFeedsWidget extends StatelessWidget {
-  const CategoryFeedsWidget({Key? key}) : super(key: key);
+class SearchFeedsWidget extends StatelessWidget {
+  const SearchFeedsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,14 @@ class CategoryFeedsWidget extends StatelessWidget {
     // print("Height: ${size.height}");
     // print("Width: ${size.width}");
     return Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: size.width > 600
+            ? const EdgeInsets.all(5.0)
+            : const EdgeInsets.all(2.0),
         child: Material(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           color: Theme.of(context).cardColor,
           child: InkWell(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             onTap: () {
               // print(productsModelProvider);
               Navigator.push(
@@ -43,29 +45,33 @@ class CategoryFeedsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: FancyShimmerImage(
-                    height: size.width > 600
-                        ? size.height * 0.38
-                        : size.height * 0.1,
-                    width: double.infinity,
-                    errorWidget: const Icon(
-                      IconlyBold.danger,
-                      color: Colors.red,
-                      size: 28,
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: FancyShimmerImage(
+                      height: size.width > 600
+                          ? size.height * 0.35
+                          : size.height * 0.1,
+                      width: double.infinity,
+                      errorWidget: const Icon(
+                        IconlyBold.danger,
+                        color: Colors.red,
+                        size: 28,
+                      ),
+                      imageUrl: productsModelProvider.images![0],
+                      boxFit: BoxFit.contain,
+
                     ),
-                    imageUrl: productsModelProvider.images![0],
-                    boxFit: BoxFit.contain,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: size.width > 600
                       ? Text(
                     productsModelProvider.sku.toString(),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
-                        fontSize: 20
+                      fontSize: 20
                     ),
                   )
                       : Text(
@@ -78,7 +84,7 @@ class CategoryFeedsWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: size.width > 600
                       ? Text(
                     productsModelProvider.title.toString(),
@@ -105,8 +111,7 @@ class CategoryFeedsWidget extends StatelessWidget {
                   height: size.height * 0.01,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
-                  child: Row(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 8),                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if(size.width > 600) ...[
@@ -115,9 +120,9 @@ class CategoryFeedsWidget extends StatelessWidget {
                               text: TextSpan(
                                   text: "\$",
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontSize: 27
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontSize: 27
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(

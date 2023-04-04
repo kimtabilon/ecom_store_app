@@ -18,8 +18,8 @@ class FeedsWidget extends StatelessWidget {
     final productsModelProvider = Provider.of<ProductModel>(context);
 
     Size size = MediaQuery.of(context).size;
-    print("Height: ${size.height}");
-    print("Width: ${size.width}");
+    // print("Height: ${size.height}");
+    // print("Width: ${size.width}");
     return Padding(
         padding: const EdgeInsets.all(2.0),
         child: Material(

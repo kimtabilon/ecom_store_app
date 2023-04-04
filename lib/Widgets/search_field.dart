@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import '../Screens/Common/categories_screen.dart';
 import '../Screens/Common/feeds_screen.dart';
 
+import '../Screens/Common/search_feeds_screen.dart';
 import 'appbar_icons.dart';
 
 class SearchFieldWidget extends StatefulWidget {
@@ -23,72 +24,168 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(0),
-          child: TextField(
-            controller: _searchText,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(width: 0.8),
+    Size size = MediaQuery.of(context).size;
+    if(size.width > 600) {
+      return Stack(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: TextField(
+              style: TextStyle(
+                fontSize: 30
               ),
-              hintText: "Search",
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(bottom: 3),
-                child: AppBarIcons(
-                  function: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: const CategoriesScreen(),
+              controller: _searchText,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 0.8),
+                ),
+                hintText: "Search",
+                hintStyle: TextStyle(
+                  fontSize: 30
+                ),
+                prefixIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 3),
+                  child: IconButton(
+                    icon: const Icon(
+                      IconlyBold.category,
+                      color: Colors.lightGreen,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: const CategoriesScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  /*
+                  child: AppBarIcons(
+                    function: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: const CategoriesScreen(),
+                        ),
+                      );
+                    },
+                    icon: IconlyBold.category,
+                  ),
+                  */
+                ),
+                suffixIcon: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, // added line
+                  mainAxisSize: MainAxisSize.min, // added line
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: IconButton(
+                        icon: const Icon(
+                          IconlyLight.search,
+                          color: Colors.green,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FeedsScreen(
+                                    target: _searchText.text.trim(),
+                                    itemSearch: 'true')),
+                          );
+                        },
                       ),
-                    );
-                  },
-                  icon: IconlyBold.category,
+                    ),
+                  ],
                 ),
               ),
-              suffixIcon: Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween, // added line
-                mainAxisSize: MainAxisSize.min, // added line
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 5),
-                    child: IconButton(
-                      icon: const Icon(
-                        IconlyLight.search,
-                        color: Colors.green,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FeedsScreen(
-                                  target: _searchText.text.trim(),
-                                  itemSearch: 'true')),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              onSubmitted: (String str) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SearchFeedsScreen(
+                          target: _searchText.text.trim(),
+                          itemSearch: 'true')),
+                );
+              },
             ),
-            onSubmitted: (String str) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FeedsScreen(
-                        target: _searchText.text.trim(),
-                        itemSearch: 'true')),
-              );
-            },
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Stack(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(0),
+            child: TextField(
+              controller: _searchText,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 0.8),
+                ),
+                hintText: "Search",
+                prefixIcon: Padding(
+                  padding: EdgeInsets.only(bottom: 3),
+                  child: AppBarIcons(
+                    function: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: const CategoriesScreen(),
+                        ),
+                      );
+                    },
+                    icon: IconlyBold.category,
+                  ),
+                ),
+                suffixIcon: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween, // added line
+                  mainAxisSize: MainAxisSize.min, // added line
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 5),
+                      child: IconButton(
+                        icon: const Icon(
+                          IconlyLight.search,
+                          color: Colors.green,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FeedsScreen(
+                                    target: _searchText.text.trim(),
+                                    itemSearch: 'true')),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              onSubmitted: (String str) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FeedsScreen(
+                          target: _searchText.text.trim(),
+                          itemSearch: 'true')),
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
