@@ -254,9 +254,6 @@ class ProductProvider {
     }
   }
 
-
-
-
   static Future<List<ProductModel>> getOnSaleProducts(
       {required String limit}) async {
     List temp = await getData(
@@ -275,9 +272,40 @@ class ProductProvider {
   }
 
 
-  static Future<List<CategoryModel>> getAllCategories() async {
-    List temp = await getData(target: "categories");
-    return CategoryModel.categoriesFromSnapshot(temp);
+  static Future<List> getAllCategories() async {
+    try {
+      var uri = Uri.https(
+          AppUrl.consoleUrl,
+          "api/v1/products/categories",
+          {
+            "offset": "0",
+            "limit": "1",
+          });
+
+      // print(uri);
+
+      var response = await http.get(uri);
+      // print(response.body.toString());
+
+      // print("response ${jsonDecode(response.body)}");
+      var data = jsonDecode(response.body);
+
+      /*List tempList = [];
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      for (var v in data) {
+        tempList.add(v);
+        print("V $v \n\n");
+      }*/
+      return data;
+    } catch (error) {
+      log("An error occured $error");
+      throw error.toString();
+    }
+    // List temp = await getData(target: "categories");
+    // return temp;
+    // return CategoryModel.categoriesFromSnapshot(temp);
   }
 
   static Future<List<UserModel>> getAllUsers() async {
