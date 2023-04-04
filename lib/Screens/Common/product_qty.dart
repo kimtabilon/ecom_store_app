@@ -135,18 +135,10 @@ class _DropdownQTYState extends State<DropdownQTY> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: size.width > 600
-                  ? Text(
+              child: Text(
                 value,
                 style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white
-                ),
-              )
-                  : Text(
-                value,
-                style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white
                 ),
               ),

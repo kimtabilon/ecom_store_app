@@ -349,13 +349,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     boxFit: BoxFit.fill,
                                   );
                                 },
-                                autoplay: true,
+                                autoplay: false,
                                 itemCount: productsModel!.images!.length,
                                 pagination: const SwiperPagination(
                                     alignment: Alignment.bottomCenter,
                                     builder: DotSwiperPaginationBuilder(
                                         color: Colors.black,
-                                        activeColor: Colors.blueAccent)),
+                                        activeColor: Colors.blueAccent
+                                    )
+                                ),
                               ),
                             ),
                           ),
@@ -375,10 +377,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               widthFactor: 1,
                               child: Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Image(
-                                  image: NetworkImage(
-                                      ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                                  ),
+                                child: Image.network(
+                                  ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
                                 ),
                               ))
                         ],
@@ -2582,15 +2582,17 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     Position position = await _determinePosition();
     setState(() {
       _position = position;
-
     });
     // print(_position);
 
     Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
-    geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+
+    print(_zipText.text);
+    if(_zipText.text == '') {
+      geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    }
     // print(geoCoding.address.state);
     // print(geoCoding.address.postalCode);
-
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
@@ -2629,7 +2631,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-
 
     if(widget.width > 600) {
       return SingleChildScrollView(
@@ -3004,7 +3005,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             children: [
                               Text(
                                 'QTY: ',
-                                style: TextStyle(fontSize: 18, color: Colors.white),
+                                style: TextStyle(fontSize: 16, color: Colors.white),
                               ),
                               DropdownQTY(),
                             ],
