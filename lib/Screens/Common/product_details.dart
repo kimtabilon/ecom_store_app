@@ -208,7 +208,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 )
                     : Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                     child: const Icon(
                         Icons.shopping_cart_checkout_rounded,
                         size: 28,
@@ -258,7 +258,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ]),
               ) 
                   : Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                 child: const Icon(
                   IconlyBold.profile,
                   size: 28,
