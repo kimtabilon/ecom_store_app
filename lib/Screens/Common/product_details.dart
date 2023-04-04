@@ -2854,6 +2854,208 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
         ),
       );
     } else {
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: BottomAppBar(
+              child: Container(
+                height: 150,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset: Offset(0, 3)),
+                    ]),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (widget.sprice != 'null' && widget.sprice != '0' && widget.sprice != widget.price) ...[
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
+                              text: TextSpan(
+                                  text: 'You Pay: \$' + widget.sprice,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '\$' + widget.price,
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            decoration: TextDecoration.lineThrough,
+                                            fontStyle: FontStyle.italic)),
+                                  ]),
+                            ),
+                          ),
+                        ] else ...[
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
+                              text: TextSpan(
+                                  text: 'You Pay: \$',
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: widget.price,
+                                        style: TextStyle(color: Colors.black)),
+                                  ]),
+                            ),
+                          ),
+                        ],
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: TextField(
+                            controller: _zipText,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide(width: 0.8),
+                              ),
+                              hintText: "ZIP",
+                              suffixIcon: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween, // added line
+                                mainAxisSize: MainAxisSize.min, // added line
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(
+                                      IconlyLight.search,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () async {
+                                      setState(() {
+                                        locationLoading = false;
+                                      });
+
+                                      List getDays = await ProductProvider.getDelivery(
+                                        sku: widget.sku,
+                                        qty: widget.qty,
+                                        lat: '0',
+                                        lng: '0',
+                                        state: '0',
+                                        postal: _zipText.text.toString(),
+                                      );
+                                      setState(() {
+                                        estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        locationLoading = true;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onSubmitted: (String str) {
+
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    locationLoading ? Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: RichText(
+                            text: TextSpan(
+                              text: estimatedDay.toString(),
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ): Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
+                          decoration: BoxDecoration(
+                            color: Colors.lightGreen,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5)),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'QTY: ',
+                                style: TextStyle(fontSize: 18, color: Colors.white),
+                              ),
+                              DropdownQTY(),
+                            ],
+                          ),
+                        ),
+                        // Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                        Flexible(
+                          child: Stack(
+                            children: [
+                              OutlinedButton.icon(
+                                onPressed: () {
+                                  print(token);
+                                  if(token=='') {
+                                    GuestCartProvider.addToCart(widget.sku, a.qty.value, context);
+                                  } else {
+                                    CartProvider().addToCart(widget.sku, a.qty.value, context);
+                                  }
+                                  print(a.qty.value);
+                                },
+                                icon: const Icon(
+                                  CupertinoIcons.cart_badge_plus,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  "Add To Cart",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                    minimumSize: const Size.fromHeight(20),
+                                    backgroundColor: Colors.lightGreen,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 13, horizontal: 15),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(5),
+                                            bottomRight: Radius.circular(5)))),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      );
+      /*
       return BottomAppBar(
           child: Container(
             height: 150,
@@ -3049,6 +3251,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               ],
             ),
           ));
+      */
     }
   }
 }

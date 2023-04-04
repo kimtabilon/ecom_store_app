@@ -167,7 +167,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
           child: TextField(
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 24
+                fontSize: 16
             ),
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 15.0),
