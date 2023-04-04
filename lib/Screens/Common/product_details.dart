@@ -2582,7 +2582,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     });
     // print(_position);
 
-    print(_zipText.text);
+    // print(_zipText.text);
     Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
     geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
     
@@ -2947,6 +2947,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                         state: '0',
                                         postal: _zipText.text.toString(),
                                       );
+
                                       setState(() {
                                         estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
                                         locationLoading = true;
