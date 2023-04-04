@@ -20,96 +20,80 @@ class CategoryFeedsWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     // print("Height: ${size.height}");
     // print("Width: ${size.width}");
-    return Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Material(
-          borderRadius: BorderRadius.circular(20),
-          color: Theme.of(context).cardColor,
-          child: InkWell(
+    if(size.width > 600) {
+      return Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Material(
             borderRadius: BorderRadius.circular(20),
-            onTap: () {
-              // print(productsModelProvider);
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                ),
-              );
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: FancyShimmerImage(
-                    height: size.width > 600
-                        ? size.height * 0.38
-                        : size.height * 0.1,
-                    width: double.infinity,
-                    errorWidget: const Icon(
-                      IconlyBold.danger,
-                      color: Colors.red,
-                      size: 28,
-                    ),
-                    imageUrl: productsModelProvider.images![0],
-                    boxFit: BoxFit.contain,
+            color: Theme.of(context).cardColor,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                // print(productsModelProvider);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: ProductDetails(id: productsModelProvider!.id!.toString()),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                  child: size.width > 600
-                      ? Text(
-                    productsModelProvider.sku.toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        fontSize: 20
-                    ),
-                  )
-                      : Text(
-                    productsModelProvider.sku.toString(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: FancyShimmerImage(
+                        height: size.width > 600
+                            ? size.height * 0.36
+                            : size.height * 0.1,
+                        width: double.infinity,
+                        errorWidget: const Icon(
+                          IconlyBold.danger,
+                          color: Colors.red,
+                          size: 28,
+                        ),
+                        imageUrl: productsModelProvider.images![0],
+                        boxFit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: size.width > 600
-                      ? Text(
-                    productsModelProvider.title.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      //  fontFamily: 'Roboto',
-                      // fontWeight: FontWeight.w700,
-                    ),
-                  )
-                      : Text(
-                    productsModelProvider.title.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      //  fontFamily: 'Roboto',
-                      // fontWeight: FontWeight.w700,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: Text(
+                      productsModelProvider.sku.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: 20
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: size.height * 0.01,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if(size.width > 600) ...[
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      productsModelProvider.title.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        //  fontFamily: 'Roboto',
+                        // fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10, top: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Flexible(
                           child: RichText(
                               text: TextSpan(
@@ -151,57 +135,198 @@ class CategoryFeedsWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ] else ...[
-                        Flexible(
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "\$",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromRGBO(
-                                        0, 0, 0, 1.0
-                                    ),
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: "${productsModelProvider.price}",
-                                        style: TextStyle(
-                                            color: const Color(0xff324558),
-                                            fontWeight: FontWeight.w600)
-                                    ),
-                                  ])
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                if(await isAdded) {
-                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                }
-
-                              },
-                              child: const Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.lightGreen,
-                              ),
-                            ),
-                            Image.network(
-                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                              color: Colors.lightGreen,
-                              width: 28,
-                            ),
-                          ],
-                        ),
                       ],
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        )
-    );
+          )
+      );
+    } else {
+      return Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Material(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).cardColor,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {
+                // print(productsModelProvider);
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: ProductDetails(id: productsModelProvider!.id!.toString()),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: FancyShimmerImage(
+                      height: size.width > 600
+                          ? size.height * 0.38
+                          : size.height * 0.1,
+                      width: double.infinity,
+                      errorWidget: const Icon(
+                        IconlyBold.danger,
+                        color: Colors.red,
+                        size: 28,
+                      ),
+                      imageUrl: productsModelProvider.images![0],
+                      boxFit: BoxFit.contain,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                    child: size.width > 600
+                        ? Text(
+                      productsModelProvider.sku.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: 20
+                      ),
+                    )
+                        : Text(
+                      productsModelProvider.sku.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: size.width > 600
+                        ? Text(
+                      productsModelProvider.title.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        //  fontFamily: 'Roboto',
+                        // fontWeight: FontWeight.w700,
+                      ),
+                    )
+                        : Text(
+                      productsModelProvider.title.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        //  fontFamily: 'Roboto',
+                        // fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5, right: 5, top: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if(size.width > 600) ...[
+                          Flexible(
+                            child: RichText(
+                                text: TextSpan(
+                                    text: "\$",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                        fontSize: 27
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: "${productsModelProvider.price}",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600)
+                                      ),
+                                    ])
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
+                                  if(await isAdded) {
+                                    Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                  }
+                                },
+                                child: const Icon(
+                                  Icons.add_shopping_cart,
+                                  color: Colors.lightGreen,
+                                  size: 35,
+                                ),
+                              ),
+                              Image.network(
+                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                color: Colors.lightGreen,
+                                width: 30,
+                              ),
+                            ],
+                          ),
+                        ] else ...[
+                          Flexible(
+                            child: RichText(
+                                text: TextSpan(
+                                    text: "\$",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(
+                                          0, 0, 0, 1.0
+                                      ),
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: "${productsModelProvider.price}",
+                                          style: TextStyle(
+                                              color: const Color(0xff324558),
+                                              fontWeight: FontWeight.w600)
+                                      ),
+                                    ])
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
+                                  if(await isAdded) {
+                                    Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                  }
+
+                                },
+                                child: const Icon(
+                                  Icons.add_shopping_cart,
+                                  color: Colors.lightGreen,
+                                ),
+                              ),
+                              Image.network(
+                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                                color: Colors.lightGreen,
+                                width: 28,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+      );
+    }
   }
 }

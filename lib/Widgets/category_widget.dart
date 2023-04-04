@@ -36,7 +36,7 @@ class CategoryWidget extends StatelessWidget {
                   categoriesModelProvider.name.toString() + " (${categoriesModelProvider.total})",
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 22,
                     fontWeight: FontWeight.w500,
                     backgroundColor: const Color(0xFFFfFFFf).withOpacity(0.5),
                   ),

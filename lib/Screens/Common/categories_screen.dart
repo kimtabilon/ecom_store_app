@@ -20,20 +20,26 @@ class CategoriesScreen extends StatelessWidget {
     if(size.width > 600) {
       return Scaffold(
           appBar: AppBar(
-            title: const Text("Menu"),
+            title: const Text(
+              "Menu",
+              style: TextStyle(
+                fontSize: 35
+              ),
+            ),
             centerTitle: true,
             leading: Row(
               children: [
                 IconButton(
                   icon: Icon(
                     Icons.arrow_back,
+                    size: 35,
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
                 IconButton(
-                  iconSize: 40,
+                  iconSize: 50,
                   icon: Image.network(
                     'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
                   ),
@@ -43,7 +49,7 @@ class CategoriesScreen extends StatelessWidget {
                 )
               ],
             ),
-            leadingWidth: 110,
+            leadingWidth: 120,
           ),
           body: FutureBuilder<List<CategoryModel>>(
             future: ProductProvider.getAllCategories(),
@@ -72,7 +78,7 @@ class CategoriesScreen extends StatelessWidget {
                           child: Text(
                             "Catalog",
                             style: TextStyle(
-                                fontSize: 17,
+                                fontSize: 25,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
@@ -122,7 +128,7 @@ class CategoriesScreen extends StatelessWidget {
                             child: Text(
                               "About Us",
                               style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 25,
                                   fontWeight: FontWeight.bold
                               ),
                             ),
@@ -148,7 +154,7 @@ class CategoriesScreen extends StatelessWidget {
                             child: Text(
                               "Help Center",
                               style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 25,
                                   fontWeight: FontWeight.bold
                               ),
                             ),

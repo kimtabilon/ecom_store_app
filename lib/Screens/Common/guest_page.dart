@@ -1,5 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:ecom_store_app/Screens/Authentication/splash.dart';
+import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:ecom_store_app/Utils/routers.dart';
 import 'package:ecom_store_app/Widgets/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -45,10 +47,15 @@ class _GuestPageState extends State<GuestPage> {
             leadingWidth: 70,
             actions: [
               const CartIconWidget(),
-              const Icon(
-                Icons.question_mark,
-                size: 35,
-                color: Colors.lightGreen,
+              IconButton(
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+                },
+                icon: const Icon(
+                  Icons.question_mark,
+                  size: 35,
+                  color: Colors.lightGreen,
+                ),
               ),
               InkWell(
                   onTap: () {

@@ -4,8 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/category_feeds_widget.dart';
 import '../../Widgets/feeds_widget.dart';
+import 'guest_page.dart';
 
 class CategoryFeedsScreen extends StatefulWidget {
   const CategoryFeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
@@ -70,39 +72,107 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // elevation: 4,
-        title: Text(widget.target),
-      ),
-      body: productsList.isEmpty
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
-          : SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: productsList.length,
-                gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 0.0,
-                    mainAxisSpacing: 0.0,
-                    childAspectRatio: 0.6),
-                itemBuilder: (ctx, index) {
-                  return ChangeNotifierProvider.value(
-                      value: productsList[index],
-                      child: const CategoryFeedsWidget());
-                }),
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator()),
-          ],
+    Size size = MediaQuery.of(context).size;
+
+    if(size.width > 600) {
+      return Scaffold(
+        appBar: AppBar(
+          // elevation: 4,
+          title: Text(
+              widget.target,
+            style: TextStyle(
+              fontSize: 35
+            ),
+          ),
+          centerTitle: true,
+          leading: Row(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              IconButton(
+                iconSize: 50,
+                icon: Image.network(
+                  'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                ),
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                },
+              )
+            ],
+          ),
+          leadingWidth: 120,
         ),
-      ),
-    );
+        body: productsList.isEmpty
+            ? const Center(
+          child: CircularProgressIndicator(),
+        )
+            : SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: productsList.length,
+                  gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 0.0,
+                      mainAxisSpacing: 0.0,
+                      childAspectRatio: 0.6),
+                  itemBuilder: (ctx, index) {
+                    return ChangeNotifierProvider.value(
+                        value: productsList[index],
+                        child: const CategoryFeedsWidget());
+                  }),
+              if (_isLoading)
+                const Center(child: CircularProgressIndicator()),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          // elevation: 4,
+          title: Text(widget.target),
+        ),
+        body: productsList.isEmpty
+            ? const Center(
+          child: CircularProgressIndicator(),
+        )
+            : SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: productsList.length,
+                  gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 0.0,
+                      mainAxisSpacing: 0.0,
+                      childAspectRatio: 0.6),
+                  itemBuilder: (ctx, index) {
+                    return ChangeNotifierProvider.value(
+                        value: productsList[index],
+                        child: const CategoryFeedsWidget());
+                  }),
+              if (_isLoading)
+                const Center(child: CircularProgressIndicator()),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }
