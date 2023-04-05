@@ -35,6 +35,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart' as badges;
 
 import 'feeds_screen.dart';
+import 'guest_page.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
@@ -89,6 +90,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _name3 = '0';
 
   final CarouselController _controller = CarouselController();
+  final CarouselController _controller2 = CarouselController();
+  final CarouselController _controller3 = CarouselController();
 
   @override
   initState() {
@@ -114,6 +117,637 @@ class _ProductDetailsState extends State<ProductDetails> {
     int _current3 = 0;
     int _curr = 0;
 
+    late final List<Widget> imageSliders = productsModel!.accessories_img!.map((item) => Container(
+      margin: EdgeInsets.all(5.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        child: Stack(
+          children: <Widget>[
+            InkWell(
+                child: Image.network(
+                    item,
+                    fit: BoxFit.fill
+                ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: ProductDetails(id: productsModel!.accessories_id![productsModel!.accessories_img!.indexOf(item)].toString()),
+                  ),
+                );
+              },
+            ),
+            Positioned(
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(200, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0)
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 20.0),
+                child: Column(
+                  children: [
+                    if(productsModel!.chk_accessories!.toString() == '1') ...[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            productsModel!.accessories_sku![productsModel!.accessories_img!.indexOf(item)].toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          productsModel!.accessories_name![productsModel!.accessories_img!.indexOf(item)].toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ] else if(productsModel!.chk_relatedproducts!.toString() == '1') ...[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            productsModel!.related_products_sku![productsModel!.related_products_img!.indexOf(item)].toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          productsModel!.related_products_name![productsModel!.related_products_img!.indexOf(item)].toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ] else if(productsModel!.chk_moreproducts!.toString() == '1') ...[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            productsModel!.more_products_sku![productsModel!.more_products_img!.indexOf(item)].toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          productsModel!.more_products_name![productsModel!.more_products_img!.indexOf(item)].toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ]
+                    /*
+                    if(
+                      productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                      productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString() != '0'
+                    ) ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ] else ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + _sprice,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + _price,
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: _price,
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ],
+                    */
+                  ],
+                ),
+              ),
+            ),
+          ]
+        )
+      )
+    )).toList();
+    late final List<Widget> imageSliders2 = productsModel!.related_products_img!.map((item) => Container(
+        margin: EdgeInsets.all(5.0),
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Stack(
+                children: <Widget>[
+                  InkWell(
+                    child: Image.network(
+                        item,
+                        fit: BoxFit.fill
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: ProductDetails(id: productsModel!.related_products_id![productsModel!.related_products_img!.indexOf(item)].toString()),
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(200, 0, 0, 0),
+                            Color.fromARGB(0, 0, 0, 0)
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          if(productsModel!.chk_accessories!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.accessories_sku![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.accessories_name![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ] else if(productsModel!.chk_relatedproducts!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.related_products_sku![productsModel!.related_products_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.related_products_name![productsModel!.related_products_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ] else if(productsModel!.chk_moreproducts!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.more_products_sku![productsModel!.more_products_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.more_products_name![productsModel!.more_products_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ]
+                          /*
+                    if(
+                      productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                      productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString() != '0'
+                    ) ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ] else ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + _sprice,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + _price,
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: _price,
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ],
+                    */
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+            )
+        )
+    )).toList();
+    late final List<Widget> imageSliders3 = productsModel!.more_products_img!.map((item) => Container(
+        margin: EdgeInsets.all(5.0),
+        child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Stack(
+                children: <Widget>[
+                  InkWell(
+                    child: Image.network(
+                        item,
+                        fit: BoxFit.fill
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: ProductDetails(id: productsModel!.more_products_id![productsModel!.more_products_img!.indexOf(item)].toString()),
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(200, 0, 0, 0),
+                            Color.fromARGB(0, 0, 0, 0)
+                          ],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          if(productsModel!.chk_accessories!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.accessories_sku![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.accessories_name![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ] else if(productsModel!.chk_relatedproducts!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.related_products_sku![productsModel!.related_products_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.related_products_name![productsModel!.related_products_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ] else if(productsModel!.chk_moreproducts!.toString() == '1') ...[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  productsModel!.more_products_sku![productsModel!.more_products_img!.indexOf(item)].toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                productsModel!.more_products_name![productsModel!.more_products_img!.indexOf(item)].toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ]
+                          /*
+                    if(
+                      productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                      productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString() != '0'
+                    ) ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString(),
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ] else ...[
+                      if (
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != 'null' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != '0' &&
+                        productsModel!.accessories_sprice![productsModel!.accessories_img!.indexOf(item)].toString() != productsModel!.accessories_price![productsModel!.accessories_img!.indexOf(item)].toString()
+                      ) ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$' + _sprice,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: '\$' + _price,
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          decoration: TextDecoration.lineThrough,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                          ),
+                        ),
+                      ] else ...[
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: RichText(
+                            text: TextSpan(
+                                text: 'Price: \$',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: _price,
+                                      style: TextStyle(color: Colors.black)),
+                                ]),
+                          ),
+                        ),
+                      ],
+                    ],
+                    */
+                        ],
+                      ),
+                    ),
+                  ),
+                ]
+            )
+        )
+    )).toList();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -121,15 +755,25 @@ class _ProductDetailsState extends State<ProductDetails> {
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
         title: size.width > 600 
-            ? Image.network(
-          'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-          width: 50,
-          cacheWidth: 50,
-        ) 
-            : Image.network(
-          'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-          width: 40,
-          cacheWidth: 40,
+            ? InkWell(
+          onTap: () {
+            PageNavigator(ctx: context).nextPage(page: const GuestPage());
+          },
+          child: Image.network(
+            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+            cacheWidth: 40,
+            width: 40,
+          ),
+        )
+            : InkWell(
+          onTap: () {
+            PageNavigator(ctx: context).nextPage(page: const GuestPage());
+          },
+          child: Image.network(
+            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+            cacheWidth: 35,
+            width: 35,
+          ),
         ) ,
         centerTitle: false,
         leading: size.width > 600 
@@ -708,6 +1352,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ],
                                     ),
                                   ),
+                                  /*
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
@@ -1023,7 +1668,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                           productsModel!.accessories_img![index].toString()
                                                       ),
                                                     );
-                                                  }, itemCount: productsModel!.accessories_img!.length,
+                                                  },
+                                                  itemCount: productsModel!.accessories_img!.length,
                                                 ),
                                                 if(_sku == '0') ...[
                                                   Row(
@@ -1247,7 +1893,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ),
                                   const SizedBox(
                                     height: 10,
-                                  )
+                                  ),
+                                  */
+                                  Container(
+                                    child: CarouselSlider(
+                                      items: imageSliders,
+                                      carouselController: _controller,
+                                      options: CarouselOptions(
+                                          autoPlay: false,
+                                          enlargeCenterPage: true,
+                                          aspectRatio: 1.0,
+                                          onPageChanged: (index, reason) {
+                                            setState(() {
+                                              setState(() {
+                                                c.curr.value = index;
+                                                _current = c.curr.value;
+
+                                                _sku = productsModel!.accessories_sku![index].toString();
+                                                _name = productsModel!.accessories_name![index].toString();
+                                                _price = productsModel!.accessories_price![index].toString();
+                                                _sprice = productsModel!.accessories_sprice![index].toString();
+                                              });
+                                            });
+                                          }),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                 ] else if(productsModel!.chk_relatedproducts != '0' && productsModel!.related_products_id!.isNotEmpty) ...[
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
@@ -1280,6 +1953,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ],
                                     ),
                                   ),
+                                  /*
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
@@ -1819,7 +2493,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ),
                                   const SizedBox(
                                     height: 10,
-                                  )
+                                  ),
+                                  */
+                                  Container(
+                                    child: CarouselSlider(
+                                      items: imageSliders2,
+                                      carouselController: _controller2,
+                                      options: CarouselOptions(
+                                          autoPlay: false,
+                                          enlargeCenterPage: true,
+                                          aspectRatio: 1.0,
+                                          onPageChanged: (index, reason) {
+                                            setState(() {
+                                              setState(() {
+                                                c.curr2.value = index;
+                                                _current2 = c.curr2.value;
+
+                                                _sku2 = productsModel!.accessories_sku![index].toString();
+                                                _name2 = productsModel!.accessories_name![index].toString();
+                                                _price2 = productsModel!.accessories_price![index].toString();
+                                                _sprice2 = productsModel!.accessories_sprice![index].toString();
+                                              });
+                                            });
+                                          }),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
                                 ] else if(productsModel!.chk_moreproducts != '0' && productsModel!.more_products_id!.isNotEmpty) ...[
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
@@ -1852,6 +2553,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ],
                                     ),
                                   ),
+                                  /*
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
@@ -2389,9 +3091,33 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ]
                                     ],
                                   ),
+                                  */
+                                  Container(
+                                    child: CarouselSlider(
+                                      items: imageSliders3,
+                                      carouselController: _controller3,
+                                      options: CarouselOptions(
+                                          autoPlay: false,
+                                          enlargeCenterPage: true,
+                                          aspectRatio: 1.0,
+                                          onPageChanged: (index, reason) {
+                                            setState(() {
+                                              setState(() {
+                                                c.curr3.value = index;
+                                                _current3 = c.curr3.value;
+
+                                                _sku3 = productsModel!.accessories_sku![index].toString();
+                                                _name3 = productsModel!.accessories_name![index].toString();
+                                                _price3 = productsModel!.accessories_price![index].toString();
+                                                _sprice3 = productsModel!.accessories_sprice![index].toString();
+                                              });
+                                            });
+                                          }),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 10,
-                                  )
+                                  ),
                                 ],
                               ],
                             ),

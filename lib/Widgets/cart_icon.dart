@@ -36,7 +36,7 @@ class _CartIconWidgetState extends State<CartIconWidget> {
               if(size.width > 600) {
                 return cart.cart_total_items != '' && cart.cart_total_items != '0'
                     ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 12, 5, 0),
 
                   child: badges.Badge(
                     badgeContent: Text(
@@ -51,7 +51,7 @@ class _CartIconWidgetState extends State<CartIconWidget> {
                   ),
                 )
                     : const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: Icon(
                       Icons.shopping_cart_outlined,
                       size: 35,
@@ -61,7 +61,7 @@ class _CartIconWidgetState extends State<CartIconWidget> {
               } else {
                 return cart.cart_total_items != '' && cart.cart_total_items != '0'
                     ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 15, 5, 0),
 
                   child: badges.Badge(
                     badgeContent: Text(
@@ -76,7 +76,7 @@ class _CartIconWidgetState extends State<CartIconWidget> {
                   ),
                 )
                     : const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
                   child: Icon(
                       Icons.shopping_cart_outlined,
                       size: 28,
