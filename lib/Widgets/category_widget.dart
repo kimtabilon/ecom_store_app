@@ -9,14 +9,50 @@ import '../Screens/Common/category_feeds_screen.dart';
 import '../Screens/Common/feeds_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({Key? key}) : super(key: key);
+  CategoryWidget({Key? key, required this.sub, required this.name}) : super(key: key);
+
+  List sub;
+  String name;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final categoriesModelProvider = Provider.of<CategoryModel>(context);
+    // final categoriesModelProvider = Provider.of<CategoryModel>(context);
+    
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(name),
+        ),
+        // body: Text('test else'),
+        body: ListView.separated(
+          scrollDirection: Axis.vertical,
+          itemCount: sub.length,
+          separatorBuilder: (context, index) {
+            return Divider();
+          },
+          itemBuilder: (context, index) {
+            var cat = sub[index];
+            return ListTile(
+              title: Text(cat['name']),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: cat['sub'].length==0
+                        ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                        : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                  ),
+                );
 
-    if(size.width > 600) {
+              },
+            );
+          },
+        )
+    );
+
+    /*if(size.width > 600) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
@@ -72,6 +108,6 @@ class CategoryWidget extends StatelessWidget {
             )
         ),
       );
-    }
+    }*/
   }
 }
