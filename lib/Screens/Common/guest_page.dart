@@ -47,55 +47,6 @@ class _GuestPageState extends State<GuestPage> {
             ),
             leadingWidth: 70,
             actions: [
-              const CartIconWidget(),
-              IconButton(
-                onPressed: () {
-                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
-                },
-                icon: const Icon(
-                  Icons.question_mark,
-                  size: 35,
-                  color: Colors.lightGreen,
-                ),
-              ),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SplashScreen(),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 12, 5, 0),
-                    child: const Icon(
-                      IconlyBold.profile,
-                      size: 35,
-                      color: Colors.lightGreen,
-                    ),
-                  )),
-            ],
-          )
-              : AppBar(
-            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Image.network(
-                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                cacheWidth: 35,
-                width: 35,
-              ),
-            ),
-            leadingWidth: 70,
-            actions: [
-              const CartIconWidget(),
-              const Icon(
-                Icons.question_mark,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
               InkWell(
                   onTap: () {
                     Navigator.push(
@@ -110,10 +61,59 @@ class _GuestPageState extends State<GuestPage> {
                     padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
                     child: const Icon(
                       IconlyBold.profile,
+                      size: 35,
+                      color: Colors.lightGreen,
+                    ),
+                  )),
+              IconButton(
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+                },
+                icon: const Icon(
+                  Icons.question_mark,
+                  size: 35,
+                  color: Colors.lightGreen,
+                ),
+              ),
+              const CartIconWidget(),
+            ],
+          )
+              : AppBar(
+            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
+            leading: Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Image.network(
+                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                cacheWidth: 35,
+                width: 35,
+              ),
+            ),
+            leadingWidth: 70,
+            actions: [
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SplashScreen(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                    child: const Icon(
+                      IconlyBold.profile,
                       size: 28,
                       color: Colors.lightGreen,
                     ),
                   )),
+              const Icon(
+                Icons.question_mark,
+                size: 28,
+                color: Colors.lightGreen,
+              ),
+              const CartIconWidget(),
             ],
           ),
           body: Padding(

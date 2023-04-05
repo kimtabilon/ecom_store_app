@@ -170,7 +170,7 @@ class CategoryFeedsWidget extends StatelessWidget {
                     child: FancyShimmerImage(
                       height: size.width > 600
                           ? size.height * 0.38
-                          : size.height * 0.1,
+                          : size.height * 0.2,
                       width: double.infinity,
                       errorWidget: const Icon(
                         IconlyBold.danger,

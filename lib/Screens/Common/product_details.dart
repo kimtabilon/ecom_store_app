@@ -130,7 +130,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
           width: 40,
           cacheWidth: 40,
-        ),
+        ) ,
         centerTitle: false,
         leading: size.width > 600 
             ? IconButton(
@@ -150,7 +150,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Navigator.pop(context);
           },
         ),
-        leadingWidth: 25,
+        leadingWidth: 30,
         actions: [
           AnimatedSearchBar(),
           InkWell(
@@ -330,6 +330,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                       ],
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white
+                        ),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            widthFactor: 1,
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Image.network(
+                                ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
+                              ),
+                            )
+                        ),
+                      ),
                       Stack(
                         children: <Widget>[
                           Padding(
@@ -359,26 +374,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                           ),
-                          /*
-                Align(
-                  alignment: Alignment.topLeft,
-                  widthFactor: 1,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white.withOpacity(0.1),
-                    backgroundImage: NetworkImage(ManufLogo[0]),
-                  ),
-                ),
-                */
-                          Align(
-                              alignment: Alignment.topLeft,
-                              widthFactor: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(5),
-                                child: Image.network(
-                                  ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                                ),
-                              ))
                         ],
                       ),
                       Arc(
@@ -685,22 +680,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1254,19 +1255,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1820,19 +1827,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -2948,8 +2961,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ],
-
-
                         locationLoading ?
                         isChangeZip ?
                         Flexible(
@@ -3054,13 +3065,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                         ): Center(
                           child: CircularProgressIndicator(),
                         ),
-
-
-
-
                       ],
                     ),
-
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -3077,7 +3083,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             children: [
                               Text(
                                 'QTY: ',
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.white),
                               ),
                               DropdownQTY(),
                             ],
@@ -3337,9 +3343,10 @@ Widget listItem({required String title, required List<String> arrdesc, required 
     color: Color.fromRGBO(16, 69, 114, 1),
     child: Theme(
       data: ThemeData(
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)
+      ),
       child: ExpansionTile(
+        childrenPadding: EdgeInsets.all(0),
         iconColor: Colors.white,
         collapsedIconColor: Colors.white,
         key: expansionTileKey,
@@ -3389,12 +3396,15 @@ Widget cardWidget({required List<String> arrdesc, required double width}) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: RichText(
-                  text: TextSpan(
-                    text: "* " + arrdesc![index],
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: RichText(
+                    text: TextSpan(
+                      text: "* " + arrdesc![index],
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black
+                      ),
                     ),
                   ),
                 ),
@@ -3408,12 +3418,15 @@ Widget cardWidget({required List<String> arrdesc, required double width}) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "* " + arrdesc![index],
-                      style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    child: RichText(
+                      text: TextSpan(
+                        text: "* " + arrdesc![index],
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.black
+                        ),
                       ),
                     ),
                   ),
@@ -3432,8 +3445,11 @@ Widget specList({required String title, required List<String> speclist, required
   return Material(
     color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+      data: ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)
+      ),
       child: ExpansionTile(
+        childrenPadding: EdgeInsets.all(0),
         iconColor: Colors.white,
         collapsedIconColor: Colors.white,
         key: expansionTileKey,
@@ -3469,6 +3485,7 @@ Widget specList({required String title, required List<String> speclist, required
 
 Widget specCont({required List<String> speccontent, required double width}){
   return ListView.builder(
+    padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: speccontent!.length,
     itemBuilder: (BuildContext context, int index){
@@ -3501,13 +3518,16 @@ Widget specCont({required List<String> speccontent, required double width}){
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                child: RichText(
-                  text: TextSpan(
-                    text: speccontent![index],
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15),
+                  child: RichText(
+                    text: TextSpan(
+                      text: speccontent![index],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -3526,8 +3546,12 @@ Widget specInfo({required String title, required List<String> specList, required
   return Material(
     color: Color.fromRGBO(16,69,114,1),
     child: Theme(
-      data: ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+      data: ThemeData(
+          dividerColor: Colors.transparent,
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)
+      ),
       child: ExpansionTile(
+        childrenPadding: EdgeInsets.all(0),
         iconColor: Colors.white,
         collapsedIconColor: Colors.white,
         key: expansionTileKey,

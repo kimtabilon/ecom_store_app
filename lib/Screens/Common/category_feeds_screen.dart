@@ -21,7 +21,7 @@ class CategoryFeedsScreen extends StatefulWidget {
 class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
   final ScrollController _scrollController = ScrollController();
   List<ProductModel> productsList = [];
-  int limit = 10;
+  int limit = 100;
   bool _isLoading = false;
 
   @override
@@ -38,7 +38,7 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
           _scrollController.position.maxScrollExtent) {
         _isLoading = true;
         print("_isLoading $_isLoading");
-        limit += 10;
+        limit += 100;
         if(!mounted) {
           super.dispose();
         } else {
