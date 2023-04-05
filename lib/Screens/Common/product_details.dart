@@ -7,6 +7,7 @@ import 'package:ecom_store_app/Screens/Account/cart_page.dart';
 import 'package:ecom_store_app/Screens/Common/product_qty.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -2575,6 +2576,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
   bool locationLoading = false;
+  bool isChangeZip = false;
+
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
     setState(() {
@@ -2600,7 +2603,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
     setState(() {
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
       locationLoading = true;
-      _zipText.text = geoCoding.address.postalCode.toString();
     });
 
   }
@@ -2618,10 +2620,14 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
   @override
   void didChangeDependencies() {
-   _getCurrentLocation();
+
     super.didChangeDependencies();
   }
 
+  void initState() {
+    _getCurrentLocation();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
@@ -2674,23 +2680,31 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ] else ...[
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: RichText(
-                              text: TextSpan(
-                                  text: 'You Pay: \$',
-                                  style: const TextStyle(
-                                      fontSize: 28,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: widget.price,
-                                        style: TextStyle(color: Colors.black)),
-                                  ]),
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'You Pay: \$',
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: widget.price,
+                                            style: TextStyle(color: Colors.black)),
+                                      ]),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
+                        locationLoading ?
+
+                        isChangeZip ?
                         Flexible(
                           fit: FlexFit.tight,
                           child: TextField(
@@ -2715,6 +2729,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                     onPressed: () async {
                                       setState(() {
                                         locationLoading = false;
+                                        isChangeZip = false;
                                       });
 
                                       List getDays = await ProductProvider.getDelivery(
@@ -2725,6 +2740,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                         state: '0',
                                         postal: _zipText.text.toString(),
                                       );
+
                                       setState(() {
 
                                         estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
@@ -2755,30 +2771,48 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                               });
                             },
                           ),
+                        ) :
+                        Stack(
+                              alignment: Alignment.bottomRight,
+                                  children:[
+                                    Column(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            text: estimatedDay.toString(),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black
+                                            ),
+                                          ),
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.blueAccent
+                                            ),
+                                            text: 'Change your Location',
+                                            recognizer: TapGestureRecognizer()
+                                                ..onTap = (){
+                                                    setState(() {
+                                                      isChangeZip = true;
+                                                    });
+                                                  }
+                                                )
+                                        ),
+                                      ],
+                                    ),
+                                  ]
+                                )
+                          : Center(
+                          child: CircularProgressIndicator(),
                         ),
+
+
                       ],
                     ),
-                    locationLoading ? Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: RichText(
-                            text: TextSpan(
-                              text: estimatedDay.toString(),
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ): Center(
-                      child: CircularProgressIndicator(),
-                    ),
+
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -2913,6 +2947,10 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ],
+
+
+                        locationLoading ?
+                        isChangeZip ?
                         Flexible(
                           fit: FlexFit.tight,
                           child: TextField(
@@ -2937,6 +2975,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                     onPressed: () async {
                                       setState(() {
                                         locationLoading = false;
+                                        isChangeZip = false;
                                       });
 
                                       List getDays = await ProductProvider.getDelivery(
@@ -2961,30 +3000,49 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
                             },
                           ),
+                        ):
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Column(
+                              children: [
+                                RichText(
+                                text: TextSpan(
+                                  text: estimatedDay.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black
+                                  ),
+                                ),
+                                ),
+                                RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.blueAccent
+                                        ),
+                                        text: 'Change your Location',
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = (){
+                                            setState(() {
+                                              isChangeZip = true;
+                                            });
+                                          }
+                                    )
+                                ),
+                              ],
+                            )
+                          ],
+                        ): Center(
+                          child: CircularProgressIndicator(),
                         ),
+
+
+
+
                       ],
                     ),
-                    locationLoading ? Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: RichText(
-                            text: TextSpan(
-                              text: estimatedDay.toString(),
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ): Center(
-                      child: CircularProgressIndicator(),
-                    ),
+
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
