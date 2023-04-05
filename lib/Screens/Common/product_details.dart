@@ -2570,7 +2570,7 @@ class ItemBottomNavBar extends StatefulWidget {
 }
 
 class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
-  late Position _position;
+  // late Position _position;
   late LocationPermission permission;
   late Geocoding geoCoding;
   final TextEditingController _zipText = TextEditingController();
@@ -2580,25 +2580,17 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
-    setState(() {
-      _position = position;
-    });
-    // print(_position);
 
-    // print(_zipText.text);
-    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
+    Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
     geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-    
-    // print(geoCoding.address.state);
-    // print(geoCoding.address.postalCode);
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
       qty: widget.qty,
-      lat: _position.latitude.toString(),
-      lng: _position.longitude.toString(),
-      state: geoCoding.address.state.toString(),
-      postal: geoCoding.address.postalCode.toString(),
+      lat: position.latitude.toString(),
+      lng: position.longitude.toString(),
+      state: '0',
+      postal: '0',
     );
     setState(() {
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
