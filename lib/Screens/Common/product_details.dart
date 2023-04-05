@@ -2581,16 +2581,24 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
 
-    Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
-    geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+
+
+    try{
+      Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
+      geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    }catch(e){
+      print(e);
+    }
+
+
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
       qty: widget.qty,
       lat: position.latitude.toString(),
       lng: position.longitude.toString(),
-      state: '0',
-      postal: '0',
+      state: geoCoding.address.state.toString(),
+      postal: geoCoding.address.postalCode.toString(),
     );
     setState(() {
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
