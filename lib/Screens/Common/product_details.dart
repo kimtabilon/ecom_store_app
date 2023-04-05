@@ -7,6 +7,7 @@ import 'package:ecom_store_app/Screens/Account/cart_page.dart';
 import 'package:ecom_store_app/Screens/Common/product_qty.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -258,15 +259,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ]),
               ) 
                   : Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
-                child:
-                Column(mainAxisSize: MainAxisSize.min, children: const [
-                  Icon(
-                    IconlyBold.profile,
-                    size: 28,
-                    color: Colors.lightGreen,
-                  ),
-                ]),
+                padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                child: const Icon(
+                  IconlyBold.profile,
+                  size: 28,
+                  color: Colors.lightGreen,
+                ),
               )
           ) 
           /*
@@ -349,13 +347,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     boxFit: BoxFit.fill,
                                   );
                                 },
-                                autoplay: true,
+                                autoplay: false,
                                 itemCount: productsModel!.images!.length,
                                 pagination: const SwiperPagination(
                                     alignment: Alignment.bottomCenter,
                                     builder: DotSwiperPaginationBuilder(
                                         color: Colors.black,
-                                        activeColor: Colors.blueAccent)),
+                                        activeColor: Colors.blueAccent
+                                    )
+                                ),
                               ),
                             ),
                           ),
@@ -375,10 +375,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               widthFactor: 1,
                               child: Padding(
                                 padding: EdgeInsets.all(5),
-                                child: Image(
-                                  image: NetworkImage(
-                                      ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                                  ),
+                                child: Image.network(
+                                  ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
                                 ),
                               ))
                         ],
@@ -2390,8 +2388,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ],
                   ),
       ),
-      bottomNavigationBar: ItemBottomNavBar(
-          price: price, sku: sku, qty: c.qty.toString(), sprice: sprice, width: size.width),
+      bottomNavigationBar: productsModel != null ? ItemBottomNavBar(
+          price: price, sku: sku, qty: c.qty.toString(), sprice: sprice, width: size.width):
+      const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
@@ -2572,22 +2573,24 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   late Position _position;
   late LocationPermission permission;
   late Geocoding geoCoding;
-  String transitDay = "Enable Location Service";
+  final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
+  bool locationLoading = false;
+  bool isChangeZip = false;
 
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
     setState(() {
       _position = position;
-
     });
     // print(_position);
 
+    // print(_zipText.text);
     Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
     geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+    
     // print(geoCoding.address.state);
     // print(geoCoding.address.postalCode);
-
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
@@ -2598,8 +2601,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
       postal: geoCoding.address.postalCode.toString(),
     );
     setState(() {
-      // transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+      locationLoading = true;
     });
 
   }
@@ -2617,15 +2620,18 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
   @override
   void didChangeDependencies() {
-    _getCurrentLocation();
+
     super.didChangeDependencies();
   }
 
+  void initState() {
+    _getCurrentLocation();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
-    final TextEditingController _zipText = TextEditingController();
 
     if(widget.width > 600) {
       return SingleChildScrollView(
@@ -2674,23 +2680,31 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ] else ...[
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: RichText(
-                              text: TextSpan(
-                                  text: 'You Pay: \$',
-                                  style: const TextStyle(
-                                      fontSize: 28,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: widget.price,
-                                        style: TextStyle(color: Colors.black)),
-                                  ]),
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'You Pay: \$',
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: widget.price,
+                                            style: TextStyle(color: Colors.black)),
+                                      ]),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
+                        locationLoading ?
+
+                        isChangeZip ?
                         Flexible(
                           fit: FlexFit.tight,
                           child: TextField(
@@ -2713,6 +2727,11 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                       color: Colors.green,
                                     ),
                                     onPressed: () async {
+                                      setState(() {
+                                        locationLoading = false;
+                                        isChangeZip = false;
+                                      });
+
                                       List getDays = await ProductProvider.getDelivery(
                                         sku: widget.sku,
                                         qty: widget.qty,
@@ -2721,9 +2740,11 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                         state: '0',
                                         postal: _zipText.text.toString(),
                                       );
+
                                       setState(() {
-                                        transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
+
                                         estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        locationLoading = true;
                                       });
                                     },
                                   ),
@@ -2731,6 +2752,11 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                               ),
                             ),
                             onSubmitted: (String str) async {
+
+                              setState(() {
+                                locationLoading = false;
+                              });
+
                               List getDays = await ProductProvider.getDelivery(
                                 sku: widget.sku,
                                 qty: widget.qty,
@@ -2740,32 +2766,53 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 postal: _zipText.text.toString(),
                               );
                               setState(() {
-                                transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
                                 estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                locationLoading = true;
                               });
                             },
                           ),
+                        ) :
+                        Stack(
+                              alignment: Alignment.bottomRight,
+                                  children:[
+                                    Column(
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            text: estimatedDay.toString(),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black
+                                            ),
+                                          ),
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.blueAccent
+                                            ),
+                                            text: 'Change your Location',
+                                            recognizer: TapGestureRecognizer()
+                                                ..onTap = (){
+                                                    setState(() {
+                                                      isChangeZip = true;
+                                                    });
+                                                  }
+                                                )
+                                        ),
+                                      ],
+                                    ),
+                                  ]
+                                )
+                          : Center(
+                          child: CircularProgressIndicator(),
                         ),
+
+
                       ],
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: RichText(
-                            text: TextSpan(
-                              text: transitDay.toString()+'\n'+estimatedDay.toString(),
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -2837,6 +2884,233 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
         ),
       );
     } else {
+      return SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: BottomAppBar(
+              child: Container(
+                height: 150,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 3,
+                          blurRadius: 10,
+                          offset: Offset(0, 3)),
+                    ]),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (widget.sprice != 'null' && widget.sprice != '0' && widget.sprice != widget.price) ...[
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
+                              text: TextSpan(
+                                  text: 'You Pay: \$' + widget.sprice,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '\$' + widget.price,
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            decoration: TextDecoration.lineThrough,
+                                            fontStyle: FontStyle.italic)),
+                                  ]),
+                            ),
+                          ),
+                        ] else ...[
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
+                              text: TextSpan(
+                                  text: 'You Pay: \$',
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: widget.price,
+                                        style: TextStyle(color: Colors.black)),
+                                  ]),
+                            ),
+                          ),
+                        ],
+
+
+                        locationLoading ?
+                        isChangeZip ?
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: TextField(
+                            controller: _zipText,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                borderSide: BorderSide(width: 0.8),
+                              ),
+                              hintText: "ZIP",
+                              suffixIcon: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween, // added line
+                                mainAxisSize: MainAxisSize.min, // added line
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: const Icon(
+                                      IconlyLight.search,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () async {
+                                      setState(() {
+                                        locationLoading = false;
+                                        isChangeZip = false;
+                                      });
+
+                                      List getDays = await ProductProvider.getDelivery(
+                                        sku: widget.sku,
+                                        qty: widget.qty,
+                                        lat: '0',
+                                        lng: '0',
+                                        state: '0',
+                                        postal: _zipText.text.toString(),
+                                      );
+
+                                      setState(() {
+                                        estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        locationLoading = true;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onSubmitted: (String str) {
+
+                            },
+                          ),
+                        ):
+                        Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Column(
+                              children: [
+                                RichText(
+                                text: TextSpan(
+                                  text: estimatedDay.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black
+                                  ),
+                                ),
+                                ),
+                                RichText(
+                                    text: TextSpan(
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.blueAccent
+                                        ),
+                                        text: 'Change your Location',
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = (){
+                                            setState(() {
+                                              isChangeZip = true;
+                                            });
+                                          }
+                                    )
+                                ),
+                              ],
+                            )
+                          ],
+                        ): Center(
+                          child: CircularProgressIndicator(),
+                        ),
+
+
+
+
+                      ],
+                    ),
+
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
+                          decoration: BoxDecoration(
+                            color: Colors.lightGreen,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5)),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'QTY: ',
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                              DropdownQTY(),
+                            ],
+                          ),
+                        ),
+                        // Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                        Flexible(
+                          child: Stack(
+                            children: [
+                              OutlinedButton.icon(
+                                onPressed: () {
+                                  print(token);
+                                  if(token=='') {
+                                    GuestCartProvider.addToCart(widget.sku, a.qty.value, context);
+                                  } else {
+                                    CartProvider().addToCart(widget.sku, a.qty.value, context);
+                                  }
+                                  print(a.qty.value);
+                                },
+                                icon: const Icon(
+                                  CupertinoIcons.cart_badge_plus,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  "Add To Cart",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                    minimumSize: const Size.fromHeight(20),
+                                    backgroundColor: Colors.lightGreen,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 13, horizontal: 15),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(5),
+                                            bottomRight: Radius.circular(5)))),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+        ),
+      );
+      /*
       return BottomAppBar(
           child: Container(
             height: 150,
@@ -2919,6 +3193,10 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                   color: Colors.green,
                                 ),
                                 onPressed: () async {
+                                  setState(() {
+                                    locationLoading = false;
+                                  });
+
                                   List getDays = await ProductProvider.getDelivery(
                                     sku: widget.sku,
                                     qty: widget.qty,
@@ -2928,8 +3206,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                     postal: _zipText.text.toString(),
                                   );
                                   setState(() {
-                                    transitDay = "Fast & Free Delivery:"+getDays[0]['transit'].toString()+" Days Transit";
                                     estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                    locationLoading = true;
                                   });
                                 },
                               ),
@@ -2945,13 +3223,14 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Flexible(
                       fit: FlexFit.loose,
                       child: RichText(
                         text: TextSpan(
-                          // text: transitDay.toString()+'\n'+estimatedDay.toString(),
+                          // text: estimatedDay.toString(),
                           text: estimatedDay.toString(),
                           style: const TextStyle(
                               fontSize: 14,
@@ -3027,6 +3306,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
               ],
             ),
           ));
+      */
     }
   }
 }

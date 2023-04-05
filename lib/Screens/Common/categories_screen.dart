@@ -53,7 +53,8 @@ class CategoriesScreen extends StatelessWidget {
             leadingWidth: 120,
           ),
           body: Text('test if'),
-          /*body: FutureBuilder<List>(
+          /*
+          body: FutureBuilder<List>(
             future: ProductProvider.getAllCategories(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -169,7 +170,8 @@ class CategoriesScreen extends StatelessWidget {
                 ),
               );
             }),
-          )*/
+          )
+          */
       );
     } else {
       return Scaffold(
@@ -263,7 +265,8 @@ class CategoriesScreen extends StatelessWidget {
             }),
           )
 
-          /*body: FutureBuilder<List>(
+          /*
+          body: FutureBuilder<List>(
             future: ProductProvider.getAllCategories(),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -380,7 +383,8 @@ class CategoriesScreen extends StatelessWidget {
                 ),
               );
             }),
-          )*/
+          )
+          */
       );
     }
   }
