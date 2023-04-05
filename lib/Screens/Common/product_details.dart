@@ -2747,6 +2747,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
                               setState(() {
                                 locationLoading = false;
+                                isChangeZip = false;
                               });
 
                               List getDays = await ProductProvider.getDelivery(
@@ -2988,8 +2989,25 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 ],
                               ),
                             ),
-                            onSubmitted: (String str) {
+                            onSubmitted: (String str) async {
 
+                              setState(() {
+                                locationLoading = false;
+                                isChangeZip = false;
+                              });
+
+                              List getDays = await ProductProvider.getDelivery(
+                                sku: widget.sku,
+                                qty: widget.qty,
+                                lat: '0',
+                                lng: '0',
+                                state: '0',
+                                postal: _zipText.text.toString(),
+                              );
+                              setState(() {
+                                estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                locationLoading = true;
+                              });
                             },
                           ),
                         ):
