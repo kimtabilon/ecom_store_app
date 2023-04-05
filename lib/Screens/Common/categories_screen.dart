@@ -8,6 +8,7 @@ import '../../Utils/routers.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
+import 'category_feeds_screen.dart';
 import 'guest_page.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -214,16 +215,34 @@ class CategoriesScreen extends StatelessWidget {
                 );
               } else if (snapshot.data == null) {
                 const Center(
-                  child: Text("No products has been added yet"),
+                  child: Text("Empty Category"),
                 );
               }
               // print("snapshot.data ${snapshot.data![0]}");
-              return ListView.builder(
+              return ListView.separated(
                 scrollDirection: Axis.vertical,
                 itemCount: snapshot.data!.length,
+                separatorBuilder: (context, index) {
+                  return Divider();
+                },
                 itemBuilder: (context, index) {
                   var cat = snapshot.data![index];
-                  return ExpansionTile(
+                  return ListTile(
+                    title: Text(cat['name']),
+                    trailing: Icon(Icons.arrow_forward),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: cat['sub'].length==0
+                              ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                              : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                        ),
+                      );
+                    },
+                  );
+                  /*return ExpansionTile(
                     title: Text(cat['name']), //header title
                     children: [
                       cat['sub'].length>1 ?
@@ -240,7 +259,7 @@ class CategoriesScreen extends StatelessWidget {
                         )
                       ) : SizedBox(height: 1,)
                     ],
-                  );
+                  );*/
                 },
               );
             }),
