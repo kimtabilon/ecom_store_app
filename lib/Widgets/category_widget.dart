@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../Model/category_model.dart';
 import '../Screens/Common/category_feeds_screen.dart';
 import '../Screens/Common/feeds_screen.dart';
+import '../Screens/Common/guest_page.dart';
+import '../Utils/routers.dart';
 
 class CategoryWidget extends StatelessWidget {
   CategoryWidget({Key? key, required this.sub, required this.name}) : super(key: key);
@@ -22,6 +24,17 @@ class CategoryWidget extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(name),
+          actions: [
+            IconButton(
+              iconSize: 40,
+              icon: Icon(
+                  Icons.close
+              ),
+              onPressed: () {
+                PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              },
+            )
+          ],
         ),
         // body: Text('test else'),
         body: Column(
@@ -44,18 +57,28 @@ class CategoryWidget extends StatelessWidget {
                   var cat = sub[index];
                   return ListTile(
                     title: Text(cat['name']),
-                    trailing: Icon(Icons.arrow_forward),
+                    trailing: IconButton(
+                      icon: Icon(Icons.arrow_forward),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: cat['sub'].length==0
+                                ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                          ),
+                        );
+                      },
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,
-                          child: cat['sub'].length==0
-                              ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                              : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                          child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
                         ),
                       );
-
                     },
                   );
                 },
