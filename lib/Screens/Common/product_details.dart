@@ -680,22 +680,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1249,19 +1255,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1815,19 +1827,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
