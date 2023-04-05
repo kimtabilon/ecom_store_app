@@ -202,67 +202,113 @@ class CategoriesScreen extends StatelessWidget {
             leadingWidth: 110,
           ),
           // body: Text('test else'),
-          body: FutureBuilder<List>(
-            future: ProductProvider.getAllCategories(),
-            builder: ((context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                Center(
-                  child: Text("An error occurred ${snapshot.error}"),
-                );
-              } else if (snapshot.data == null) {
-                const Center(
-                  child: Text("Empty Category"),
-                );
-              }
-              // print("snapshot.data ${snapshot.data![0]}");
-              return ListView.separated(
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.data!.length,
-                separatorBuilder: (context, index) {
-                  return Divider();
-                },
-                itemBuilder: (context, index) {
-                  var cat = snapshot.data![index];
-                  return ListTile(
-                    title: Text(cat['name']),
-                    trailing: Icon(Icons.arrow_forward),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.fade,
-                          child: cat['sub'].length==0
-                              ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                              : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                        ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.black12,
+                padding: EdgeInsets.all(8),
+                child: Text('Categories', style: TextStyle(fontWeight: FontWeight.bold),),
+              ),
+              Expanded(
+                child: FutureBuilder<List>(
+                  future: ProductProvider.getAllCategories(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    },
-                  );
-                  /*return ExpansionTile(
-                    title: Text(cat['name']), //header title
-                    children: [
-                      cat['sub'].length>1 ?
-                      Container(
-                        color: Colors.black12,
-                        padding:EdgeInsets.all(20),
-                        width: double.infinity,
-                        child:  Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(cat['sub'].length,(index){
-                            return Text(cat['sub'][index]['name'].toString());
+                    } else if (snapshot.hasError) {
+                      Center(
+                        child: Text("An error occurred ${snapshot.error}"),
+                      );
+                    } else if (snapshot.data == null) {
+                      const Center(
+                        child: Text("Empty Category"),
+                      );
+                    }
+                    // print("snapshot.data ${snapshot.data![0]}");
+                    return ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.length,
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
+                      itemBuilder: (context, index) {
+                        var cat = snapshot.data![index];
+                        return ListTile(
+                          title: Text(cat['name']),
+                          trailing: Icon(Icons.arrow_forward),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: cat['sub'].length==0
+                                    ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                    : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                              ),
+                            );
                           },
-                        )
-                        )
-                      ) : SizedBox(height: 1,)
-                    ],
-                  );*/
+                        );
+                        /*return ExpansionTile(
+                          title: Text(cat['name']), //header title
+                          children: [
+                            cat['sub'].length>1 ?
+                            Container(
+                              color: Colors.black12,
+                              padding:EdgeInsets.all(20),
+                              width: double.infinity,
+                              child:  Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(cat['sub'].length,(index){
+                                  return Text(cat['sub'][index]['name'].toString());
+                                },
+                              )
+                              )
+                            ) : SizedBox(height: 1,)
+                          ],
+                        );*/
+                      },
+                    );
+                  }),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                color: Colors.black12,
+                padding: EdgeInsets.all(8),
+                child: Text('Pages', style: TextStyle(fontWeight: FontWeight.bold),),
+              ),
+              ListTile(
+                title: const Text('About Us'),
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const AboutUsPage(),
+                    ),
+                  );
                 },
-              );
-            }),
+              ),
+              const Divider(),
+              ListTile(
+                title: const Text('Help Center'),
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const HelpCenterPage(),
+                    ),
+                  );
+                },
+              )
+            ],
           )
 
           /*

@@ -18,7 +18,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // final categoriesModelProvider = Provider.of<CategoryModel>(context);
-    
+
     return Scaffold(
         appBar: AppBar(
           title: Text(name),
