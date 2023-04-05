@@ -36,14 +36,15 @@ class CategoryWidget extends StatelessWidget {
             )
           ],
         ),
+        backgroundColor: Colors.white,
         // body: Text('test else'),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              color: Colors.black12,
-              padding: EdgeInsets.all(8),
+              color: Colors.white,
+              padding: EdgeInsets.only(top: 8, left: 8),
               child: Text('Sub Categories', style: TextStyle(fontWeight: FontWeight.bold),),
             ),
             Expanded(

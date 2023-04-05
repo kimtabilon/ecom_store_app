@@ -52,6 +52,7 @@ class CategoriesScreen extends StatelessWidget {
             ),
             leadingWidth: 120,
           ),
+          backgroundColor: Colors.white,
           body: Text('test if'),
           /*
           body: FutureBuilder<List>(
@@ -212,69 +213,70 @@ class CategoriesScreen extends StatelessWidget {
               )
             ],
           ),
+          backgroundColor: Colors.white,
           // body: Text('test else'),
+          /*
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                color: Colors.black12,
-                padding: EdgeInsets.all(8),
+                color: Colors.white,
+                padding: EdgeInsets.only(top: 8, left: 8),
                 child: Text('Categories', style: TextStyle(fontWeight: FontWeight.bold),),
               ),
-              Expanded(
-                child: FutureBuilder<List>(
-                  future: ProductProvider.getAllCategories(),
-                  builder: ((context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      Center(
-                        child: Text("An error occurred ${snapshot.error}"),
-                      );
-                    } else if (snapshot.data == null) {
-                      const Center(
-                        child: Text("Empty Category"),
-                      );
-                    }
-                    // print("snapshot.data ${snapshot.data![0]}");
-                    return ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data!.length,
-                      separatorBuilder: (context, index) {
-                        return Divider();
-                      },
-                      itemBuilder: (context, index) {
-                        var cat = snapshot.data![index];
-                        return ListTile(
-                          title: Text(cat['name']),
-                          trailing: IconButton(
-                            icon: Icon(Icons.arrow_forward),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: cat['sub'].length==0
-                                      ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                                      : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                                ),
-                              );
-                            },
-                          ),
-                          onTap: () {
+              FutureBuilder<List>(
+                future: ProductProvider.getAllCategories(),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    Center(
+                      child: Text("An error occurred ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data == null) {
+                    const Center(
+                      child: Text("Empty Category"),
+                    );
+                  }
+                  // print("snapshot.data ${snapshot.data![0]}");
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: snapshot.data!.length,
+                    // separatorBuilder: (context, index) {
+                    //   return Divider();
+                    // },
+                    itemBuilder: (context, index) {
+                      var cat = snapshot.data![index];
+                      return ListTile(
+                        title: Text(cat['name']),
+                        trailing: IconButton(
+                          icon: Icon(Icons.arrow_forward),
+                          onPressed: () {
                             Navigator.push(
                               context,
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
+                                child: cat['sub'].length==0
+                                    ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                    : CategoryWidget(sub: cat['sub'], name: cat['name']),
                               ),
                             );
                           },
-                        );
-                        /*return ExpansionTile(
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
+                            ),
+                          );
+                        },
+                      );
+                      /*return ExpansionTile(
                           title: Text(cat['name']), //header title
                           children: [
                             cat['sub'].length>1 ?
@@ -292,16 +294,20 @@ class CategoriesScreen extends StatelessWidget {
                             ) : SizedBox(height: 1,)
                           ],
                         );*/
-                      },
-                    );
-                  }),
-                ),
+                    },
+                  );
+                }),
               ),
               Container(
                 width: double.infinity,
-                color: Colors.black12,
-                padding: EdgeInsets.all(8),
-                child: Text('Pages', style: TextStyle(fontWeight: FontWeight.bold),),
+                color: Colors.white,
+                padding: EdgeInsets.only(left: 8, top: 8),
+                child: Text(
+                  'Pages',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               ListTile(
                 title: const Text('About Us'),
@@ -316,7 +322,6 @@ class CategoriesScreen extends StatelessWidget {
                   );
                 },
               ),
-              const Divider(),
               ListTile(
                 title: const Text('Help Center'),
                 trailing: const Icon(Icons.arrow_forward),
@@ -332,8 +337,8 @@ class CategoriesScreen extends StatelessWidget {
               )
             ],
           )
+          */
 
-          /*
           body: FutureBuilder<List>(
             future: ProductProvider.getAllCategories(),
             builder: ((context, snapshot) {
@@ -381,12 +386,38 @@ class CategoriesScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          print(snapshot.data![index]);
-                          return Text('test123');
-                          return ChangeNotifierProvider.value(
-                            value: snapshot.data![index],
-                            child: const CategoryWidget(),
+                          // print(snapshot.data![index]);
+                          var cat = snapshot.data![index];
+                          return ListTile(
+                            title: Text(cat['name']),
+                            trailing: IconButton(
+                              icon: Icon(Icons.arrow_forward),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: cat['sub'].length==0
+                                        ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                        : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                                  ),
+                                );
+                              },
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
+                                ),
+                              );
+                            },
                           );
+                          // return ChangeNotifierProvider.value(
+                          //   value: snapshot.data![index],
+                          //   child: const CategoryWidget(),
+                          // );
                         },
                       ),
                     ),
@@ -452,7 +483,7 @@ class CategoriesScreen extends StatelessWidget {
               );
             }),
           )
-          */
+
       );
     }
   }
