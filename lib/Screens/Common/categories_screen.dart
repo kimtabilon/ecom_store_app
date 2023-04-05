@@ -200,6 +200,17 @@ class CategoriesScreen extends StatelessWidget {
               ],
             ),
             leadingWidth: 110,
+            actions: [
+              IconButton(
+                iconSize: 40,
+                icon: Icon(
+                  Icons.close
+                ),
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                },
+              )
+            ],
           ),
           // body: Text('test else'),
           body: Column(
@@ -239,15 +250,26 @@ class CategoriesScreen extends StatelessWidget {
                         var cat = snapshot.data![index];
                         return ListTile(
                           title: Text(cat['name']),
-                          trailing: Icon(Icons.arrow_forward),
+                          trailing: IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: cat['sub'].length==0
+                                      ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                      : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                                ),
+                              );
+                            },
+                          ),
                           onTap: () {
                             Navigator.push(
                               context,
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                child: cat['sub'].length==0
-                                    ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                                    : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                                child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
                               ),
                             );
                           },

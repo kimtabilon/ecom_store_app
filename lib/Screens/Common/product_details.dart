@@ -3343,7 +3343,8 @@ Widget listItem({required String title, required List<String> arrdesc, required 
     color: Color.fromRGBO(16, 69, 114, 1),
     child: Theme(
       data: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.transparent),
+        dividerColor: Colors.transparent
       ),
       child: ExpansionTile(
         childrenPadding: EdgeInsets.all(0),
@@ -3413,7 +3414,7 @@ Widget cardWidget({required List<String> arrdesc, required double width}) {
           ),
         )
             : Padding(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(vertical: 4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -3446,7 +3447,8 @@ Widget specList({required String title, required List<String> speclist, required
     color: Color.fromRGBO(16,69,114,1),
     child: Theme(
       data: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black)
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
+        dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
         childrenPadding: EdgeInsets.all(0),
@@ -3476,14 +3478,14 @@ Widget specList({required String title, required List<String> speclist, required
           ),
         ),
         children: <Widget>[
-          specCont(speccontent: speccontent, width: width)
+          specCont(speclist: speclist, speccontent: speccontent, width: width)
         ],
       ),
     ),
   );
 }
 
-Widget specCont({required List<String> speccontent, required double width}){
+Widget specCont({required List<String> speccontent, required double width, required List<String> speclist}){
   return ListView.builder(
     padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
@@ -3500,12 +3502,22 @@ Widget specCont({required List<String> speccontent, required double width}){
               Flexible(
                 child: RichText(
                   text: TextSpan(
-                    text: speccontent![index],
+                    text: speclist![index],
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
                       color: Colors.black,
                     ),
+                    children: <TextSpan>[
+                      TextSpan(
+                      text: speccontent![index],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -3522,12 +3534,22 @@ Widget specCont({required List<String> speccontent, required double width}){
                   padding: EdgeInsets.only(left: 15, right: 15),
                   child: RichText(
                     text: TextSpan(
-                      text: speccontent![index],
+                      text: speclist![index],
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
+                      children: <TextSpan>[
+                        TextSpan(
+                        text: speccontent![index],
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            )
+                        )
+                      ],
                     ),
                   ),
                 ),
