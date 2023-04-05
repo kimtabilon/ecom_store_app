@@ -330,6 +330,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                       ],
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white
+                        ),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            widthFactor: 1,
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Image.network(
+                                ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
+                              ),
+                            )
+                        ),
+                      ),
                       Stack(
                         children: <Widget>[
                           Padding(
@@ -359,26 +374,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                           ),
-                          /*
-                Align(
-                  alignment: Alignment.topLeft,
-                  widthFactor: 1,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white.withOpacity(0.1),
-                    backgroundImage: NetworkImage(ManufLogo[0]),
-                  ),
-                ),
-                */
-                          Align(
-                              alignment: Alignment.topLeft,
-                              widthFactor: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(5),
-                                child: Image.network(
-                                  ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                                ),
-                              ))
                         ],
                       ),
                       Arc(
@@ -685,22 +680,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Accessories",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Accessories",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1254,19 +1255,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "Related Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Related Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -1820,19 +1827,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         if(size.width > 600) ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ] else ...[
-                                          Text(
-                                            "More Products",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "More Products",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
                                             ),
                                           ),
                                         ]
@@ -2570,7 +2583,7 @@ class ItemBottomNavBar extends StatefulWidget {
 }
 
 class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
-  late Position _position;
+  // late Position _position;
   late LocationPermission permission;
   late Geocoding geoCoding;
   final TextEditingController _zipText = TextEditingController();
@@ -2580,25 +2593,17 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
-    setState(() {
-      _position = position;
-    });
-    // print(_position);
 
-    // print(_zipText.text);
-    Coordinate coordinate = Coordinate(latitude: _position.latitude, longitude: _position.longitude);
+    Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
     geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-    
-    // print(geoCoding.address.state);
-    // print(geoCoding.address.postalCode);
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
       qty: widget.qty,
-      lat: _position.latitude.toString(),
-      lng: _position.longitude.toString(),
-      state: geoCoding.address.state.toString(),
-      postal: geoCoding.address.postalCode.toString(),
+      lat: position.latitude.toString(),
+      lng: position.longitude.toString(),
+      state: '0',
+      postal: '0',
     );
     setState(() {
       estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
@@ -2755,6 +2760,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
                               setState(() {
                                 locationLoading = false;
+                                isChangeZip = false;
                               });
 
                               List getDays = await ProductProvider.getDelivery(
@@ -2947,8 +2953,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ],
-
-
                         locationLoading ?
                         isChangeZip ?
                         Flexible(
@@ -2996,8 +3000,25 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 ],
                               ),
                             ),
-                            onSubmitted: (String str) {
+                            onSubmitted: (String str) async {
 
+                              setState(() {
+                                locationLoading = false;
+                                isChangeZip = false;
+                              });
+
+                              List getDays = await ProductProvider.getDelivery(
+                                sku: widget.sku,
+                                qty: widget.qty,
+                                lat: '0',
+                                lng: '0',
+                                state: '0',
+                                postal: _zipText.text.toString(),
+                              );
+                              setState(() {
+                                estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                locationLoading = true;
+                              });
                             },
                           ),
                         ):
@@ -3036,13 +3057,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                         ): Center(
                           child: CircularProgressIndicator(),
                         ),
-
-
-
-
                       ],
                     ),
-
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -3059,7 +3075,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             children: [
                               Text(
                                 'QTY: ',
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.white),
                               ),
                               DropdownQTY(),
                             ],
