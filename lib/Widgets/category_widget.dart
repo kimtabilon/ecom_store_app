@@ -24,31 +24,44 @@ class CategoryWidget extends StatelessWidget {
           title: Text(name),
         ),
         // body: Text('test else'),
-        body: ListView.separated(
-          scrollDirection: Axis.vertical,
-          itemCount: sub.length,
-          separatorBuilder: (context, index) {
-            return Divider();
-          },
-          itemBuilder: (context, index) {
-            var cat = sub[index];
-            return ListTile(
-              title: Text(cat['name']),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.fade,
-                    child: cat['sub'].length==0
-                        ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                        : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                  ),
-                );
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              color: Colors.black12,
+              padding: EdgeInsets.all(8),
+              child: Text('Sub Categories', style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
+            Expanded(
+              child: ListView.separated(
+                scrollDirection: Axis.vertical,
+                itemCount: sub.length,
+                separatorBuilder: (context, index) {
+                  return Divider();
+                },
+                itemBuilder: (context, index) {
+                  var cat = sub[index];
+                  return ListTile(
+                    title: Text(cat['name']),
+                    trailing: Icon(Icons.arrow_forward),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: cat['sub'].length==0
+                              ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                              : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                        ),
+                      );
 
-              },
-            );
-          },
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         )
     );
 
