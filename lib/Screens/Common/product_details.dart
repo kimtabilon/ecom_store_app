@@ -330,6 +330,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                       ],
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white
+                        ),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            widthFactor: 1,
+                            child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Image.network(
+                                ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
+                              ),
+                            )
+                        ),
+                      ),
                       Stack(
                         children: <Widget>[
                           Padding(
@@ -359,26 +374,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             ),
                           ),
-                          /*
-                Align(
-                  alignment: Alignment.topLeft,
-                  widthFactor: 1,
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white.withOpacity(0.1),
-                    backgroundImage: NetworkImage(ManufLogo[0]),
-                  ),
-                ),
-                */
-                          Align(
-                              alignment: Alignment.topLeft,
-                              widthFactor: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(5),
-                                child: Image.network(
-                                  ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                                ),
-                              ))
                         ],
                       ),
                       Arc(
@@ -2947,8 +2942,6 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             ),
                           ),
                         ],
-
-
                         locationLoading ?
                         isChangeZip ?
                         Flexible(
@@ -3036,13 +3029,8 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                         ): Center(
                           child: CircularProgressIndicator(),
                         ),
-
-
-
-
                       ],
                     ),
-
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -3059,7 +3047,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                             children: [
                               Text(
                                 'QTY: ',
-                                style: TextStyle(fontSize: 16, color: Colors.white),
+                                style: TextStyle(fontSize: 18, color: Colors.white),
                               ),
                               DropdownQTY(),
                             ],

@@ -73,7 +73,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
           dropdownColor: Colors.lightGreen,
           value: dropdownValue,
           items: <String>[
-            '1','2','3','4','5','6','7','8','9','10','11'
+            '1','2','3','4','5','6','7','8','9','10+'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -88,6 +88,9 @@ class _DropdownQTYState extends State<DropdownQTY> {
           }).toList(),
           onChanged: (String? newValue) {
             setState(() {
+              if(newValue == '10+') {
+                newValue = '10';
+              }
               dropdownValue = newValue!;
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
@@ -97,14 +100,14 @@ class _DropdownQTYState extends State<DropdownQTY> {
         );
       } else {
         return Container(
-          width: 30,
+          width: 80,
           child: TextField(
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 20
             ),
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 10.0),
                 border: InputBorder.none,
                 hintText: dropdownValue,
                 hintStyle: TextStyle(
@@ -124,21 +127,21 @@ class _DropdownQTYState extends State<DropdownQTY> {
         );
       }
     } else {
-      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) <= 10) {
+      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) < 10 && dropdownValue != '10+') {
         return DropdownButton<String>(
           iconDisabledColor: Colors.white,
           iconEnabledColor: Colors.white,
           dropdownColor: Colors.lightGreen,
           value: dropdownValue,
           items: <String>[
-            '1','2','3','4','5','6','7','8','9','10','11'
+            '1','2','3','4','5','6','7','8','9','10+'
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(
                 value,
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     color: Colors.white
                 ),
               ),
@@ -146,6 +149,9 @@ class _DropdownQTYState extends State<DropdownQTY> {
           }).toList(),
           onChanged: (String? newValue) {
             setState(() {
+              if(newValue == '10+') {
+                newValue = '10';
+              }
               dropdownValue = newValue!;
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
@@ -155,16 +161,16 @@ class _DropdownQTYState extends State<DropdownQTY> {
         );
       } else {
         return Container(
-          width: 30,
+          width: 80,
           child: TextField(
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 16
+                fontSize: 18
             ),
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 10.0),
                 border: InputBorder.none,
-                hintText: dropdownValue,
+                hintText: 'Input QTY',
                 hintStyle: TextStyle(
                     color: Colors.white
                 ),
@@ -182,7 +188,5 @@ class _DropdownQTYState extends State<DropdownQTY> {
         );
       }
     }
-
-
   }
 }
