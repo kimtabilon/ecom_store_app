@@ -47,17 +47,6 @@ class _GuestPageState extends State<GuestPage> {
             ),
             leadingWidth: 70,
             actions: [
-              const CartIconWidget(),
-              IconButton(
-                onPressed: () {
-                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
-                },
-                icon: const Icon(
-                  Icons.question_mark,
-                  size: 35,
-                  color: Colors.lightGreen,
-                ),
-              ),
               InkWell(
                   onTap: () {
                     Navigator.push(
@@ -76,6 +65,17 @@ class _GuestPageState extends State<GuestPage> {
                       color: Colors.lightGreen,
                     ),
                   )),
+              IconButton(
+                onPressed: () {
+                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+                },
+                icon: const Icon(
+                  Icons.question_mark,
+                  size: 35,
+                  color: Colors.lightGreen,
+                ),
+              ),
+              const CartIconWidget(),
             ],
           )
               : AppBar(
@@ -90,12 +90,6 @@ class _GuestPageState extends State<GuestPage> {
             ),
             leadingWidth: 70,
             actions: [
-              const CartIconWidget(),
-              const Icon(
-                Icons.question_mark,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
               InkWell(
                   onTap: () {
                     Navigator.push(
@@ -114,6 +108,12 @@ class _GuestPageState extends State<GuestPage> {
                       color: Colors.lightGreen,
                     ),
                   )),
+              const Icon(
+                Icons.question_mark,
+                size: 28,
+                color: Colors.lightGreen,
+              ),
+              const CartIconWidget(),
             ],
           ),
           body: Padding(
