@@ -3400,7 +3400,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                               text: TextSpan(
                                   text: 'You Pay: \$',
                                   style: const TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                   children: <TextSpan>[
