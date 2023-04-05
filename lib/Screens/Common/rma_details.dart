@@ -50,14 +50,132 @@ class _RMADetailsState extends State<RMADetails> {
   int min = 1;
   int max = 1;
   TextEditingController _textEditingController = TextEditingController();
-  bool isChecked = false;
 
-  List<bool> _isChecked = [];
-  int i = 0;
+  final allChecked = CheckBoxModal(title: 'All Checked');
 
   @override
   Widget build(BuildContext context) {
-    // print(widget.order.toJson());
+    final checkBoxList = widget.order.items!;
+    /*
+    return SafeArea(
+      child: Scaffold(
+          appBar: AppBar(
+            // elevation: 1,
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
+            title: Image.network(
+              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+              width: 40,
+              cacheWidth: 40,
+            ),
+            centerTitle: false,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            leadingWidth: 25,
+            actions: [
+              AnimatedSearchBar(),
+              InkWell(
+                  onTap: () {
+                    PageNavigator(ctx: context).nextPage(page: const CartPage());
+                  },
+                  child: Consumer<CartProvider>(builder: (context, cart, child) {
+                    return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                        ? Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 14, 5, 0),
+                      child: badges.Badge(
+                          badgeContent: Text(
+                            cart.cart_total_items,
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
+                          ),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: const Icon(
+                                Icons.shopping_cart_checkout_rounded,
+                                size: 30,
+                                color: Colors.lightGreen,
+                              )
+                          )
+                      ),
+                    )
+                        : Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                        child: const Icon(
+                            Icons.shopping_cart_checkout_rounded,
+                            size: 28,
+                            color: Colors.lightGreen
+                        )
+                    );
+                  })
+              ),
+              /*
+          InkWell(
+              onTap: () {
+                PageNavigator(ctx: context).nextPage(page: const CartPage());
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 15, 1, 0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Stack(
+                    children: [
+                      Icon(Icons.shopping_cart_checkout_rounded,
+                          size: 28, color: Colors.lightGreen),
+                    ],
+                  ),
+                ]),
+              )),
+          */
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.fade,
+                        child: SplashScreen(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
+                    child:
+                    Column(mainAxisSize: MainAxisSize.min, children: const [
+                      Icon(
+                        IconlyBold.profile,
+                        size: 28,
+                        color: Colors.lightGreen,
+                      ),
+                    ]),
+                  )),
+              /*
+          AppBarIcons(
+            function: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: SplashScreen(),
+                ),
+              );
+            },
+            icon: IconlyBold.profile,
+          ),
+          */
+            ],
+          ),
+          backgroundColor: const Color(0xFFEDECF2),
+          body: ListView(
+            children: [
+
+            ],
+          )
+      ),
+    );
+    */
 
     return Scaffold(
       appBar: AppBar(
@@ -188,7 +306,7 @@ class _RMADetailsState extends State<RMADetails> {
                 )
               ),
               const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(10.0),
                   child: Text('ITEMS ORDERED')
               ),
               ...widget.order.items!.map((item) =>
@@ -240,12 +358,14 @@ class _RMADetailsState extends State<RMADetails> {
                                     ),
                                   ],
                                 ),
+                                /*
                                 Row(
                                   children: [
                                     Text("Add To List: "),
                                     Checkbox(
                                       value: isChecked,
                                       onChanged: (bool? value) {
+                                        print(value);
                                         setState(() {
                                           if(isChecked == false){
                                             isChecked = true;
@@ -256,7 +376,8 @@ class _RMADetailsState extends State<RMADetails> {
                                       },
                                     ),
                                   ],
-                                )
+                                ),
+                                */
                               ],
                             ),
                             trailing: Text("\$${item.price!}"),
@@ -293,5 +414,13 @@ class _RMADetailsState extends State<RMADetails> {
         ),
       ),
     );
+
   }
+}
+
+class CheckBoxModal {
+  String title;
+  bool value;
+
+  CheckBoxModal({required this.title, this.value = false});
 }
