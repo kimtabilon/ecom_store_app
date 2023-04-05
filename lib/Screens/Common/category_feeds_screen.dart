@@ -21,9 +21,10 @@ class CategoryFeedsScreen extends StatefulWidget {
 class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
   final ScrollController _scrollController = ScrollController();
   List<ProductModel> productsList = [];
-  int limit = 100;
+  int limit = 10;
   bool _isLoading = false;
 
+  late ScrollController _controller;
   @override
   void initState() {
     getProducts();
@@ -34,20 +35,21 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
   void didChangeDependencies() {
     // getProducts();
     _scrollController.addListener(() async {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        _isLoading = true;
-        print("_isLoading $_isLoading");
-        limit += 100;
-        if(!mounted) {
-          super.dispose();
-        } else {
-          await getProducts();
-        }
-        _isLoading = false;
-        print("limit $limit");
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        // print(_isLoading);
+          _isLoading = true;
+          print("_isLoading $_isLoading");
+          limit += 10;
+          if(!mounted) {
+            super.dispose();
+          } else {
+            await getProducts();
+          }
+          _isLoading = false;
+          print("limit $limit");
       }
     });
+
     super.didChangeDependencies();
   }
 
@@ -166,9 +168,40 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
                     return ChangeNotifierProvider.value(
                         value: productsList[index],
                         child: const CategoryFeedsWidget());
-                  }),
+                  }
+              ),
+              /*
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                color: Colors.white,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if(_isLoadMoreRunning == true)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 40),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                      });
+                    },
+                    icon: Icon(
+                      Icons.downloading,
+                      size: 30,
+                    ),
+                    isSelected: _isLoadMoreRunning = true,
+                  ),
+                ),
+              ),
+              */
               if (_isLoading)
-                const Center(child: CircularProgressIndicator()),
+                const Center(
+                    child: CircularProgressIndicator()
+                ),
             ],
           ),
         ),

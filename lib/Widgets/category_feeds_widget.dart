@@ -47,9 +47,7 @@ class CategoryFeedsWidget extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: FancyShimmerImage(
-                        height: size.width > 600
-                            ? size.height * 0.36
-                            : size.height * 0.1,
+                        height: size.height * 0.36,
                         width: double.infinity,
                         errorWidget: const Icon(
                           IconlyBold.danger,
@@ -168,9 +166,7 @@ class CategoryFeedsWidget extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: FancyShimmerImage(
-                      height: size.width > 600
-                          ? size.height * 0.38
-                          : size.height * 0.2,
+                      height: size.height * 0.21,
                       width: double.infinity,
                       errorWidget: const Icon(
                         IconlyBold.danger,
@@ -268,11 +264,11 @@ class CategoryFeedsWidget extends StatelessWidget {
                                   size: 35,
                                 ),
                               ),
-                              Image.network(
-                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                                color: Colors.lightGreen,
-                                width: 30,
-                              ),
+                              // Image.network(
+                              //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                              //   color: Colors.lightGreen,
+                              //   width: 30,
+                              // ),
                             ],
                           ),
                         ] else ...[
@@ -311,11 +307,11 @@ class CategoryFeedsWidget extends StatelessWidget {
                                   color: Colors.lightGreen,
                                 ),
                               ),
-                              Image.network(
-                                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                                color: Colors.lightGreen,
-                                width: 28,
-                              ),
+                              // Image.network(
+                              //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
+                              //   color: Colors.lightGreen,
+                              //   width: 28,
+                              // ),
                             ],
                           ),
                         ],
