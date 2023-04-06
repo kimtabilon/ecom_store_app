@@ -60,6 +60,7 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
             child: Container(
                 padding: const EdgeInsets.all(15),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
 
                     Text("Your order has been placed!"),

@@ -3044,16 +3044,12 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
 
-
-
     try{
       Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
       geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
     }catch(e){
       print(e);
     }
-
-
 
     List getDays = await ProductProvider.getDelivery(
       sku: widget.sku,
@@ -3481,18 +3477,17 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                           ),
                         ):
                         Stack(
-                          alignment: Alignment.bottomRight,
                           children: [
                             Column(
                               children: [
                                 RichText(
-                                text: TextSpan(
-                                  text: estimatedDay.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black
+                                  text: TextSpan(
+                                    text: estimatedDay.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black
+                                    ),
                                   ),
-                                ),
                                 ),
                                 RichText(
                                     text: TextSpan(
