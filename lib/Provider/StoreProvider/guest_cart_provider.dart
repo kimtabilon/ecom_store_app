@@ -45,7 +45,8 @@ class GuestCartProvider extends ChangeNotifier {
         if (cart_total_items!='') {
           new_total = (int.parse(cart_total_items)+1).toString();
         }
-        DatabaseProvider().saveData('cart_total_items', new_total);
+        // DatabaseProvider().saveData('cart_total_items', new_total);
+        DatabaseProvider().setCartTotal(new_total, context);
       }
 
       showMessage(message: "$sku has been added to cart", context: context);
@@ -85,7 +86,8 @@ class GuestCartProvider extends ChangeNotifier {
         }
       ]);
       var _cart_total_items = await DatabaseProvider().getData('cart_total_items');
-      DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
+      // DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
+      DatabaseProvider().setCartTotal((int.parse(_cart_total_items)-1).toString(), context);
     } else {
       request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id/items/$id'));
       request.body = json.encode({
@@ -117,7 +119,8 @@ class GuestCartProvider extends ChangeNotifier {
         var body = await response.stream.bytesToString();
         if (response.statusCode == 200 || response.statusCode == 201){
           var data = json.decode(body);
-          DatabaseProvider().saveData('cart_total_items', data['items_count'].toString());
+          // DatabaseProvider().saveData('cart_total_items', data['items_count'].toString());
+          DatabaseProvider().setCartTotal(data['items_count'].toString(), context);
           return CartItem.itemsFromSnapshot(data['items']);
         }
       }

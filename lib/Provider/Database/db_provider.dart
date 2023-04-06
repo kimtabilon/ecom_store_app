@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../Screens/Authentication/login.dart';
 import '../../Utils/routers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../StoreProvider/cart_provider.dart';
 
 class DatabaseProvider extends ChangeNotifier {
   final Future<SharedPreferences> _pref = SharedPreferences.getInstance();
@@ -15,14 +18,16 @@ class DatabaseProvider extends ChangeNotifier {
 
   // COMMON
   void saveData(String key, String value) async {
-    /*if(key=='cart_total_items') {
-      print("trigger -> cart_total_items: $value");
-      _cart_total_items = value;
-      notifyListeners();
-    }*/
     SharedPreferences pref = await _pref;
     print("saved: $key -> $value");
     pref.setString(key, value);
+
+  }
+
+  void setCartTotal(total, ctx) async {
+    SharedPreferences pref = await _pref;
+    pref.setString('cart_total_items', total);
+    Provider.of<CartProvider>(ctx, listen: false).setCartTotal(total);
   }
 
   Future<String> getData(String key) async {
@@ -32,11 +37,6 @@ class DatabaseProvider extends ChangeNotifier {
       String data = value.getString(key)!;
       _data = data;
 
-      /*if(key=='cart_total_items') {
-        _cart_total_items = data;
-      }*/
-
-      // notifyListeners();
       return data;
     } else {
       _data = '';

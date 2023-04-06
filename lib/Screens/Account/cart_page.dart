@@ -2,6 +2,7 @@ import 'package:ecom_store_app/Screens/Account/checkout_cart_page.dart';
 import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '../../Model/cart_model.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
@@ -47,18 +48,7 @@ class _CartPageState extends State<CartPage> {
               );
             },
           )
-            : IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const HomePage()
-                )
-            );
-          },
-        ),
+            : const BackButton(),
       ),
       body: Container(
           padding: const EdgeInsets.all(20),
@@ -123,11 +113,10 @@ class _CartPageState extends State<CartPage> {
                       )
                   );
                 }),*/
-            FutureBuilder<String>(
-                future: DatabaseProvider().getData('cart_total_items'),
-                builder: (context, snapshot) {
-                  if (snapshot.data != '' && snapshot.data != '0') {
-                    return Expanded(
+            Consumer<CartProvider>(
+            builder: (context, cart, child) {
+              return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                  ? Expanded(
                         child: Align(
                             alignment: Alignment.bottomCenter,
                             child: ElevatedButton(
@@ -138,9 +127,9 @@ class _CartPageState extends State<CartPage> {
                                 );
                               },
                               child: const Text(
-                                  'Checkout',
+                                'Checkout',
                                 style: TextStyle(
-                                  fontSize: 25
+                                    fontSize: 25
                                 ),
                               ),
                               style: ElevatedButton.styleFrom(
@@ -150,11 +139,9 @@ class _CartPageState extends State<CartPage> {
                               ),
                             )
                         )
-                    );
-                  }
-                  return SizedBox(width: 1,);
-                }),
-
+                    )
+                  : SizedBox(width: 1,);
+            }),
           ]
           )
       ),

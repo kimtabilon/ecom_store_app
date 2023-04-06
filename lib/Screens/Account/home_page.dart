@@ -92,6 +92,12 @@ class _HomePageState extends State<HomePage> {
                               child: Text("No order has been added yet"),
                             );
                           }
+                          // snapshot.data!.sort((a,b) => -a.order_date!.compareTo(b.order_date!));
+                          snapshot.data!.sort((a, b) {
+                            int comp = a.order_date!.compareTo(b.order_date!);
+                            return comp;
+                          });
+
                           return OrderListWidget(orderList: snapshot.data!);
 
                         }),
@@ -268,6 +274,12 @@ class _HomePageState extends State<HomePage> {
                               child: Text("No order has been added yet"),
                             );
                           }
+
+                          // snapshot.data!.sort((a,b) => -a.order_date!.compareTo(b.order_date!));
+                          snapshot.data!.sort((a, b) {
+                            int comp = -a.order_date!.compareTo(b.order_date!);
+                            return comp;
+                          });
                           return OrderListWidget(orderList: snapshot.data!);
 
                         }),

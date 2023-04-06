@@ -55,6 +55,7 @@ dependencies:
   badges: ^3.0.3
   video_player:
   flutter_email_sender: ^5.2.0
+  dropdown_button2: ^2.0.0
 
 dev_dependencies:
   flutter_test:

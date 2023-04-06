@@ -3,6 +3,7 @@ import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:ecom_store_app/Utils/routers.dart';
 import 'package:ecom_store_app/Widgets/cart_icon.dart';
+import 'package:ecom_store_app/Widgets/help_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
@@ -57,24 +58,15 @@ class _GuestPageState extends State<GuestPage> {
                       ),
                     );
                   },
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-                    child: const Icon(
+                    child: Icon(
                       IconlyBold.profile,
                       size: 35,
                       color: Colors.lightGreen,
                     ),
                   )),
-              IconButton(
-                onPressed: () {
-                  PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
-                },
-                icon: const Icon(
-                  Icons.question_mark,
-                  size: 35,
-                  color: Colors.lightGreen,
-                ),
-              ),
+              const HelpDropdown(),
               const CartIconWidget(),
             ],
           )
@@ -100,19 +92,15 @@ class _GuestPageState extends State<GuestPage> {
                       ),
                     );
                   },
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                    child: const Icon(
+                    child: Icon(
                       IconlyBold.profile,
                       size: 28,
                       color: Colors.lightGreen,
                     ),
                   )),
-              const Icon(
-                Icons.question_mark,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
+              const HelpDropdown(),
               const CartIconWidget(),
             ],
           ),

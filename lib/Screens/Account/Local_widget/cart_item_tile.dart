@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import '../../../Model/cart_model.dart';
 import '../../../Provider/StoreProvider/cart_provider.dart';
 import '../../Common/product_details.dart';
@@ -66,11 +67,16 @@ class _CartItemTileWidgetState extends State<CartItemTileWidget> {
             ),
           ],
         ),
-        trailing: Text(
-            "\$${widget.item.price!}",
-          style: TextStyle(
-            fontSize: 25
-          ),
+        trailing: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "\$${widget.item.price!}",
+              style: const TextStyle(fontSize: 25 ),
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever_outlined))
+          ],
         ),
         leading: CartItemImageWidget(
             sku: widget.item.sku!
@@ -94,23 +100,39 @@ class _CartItemTileWidgetState extends State<CartItemTileWidget> {
           children: [
             Text(widget.item.name!),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                IconButton(icon: new Icon(Icons.remove),onPressed: () async {
-                  int new_qty = await CartProvider.updateCart(widget.item!.id, _qty, "-", context);
-                  _qty = new_qty;
-                  setState(() {});
-                }),
-                Text(_qty.toString()),
-                IconButton(icon: new Icon(Icons.add),onPressed: () async {
-                  int new_qty = await CartProvider.updateCart(widget.item!.id, _qty, "+", context);
-                  _qty = new_qty;
-                  setState(() {});
-                })
+                Row(
+                  children: [
+                    IconButton(icon: new Icon(Icons.remove),onPressed: () async {
+                      int new_qty = await CartProvider.updateCart(widget.item!.id, _qty, "-", context);
+                      _qty = new_qty;
+                      setState(() {});
+                    }),
+                    Text(_qty.toString()),
+                    IconButton(icon: new Icon(Icons.add),onPressed: () async {
+                      int new_qty = await CartProvider.updateCart(widget.item!.id, _qty, "+", context);
+                      _qty = new_qty;
+                      setState(() {});
+                    }),
+                  ],
+                ),
+                IconButton(
+                  onPressed: () async {
+                    int new_qty = await CartProvider.updateCart(widget.item!.id, 1, "-", context);
+                    _qty = new_qty;
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.delete_outline, color: Colors.red),
+                )
               ],
             ),
           ],
         ),
-        trailing: Text("\$${widget.item.price!}"),
+        trailing: Text(
+          "\$${widget.item.price!}",
+          style: const TextStyle(fontSize: 25 ),
+        ),
         leading: CartItemImageWidget(sku: widget.item.sku!),
         onTap: () {
           Navigator.push(

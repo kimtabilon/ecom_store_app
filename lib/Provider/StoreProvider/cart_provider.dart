@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:ecom_store_app/Provider/AuthProvider/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
 import '../../Provider/Database/db_provider.dart';
@@ -16,6 +17,11 @@ class CartProvider extends ChangeNotifier {
 
   void refreshCartTotal() async {
     _cart_total_items = await DatabaseProvider().getData('cart_total_items');
+    notifyListeners();
+  }
+
+  void setCartTotal(total) async {
+    _cart_total_items = total;
     notifyListeners();
   }
 
@@ -63,7 +69,8 @@ class CartProvider extends ChangeNotifier {
             if (cart_total_items!='') {
               new_total = (int.parse(cart_total_items)+1).toString();
             }
-            DatabaseProvider().saveData('cart_total_items', new_total);
+            // DatabaseProvider().saveData('cart_total_items', new_total);
+            DatabaseProvider().setCartTotal(new_total, context);
           }
 
         } else {
@@ -107,7 +114,8 @@ class CartProvider extends ChangeNotifier {
         }
       ]);
       var _cart_total_items = await DatabaseProvider().getData('cart_total_items');
-      DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
+      // DatabaseProvider().saveData('cart_total_items', (int.parse(_cart_total_items)-1).toString());
+      DatabaseProvider().setCartTotal((int.parse(_cart_total_items)-1).toString(), context);
     } else {
       request = http.Request('PUT', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/items/$id'));
       request.body = json.encode({
@@ -160,7 +168,8 @@ class CartProvider extends ChangeNotifier {
 
         if (response.statusCode == 200 || response.statusCode == 201){
           var _items = json.decode(body);
-          DatabaseProvider().saveData('cart_total_items', _items.length.toString());
+          // DatabaseProvider().saveData('cart_total_items', _items.length.toString());
+          DatabaseProvider().setCartTotal(_items.length.toString(), context);
           return CartItem.itemsFromSnapshot(_items);
         } else {
           /*if(token=='') {
