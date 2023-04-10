@@ -30,7 +30,7 @@ class _ProductDetailsState extends State<OrderDetails> {
       appBar: AppBar(
         title: const Text('Order Details'),
         centerTitle: true,
-        leading: IconButton(
+        leading: const BackButton()/*IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
@@ -41,7 +41,7 @@ class _ProductDetailsState extends State<OrderDetails> {
                 )
             );
           },
-        ),
+        )*/,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -210,7 +210,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
       appBar: AppBar(
         title: const Text('Shopping Cart'),
         centerTitle: true,
-        leading: IconButton(
+        leading: const BackButton()/*IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             PageNavigator(ctx: context).nextPage(page: const CartPage());
@@ -222,7 +222,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
             //     )
             // );
           },
-        ),
+        )*/,
       ),
       body: CustomScrollView(
         slivers: [

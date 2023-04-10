@@ -180,10 +180,10 @@ class _RegisterPageState extends State<RegisterPage> {
         appBar: AppBar(
           title: const Text('Create Account'),
           centerTitle: true,
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back),
+          leading: const BackButton()/*IconButton(
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
-          ),
+          )*/,
         ),
         body: CustomScrollView(
           slivers: [

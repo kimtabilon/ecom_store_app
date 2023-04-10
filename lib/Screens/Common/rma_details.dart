@@ -188,12 +188,12 @@ class _RMADetailsState extends State<RMADetails> {
           cacheWidth: 40,
         ),
         centerTitle: false,
-        leading: IconButton(
+        leading: const BackButton()/*IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
-        ),
+        )*/,
         leadingWidth: 25,
         actions: [
           AnimatedSearchBar(),
