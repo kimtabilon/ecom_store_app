@@ -43,7 +43,7 @@ class _AccountPageState extends State<AccountPage> {
       appBar: AppBar(
         title: const Text('My Account'),
         centerTitle: true,
-        leading: IconButton(
+        leading: const BackButton()/*IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
@@ -54,7 +54,7 @@ class _AccountPageState extends State<AccountPage> {
                 )
             );
           },
-        )
+        )*/
       ),
       body: CustomScrollView(
         slivers: [
