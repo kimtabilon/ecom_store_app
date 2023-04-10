@@ -359,8 +359,12 @@ class CheckoutProvider extends ChangeNotifier {
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
+                String filteredString = response.body.replaceAll('"', '');
                 PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+                  firstName,
+                  lastName,
                   email,
+                  filteredString,
                 ));
               }
               else {
@@ -430,8 +434,12 @@ class CheckoutProvider extends ChangeNotifier {
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
+                String filteredString = response.body.replaceAll('"', '');
                 PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+                  firstName,
+                  lastName,
                   email,
+                  filteredString,
                 ));
               }
               else {
@@ -519,8 +527,12 @@ class CheckoutProvider extends ChangeNotifier {
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
+            String filteredString = response.body.replaceAll('"', '');
             PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+              firstName,
+              lastName,
               email,
+              filteredString,
             ));
           }
           else {
@@ -578,8 +590,12 @@ class CheckoutProvider extends ChangeNotifier {
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
+            String filteredString = response.body.replaceAll('"', '');
             PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+              firstName,
+              lastName,
               email,
+              filteredString,
             ));
           }
           else {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Model/cart_model.dart';
+import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/CheckoutProvider/checkout_provider.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
@@ -128,7 +129,14 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
   String? stateField;
   String transitDay = "";
   String estimatedDay = "";
+  bool hasAddress = false;
+  bool doneLoad = false;
+  bool isButtonDisabled = false;
   void _getCurrentLocation() async {
+
+
+
+
     List getItems = await CartProvider.getCartItems(context);
     String skuList = "";
     int skuCount = 0;
@@ -164,6 +172,38 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
   }
 
 
+  void _getUserAddress() async {
+    List? getData = await AuthenticationProvider.getCustomerAddress();
+
+    if(getData.isNotEmpty){
+      print(getData[0]);
+      setState(() {
+        _email.text = getData[0]['email'];
+        _firstName.text = getData[0]['addresses'][0]['firstname'];
+        _lastName.text = getData[0]['addresses'][0]['lastname'];
+        _company.text = getData[0]['addresses'][0]['company'];
+        _address1.text = getData[0]['addresses'][0]['street'][0] ?? "";
+        _address2.text = getData[0]['addresses'][0]['street'][1] ?? "";
+        _address3.text = getData[0]['addresses'][0]['street'][2] ?? "";
+        _province.text = getData[0]['addresses'][0]['region']['region'];
+        _provinceCode.text = getData[0]['addresses'][0]['region']['region_id'].toString();
+        _city.text = getData[0]['addresses'][0]['city'];
+        _zipcode.text = getData[0]['addresses'][0]['postcode'];
+        _number.text = getData[0]['addresses'][0]['telephone'];
+        hasAddress = true;
+      });
+    }
+
+    setState(() {
+      doneLoad = true;
+    });
+  }
+  @override
+  void initState() {
+    _getUserAddress();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,13 +213,14 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const CartPage()
-                )
-            );
+            PageNavigator(ctx: context).nextPage(page: const CartPage());
+            // Navigator.push(
+            //     context,
+            //     PageTransition(
+            //         type: PageTransitionType.fade,
+            //         child: const CartPage()
+            //     )
+            // );
           },
         ),
       ),
@@ -188,7 +229,165 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
           SliverToBoxAdapter(
             child: Container(
                 padding: const EdgeInsets.all(15),
-                child: Column(
+                child: hasAddress ?
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("SHIPPING ADDRESS:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                              fontSize: 20,
+                            ))),
+                    SizedBox(height: 10),
+
+                    RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                            text: "Email: "+_email.text,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 17,
+                            ),
+                        )
+                    ),
+                    RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          text: "Name: "+_firstName.text+" "+_lastName.text,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        )
+                    ),
+                    RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          text: "Address: "+_city.text+", "+_province.text+" "+_zipcode.text,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        )
+                    ),
+                    RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          text: "Country: "+_country.text,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        )
+                    ),
+                    RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          text: "Phone: "+_number.text,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 17,
+                          ),
+                        )
+                    ),
+                    customButton(
+                      text: 'NEW ADDRESS',
+                      tap: () {
+
+                        isButtonDisabled ? null :
+                        setState(() {
+                          _company.text = '';
+                          _address1.text = '';
+                          _address2.text = '';
+                          _address3.text = '';
+                          _province.text = '';
+                          _provinceCode.text = '0';
+                          _city.text = '';
+                          _zipcode.text = '';
+                          _number.text = '';
+                          hasAddress = false;
+                        });
+                      },
+                      context: context,
+                    ),
+
+                    Consumer<CheckoutProvider>(
+                        builder: (context, auth, child) {
+                          // print(auth);
+                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                            if (auth.resMessage != '') {
+                              showMessage(
+                                  message: auth.resMessage, context: context);
+
+                              ///Clear the response message to avoid duplicate
+                              auth.clear();
+                            }
+                          });
+                          return customButton(
+                            text: 'PROCEED TO PAYMENT',
+                            tap: () {
+                              if (_email.text.isEmpty ||
+                                  _firstName.text.isEmpty ||
+                                  _lastName.text.isEmpty ||
+                                  _country.text.isEmpty ||
+                                  _province.text.isEmpty ||
+                                  _company.text.isEmpty ||
+                                  _provinceCode.text == '0' ||
+                                  _number.text.isEmpty ||
+                                  _address1.text.isEmpty ||
+                                  _city.text.isEmpty ||
+                                  _zipcode.text.isEmpty) {
+                                showMessage(
+                                    message: "All fields are required",
+                                    context: context);
+                              } else {
+
+                                setState(() {
+                                  isButtonDisabled = true;
+                                });
+
+                                auth.shippingAndBillingInfo(
+                                    firstName: _firstName.text.trim(),
+                                    lastName: _lastName.text.trim(),
+                                    company: _company.text.trim(),
+                                    email: _email.text.trim(),
+                                    address1: _address1.text.trim(),
+                                    address2: _address2.text.trim(),
+                                    address3: _address3.text.trim(),
+                                    country: _country.text.trim(),
+                                    province: _province.text.trim(),
+                                    provinceCode: _provinceCode.text.trim(),
+                                    city: _city.text.trim(),
+                                    zip: _zipcode.text.trim(),
+                                    phone : _number.text.trim(),
+                                    context: context);
+                              }
+                            },
+                            context: context,
+                            status: auth.isLoading,
+                          );
+                        }),
+
+
+                  ],
+                )
+
+                    :
+
+                !doneLoad ? const Center(
+                  child: CircularProgressIndicator(),
+                ):
+                Column(
                   children: [
                     customTextField(
                       title: 'Email Address',
@@ -231,8 +430,16 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     //   hint: 'Enter Country',
                     // ),
 
-                    Text("Country"),
                     Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Country",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ))
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
@@ -240,6 +447,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                         color: lightGrey,
                       ),
                       child:  DropdownButton(
+                        isExpanded: true,
                         items: countryOption.entries
                             .map<DropdownMenuItem<String>>(
                                 (MapEntry<String, String> e) => DropdownMenuItem<String>(
@@ -263,8 +471,15 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     //   hint: 'Enter State/Province',
                     // ),
 
-                    Text("State/Province"),
                     Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("State/Province",
+                            style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: black,
+                        ))),
+                    Container(
+                      alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
@@ -272,6 +487,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                         color: lightGrey,
                       ),
                       child:  DropdownButton(
+                        isExpanded: true,
                         items: RegionId.entries
                             .map<DropdownMenuItem<String>>(
                                 (MapEntry<String, String> e) => DropdownMenuItem<String>(
@@ -346,8 +562,16 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                       controller: _number,
                       hint: 'Enter Phone Number',
                     ),
-                    Text("Shipping Option:"),
                     Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Shipping Option:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ))
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
@@ -355,6 +579,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                         color: lightGrey,
                       ),
                       child:  DropdownButton(
+                        isExpanded: true,
                         items: shippingOption.entries
                             .map<DropdownMenuItem<String>>(
                                 (MapEntry<String, String> e) => DropdownMenuItem<String>(
@@ -441,7 +666,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                             }
                           });
                           return customButton(
-                            text: 'PAYMENT',
+                            text: 'PROCEED TO PAYMENT',
                             tap: () {
                               if (_email.text.isEmpty ||
                                   _firstName.text.isEmpty ||

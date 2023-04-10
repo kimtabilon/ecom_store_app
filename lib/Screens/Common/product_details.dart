@@ -699,6 +699,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ],
                       Container(
+                        height: 50,
+                        width: 50,
                         decoration: BoxDecoration(
                           color: Colors.white
                         ),
@@ -724,10 +726,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Swiper(
                                 itemBuilder: (BuildContext context, int index) {
                                   return FancyShimmerImage(
-                                    width: double.infinity,
+                                    // width: double.infinity,
                                     imageUrl: productsModel!.images![index]
                                         .toString(),
-                                    boxFit: BoxFit.fill,
+                                    boxFit: BoxFit.fitWidth,
                                   );
                                 },
                                 autoplay: false,
@@ -3060,7 +3062,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
       postal: geoCoding.address.postalCode.toString(),
     );
     setState(() {
-      estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+      estimatedDay = getDays[0]['date'].toString();
       locationLoading = true;
     });
 
@@ -3202,7 +3204,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
 
                                       setState(() {
 
-                                        estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        estimatedDay = getDays[0]['date'].toString();
                                         locationLoading = true;
                                       });
                                     },
@@ -3226,7 +3228,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 postal: _zipText.text.toString(),
                               );
                               setState(() {
-                                estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                estimatedDay = getDays[0]['date'].toString();
                                 locationLoading = true;
                               });
                             },
@@ -3236,10 +3238,11 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                               alignment: Alignment.bottomRight,
                                   children:[
                                     Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         RichText(
                                           text: TextSpan(
-                                            text: estimatedDay.toString(),
+                                            text: "Estimated Delivery Date:"+estimatedDay.toString(),
                                             style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black
@@ -3446,7 +3449,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                       );
 
                                       setState(() {
-                                        estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                        estimatedDay = getDays[0]['date'].toString();
                                         locationLoading = true;
                                       });
                                     },
@@ -3470,7 +3473,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 postal: _zipText.text.toString(),
                               );
                               setState(() {
-                                estimatedDay = "Estimated Delivery Date:"+getDays[0]['date'].toString();
+                                estimatedDay = getDays[0]['date'].toString();
                                 locationLoading = true;
                               });
                             },
@@ -3479,10 +3482,12 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                         Stack(
                           children: [
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 RichText(
+                                  textAlign: TextAlign.right,
                                   text: TextSpan(
-                                    text: estimatedDay.toString(),
+                                    text: "Estimated Delivery Date:\n"+estimatedDay.toString(),
                                     style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.black

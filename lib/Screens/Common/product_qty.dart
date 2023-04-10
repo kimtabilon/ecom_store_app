@@ -59,6 +59,8 @@ class _DropdownQTYState extends State<DropdownQTY> {
   String dropdownValue = '1';
   final MyController c = Get.put(MyController());
 
+  final FocusNode unitCodeCtrlFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     print(dropdownValue);
@@ -91,10 +93,13 @@ class _DropdownQTYState extends State<DropdownQTY> {
               if(newValue == '10+') {
                 newValue = '10';
               }
-              dropdownValue = newValue!;
+              setState(() {
+                dropdownValue = newValue!;
+              });
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
               print(c.qty.value);
+              unitCodeCtrlFocusNode.requestFocus();
             });
           },
         );
@@ -102,6 +107,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
         return Container(
           width: 80,
           child: TextField(
+            focusNode: unitCodeCtrlFocusNode,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 20
@@ -118,16 +124,20 @@ class _DropdownQTYState extends State<DropdownQTY> {
                 )
             ),
             onSubmitted: (String str) {
-              dropdownValue = str;
+              setState(() {
+                dropdownValue = str;
+              });
+
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
               print(c.qty.value);
+              unitCodeCtrlFocusNode.requestFocus();
             },
           ),
         );
       }
     } else {
-      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) < 10 && dropdownValue != '10+') {
+      if(int.parse(dropdownValue) >= 1 && int.parse(dropdownValue) < 10) {
         return DropdownButton<String>(
           iconDisabledColor: Colors.white,
           iconEnabledColor: Colors.white,
@@ -152,10 +162,14 @@ class _DropdownQTYState extends State<DropdownQTY> {
               if(newValue == '10+') {
                 newValue = '10';
               }
-              dropdownValue = newValue!;
+              setState(() {
+                dropdownValue = newValue!;
+              });
+              print("test");
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
               print(c.qty.value);
+              unitCodeCtrlFocusNode.requestFocus();
             });
           },
         );
@@ -163,6 +177,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
         return Container(
           width: 80,
           child: TextField(
+            focusNode: unitCodeCtrlFocusNode,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 18
@@ -179,7 +194,10 @@ class _DropdownQTYState extends State<DropdownQTY> {
                 )
             ),
             onSubmitted: (String str) {
-              dropdownValue = str;
+              setState(() {
+                dropdownValue = str;
+              });
+              unitCodeCtrlFocusNode.requestFocus();
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
               print(c.qty.value);

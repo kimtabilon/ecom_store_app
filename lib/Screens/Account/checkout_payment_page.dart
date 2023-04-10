@@ -60,12 +60,130 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   String? cardCode;
   String? cardType;
   bool creditOpt = false;
+  bool newAddress = false;
   String PayOption = 'banktransfer';
 
   final PaymentOption = {
     'banktransfer': 'Bank Transfer Payment',
     'authnetcim': 'Credit Card (Authorize.Net CIM)',
   };
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _firstName = TextEditingController();
+  final TextEditingController _lastName = TextEditingController();
+  final TextEditingController _address1 = TextEditingController();
+  final TextEditingController _address2 = TextEditingController();
+  final TextEditingController _address3 = TextEditingController();
+
+  final TextEditingController _country = TextEditingController(text:'US');
+  final TextEditingController _province = TextEditingController();
+  final TextEditingController _city = TextEditingController();
+  final TextEditingController _zipcode = TextEditingController();
+  final TextEditingController _provinceCode = TextEditingController(text:'0');
+  final TextEditingController _number = TextEditingController();
+
+  final String ShipOption = 'freeshipping';
+  final shippingOption = {
+    'freeshipping': '\$0.00 - Fast & Free Delivery',
+  };
+
+  final countryOption = {
+    'US': 'United States',
+  };
+
+
+  final RegionId = {
+    '0': 'Select State/Province',
+    '1': 'Alabama',
+    '2': 'Alaska',
+    '3': 'American Samoa',
+    '4': 'Arizona',
+    '5': 'Arkansas',
+    '6': 'Armed Forces Africa',
+    '7': 'Armed Forces Americas',
+    '8': 'Armed Forces Canada',
+    '9': 'Armed Forces Europe',
+    '10': 'Armed Forces Middle East',
+    '11': 'Armed Forces Pacific',
+    '12': 'California',
+    '13': 'Colorado',
+    '14': 'Connecticut',
+    '15': 'Delaware',
+    '16': 'District of Columbia',
+    '17': 'Federated States Of Micronesia',
+    '18': 'Florida',
+    '19': 'Georgia',
+    '20': 'Guam',
+    '21': 'Hawaii',
+    '22': 'Idaho',
+    '23': 'Illinois',
+    '24': 'Indiana',
+    '25': 'Iowa',
+    '26': 'Kansas',
+    '27': 'Kentucky',
+    '28': 'Louisiana',
+    '29': 'Maine',
+    '30': 'Marshall Islands',
+    '31': 'Maryland',
+    '32': 'Massachusetts',
+    '33': 'Michigan',
+    '34': 'Minnesota',
+    '35': 'Mississippi',
+    '36': 'Missouri',
+    '37': 'Montana',
+    '38': 'Nebraska',
+    '39': 'Nevada',
+    '40': 'New Hampshire',
+    '41': 'New Jersey',
+    '42': 'New Mexico',
+    '43': 'New York',
+    '44': 'North Carolina',
+    '45': 'North Dakota',
+    '46': 'Northern Mariana Islands',
+    '47': 'Ohio',
+    '48': 'Oklahoma',
+    '49': 'Oregon',
+    '50': 'Palau',
+    '51': 'Pennsylvania',
+    '52': 'Puerto Rico',
+    '53': 'Rhode Island',
+    '54': 'South Carolina',
+    '55': 'South Dakota',
+    '56': 'Tennessee',
+    '57': 'Texas',
+    '58': 'Utah',
+    '59': 'Vermont',
+    '60': 'Virgin Islands',
+    '61': 'Virginia',
+    '62': 'Washington',
+    '63': 'West Virginia',
+    '64': 'Wisconsin',
+    '65': 'Wyoming',
+  };
+
+  String? zipField;
+  String? stateField;
+
+
+  @override
+  initState() {
+
+      _email.text = widget.email;
+      _firstName.text = widget.firstName;
+      _lastName.text = widget.lastName;
+      _address1.text = widget.address1;
+      _address2.text = widget.address2;
+      _address3.text = widget.address3;
+      _country.text = widget.country;
+      _province.text = widget.province;
+      _provinceCode.text = widget.provinceCode;
+      _city.text = widget.city;
+      _zipcode.text = widget.zip;
+      _number.text = widget.phone;
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,10 +210,17 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   children: [
-
-                    Text("Payment Method:"),
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Payment Method:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: black,
+                            ))
+                    ),
 
                     Container(
+                      alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       decoration: BoxDecoration(
@@ -103,6 +228,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                         color: lightGrey,
                       ),
                       child:  DropdownButton(
+                        isExpanded: true,
                         items: PaymentOption.entries
                             .map<DropdownMenuItem<String>>(
                                 (MapEntry<String, String> e) => DropdownMenuItem<String>(
@@ -146,6 +272,287 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                       },
                     ): Container(),
 
+
+                    newAddress ?
+
+
+                    Column(
+                      children: [
+
+                        SizedBox(height: 20),
+
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text("BILLING ADDRESS:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                  fontSize: 20,
+                                ))),
+                        SizedBox(height: 10),
+
+                        customTextField(
+                          title: 'Email Address',
+                          controller: _email,
+                          hint: 'Enter you valid email address',
+                        ),
+                        customTextField(
+                          title: 'First Name',
+                          controller: _firstName,
+                          hint: 'Enter your First Name',
+                        ),
+                        customTextField(
+                          title: 'Last Name',
+                          controller: _lastName,
+                          hint: 'Enter your Last Name',
+                        ),
+                        customTextField(
+                          title: 'Street Address Line 1',
+                          controller: _address1,
+                          // hint: 'Enter your First Name',
+                        ),
+                        customTextField(
+                          title: 'Street Address Line 2',
+                          controller: _address2,
+                          // hint: 'Enter your First Name',
+                        ),
+                        customTextField(
+                          title: 'Street Address Line 3',
+                          controller: _address3,
+                          // hint: 'Enter your First Name',
+                        ),
+                        // customTextField(
+                        //   title: 'Country',
+                        //   controller: _country,
+                        //   hint: 'Enter Country',
+                        // ),
+
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Country",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                ))
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: lightGrey,
+                          ),
+                          child:  DropdownButton(
+                            isExpanded: true,
+                            items: countryOption.entries
+                                .map<DropdownMenuItem<String>>(
+                                    (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(e.value),
+                                ))
+                                .toList(),
+                            onChanged: (Value) {
+                              setState(() {
+                                _country.text = Value.toString();
+                              });
+
+                            },
+                            value: _country.text,
+                          ),
+                        ),
+
+                        // customTextField(
+                        //   title: 'State/Province',
+                        //   controller: _province,
+                        //   hint: 'Enter State/Province',
+                        // ),
+
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text("State/Province",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                ))),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: lightGrey,
+                          ),
+                          child:  DropdownButton(
+                            isExpanded: true,
+                            items: RegionId.entries
+                                .map<DropdownMenuItem<String>>(
+                                    (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(e.value),
+                                ))
+                                .toList(),
+                            onChanged: (Value) {
+                              setState(() {
+                                _province.text = RegionId[Value].toString();
+                                _provinceCode.text = Value.toString();
+
+                                stateField = RegionId[Value].toString();
+                              });
+                            },
+                            value: _provinceCode.text,
+
+                          ),
+                        ),
+
+                        customTextField(
+                          title: 'City',
+                          controller: _city,
+                          hint: 'Enter City',
+                        ),
+                        // TextField(
+                        //   title: 'Zip/Postal Code',
+                        //   controller: _zipcode,
+                        //   hint: 'Enter Zip',
+                        //   onChanged: (value) => updateButtonState(value),
+                        // ),
+                        Column(
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Zip/Postal Code',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: lightGrey,
+                              ),
+                              child: TextFormField(
+                                controller: _zipcode,
+                                maxLines: 1,
+                                decoration: InputDecoration(hintText: 'Enter Zip', border: InputBorder.none),
+                                onChanged: (value){
+                                  setState(() {
+                                    zipField = value.toString();
+                                  });
+
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+
+
+
+                        customTextField(
+                          title: 'Phone Number',
+                          controller: _number,
+                          hint: 'Enter Phone Number',
+                        ),
+                      ],
+                    ):
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text("SHIPPING ADDRESS:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                  fontSize: 20,
+                                ))),
+                        SizedBox(height: 10),
+
+                        RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: "Email: "+_email.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            )
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: "Name: "+_firstName.text+" "+_lastName.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            )
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: "Address: "+_city.text+", "+_province.text+" "+_zipcode.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            )
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: "Country: "+_country.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            )
+                        ),
+                        RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: "Phone: "+_number.text,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontSize: 17,
+                              ),
+                            )
+                        ),
+                        customButton(
+                          text: 'NEW ADDRESS',
+                          tap: () {
+                            setState(() {
+                              _address1.text = '';
+                              _address2.text = '';
+                              _address3.text = '';
+                              _province.text = '';
+                              _provinceCode.text = '0';
+                              _city.text = '';
+                              _zipcode.text = '';
+                              _number.text = '';
+                              newAddress = true;
+                            });
+                          },
+                          context: context,
+                        ),
+
+
+                      ],
+                    )
+                    ,
+
+
+
                     ///Button
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
@@ -168,7 +575,17 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                         expMonth.toString().isEmpty ||
                                         expYear.toString().isEmpty ||
                                         cardCode.toString().isEmpty ||
-                                        cardType.toString().isEmpty) {
+                                        cardType.toString().isEmpty ||
+                                        _email.text.isEmpty ||
+                                        _firstName.text.isEmpty ||
+                                        _lastName.text.isEmpty ||
+                                        _country.text.isEmpty ||
+                                        _province.text.isEmpty ||
+                                        _provinceCode.text == '0' ||
+                                        _number.text.isEmpty ||
+                                        _address1.text.isEmpty ||
+                                        _city.text.isEmpty ||
+                                        _zipcode.text.isEmpty) {
 
                                         showMessage(
                                             message: "All fields are required",
@@ -177,18 +594,18 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                     }else{
 
                                       auth.paymentInfo(
-                                          firstName: widget.firstName.trim(),
-                                          lastName: widget.lastName.trim(),
-                                          email: widget.email.trim(),
-                                          address1: widget.address1.trim(),
-                                          address2: widget.address2.trim(),
-                                          address3: widget.address3.trim(),
-                                          country: widget.country.trim(),
-                                          province: widget.province.trim(),
-                                          provinceCode: widget.provinceCode.trim(),
-                                          city: widget.city.trim(),
-                                          zip: widget.zip.trim(),
-                                          phone : widget.phone.trim(),
+                                          firstName: _firstName.text.trim(),
+                                          lastName: _lastName.text.trim(),
+                                          email: _email.text.trim(),
+                                          address1: _address1.text.trim(),
+                                          address2: _address2.text.trim(),
+                                          address3: _address3.text.trim(),
+                                          country: _country.text.trim(),
+                                          province: _province.text.trim(),
+                                          provinceCode: _provinceCode.text.trim(),
+                                          city: _city.text.trim(),
+                                          zip: _zipcode.text.trim(),
+                                          phone : _number.text.trim(),
                                           paymentOption : PayOption.trim(),
                                           cardNumber: cardNumber,
                                           expMonth: expMonth,
@@ -205,26 +622,49 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
 
                                   } else {
-                                    auth.paymentInfo(
-                                        firstName: widget.firstName.trim(),
-                                        lastName: widget.lastName.trim(),
-                                        email: widget.email.trim(),
-                                        address1: widget.address1.trim(),
-                                        address2: widget.address2.trim(),
-                                        address3: widget.address3.trim(),
-                                        country: widget.country.trim(),
-                                        province: widget.province.trim(),
-                                        provinceCode: widget.provinceCode.trim(),
-                                        city: widget.city.trim(),
-                                        zip: widget.zip.trim(),
-                                        phone : widget.phone.trim(),
-                                        paymentOption : PayOption.trim(),
-                                        cardNumber: cardNumber,
-                                        expMonth: expMonth,
-                                        expYear: expYear,
-                                        cardCode: cardCode,
-                                        cardType: cardType,
-                                        context: context);
+
+                                    if (
+                                        _email.text.isEmpty ||
+                                        _firstName.text.isEmpty ||
+                                        _lastName.text.isEmpty ||
+                                        _country.text.isEmpty ||
+                                        _province.text.isEmpty ||
+                                        _provinceCode.text == '0' ||
+                                        _number.text.isEmpty ||
+                                        _address1.text.isEmpty ||
+                                        _city.text.isEmpty ||
+                                        _zipcode.text.isEmpty) {
+
+                                      showMessage(
+                                          message: "All fields are required",
+                                          context: context);
+
+                                    }else{
+                                      auth.paymentInfo(
+
+
+                                          firstName: _firstName.text.trim(),
+                                          lastName: _lastName.text.trim(),
+                                          email: _email.text.trim(),
+                                          address1: _address1.text.trim(),
+                                          address2: _address2.text.trim(),
+                                          address3: _address3.text.trim(),
+                                          country: _country.text.trim(),
+                                          province: _province.text.trim(),
+                                          provinceCode: _provinceCode.text.trim(),
+                                          city: _city.text.trim(),
+                                          zip: _zipcode.text.trim(),
+                                          phone : _number.text.trim(),
+                                          paymentOption : PayOption.trim(),
+                                          cardNumber: cardNumber,
+                                          expMonth: expMonth,
+                                          expYear: expYear,
+                                          cardCode: cardCode,
+                                          cardType: cardType,
+                                          context: context);
+                                    }
+
+
                                   }
 
 

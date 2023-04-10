@@ -327,6 +327,29 @@ class AuthenticationProvider extends ChangeNotifier {
     }
   }
 
+
+  static Future<List> getCustomerAddress() async {
+String token = await DatabaseProvider().getData('admin_token');
+String user_id = await DatabaseProvider().getData('user_id');
+    try {
+      List addressList = [];
+      if(user_id != '') {
+        http.Response response = await http.get(
+            Uri.https(AppUrl.storeUrl, "rest/default/V1/customers/$user_id"),
+            headers: {
+              "Authorization": "Bearer ${token}",
+            }
+        );
+        var data = jsonDecode(response.body);
+        addressList.add(data);
+      }
+      return addressList;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+
   void clear() {
     _resMessage = "";
     // _isLoading = false;

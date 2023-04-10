@@ -1,6 +1,7 @@
 import 'package:credit_card_form/credit_card_form.dart';
 import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -16,16 +17,22 @@ import '../../Utils/snack_message.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
 import '../Authentication/splash.dart';
+import '../Pages/help_center.dart';
 import 'Local_widget/cart_item_list.dart';
 import 'cart_page.dart';
 import 'dart:io';
 
 
 class CheckoutResultPage extends StatefulWidget {
+  final String firstName;
+  final String lastName;
   final String email;
-
+  final String orderNumber;
   const CheckoutResultPage(
+      this.firstName,
+      this.lastName,
       this.email,
+      this.orderNumber,
       {Key? key}) : super(key: key);
 
   @override
@@ -58,14 +65,151 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(55),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    RichText(
+                        textAlign: TextAlign.center,
+                    text: TextSpan(
+                    text: widget.firstName+" "+widget.lastName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 24,
+                        ),
+                        children: const [
+                          TextSpan(
+                            text: " your order has been placed!",
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ]
+                      )
+                    ),
+                    SizedBox(height: 20),
 
-                    Text("Your order has been placed!"),
-                    Text("An order confirmation will be sent to "+widget.email+" along with your tracking information"),
 
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            text: "Order Number ",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 24,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: "#"+widget.orderNumber,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ]
+                        )
+                    ),
+
+                    SizedBox(height: 20),
+
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                            text: "An order confirmation and tracking information will be sent to",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 24,
+                            ),
+
+                        )
+                    ),
+
+                    SizedBox(height: 20),
+
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: widget.email,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 24,
+                          ),
+
+                        )
+                    ),
+
+                    SizedBox(height: 20),
+
+                    Column(
+                      children: [
+                        RichText(
+                            textAlign: TextAlign.center,
+                            text: const TextSpan(
+                                text: "Please visit Help Center",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                  fontSize: 24,
+                                ),
+                            )
+                        ),
+                        RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                                text: "Help Center",
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = (){
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child: const HelpCenterPage(),
+                                      ),
+                                    );
+                                  }
+                            )
+                        ),
+                      ],
+                    ),
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                            text: " for further assistance and how you can reach us",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                              fontSize: 24,
+                            ),
+                        )
+                    ),
+
+                    SizedBox(height: 20),
+
+                    RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          text: "And again thank you for business!",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            fontSize: 24,
+                          ),
+
+                        )
+                    ),
 
                   ],
                 )),
