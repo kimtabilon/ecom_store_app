@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Provider/StoreProvider/cart_provider.dart';
 import '../Screens/Account/cart_page.dart';
-import '../Screens/Account/checkout_cart_page.dart';
 import '../Utils/routers.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -30,7 +29,7 @@ class _CartIconWidgetState extends State<CartIconWidget> {
 
     return InkWell(
         onTap: () {
-          PageNavigator(ctx: context).nextPage(page: const CheckoutCartPage());
+          PageNavigator(ctx: context).nextPage(page: const CartPage());
         },
         child: Consumer<CartProvider>(
             builder: (context, cart, child) {
