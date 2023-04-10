@@ -208,7 +208,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping Cart'),
+        title: const Text('Checkout'),
         centerTitle: true,
         leading: const BackButton()/*IconButton(
           icon: Icon(Icons.arrow_back),

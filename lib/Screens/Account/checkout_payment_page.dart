@@ -465,7 +465,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
                         Container(
                             alignment: Alignment.centerLeft,
-                            child: Text("SHIPPING ADDRESS:",
+                            child: Text("BILLING ADDRESS:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: black,
