@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Utils/routers.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_feeds_widget.dart';
 import '../../Widgets/feeds_widget.dart';
 import 'guest_page.dart';
@@ -76,7 +77,45 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    if(size.width > 600) {
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppbarWidget(title: widget.target, leadingButton: 'close',)
+      ),
+      body: productsList.isEmpty
+          ? const Center(
+        child: CircularProgressIndicator(),
+      )
+          : SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: productsList.length,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0.0,
+                    mainAxisSpacing: 0.0,
+                    childAspectRatio: 0.6),
+                itemBuilder: (ctx, index) {
+                  return ChangeNotifierProvider.value(
+                      value: productsList[index],
+                      child: const CategoryFeedsWidget());
+                }
+            ),
+            if (_isLoading)
+              const Center(
+                  child: CircularProgressIndicator()
+              ),
+          ],
+        ),
+      ),
+    );
+
+    /*if(size.width > 600) {
       return Scaffold(
         appBar: AppBar(
           // elevation: 4,
@@ -170,7 +209,7 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
                         child: const CategoryFeedsWidget());
                   }
               ),
-              /*
+              *//*
               Container(
                 padding: EdgeInsets.all(10),
                 width: double.infinity,
@@ -197,7 +236,7 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
                   ),
                 ),
               ),
-              */
+              *//*
               if (_isLoading)
                 const Center(
                     child: CircularProgressIndicator()
@@ -206,6 +245,6 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
           ),
         ),
       );
-    }
+    }*/
   }
 }

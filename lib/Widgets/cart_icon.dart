@@ -33,57 +33,29 @@ class _CartIconWidgetState extends State<CartIconWidget> {
         },
         child: Consumer<CartProvider>(
             builder: (context, cart, child) {
-              if(size.width > 600) {
-                return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                    ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 12, 5, 0),
-
-                  child: badges.Badge(
-                    badgeContent: Text(
-                      cart.cart_total_items,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Icon(Icons.shopping_cart_outlined,
-                          size: 35, color: Colors.lightGreen),
-                    ),
-                  ),
-                )
-                    : const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  child: Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 35,
-                      color: Colors.lightGreen
-                  ),
-                );
-              } else {
-                return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                    ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 15, 5, 0),
-
-                  child: badges.Badge(
-                    badgeContent: Text(
-                      cart.cart_total_items,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Icon(Icons.shopping_cart_outlined,
-                          size: 28, color: Colors.lightGreen),
-                    ),
-                  ),
-                )
-                    : const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  child: Icon(
-                      Icons.shopping_cart_outlined,
-                      size: 28,
-                      color: Colors.lightGreen
-                  ),
-                );
-              }
+              return cart.cart_total_items != '' && cart.cart_total_items != '0'
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 6, 5, 0),
+                      child: badges.Badge(
+                        badgeContent: Text(
+                          cart.cart_total_items,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(0),
+                          child: Icon(Icons.shopping_cart_outlined,
+                              size: 28, color: Colors.lightGreen),
+                        ),
+                     ),
+                  )
+                  : const Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: Icon(
+                          Icons.shopping_cart_outlined,
+                          size: 28,
+                          color: Colors.lightGreen
+                      ),
+              );
             })
     );
   }

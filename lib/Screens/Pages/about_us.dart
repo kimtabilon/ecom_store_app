@@ -112,6 +112,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 // const SizedBox(height: 18, ),
                 Expanded(
                   child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
                           Container(

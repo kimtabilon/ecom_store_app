@@ -2,14 +2,11 @@ import 'package:ecom_store_app/Screens/Pages/about_us.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
-import '../../Model/category_model.dart';
-import '../../Utils/routers.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
 import 'category_feeds_screen.dart';
-import 'guest_page.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({Key? key}) : super(key: key);
@@ -18,473 +15,156 @@ class CategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    if(size.width > 600) {
-      return Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              "Menu",
-              style: TextStyle(
-                fontSize: 35
-              ),
-            ),
-            centerTitle: true,
-            leading: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                IconButton(
-                  iconSize: 50,
-                  icon: Image.network(
-                    'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                  ),
-                  onPressed: () {
-                    PageNavigator(ctx: context).nextPage(page: const GuestPage());
-                  },
-                )
-              ],
-            ),
-            leadingWidth: 120,
-          ),
-          backgroundColor: Colors.white,
-          body: Text('test if'),
-          /*
-          body: FutureBuilder<List>(
-            future: ProductProvider.getAllCategories(),
-            builder: ((context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                Center(
-                  child: Text("An error occurred ${snapshot.error}"),
-                );
-              } else if (snapshot.data == null) {
-                const Center(
-                  child: Text("No products has been added yet"),
-                );
-              }
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Wrap(
-                  children: [
-                    Row(
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-                          child: Text(
-                            "Catalog",
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                      height: 1,
-                      color: Colors.black,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: ListView.builder(
-                        primary: false,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return Text('123');
-                          *//*return ChangeNotifierProvider.value(
-                            value: snapshot.data![index],
-                            child: const CategoryWidget(),
-                          );*//*
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                      height: 1,
-                      color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8.0),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const AboutUsPage(),
-                              ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                            child: Text(
-                              "About Us",
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8.0),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const HelpCenterPage(),
-                              ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                            child: Text(
-                              "Help Center",
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+    return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(60.0),
+            child: AppbarWidget(title: 'Menu', leadingButton: 'close',)
+        ),
+        body: FutureBuilder<List>(
+          future: ProductProvider.getAllCategories(),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            }),
-          )
-          */
-      );
-    } else {
-      return Scaffold(
-          appBar: AppBar(
-            title: const Text("Menu"),
-            centerTitle: true,
-            leading: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
+            } else if (snapshot.hasError) {
+              Center(
+                child: Text("An error occurred ${snapshot.error}"),
+              );
+            } else if (snapshot.data == null) {
+              const Center(
+                child: Text("No products has been added yet"),
+              );
+            }
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Wrap(
+                children: [
+                  Row(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                        child: Text(
+                          "Catalog",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                IconButton(
-                  iconSize: 40,
-                  icon: Image.network(
-                    'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                    height: 1,
+                    color: Colors.black,
                   ),
-                  onPressed: () {
-                    PageNavigator(ctx: context).nextPage(page: const GuestPage());
-                  },
-                )
-              ],
-            ),
-            leadingWidth: 110,
-            actions: [
-              IconButton(
-                iconSize: 40,
-                icon: Icon(
-                  Icons.close
-                ),
-                onPressed: () {
-                  PageNavigator(ctx: context).nextPage(page: const GuestPage());
-                },
-              )
-            ],
-          ),
-          backgroundColor: Colors.white,
-          // body: Text('test else'),
-          /*
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                color: Colors.white,
-                padding: EdgeInsets.only(top: 8, left: 8),
-                child: Text('Categories', style: TextStyle(fontWeight: FontWeight.bold),),
-              ),
-              FutureBuilder<List>(
-                future: ProductProvider.getAllCategories(),
-                builder: ((context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    Center(
-                      child: Text("An error occurred ${snapshot.error}"),
-                    );
-                  } else if (snapshot.data == null) {
-                    const Center(
-                      child: Text("Empty Category"),
-                    );
-                  }
-                  // print("snapshot.data ${snapshot.data![0]}");
-                  return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: snapshot.data!.length,
-                    // separatorBuilder: (context, index) {
-                    //   return Divider();
-                    // },
-                    itemBuilder: (context, index) {
-                      var cat = snapshot.data![index];
-                      return ListTile(
-                        title: Text(cat['name']),
-                        trailing: IconButton(
-                          icon: Icon(Icons.arrow_forward),
-                          onPressed: () {
+                  Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: ListView.builder(
+                      primary: false,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        // print(snapshot.data![index]);
+                        var cat = snapshot.data![index];
+                        return ListTile(
+                          title: Text(cat['name']),
+                          trailing: IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: cat['sub'].length==0
+                                      ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                      : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                                ),
+                              );
+                            },
+                          ),
+                          onTap: () {
                             Navigator.push(
                               context,
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                child: cat['sub'].length==0
-                                    ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                                    : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                                child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
                               ),
                             );
                           },
-                        ),
+                        );
+                        // return ChangeNotifierProvider.value(
+                        //   value: snapshot.data![index],
+                        //   child: const CategoryWidget(),
+                        // );
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
+                    height: 1,
+                    color: Colors.black,
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8.0),
                         onTap: () {
                           Navigator.push(
                             context,
                             PageTransition(
                               type: PageTransitionType.fade,
-                              child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
+                              child: const AboutUsPage(),
                             ),
                           );
                         },
-                      );
-                      /*return ExpansionTile(
-                          title: Text(cat['name']), //header title
-                          children: [
-                            cat['sub'].length>1 ?
-                            Container(
-                              color: Colors.black12,
-                              padding:EdgeInsets.all(20),
-                              width: double.infinity,
-                              child:  Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(cat['sub'].length,(index){
-                                  return Text(cat['sub'][index]['name'].toString());
-                                },
-                              )
-                              )
-                            ) : SizedBox(height: 1,)
-                          ],
-                        );*/
-                    },
-                  );
-                }),
-              ),
-              Container(
-                width: double.infinity,
-                color: Colors.white,
-                padding: EdgeInsets.only(left: 8, top: 8),
-                child: Text(
-                  'Pages',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              ListTile(
-                title: const Text('About Us'),
-                trailing: const Icon(Icons.arrow_forward),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const AboutUsPage(),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Help Center'),
-                trailing: const Icon(Icons.arrow_forward),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const HelpCenterPage(),
-                    ),
-                  );
-                },
-              )
-            ],
-          )
-          */
-
-          body: FutureBuilder<List>(
-            future: ProductProvider.getAllCategories(),
-            builder: ((context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (snapshot.hasError) {
-                Center(
-                  child: Text("An error occurred ${snapshot.error}"),
-                );
-              } else if (snapshot.data == null) {
-                const Center(
-                  child: Text("No products has been added yet"),
-                );
-              }
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Wrap(
-                  children: [
-                    Row(
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
                           child: Text(
-                            "Catalog",
+                            "About Us",
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Container(
-                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                      height: 1,
-                      color: Colors.black,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: ListView.builder(
-                        primary: false,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          // print(snapshot.data![index]);
-                          var cat = snapshot.data![index];
-                          return ListTile(
-                            title: Text(cat['name']),
-                            trailing: IconButton(
-                              icon: Icon(Icons.arrow_forward),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: cat['sub'].length==0
-                                        ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
-                                        : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                                  ),
-                                );
-                              },
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(8.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const HelpCenterPage(),
                             ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
-                                ),
-                              );
-                            },
                           );
-                          // return ChangeNotifierProvider.value(
-                          //   value: snapshot.data![index],
-                          //   child: const CategoryWidget(),
-                          // );
                         },
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                      height: 1,
-                      color: Colors.black,
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8.0),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const AboutUsPage(),
-                              ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                            child: Text(
-                              "About Us",
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold
-                              ),
+                        child: const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
+                          child: Text(
+                            "Help Center",
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        InkWell(
-                          borderRadius: BorderRadius.circular(8.0),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const HelpCenterPage(),
-                              ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                            child: Text(
-                              "Help Center",
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }),
-          )
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }),
+        )
 
-      );
-    }
+    );
   }
 }

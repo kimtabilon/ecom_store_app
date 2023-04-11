@@ -88,6 +88,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
                         Container(

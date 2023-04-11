@@ -9,6 +9,7 @@ import '../Screens/Common/category_feeds_screen.dart';
 import '../Screens/Common/feeds_screen.dart';
 import '../Screens/Common/guest_page.dart';
 import '../Utils/routers.dart';
+import 'appbar_widget.dart';
 
 class CategoryWidget extends StatelessWidget {
   CategoryWidget({Key? key, required this.sub, required this.name}) : super(key: key);
@@ -22,7 +23,11 @@ class CategoryWidget extends StatelessWidget {
     // final categoriesModelProvider = Provider.of<CategoryModel>(context);
 
     return Scaffold(
-        appBar: AppBar(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(60.0),
+            child: AppbarWidget(title: name, leadingButton: 'back',)
+        ),
+        /*appBar: AppBar(
           title: Text(name),
           actions: [
             IconButton(
@@ -35,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
               },
             )
           ],
-        ),
+        ),*/
         backgroundColor: Colors.white,
         // body: Text('test else'),
         body: Column(

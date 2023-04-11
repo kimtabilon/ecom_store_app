@@ -11,6 +11,7 @@ import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/sale_widget.dart';
 import '../../Widgets/search_field.dart';
@@ -28,81 +29,15 @@ class _GuestPageState extends State<GuestPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    print(size.width);
 
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          appBar: size.width > 600
-              ? AppBar(
-            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Image.network(
-                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                cacheWidth: 50,
-                width: 50,
-              ),
-            ),
-            leadingWidth: 70,
-            actions: [
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SplashScreen(),
-                      ),
-                    );
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-                    child: Icon(
-                      IconlyBold.profile,
-                      size: 35,
-                      color: Colors.lightGreen,
-                    ),
-                  )),
-              const HelpDropdown(),
-              const CartIconWidget(),
-            ],
-          )
-              : AppBar(
-            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Image.network(
-                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                cacheWidth: 35,
-                width: 35,
-              ),
-            ),
-            leadingWidth: 70,
-            actions: [
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SplashScreen(),
-                      ),
-                    );
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                    child: Icon(
-                      IconlyBold.profile,
-                      size: 28,
-                      color: Colors.lightGreen,
-                    ),
-                  )),
-              const HelpDropdown(),
-              const CartIconWidget(),
-            ],
+          appBar: PreferredSize(
+              preferredSize: Size.fromHeight(60.0),
+              child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),

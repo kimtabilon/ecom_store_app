@@ -25,6 +25,7 @@ import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_icons.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/feeds_widget.dart';
 import '../Authentication/splash.dart';
@@ -474,7 +475,11 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppbarWidget(title: '', leadingButton: 'back',)
+      ),
+      /*appBar: AppBar(
         // elevation: 1,
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
@@ -587,7 +592,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               }
             })
           ),
-          /*
+          *//*
           InkWell(
               onTap: () {
                 PageNavigator(ctx: context).nextPage(page: const CartPage());
@@ -603,7 +608,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ]),
               )),
-          */
+          *//*
           InkWell(
               onTap: () {
                 Navigator.push(
@@ -635,7 +640,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               )
           ) 
-          /*
+          *//*
           AppBarIcons(
             function: () {
               Navigator.push(
@@ -648,9 +653,9 @@ class _ProductDetailsState extends State<ProductDetails> {
             },
             icon: IconlyBold.profile,
           ),
-          */
+          *//*
         ],
-      ),
+      ),*/
       backgroundColor: const Color(0xFFEDECF2),
       body: SafeArea(
         child: isError

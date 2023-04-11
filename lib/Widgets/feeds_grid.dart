@@ -18,7 +18,7 @@ class FeedsGridWidget extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 0.0,
             mainAxisSpacing: 0.0,
-            childAspectRatio: 0.8),
+            childAspectRatio: 0.7),
         itemBuilder: (ctx, index) {
           return ChangeNotifierProvider.value(
             value: productsList[index],

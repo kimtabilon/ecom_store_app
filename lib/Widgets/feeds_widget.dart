@@ -134,9 +134,9 @@ class FeedsWidget extends StatelessWidget {
                             InkWell(
                               onTap: () async {
                                 Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                if(await isAdded) {
-                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                }
+                                // if(await isAdded) {
+                                //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                // }
                               },
                               child: const Icon(
                                 Icons.add_shopping_cart,
@@ -174,19 +174,26 @@ class FeedsWidget extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            InkWell(
+                            IconButton(
+                                onPressed: () { CartProvider().addToCart(productsModelProvider.sku, "1", context); },
+                                icon: const Icon(
+                                  Icons.add_shopping_cart,
+                                  color: Colors.lightGreen,
+                                )
+                            ),
+                            /*InkWell(
                               onTap: () async {
                                 Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                if(await isAdded) {
-                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                }
+                                // if(await isAdded) {
+                                //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                // }
 
                               },
                               child: const Icon(
                                 Icons.add_shopping_cart,
                                 color: Colors.lightGreen,
                               ),
-                            ),
+                            ),*/
                             // Image.network(
                             //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
                             //   color: Colors.lightGreen,

@@ -116,9 +116,9 @@ class CategoryFeedsWidget extends StatelessWidget {
                             InkWell(
                               onTap: () async {
                                 Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                if(await isAdded) {
-                                  Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                }
+                                // if(await isAdded) {
+                                //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                // }
                               },
                               child: const Icon(
                                 Icons.add_shopping_cart,
@@ -254,9 +254,9 @@ class CategoryFeedsWidget extends StatelessWidget {
                               InkWell(
                                 onTap: () async {
                                   Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                  if(await isAdded) {
-                                    Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                  }
+                                  // if(await isAdded) {
+                                  //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                  // }
                                 },
                                 child: const Icon(
                                   Icons.add_shopping_cart,
@@ -297,9 +297,9 @@ class CategoryFeedsWidget extends StatelessWidget {
                               InkWell(
                                 onTap: () async {
                                   Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                  if(await isAdded) {
-                                    Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                  }
+                                  // if(await isAdded) {
+                                  //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
+                                  // }
 
                                 },
                                 child: const Icon(
