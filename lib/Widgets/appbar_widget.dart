@@ -37,14 +37,15 @@ class AppbarWidget extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
       leading: leadingButton!='' ? leadingButton=='back' ?  const BackButton() : CloseButton(context) : Padding(
         padding: size.width > 600 ? const EdgeInsets.only(right: 5) : const EdgeInsets.only(right: 10),
-        child: Image.network(
+        /*child: Image.network(
           'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
           cacheWidth: 35,
           width: 35,
-        ),
+        ),*/
+        child: Image.asset("images/icon-logo.png"),
       ),
       title: Text(title!),
-      leadingWidth: 70,
+      leadingWidth: leadingButton=='' ? 70 : 30,
       actions: [
         InkWell(
             onTap: () {

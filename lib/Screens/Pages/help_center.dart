@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Utils/routers.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/cart_icon.dart';
 import '../../Widgets/search_field.dart';
 import 'help_center_form.dart';
@@ -36,56 +37,14 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-            leading: InkWell(
-              onTap: () {
-                PageNavigator(ctx: context).nextPage(page: const GuestPage());
-              },
-              child: Image.network(
-                'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-                cacheWidth: 40,
-                width: 40,
-              ),
-            ),
-            actions: [
-              const CartIconWidget(),
-              const Icon(
-                Icons.question_mark,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: SplashScreen(),
-                      ),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 15, 5, 0),
-                    child:
-                    Column(mainAxisSize: MainAxisSize.min, children: const [
-                      Icon(
-                        IconlyBold.profile,
-                        size: 28,
-                        color: Colors.lightGreen,
-                      ),
-                    ]),
-                  )),
-            ],
+          appBar: PreferredSize(
+              preferredSize: Size.fromHeight(60.0),
+              child: AppbarWidget(title: '', leadingButton: 'close',)
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const SearchFieldWidget(),
-                const SizedBox(
-                  height: 18,
-                ),
                 Expanded(
                   child: SingleChildScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),

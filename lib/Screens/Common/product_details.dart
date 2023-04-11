@@ -477,7 +477,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
-          child: AppbarWidget(title: '', leadingButton: 'back',)
+          child: AppbarWidget(title: 'Product Details', leadingButton: 'back',)
       ),
       /*appBar: AppBar(
         // elevation: 1,
