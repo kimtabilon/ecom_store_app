@@ -1,7 +1,7 @@
 import 'dart:convert';
 import '../../Constants/url.dart';
 import '../../Model/order_model.dart';
-import '../../Provider/Database/db_provider.dart';
+import '../Database/db_provider.dart';
 import 'package:http/http.dart' as http;
 
 class OrderProvider {

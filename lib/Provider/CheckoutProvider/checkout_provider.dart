@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../Constants/access.dart';
 import '../../Constants/url.dart';
 import 'package:http/http.dart' as http;
-import '../../Provider/Database/db_provider.dart';
+import '../Database/db_provider.dart';
 import '../../Screens/Account/checkout_payment_page.dart';
 import '../../Screens/Account/checkout_result_page.dart';
 import '../../Screens/Authentication/login.dart';

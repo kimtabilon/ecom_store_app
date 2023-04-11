@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../Constants/access.dart';
 import '../../Constants/url.dart';
 import 'package:http/http.dart' as http;
-import '../../Provider/Database/db_provider.dart';
+import '../Database/db_provider.dart';
 import '../../Screens/Authentication/login.dart';
 import '../../Screens/Account/home_page.dart';
 import '../../Utils/routers.dart';

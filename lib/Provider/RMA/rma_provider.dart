@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../Constants/url.dart';
 import '../../Model/cart_model.dart';
-import '../../Provider/Database/db_provider.dart';
+import '../Database/db_provider.dart';
 import 'package:http/http.dart' as http;
 import '../../Utils/snack_message.dart';
 
