@@ -39,8 +39,8 @@ class App extends StatelessWidget {
             floatingActionButtonTheme:
                 FloatingActionButtonThemeData(backgroundColor: primaryColor),
             primaryColor: primaryColor),
-        // home: const GuestPage(),
-        home: const EbpGuaranteePage(),
+        home: const GuestPage(),
+        // home: const EbpGuaranteePage(),
       ),
     );
   }
