@@ -1,12 +1,6 @@
-import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:page_transition/page_transition.dart';
-import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
-import '../../Widgets/cart_icon.dart';
 import 'package:video_player/video_player.dart';
-import '../Common/guest_page.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({Key? key}) : super(key: key);
@@ -93,10 +87,6 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                       stops: [0.0, 1.0],
                                       tileMode: TileMode.clamp
                                   ),
-                                /*image: DecorationImage(
-                                image: AssetImage("assets/images/bulb.jpg"),
-                                fit: BoxFit.cover,
-                              ),*/
                               ),
                               child: Column(
                                   children: const [

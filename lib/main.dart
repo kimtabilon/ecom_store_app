@@ -1,5 +1,7 @@
 import 'package:ecom_store_app/Model/category_model.dart';
 import 'package:ecom_store_app/Provider/CheckoutProvider/checkout_provider.dart';
+import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
+import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
 import 'package:flutter/material.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +39,8 @@ class App extends StatelessWidget {
             floatingActionButtonTheme:
                 FloatingActionButtonThemeData(backgroundColor: primaryColor),
             primaryColor: primaryColor),
-        home: const GuestPage(),
-        // home: const RewardsPage(),
+        // home: const GuestPage(),
+        home: const EbpGuaranteePage(),
       ),
     );
   }

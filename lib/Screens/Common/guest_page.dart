@@ -1,9 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:ecom_store_app/Screens/Authentication/splash.dart';
-import 'package:ecom_store_app/Screens/Pages/help_center.dart';
-import 'package:ecom_store_app/Utils/routers.dart';
-import 'package:ecom_store_app/Widgets/cart_icon.dart';
-import 'package:ecom_store_app/Widgets/help_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';

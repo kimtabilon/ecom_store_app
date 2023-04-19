@@ -85,6 +85,16 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/icon-logo.png
+    - assets/images/home_b1.png
+    - assets/images/home_b2.png
+    - assets/images/home_b3.png
+    - assets/images/ebp_guarantee_b1.png
+    - assets/images/ebp_guarantee_b2.png
+    - assets/images/ebp_guarantee_b3.png
+    - assets/images/ebp_guarantee_b4.png
+    - assets/images/ebp_guarantee_b5.png
+    - assets/images/ebp_guarantee_b6.png
+    - assets/images/job_opportunities_b1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
