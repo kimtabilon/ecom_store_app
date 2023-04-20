@@ -1,5 +1,6 @@
 import 'package:ecom_store_app/Model/category_model.dart';
 import 'package:ecom_store_app/Provider/CheckoutProvider/checkout_provider.dart';
+import 'package:ecom_store_app/Screens/Common/categories_screen.dart';
 import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
 import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class App extends StatelessWidget {
                 FloatingActionButtonThemeData(backgroundColor: primaryColor),
             primaryColor: primaryColor),
         home: const GuestPage(),
-        // home: const EbpGuaranteePage(),
+        // home: const CategoriesScreen(),
       ),
     );
   }

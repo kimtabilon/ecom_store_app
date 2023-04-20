@@ -1,5 +1,7 @@
 import 'package:ecom_store_app/Screens/Pages/about_us.dart';
+import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -14,6 +16,13 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    List pages = [
+      { 'title': 'Help Center', 'widget': const HelpCenterPage() },
+      { 'title': 'About Us', 'widget': const AboutUsPage() },
+      { 'title': 'EBP Guarantee', 'widget': const EbpGuaranteePage() },
+      { 'title': 'Job Opportunities', 'widget': const JobOpportunitiesPage() },
+    ];
 
     return Scaffold(
         appBar: PreferredSize(
@@ -95,10 +104,6 @@ class CategoriesScreen extends StatelessWidget {
                             );
                           },
                         );
-                        // return ChangeNotifierProvider.value(
-                        //   value: snapshot.data![index],
-                        //   child: const CategoryWidget(),
-                        // );
                       },
                     ),
                   ),
@@ -107,58 +112,65 @@ class CategoriesScreen extends StatelessWidget {
                     height: 1,
                     color: Colors.black,
                   ),
-                  Row(
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const AboutUsPage(),
-                            ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListView.builder(
+                        primary: false,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: pages.length,
+                        itemBuilder: (context, index) {
+                          var page = pages[index];
+                          return ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: page['widget'],
+                                ),
+                              );
+                            },
+                            title: Text(page['title'], style: TextStyle(fontWeight: FontWeight.bold),),
+                            trailing: const Icon(Icons.arrow_forward),
                           );
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                          child: Text(
-                            "About Us",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
+                        }
+
+                    ),
+                    /*child: Column(
+                      children: [
+                        ListTile(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const AboutUsPage(),
+                              ),
+                            );
+                          },
+                          title: const Text('About Us', style: TextStyle(fontWeight: FontWeight.bold),),
+                          trailing: const Icon(Icons.arrow_forward),
                         ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        borderRadius: BorderRadius.circular(8.0),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: const HelpCenterPage(),
-                            ),
-                          );
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 5, 0, 0),
-                          child: Text(
-                            "Help Center",
-                            style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
+                        ListTile(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: const HelpCenterPage(),
+                              ),
+                            );
+                          },
+                          title: const Text('Help Center', style: TextStyle(fontWeight: FontWeight.bold),),
+                          trailing: const Icon(Icons.arrow_forward),
                         ),
-                      )
-                    ],
+
+                      ],
+                    ),*/
                   ),
+
                 ],
               ),
             );
