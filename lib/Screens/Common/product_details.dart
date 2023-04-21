@@ -3836,6 +3836,7 @@ Widget listItem({required String title, required List<String> arrdesc, required 
 
 Widget cardWidget({required List<String> arrdesc, required double width}) {
   return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
     padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: arrdesc!.length,
@@ -3942,6 +3943,7 @@ Widget specList({required String title, required List<String> speclist, required
 
 Widget specCont({required List<String> speccontent, required double width, required List<String> speclist}){
   return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
     padding: EdgeInsets.all(0.0),
     shrinkWrap: true,
     itemCount: speccontent!.length,
@@ -4064,6 +4066,7 @@ Widget specInfo({required String title, required List<String> specList, required
 
 Widget specInfoCont({required List<String> specinfo, required double width}){
   return ListView.builder(
+    physics: NeverScrollableScrollPhysics(),
     shrinkWrap: true,
     itemCount: specinfo!.length,
     itemBuilder: (BuildContext context, int index){
