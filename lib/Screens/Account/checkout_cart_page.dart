@@ -177,21 +177,39 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
 
     if(getData.isNotEmpty){
       print(getData[0]);
-      setState(() {
-        _email.text = getData[0]['email'];
-        _firstName.text = getData[0]['addresses'][0]['firstname'];
-        _lastName.text = getData[0]['addresses'][0]['lastname'];
-        _company.text = getData[0]['addresses'][0]['company'];
-        _address1.text = getData[0]['addresses'][0]['street'][0] ?? "";
-        _address2.text = getData[0]['addresses'][0]['street'][1] ?? "";
-        _address3.text = getData[0]['addresses'][0]['street'][2] ?? "";
-        _province.text = getData[0]['addresses'][0]['region']['region'];
-        _provinceCode.text = getData[0]['addresses'][0]['region']['region_id'].toString();
-        _city.text = getData[0]['addresses'][0]['city'];
-        _zipcode.text = getData[0]['addresses'][0]['postcode'];
-        _number.text = getData[0]['addresses'][0]['telephone'];
+      /*setState(() {
+        _email.text = getData[0]['email'] ?? "";
+        _firstName.text = getData[0]['addresses'][0]!['firstname'] ?? "";
+        _lastName.text = getData[0]['addresses'][0]!['lastname'] ?? "";
+        _company.text = getData[0]['addresses'][0]!['company'] ?? "";
+        _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
+        _address2.text = getData[0]['addresses'][0]!['street'][1] ?? "";
+        _address3.text = getData[0]['addresses'][0]!['street'][2] ?? "";
+        _province.text = getData[0]['addresses'][0]!['region']['region'] ?? "";
+        _provinceCode.text = getData[0]['addresses'][0]!['region']['region_id'].toString() ?? "";
+        _city.text = getData[0]['addresses'][0]!['city'] ?? "";
+        _zipcode.text = getData[0]['addresses'][0]!['postcode'] ?? "";
+        _number.text = getData[0]['addresses'][0]!['telephone'] ?? "";
         hasAddress = true;
-      });
+      });*/
+      _email.text = getData[0]['email']!;
+      _firstName.text = getData[0]['firstname']!;
+      _lastName.text = getData[0]['lastname']!;
+
+      if(getData[0]['addresses'].length>0) {
+        _company.text = getData[0]['addresses'][0]!['company'] ?? "";
+        _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
+        _address2.text = getData[0]['addresses'][0]!['street'][1] ?? "";
+        _address3.text = getData[0]['addresses'][0]!['street'][2] ?? "";
+        _province.text = getData[0]['addresses'][0]!['region']['region'] ?? "";
+        _provinceCode.text = getData[0]['addresses'][0]!['region']['region_id'].toString() ?? "";
+        _city.text = getData[0]['addresses'][0]!['city'] ?? "";
+        _zipcode.text = getData[0]['addresses'][0]!['postcode'] ?? "";
+        _number.text = getData[0]['addresses'][0]!['telephone'] ?? "";
+        hasAddress = true;
+      }
+
+      setState(() {});
     }
 
     setState(() {

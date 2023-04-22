@@ -56,10 +56,12 @@ class CartProvider extends ChangeNotifier {
 
         print(body);
 
+        var data = json.decode(body);
+
         if (response.statusCode == 200) {
           showMessage(message: "$sku has been added to cart", context: context);
 
-          var data = json.decode(body);
+
 
           print(data);
 
@@ -74,7 +76,7 @@ class CartProvider extends ChangeNotifier {
           }
 
         } else {
-          showMessage(message: "Oops, something went wrong! Please try again later.", context: context);
+          showMessage(message: data['message'], context: context);
         }
       }
 

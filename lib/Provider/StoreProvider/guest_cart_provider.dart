@@ -36,9 +36,10 @@ class GuestCartProvider extends ChangeNotifier {
     http.StreamedResponse response = await request.send();
 
     var body = await response.stream.bytesToString();
+    var data = json.decode(body);
 
     if (response.statusCode == 200) {
-      var data = json.decode(body);
+
       if(data['qty']==1) {
         var cart_total_items = await DatabaseProvider().getData('cart_total_items');
         var new_total = '1';
@@ -51,8 +52,7 @@ class GuestCartProvider extends ChangeNotifier {
 
       showMessage(message: "$sku has been added to cart", context: context);
     } else {
-      print(body);
-      showMessage(message: "Oops, something went wrong! Please try again later.", context: context);
+      showMessage(message: data['message'], context: context);
     }
 
 

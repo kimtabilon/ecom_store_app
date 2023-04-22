@@ -239,7 +239,7 @@ class AuthenticationProvider extends ChangeNotifier {
         DatabaseProvider().saveData('password',password);
         if(await AuthenticationProvider().getUserAccount()) {
           _isLoading = false;
-          _resMessage = "Login successfull!";
+          _resMessage = "Login successfully!";
           notifyListeners();
           PageNavigator(ctx: context).nextPageOnly(page: const HomePage());
         }
