@@ -56,7 +56,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                             decoration: const BoxDecoration(
                               color: Colors.black12,
                               image: DecorationImage(
-                                image: NetworkImage('https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/help-center/banner-bg-help-center-mobile.webp'),
+                                image: AssetImage("assets/images/banner-bg-help-center-mobile.webp"),
                                 fit: BoxFit.cover,
                               ),
                             ),

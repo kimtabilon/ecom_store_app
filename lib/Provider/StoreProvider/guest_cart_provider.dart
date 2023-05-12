@@ -61,7 +61,6 @@ class GuestCartProvider extends ChangeNotifier {
   }
 
   static Future<int> updateCart(id, qty, action, context) async {
-    print('Guest Cart update');
     final masked_id = await DatabaseProvider().getData('masked_id');
     final qoute_id = await DatabaseProvider().getData('qoute_id');
 
@@ -99,7 +98,6 @@ class GuestCartProvider extends ChangeNotifier {
 
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    print(await response.stream.bytesToString());
     if (response.statusCode == 200) {
       return new_qty;
     } else {

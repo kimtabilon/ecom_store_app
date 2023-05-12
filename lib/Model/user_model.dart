@@ -21,7 +21,6 @@ class UserModel with ChangeNotifier{
   }
 
   static List<UserModel> usersFromSnapshot(List usersSnaphot) {
-    // print("data ${usersSnaphot[0]}");
     return usersSnaphot.map((data) {
       return UserModel.fromJson(data);
     }).toList();

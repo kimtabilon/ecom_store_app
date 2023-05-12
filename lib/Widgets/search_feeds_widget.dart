@@ -149,11 +149,8 @@ class SearchFeedsWidget extends StatelessWidget {
                                 size: 35,
                               ),
                             ),
-                            Image.network(
-                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                              color: Colors.lightGreen,
-                              width: 30,
-                            ),
+                            const SizedBox(width: 10,),
+                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ] else ...[
@@ -192,11 +189,8 @@ class SearchFeedsWidget extends StatelessWidget {
                                 color: Colors.lightGreen,
                               ),
                             ),
-                            Image.network(
-                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                              color: Colors.lightGreen,
-                              width: 28,
-                            ),
+                            const SizedBox(width: 10,),
+                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ],

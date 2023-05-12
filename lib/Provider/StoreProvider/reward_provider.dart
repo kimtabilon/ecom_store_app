@@ -26,7 +26,6 @@ class RewardProvider extends ChangeNotifier {
         http.StreamedResponse response = await request.send();
 
         var body = await response.stream.bytesToString();
-        print(body);
         if (response.statusCode == 200 || response.statusCode == 201){
           return json.decode(body);
         }

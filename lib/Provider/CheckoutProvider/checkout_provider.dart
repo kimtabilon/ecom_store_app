@@ -104,7 +104,6 @@ class CheckoutProvider extends ChangeNotifier {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
-          // print(await response.stream.bytesToString());
           _isLoading = false;
           _resMessage = "Shipping Info saved!";
           notifyListeners();
@@ -124,7 +123,6 @@ class CheckoutProvider extends ChangeNotifier {
           ));
         }
         else {
-          // print(response.body);
           _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
@@ -194,7 +192,6 @@ class CheckoutProvider extends ChangeNotifier {
         var response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
-          // print(await response.stream.bytesToString());
           _isLoading = false;
           _resMessage = "Shipping Info saved!";
           notifyListeners();
@@ -214,7 +211,6 @@ class CheckoutProvider extends ChangeNotifier {
           ));
         }
         else {
-          // print(response.reasonPhrase);
           _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
@@ -304,9 +300,6 @@ class CheckoutProvider extends ChangeNotifier {
 
         if (response.statusCode == 200) {
           var data = jsonDecode(response.body);
-          print(data['opaqueData']['dataDescriptor']);
-
-
 
           if(masked_id != '') {
             try {
@@ -355,7 +348,6 @@ class CheckoutProvider extends ChangeNotifier {
               var response = await http.Response.fromStream(streamedResponse);
 
               if (response.statusCode == 200) {
-                // print(await response.stream.bytesToString());
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
@@ -368,7 +360,6 @@ class CheckoutProvider extends ChangeNotifier {
                 ));
               }
               else {
-                // print(response.reasonPhrase);
                 _resMessage = response.body.toString();
                 _isLoading = false;
                 notifyListeners();
@@ -430,7 +421,6 @@ class CheckoutProvider extends ChangeNotifier {
               var response = await http.Response.fromStream(streamedResponse);
 
               if (response.statusCode == 200) {
-                // print(await response.stream.bytesToString());
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
@@ -443,7 +433,6 @@ class CheckoutProvider extends ChangeNotifier {
                 ));
               }
               else {
-                // print(response.reasonPhrase);
                 _resMessage = response.body.toString();
                 _isLoading = false;
                 notifyListeners();
@@ -468,7 +457,6 @@ class CheckoutProvider extends ChangeNotifier {
 
         }
         else {
-          // print(response.reasonPhrase);
           _resMessage = response.body.toString();
           _isLoading = false;
           notifyListeners();
@@ -523,7 +511,6 @@ class CheckoutProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
-            // print(await response.stream.bytesToString());
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
@@ -536,7 +523,6 @@ class CheckoutProvider extends ChangeNotifier {
             ));
           }
           else {
-            // print(response.reasonPhrase);
             _resMessage = response.body.toString();
             _isLoading = false;
             notifyListeners();
@@ -586,7 +572,6 @@ class CheckoutProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
-            // print(await response.stream.bytesToString());
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
@@ -599,7 +584,6 @@ class CheckoutProvider extends ChangeNotifier {
             ));
           }
           else {
-            // print(response.reasonPhrase);
             _resMessage = response.body.toString();
             _isLoading = false;
             notifyListeners();

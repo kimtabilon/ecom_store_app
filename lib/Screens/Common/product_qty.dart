@@ -63,7 +63,6 @@ class _DropdownQTYState extends State<DropdownQTY> {
 
   @override
   Widget build(BuildContext context) {
-    print(dropdownValue);
 
     Size size = MediaQuery.of(context).size;
 
@@ -98,7 +97,6 @@ class _DropdownQTYState extends State<DropdownQTY> {
               });
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
-              print(c.qty.value);
               unitCodeCtrlFocusNode.requestFocus();
             });
           },
@@ -130,7 +128,6 @@ class _DropdownQTYState extends State<DropdownQTY> {
 
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
-              print(c.qty.value);
               unitCodeCtrlFocusNode.requestFocus();
             },
           ),
@@ -165,10 +162,8 @@ class _DropdownQTYState extends State<DropdownQTY> {
               setState(() {
                 dropdownValue = newValue!;
               });
-              print("test");
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
-              print(c.qty.value);
               unitCodeCtrlFocusNode.requestFocus();
             });
           },
@@ -200,7 +195,6 @@ class _DropdownQTYState extends State<DropdownQTY> {
               unitCodeCtrlFocusNode.requestFocus();
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
-              print(c.qty.value);
             },
           ),
         );

@@ -19,7 +19,6 @@ class ProductProvider {
 
       var response = await http.get(uri);
 
-      //print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
       if (response.statusCode != 200) {
@@ -43,12 +42,7 @@ class ProductProvider {
             "limit": limit,
           });
 
-      // print(uri);
-
       var response = await http.get(uri);
-      // print(response.body.toString());
-
-      //print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
       List tempList = [];
@@ -57,7 +51,6 @@ class ProductProvider {
       }
       for (var v in data) {
         tempList.add(v);
-        // print("V $v \n\n");
       }
       return tempList;
     } catch (error) {
@@ -77,11 +70,8 @@ class ProductProvider {
             "limit": limit,
           });
 
-      // print(uri);
-
       var response = await http.get(uri);
 
-      //print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
       List tempList = [];
       if (response.statusCode != 200) {
@@ -89,7 +79,6 @@ class ProductProvider {
       }
       for (var v in data) {
         tempList.add(v);
-        // print("V $v \n\n");
       }
       return tempList;
     } catch (error) {
@@ -110,11 +99,8 @@ class ProductProvider {
           AppUrl.consoleUrl,
           "content/delivery/$sku/$qty/$lat/$lng/$state/$postal");
 
-      //print(uri);
-
       var response = await http.get(uri);
 
-      // print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
       List tempList = [];
@@ -122,11 +108,6 @@ class ProductProvider {
         throw data["message"];
       }
       tempList.add(data);
-      // for (var v in data) {
-      //   tempList.add(v);
-      //   // print("V $v \n\n");
-      // }
-      // return data['date'];
       return ProductModel.fromJson(data);
     } catch (error) {
       log("An error occured $error");
@@ -188,11 +169,9 @@ class ProductProvider {
           AppUrl.consoleUrl,
           "content/deliverymultisku/$sku/$qty/$lat/$lng/$state/0/0/$postal");
 
-      //print(uri);
 
       var response = await http.get(uri);
 
-      // print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
       List tempList = [];
@@ -200,11 +179,6 @@ class ProductProvider {
         throw data["message"];
       }
       tempList.add(data);
-      // for (var v in data) {
-      //   tempList.add(v);
-      //   // print("V $v \n\n");
-      // }
-      // return data['date'];
       return tempList;
     } catch (error) {
       log("An error occured $error");
@@ -231,11 +205,8 @@ class ProductProvider {
           "content/delivery/$sku/$qty/$lat/$lng/$state/0/0/$postal"
       );
 
-      print(uri);
-
       var response = await http.get(uri);
 
-      // print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
       List tempList = [];
@@ -243,11 +214,6 @@ class ProductProvider {
         throw data["message"];
       }
       tempList.add(data);
-      // for (var v in data) {
-      //   tempList.add(v);
-      //   // print("V $v \n\n");
-      // }
-      // return data['date'];
       return tempList;
     } catch (error) {
       log("An error occured $error");
@@ -283,30 +249,15 @@ class ProductProvider {
             "limit": "1",
           });
 
-      // print(uri);
 
       var response = await http.get(uri);
-      // print(response.body.toString());
-
-      // print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 
-      /*List tempList = [];
-      if (response.statusCode != 200) {
-        throw data["message"];
-      }
-      for (var v in data) {
-        tempList.add(v);
-        print("V $v \n\n");
-      }*/
       return data;
     } catch (error) {
       log("An error occured $error");
       throw error.toString();
     }
-    // List temp = await getData(target: "categories");
-    // return temp;
-    // return CategoryModel.categoriesFromSnapshot(temp);
   }
 
   static Future<List<UserModel>> getAllUsers() async {
@@ -322,7 +273,6 @@ class ProductProvider {
       );
       var response = await http.get(uri);
 
-      //print("response ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
       if (response.statusCode != 200) {
         throw data["message"];

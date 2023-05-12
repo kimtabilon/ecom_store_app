@@ -332,7 +332,6 @@ class _RMADetailsState extends State<RMADetails> {
                                         ),
                                         keyboardType: TextInputType.number,
                                         onChanged: (String value) {
-                                          print('Changed');
                                           int x;
                                           try {
                                             x = int.parse(value);

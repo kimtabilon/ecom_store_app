@@ -34,7 +34,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         _isLoading = true;
-        print("_isLoading $_isLoading");
         limit += 30;
         if(!mounted) {
           super.dispose();

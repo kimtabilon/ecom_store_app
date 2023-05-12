@@ -54,16 +54,10 @@ class CartProvider extends ChangeNotifier {
         http.StreamedResponse response = await request.send();
         var body = await response.stream.bytesToString();
 
-        print(body);
-
         var data = json.decode(body);
 
         if (response.statusCode == 200) {
           showMessage(message: "$sku has been added to cart", context: context);
-
-
-
-          print(data);
 
           if(data['qty']==1) {
             var cart_total_items = await DatabaseProvider().getData('cart_total_items');
@@ -152,7 +146,6 @@ class CartProvider extends ChangeNotifier {
       DatabaseProvider().saveData('name', 'Guest');
       return GuestCartProvider.getCartItems(context);
     }
-    // print("User Cart");
     try {
       Future<bool> refresh_token = AuthenticationProvider().getUserToken();
       if(await refresh_token) {
@@ -188,13 +181,6 @@ class CartProvider extends ChangeNotifier {
 
       return <CartItem>[];
 
-      /*if (response.statusCode == 200) {
-        return await response.stream.bytesToString();
-      }
-      else {
-        print(response.reasonPhrase);
-        return '';
-      }*/
     } catch (e) {
       print(e);
       return Future.error(e.toString());

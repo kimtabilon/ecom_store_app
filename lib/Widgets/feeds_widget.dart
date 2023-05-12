@@ -2,6 +2,8 @@ import 'package:ecom_store_app/Provider/Database/db_provider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:image_network/image_network.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../Model/product_model.dart';
@@ -18,8 +20,7 @@ class FeedsWidget extends StatelessWidget {
     final productsModelProvider = Provider.of<ProductModel>(context);
 
     Size size = MediaQuery.of(context).size;
-    // print("Height: ${size.height}");
-    // print("Width: ${size.width}");
+
     return Padding(
         padding: const EdgeInsets.all(2.0),
         child: Material(
@@ -56,6 +57,26 @@ class FeedsWidget extends StatelessWidget {
                     imageUrl: productsModelProvider.images![0],
                     boxFit: BoxFit.contain,
                   ),
+                  /*child: ImageNetwork(
+                    image: productsModelProvider.images![0],
+                    imageCache: CachedNetworkImageProvider(productsModelProvider.images![0]),
+                    height: 100,
+                    width: 100,
+                    duration: 1500,
+                    curve: Curves.easeIn,
+                    onPointer: true,
+                    debugPrint: false,
+                    fullScreen: false,
+                    fitAndroidIos: BoxFit.contain,
+                    fitWeb: BoxFitWeb.contain,
+                    onLoading: const CircularProgressIndicator(
+                      color: Colors.indigoAccent,
+                    ),
+                    onError: const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
+                  ),*/
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
@@ -144,11 +165,8 @@ class FeedsWidget extends StatelessWidget {
                                 size: 35,
                               ),
                             ),
-                            Image.network(
-                              'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                              color: Colors.lightGreen,
-                              width: 30,
-                            ),
+                            const SizedBox(width: 10,),
+                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ] else ...[

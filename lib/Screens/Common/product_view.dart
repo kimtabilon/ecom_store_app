@@ -39,17 +39,17 @@ import 'package:badges/badges.dart' as badges;
 import 'feeds_screen.dart';
 import 'guest_page.dart';
 
-class ProductDetails extends StatefulWidget {
-  const ProductDetails({
+class ProductView extends StatefulWidget {
+  const ProductView({
     Key? key,
     required this.id,
   }) : super(key: key);
   final String id;
   @override
-  State<ProductDetails> createState() => _ProductDetailsState();
+  State<ProductView> createState() => _ProductViewState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class _ProductViewState extends State<ProductView> {
   final titleStyle = const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
   ProductModel? productsModel;
   bool isError = false;
@@ -154,7 +154,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,
-                          child: ProductDetails(id: productsModel!.accessories_id![productsModel!.accessories_img!.indexOf(item)].toString()),
+                          child: ProductView(id: productsModel!.accessories_id![productsModel!.accessories_img!.indexOf(item)].toString()),
                         ),
                       );
                     },
@@ -291,7 +291,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,
-                          child: ProductDetails(id: productsModel!.related_products_id![productsModel!.related_products_img!.indexOf(item)].toString()),
+                          child: ProductView(id: productsModel!.related_products_id![productsModel!.related_products_img!.indexOf(item)].toString()),
                         ),
                       );
                     },
@@ -428,7 +428,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,
-                          child: ProductDetails(id: productsModel!.more_products_id![productsModel!.more_products_img!.indexOf(item)].toString()),
+                          child: ProductView(id: productsModel!.more_products_id![productsModel!.more_products_img!.indexOf(item)].toString()),
                         ),
                       );
                     },

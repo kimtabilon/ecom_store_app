@@ -56,6 +56,8 @@ dependencies:
   video_player:
   flutter_email_sender: ^5.2.0
   dropdown_button2: ^2.0.0
+  image_network: ^2.5.2
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +97,7 @@ flutter:
     - assets/images/ebp_guarantee_b5.png
     - assets/images/ebp_guarantee_b6.png
     - assets/images/job_opportunities_b1.png
+    - assets/images/banner-bg-help-center-mobile.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

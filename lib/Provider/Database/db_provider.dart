@@ -19,7 +19,7 @@ class DatabaseProvider extends ChangeNotifier {
   // COMMON
   void saveData(String key, String value) async {
     SharedPreferences pref = await _pref;
-    print("saved: $key -> $value");
+    //print("saved: $key -> $value");
     pref.setString(key, value);
 
   }

@@ -30,7 +30,6 @@ class CartItem {
   };
 
   static List<CartItem> itemsFromSnapshot(List snapshot) {
-    // print("data ${productSnaphot[0]}");
     return snapshot.map((data) {
       return CartItem.fromJson(data);
     }).toList();

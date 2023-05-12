@@ -108,7 +108,6 @@ class OrderModel extends ChangeNotifier {
   };
 
   static List<OrderModel> orderFromSnapshot(List orderSnapshot) {
-    // print("data ${productSnaphot[0]}");
     return orderSnapshot.map((data) {
       return OrderModel.fromJson(data);
     }).toList();

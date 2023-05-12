@@ -56,14 +56,12 @@ class AuthenticationProvider extends ChangeNotifier {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-        // print(await response.stream.bytesToString());
         _isLoading = false;
         _resMessage = "Account created!";
         notifyListeners();
         PageNavigator(ctx: context).nextPageOnly(page: const LoginPage());
       }
       else {
-        // print(response.reasonPhrase);
         _resMessage = response.reasonPhrase.toString();
         _isLoading = false;
         notifyListeners();
@@ -95,13 +93,8 @@ class AuthenticationProvider extends ChangeNotifier {
 
       var guestRequest = http.Request('GET', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id'));
       http.StreamedResponse guestData = await guestRequest.send();
-      // print(guestData.stream.bytesToString());
       var body = await guestData.stream.bytesToString();
-      // print("body123!: "+body);
       if (guestData.statusCode == 200) {
-        // var json = jsonDecode(body);
-
-        // print("json123!: "+json);
         DatabaseProvider().saveData('qoute_id', json.decode(body)['id'].toString());
         return true;
       } else {
@@ -154,7 +147,6 @@ class AuthenticationProvider extends ChangeNotifier {
           headers: { "Content-Type": "application/json; charset=UTF-8" },
           body: jsonEncode({'username': AppAccess.username, 'password': AppAccess.password})
       );
-      // print(adminTokenResponse.statusCode);
       if (adminTokenResponse.statusCode == 200 || adminTokenResponse.statusCode == 201) {
         DatabaseProvider().saveData('admin_token', adminTokenResponse.body.replaceAll('"',''));
       }
@@ -189,7 +181,6 @@ class AuthenticationProvider extends ChangeNotifier {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Map<String, dynamic> json = jsonDecode(response.body);
-        print(json);
 
         DatabaseProvider().saveData('user_id', json['id'].toString());
         DatabaseProvider().saveData('name', json['firstname'] + " " + json['lastname']);
@@ -309,7 +300,6 @@ class AuthenticationProvider extends ChangeNotifier {
         notifyListeners();
       }
       else {
-        // print(response.reasonPhrase);
         _resMessage = response.reasonPhrase.toString();
         _isLoading = false;
         notifyListeners();

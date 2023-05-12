@@ -27,18 +27,9 @@ class CategoryModel with ChangeNotifier {
     name3 = json['name3'];
     total = json['total'].toString();
     main_cat = json['main_cat'];
-    // main_cat2 = json[name] == ''
-    //     ? ['']
-    //     : json[name].cast<String>();
-    //
-    // main_cat3 = json[name] == ''
-    //     ? ['']
-    //     : json[name].cast<String>();
-    //
     ctr = json['ctr'];
   }
   static List<CategoryModel> categoriesFromSnapshot(List categoriesSnaphot) {
-    // print("data ${categoriesSnaphot[0]}");
     return categoriesSnaphot.map((data) {
       return CategoryModel.fromJson(data);
     }).toList();

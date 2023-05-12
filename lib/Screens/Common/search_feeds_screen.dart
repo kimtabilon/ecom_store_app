@@ -35,7 +35,6 @@ class _SearchFeedsScreenState extends State<SearchFeedsScreen> {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         _isLoading = true;
-        print("_isLoading $_isLoading");
         limit += 10;
         if(!mounted) {
           super.dispose();
@@ -43,7 +42,6 @@ class _SearchFeedsScreenState extends State<SearchFeedsScreen> {
           await getProducts();
         }
         _isLoading = false;
-        print("limit $limit");
       }
     });
     super.didChangeDependencies();
