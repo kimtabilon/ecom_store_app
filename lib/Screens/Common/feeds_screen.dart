@@ -70,91 +70,40 @@ class _FeedsScreenState extends State<FeedsScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    if(size.width > 600) {
-      return Scaffold(
-        appBar: AppBar(
-          // elevation: 4,
-          title: Text(
-              widget.target,
-            style: TextStyle(
-              fontSize: 30
-            ),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-                Icons.arrow_back,
-                size: 35
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: productsList.isEmpty
-            ? const Center(
-          child: CircularProgressIndicator(),
-        )
-            : SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: productsList.length,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 0.0,
-                      mainAxisSpacing: 0.0,
-                      childAspectRatio: 0.6),
+    return Scaffold(
+      appBar: AppBar(
+        // elevation: 4,
+        title: Text(widget.target),
+      ),
+      body: productsList.isEmpty
+          ? const Center(
+        child: CircularProgressIndicator(),
+      )
+          : SingleChildScrollView(
+        controller: _scrollController,
+        child: Column(
+          children: [
+            GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: productsList.length,
+                gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
+                  childAspectRatio: 0.7),
                   itemBuilder: (ctx, index) {
                     return ChangeNotifierProvider.value(
                         value: productsList[index],
                         child: const FeedsWidget());
                   }),
-              if (_isLoading)
-                const Center(child: CircularProgressIndicator()),
-            ],
-          ),
+            if (_isLoading)
+              const Center(child: CircularProgressIndicator()),
+          ],
         ),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          // elevation: 4,
-          title: Text(widget.target),
-        ),
-        body: productsList.isEmpty
-            ? const Center(
-          child: CircularProgressIndicator(),
-        )
-            : SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            children: [
-              GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: productsList.length,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 0.0,
-                      mainAxisSpacing: 0.0,
-                      childAspectRatio: 0.6),
-                  itemBuilder: (ctx, index) {
-                    return ChangeNotifierProvider.value(
-                        value: productsList[index],
-                        child: const FeedsWidget());
-                  }),
-              if (_isLoading)
-                const Center(child: CircularProgressIndicator()),
-            ],
-          ),
-        ),
-      );
-    }
+      ),
+    );
+
   }
 }

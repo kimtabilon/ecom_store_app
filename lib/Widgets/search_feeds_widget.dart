@@ -1,14 +1,11 @@
-import 'package:ecom_store_app/Provider/Database/db_provider.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../Model/product_model.dart';
 
 import '../Provider/StoreProvider/cart_provider.dart';
 import '../Screens/Common/product_details.dart';
-import 'appbar_icons.dart';
+import '../Screens/Common/product_view.dart';
 
 class SearchFeedsWidget extends StatelessWidget {
   const SearchFeedsWidget({Key? key}) : super(key: key);
@@ -35,7 +32,8 @@ class SearchFeedsWidget extends StatelessWidget {
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  child: ProductDetails(id: productsModelProvider!.id!.toString()),
+                  //child: ProductDetails(id: productsModelProvider!.id!.toString()),
+                    child: ProductView(product: productsModelProvider, id:'')
                 ),
               );
             },
@@ -47,19 +45,13 @@ class SearchFeedsWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   child: Padding(
                     padding: EdgeInsets.all(10),
-                    child: FancyShimmerImage(
+                    child: Image.network(
+                      productsModelProvider.images![0],
+                      fit: BoxFit.contain,
                       height: size.width > 600
                           ? size.height * 0.35
                           : size.height * 0.1,
                       width: double.infinity,
-                      errorWidget: const Icon(
-                        IconlyBold.danger,
-                        color: Colors.red,
-                        size: 28,
-                      ),
-                      imageUrl: productsModelProvider.images![0],
-                      boxFit: BoxFit.contain,
-
                     ),
                   ),
                 ),
@@ -150,7 +142,7 @@ class SearchFeedsWidget extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10,),
-                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
+                            const Icon(Icons.heart_broken, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ] else ...[
@@ -190,7 +182,7 @@ class SearchFeedsWidget extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10,),
-                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
+                            const Icon(Icons.heart_broken, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ],

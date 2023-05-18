@@ -1,6 +1,5 @@
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../Screens/Authentication/splash.dart';
@@ -40,7 +39,7 @@ class AppbarWidget extends StatelessWidget {
         child: Image.asset("assets/images/icon-logo.png"),
       ),
       title: Text(title!),
-      leadingWidth: leadingButton=='' ? 70 : 30,
+      leadingWidth: leadingButton=='' ? 140 : 30,
       actions: [
         InkWell(
             onTap: () {
@@ -55,7 +54,7 @@ class AppbarWidget extends StatelessWidget {
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Icon(
-                IconlyBold.profile,
+                Icons.person,
                 size: 28,
                 color: Colors.lightGreen,
               ),

@@ -1,13 +1,6 @@
-import 'package:ecom_store_app/Screens/Authentication/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:page_transition/page_transition.dart';
-import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
-import '../../Widgets/cart_icon.dart';
-import '../../Widgets/search_field.dart';
 import 'help_center_form.dart';
-import '../Common/guest_page.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key}) : super(key: key);

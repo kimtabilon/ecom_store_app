@@ -1,19 +1,21 @@
-import 'package:ecom_store_app/Provider/Database/db_provider.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:image_network/image_network.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../Model/product_model.dart';
-
 import '../Provider/StoreProvider/cart_provider.dart';
 import '../Screens/Common/product_details.dart';
-import 'appbar_icons.dart';
+import '../Screens/Common/product_view.dart';
 
-class FeedsWidget extends StatelessWidget {
+class FeedsWidget extends StatefulWidget {
   const FeedsWidget({Key? key}) : super(key: key);
+
+  @override
+  State<FeedsWidget> createState() => _FeedsWidgetState();
+}
+
+class _FeedsWidgetState extends State<FeedsWidget> {
+
+  bool _isLoading=false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,13 @@ class FeedsWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              // print(productsModelProvider);
               Navigator.push(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
-                  child: ProductDetails(id: productsModelProvider!.id!.toString()),
+                  // child: ProductDetails(id: productsModelProvider!.id!.toString()),
+                  // child: ProductView(product: productsModelProvider, id:''),
+                  child: ProductView(product: ProductModel(), id:productsModelProvider.id!.toString()),
                 ),
               );
             },
@@ -44,46 +47,21 @@ class FeedsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: FancyShimmerImage(
+                  child: Image.network(
+                    productsModelProvider.images![0],
+                    fit: BoxFit.contain,
                     height: size.width > 600
                         ? size.height * 0.23
                         : size.height * 0.1,
                     width: double.infinity,
-                    errorWidget: const Icon(
-                      IconlyBold.danger,
-                      color: Colors.red,
-                      size: 28,
-                    ),
-                    imageUrl: productsModelProvider.images![0],
-                    boxFit: BoxFit.contain,
                   ),
-                  /*child: ImageNetwork(
-                    image: productsModelProvider.images![0],
-                    imageCache: CachedNetworkImageProvider(productsModelProvider.images![0]),
-                    height: 100,
-                    width: 100,
-                    duration: 1500,
-                    curve: Curves.easeIn,
-                    onPointer: true,
-                    debugPrint: false,
-                    fullScreen: false,
-                    fitAndroidIos: BoxFit.contain,
-                    fitWeb: BoxFitWeb.contain,
-                    onLoading: const CircularProgressIndicator(
-                      color: Colors.indigoAccent,
-                    ),
-                    onError: const Icon(
-                      Icons.error,
-                      color: Colors.red,
-                    ),
-                  ),*/
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                   child: size.width > 600
                       ? Text(
                     productsModelProvider.sku.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       fontSize: 20
@@ -91,7 +69,7 @@ class FeedsWidget extends StatelessWidget {
                   )
                       : Text(
                     productsModelProvider.sku.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey
                     ),
@@ -117,8 +95,6 @@ class FeedsWidget extends StatelessWidget {
                     maxLines: 2,
                     style: const TextStyle(
                       fontSize: 14,
-                      //  fontFamily: 'Roboto',
-                      // fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -130,96 +106,47 @@ class FeedsWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      if(size.width > 600) ...[
-                        Flexible(
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "\$",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontSize: 27
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: "${productsModelProvider.price}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600)
-                                    ),
-                                  ])
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                // if(await isAdded) {
-                                //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                // }
-                              },
-                              child: const Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.lightGreen,
-                                size: 35,
+                      RichText(
+                          text: TextSpan(
+                              text: "\$",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromRGBO(
+                                    0, 0, 0, 1.0
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 10,),
-                            const Icon(IconlyBold.heart, color: Colors.lightGreen, size: 40),
-                          ],
-                        ),
-                      ] else ...[
-                        Flexible(
-                          child: RichText(
-                              text: TextSpan(
-                                  text: "\$",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color.fromRGBO(
-                                        0, 0, 0, 1.0
-                                    ),
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: "${productsModelProvider.price}",
-                                        style: TextStyle(
-                                            color: const Color(0xff324558),
-                                            fontWeight: FontWeight.w600)
-                                    ),
-                                  ])
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            IconButton(
-                                onPressed: () { CartProvider().addToCart(productsModelProvider.sku, "1", context); },
-                                icon: const Icon(
-                                  Icons.add_shopping_cart,
-                                  color: Colors.lightGreen,
-                                )
-                            ),
-                            /*InkWell(
-                              onTap: () async {
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: "${productsModelProvider.price}",
+                                    style: const TextStyle(
+                                        color: Color(0xff324558),
+                                        fontWeight: FontWeight.w600)
+                                ),
+                              ])
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
                                 Future<bool> isAdded = CartProvider().addToCart(productsModelProvider.sku, "1", context);
-                                // if(await isAdded) {
-                                //   Provider.of<CartProvider>(context, listen: false).refreshCartTotal();
-                                // }
 
+                                setState(() {
+                                  _isLoading=true;
+                                });
+
+                                if(await isAdded) {
+                                  setState(() {
+                                    _isLoading=false;
+                                  });
+                                }
                               },
-                              child: const Icon(
+                              icon: _isLoading ? const Center(child: CircularProgressIndicator()) : const Icon(
                                 Icons.add_shopping_cart,
                                 color: Colors.lightGreen,
-                              ),
-                            ),*/
-                            // Image.network(
-                            //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                            //   color: Colors.lightGreen,
-                            //   width: 22,
-                            // ),
-                          ],
-                        ),
-                      ],
+                              )
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

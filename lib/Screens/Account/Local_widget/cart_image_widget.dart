@@ -1,7 +1,4 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:image_network/image_network.dart';
 import '../../../Provider/ProductProvider/product_provider.dart';
 class CartItemImageWidget extends StatelessWidget {
   const CartItemImageWidget({Key? key, required this.sku})
@@ -34,36 +31,13 @@ class CartItemImageWidget extends StatelessWidget {
                 );
               }
               Size size = MediaQuery.of(context).size;
-              /*return ImageNetwork(
-                image: snapshot.data.toString(),
-                height: 28,
-                width: 28,
-                duration: 1500,
-                curve: Curves.easeIn,
-                onPointer: true,
-                debugPrint: false,
-                fullScreen: false,
-                fitAndroidIos: BoxFit.contain,
-                fitWeb: BoxFitWeb.contain,
-                onLoading: const CircularProgressIndicator(
-                  color: Colors.indigoAccent,
-                ),
-                onError: const Icon(
-                  Icons.error,
-                  color: Colors.red,
-                ),
-              );*/
-              return FancyShimmerImage(
+              return Image.network(
+                snapshot.data.toString(),
+                fit: BoxFit.contain,
                 height: size.height * 0.2,
                 width: double.infinity,
-                errorWidget: const Icon(
-                  IconlyBold.danger,
-                  color: Colors.red,
-                  size: 28,
-                ),
-                imageUrl: snapshot.data.toString(),
-                boxFit: BoxFit.contain,
               );
+
             })
     );
   }
