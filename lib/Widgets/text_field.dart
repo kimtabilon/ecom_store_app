@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../../Styles/colors.dart';
 
@@ -33,4 +35,56 @@ Widget customTextField(
       )
     ],
   );
+}
+
+
+Widget customTextStores(
+    {String? title,
+      TextAlign? textAlign,
+      AlignmentGeometry? align,
+      String? description,
+      required CrossAxisAlignment axis,
+      BuildContext? context}) {
+  return Column(
+    crossAxisAlignment: axis,
+    children: [
+      Container(
+        alignment: align,
+        child: Text(
+          title!,
+          textAlign: textAlign,
+          textScaleFactor: ScaleSize.textScaleFactor(context!),
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.yellow,
+          ),
+        ),
+      ),
+      Container(
+        alignment: align,
+        width: 180,
+        child: Text(
+          description!,
+          textAlign: textAlign,
+          textScaleFactor: ScaleSize.textScaleFactor(context!),
+          style: const TextStyle(
+            fontSize: 12,
+            // fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 1400) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
+  }
 }
