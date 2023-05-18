@@ -9,6 +9,7 @@ import '../Screens/Authentication/splash.dart';
 import '../Screens/Common/feeds_screen.dart';
 import '../Screens/Common/guest_page.dart';
 import '../Screens/Common/shop.dart';
+import '../Screens/Common/stores_page.dart';
 import '../Utils/routers.dart';
 
 class GuestBottomAppbarWidget extends StatefulWidget {
@@ -63,7 +64,7 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         ),
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              PageNavigator(ctx: context).nextPage(page: const StorePage());
             },
             child: Padding(
               padding: EdgeInsets.all(10),
