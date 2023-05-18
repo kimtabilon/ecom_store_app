@@ -1,44 +1,187 @@
-import 'dart:convert';
+
 import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:clippy_flutter/arc.dart';
-import 'package:ecom_store_app/Screens/Account/cart_page.dart';
 import 'package:ecom_store_app/Screens/Common/product_qty.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image_network/image_network.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
-import '../../Constants/url.dart';
-import '../../Model/cart_model.dart';
 import '../../Model/product_model.dart';
-import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Provider/StoreProvider/guest_cart_provider.dart';
-import '../../Utils/routers.dart';
-import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
-import '../../Widgets/feeds_grid.dart';
-import '../../Widgets/feeds_widget.dart';
-import '../Authentication/splash.dart';
-import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:badges/badges.dart' as badges;
 
 import 'feeds_screen.dart';
-import 'guest_page.dart';
 
+class AnimatedSearchBar extends StatefulWidget {
+  @override
+  _AnimatedSearchBarState createState() => _AnimatedSearchBarState();
+}
+
+class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
+  bool _folded = true;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    if(size.width > 600) {
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 400),
+        width: _folded ? 60 : 400,
+        height: 56,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: _folded ? Color.fromRGBO(16, 69, 114, 1) : Colors.white,
+          boxShadow: kElevationToShadow[5],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 0),
+                child: !_folded
+                    ? TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    border: InputBorder.none,
+                    hintText: "Search",
+                    prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.green,
+                        size: 28
+                    ),
+                  ),
+                  onSubmitted: (String str) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FeedsScreen(target: str, itemSearch: 'true')
+                      ),
+                    );
+                  },
+                )
+                    : null,
+              ),
+            ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(_folded ? 28 : 0),
+                    topRight: Radius.circular(28),
+                    bottomLeft: Radius.circular(_folded ? 28 : 0),
+                    bottomRight: Radius.circular(28),
+                  ),
+                  child: Padding(
+                    padding: _folded
+                        ? const EdgeInsets.only(top: 11, bottom: 10, left: 10)
+                        : const EdgeInsets.only(top: 11, bottom: 10, left: 5, right: 5),
+                    child: Icon(
+                        _folded ? Icons.search : Icons.close,
+                        color: Colors.lightGreen,
+                        size: 35
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _folded = !_folded;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return AnimatedContainer(
+        duration: Duration(milliseconds: 400),
+        width: _folded ? 60 : 250,
+        height: 56,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: _folded ? Color.fromRGBO(16, 69, 114, 1) : Colors.white,
+          boxShadow: kElevationToShadow[5],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 0),
+                child: !_folded
+                    ? TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+                    border: InputBorder.none,
+                    hintText: "Search",
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.green,
+                    ),
+                  ),
+                  onSubmitted: (String str) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FeedsScreen(target: str, itemSearch: 'true')
+                      ),
+                    );
+                  },
+
+                )
+                    : null,
+              ),
+            ),
+            AnimatedContainer(
+              duration: Duration(milliseconds: 400),
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(_folded ? 28 : 0),
+                    topRight: Radius.circular(28),
+                    bottomLeft: Radius.circular(_folded ? 28 : 0),
+                    bottomRight: Radius.circular(28),
+                  ),
+                  child: Padding(
+                    padding: _folded
+                        ? const EdgeInsets.only(top: 11, bottom: 10, left: 10)
+                        : const EdgeInsets.only(top: 11, bottom: 10, left: 5),
+                    child: Icon(
+                      _folded ? Icons.search : Icons.close,
+                      color: Colors.lightGreen,
+                      size: 30,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      _folded = !_folded;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+}
+/*
 class ProductDetails extends StatefulWidget {
   const ProductDetails({
     Key? key,
@@ -57,7 +200,6 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   Future<void> getProductInfo() async {
     try {
-      // print("test123!::: ${widget.id}");
       productsModel = await ProductProvider.getProductById(id: widget.id);
     } catch (error) {
       isError = true;
@@ -126,25 +268,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Stack(
                 children: <Widget>[
                   InkWell(
-                    /*child: ImageNetwork(
-                      image: item,
-                      height: 100,
-                      width: 100,
-                      duration: 1500,
-                      curve: Curves.easeIn,
-                      onPointer: true,
-                      debugPrint: false,
-                      fullScreen: false,
-                      fitAndroidIos: BoxFit.contain,
-                      fitWeb: BoxFitWeb.contain,
-                      onLoading: const CircularProgressIndicator(
-                        color: Colors.indigoAccent,
-                      ),
-                      onError: const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                    ),*/
                     child: Image.network(
                         item,
                         fit: BoxFit.fill
@@ -263,25 +386,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Stack(
                 children: <Widget>[
                   InkWell(
-                    /*child: ImageNetwork(
-                      image: item,
-                      height: 100,
-                      width: 100,
-                      duration: 1500,
-                      curve: Curves.easeIn,
-                      onPointer: true,
-                      debugPrint: false,
-                      fullScreen: false,
-                      fitAndroidIos: BoxFit.contain,
-                      fitWeb: BoxFitWeb.contain,
-                      onLoading: const CircularProgressIndicator(
-                        color: Colors.indigoAccent,
-                      ),
-                      onError: const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                    ),*/
                     child: Image.network(
                         item,
                         fit: BoxFit.fill
@@ -400,25 +504,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Stack(
                 children: <Widget>[
                   InkWell(
-                    /*child: ImageNetwork(
-                      image: item,
-                      height: 100,
-                      width: 100,
-                      duration: 1500,
-                      curve: Curves.easeIn,
-                      onPointer: true,
-                      debugPrint: false,
-                      fullScreen: false,
-                      fitAndroidIos: BoxFit.contain,
-                      fitWeb: BoxFitWeb.contain,
-                      onLoading: const CircularProgressIndicator(
-                        color: Colors.indigoAccent,
-                      ),
-                      onError: const Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                    ),*/
                     child: Image.network(
                         item,
                         fit: BoxFit.fill
@@ -537,183 +622,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           preferredSize: Size.fromHeight(60.0),
           child: AppbarWidget(title: 'Product Details', leadingButton: 'back',)
       ),
-      /*appBar: AppBar(
-        // elevation: 1,
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color.fromRGBO(16, 69, 114, 1),
-        title: size.width > 600
-            ? InkWell(
-          onTap: () {
-            PageNavigator(ctx: context).nextPage(page: const GuestPage());
-          },
-          child: Image.network(
-            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-            cacheWidth: 40,
-            width: 40,
-          ),
-        )
-            : InkWell(
-          onTap: () {
-            PageNavigator(ctx: context).nextPage(page: const GuestPage());
-          },
-          child: Image.network(
-            'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/icon-logo.png',
-            cacheWidth: 35,
-            width: 35,
-          ),
-        ) ,
-        centerTitle: false,
-        leading: size.width > 600
-            ? IconButton(
-          icon: Icon(
-              Icons.arrow_back,
-              size: 35
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-            : IconButton(
-          icon: Icon(
-              Icons.arrow_back,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        leadingWidth: 30,
-        actions: [
-          AnimatedSearchBar(),
-          InkWell(
-            onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const CartPage());
-            },
-            child: Consumer<CartProvider>(builder: (context, cart, child) {
-              if(size.width > 600) {
-                return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                    ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 12, 5, 10),
-                  child: badges.Badge(
-                      badgeContent: Text(
-                        cart.cart_total_items,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: const Icon(
-                            Icons.shopping_cart_checkout_rounded,
-                            size: 35,
-                            color: Colors.lightGreen,
-                          )
-                      )
-                  ),
-                )
-                    : Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                    child: const Icon(
-                        Icons.shopping_cart_checkout_rounded,
-                        size: 35,
-                        color: Colors.lightGreen
-                    )
-                );
-              } else {
-                return cart.cart_total_items != '' && cart.cart_total_items != '0'
-                    ? Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 14, 5, 0),
-                  child: badges.Badge(
-                      badgeContent: Text(
-                        cart.cart_total_items,
-                        style: TextStyle(
-                            color: Colors.white
-                        ),
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: const Icon(
-                            Icons.shopping_cart_checkout_rounded,
-                            size: 30,
-                            color: Colors.lightGreen,
-                          )
-                      )
-                  ),
-                )
-                    : Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                    child: const Icon(
-                        Icons.shopping_cart_checkout_rounded,
-                        size: 28,
-                        color: Colors.lightGreen
-                    )
-                );
-              }
-            })
-          ),
-          *//*
-          InkWell(
-              onTap: () {
-                PageNavigator(ctx: context).nextPage(page: const CartPage());
-              },
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 1, 0),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  Stack(
-                    children: [
-                      Icon(Icons.shopping_cart_checkout_rounded,
-                          size: 28, color: Colors.lightGreen),
-                    ],
-                  ),
-                ]),
-              )),
-          *//*
-          InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.fade,
-                    child: SplashScreen(),
-                  ),
-                );
-              },
-              child: size.width > 600
-                  ? Padding(
-                padding: EdgeInsets.fromLTRB(0, 12, 5, 0),
-                child:
-                Column(mainAxisSize: MainAxisSize.min, children: const [
-                  Icon(
-                    IconlyBold.profile,
-                    size: 35,
-                    color: Colors.lightGreen,
-                  ),
-                ]),
-              )
-                  : Padding(
-                padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                child: const Icon(
-                  IconlyBold.profile,
-                  size: 28,
-                  color: Colors.lightGreen,
-                ),
-              )
-          )
-          *//*
-          AppBarIcons(
-            function: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: SplashScreen(),
-                ),
-              );
-            },
-            icon: IconlyBold.profile,
-          ),
-          *//*
-        ],
-      ),*/
       backgroundColor: const Color(0xFFEDECF2),
       body: SafeArea(
         child: isError
@@ -761,35 +669,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
               ),
             ],
-            Align(
-              alignment: Alignment.topLeft,
-              widthFactor: 1,
-              child: Container(
-                height: 50,
-                width: 50,
-                child: Image.network(
-                    ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                    fit: BoxFit.fill
-                ),
-                /*child: ImageNetwork(
-                  image: ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-                  height: 50,
-                  width: 50,
-                  duration: 1500,
-                  curve: Curves.easeIn,
-                  onPointer: true,
-                  debugPrint: false,
-                  fullScreen: false,
-                  fitAndroidIos: BoxFit.contain,
-                  fitWeb: BoxFitWeb.contain,
-                  onLoading: const CircularProgressIndicator(
-                    color: Colors.indigoAccent,
-                  ),
-                  onError: const Icon(
-                    Icons.error,
-                    color: Colors.red,
-                  ),
-                ),*/
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  color: Colors.white
+              ),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  widthFactor: 1,
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Image.network(
+                      ManufLogo[0].toString().replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
+                    ),
+                  )
               ),
             ),
             Stack(
@@ -802,28 +696,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                         : size.height * 0.4,
                     child: Swiper(
                       itemBuilder: (BuildContext context, int index) {
-                        /*return ImageNetwork(
-                          image: productsModel!.images![index].toString(),
-                          height: 300,
-                          width: 300,
-                          duration: 1500,
-                          curve: Curves.easeIn,
-                          onPointer: true,
-                          debugPrint: false,
-                          fullScreen: false,
-                          fitAndroidIos: BoxFit.contain,
-                          fitWeb: BoxFitWeb.contain,
-                          onLoading: const CircularProgressIndicator(
-                            color: Colors.indigoAccent,
-                          ),
-                          onError: const Icon(
-                            Icons.error,
-                            color: Colors.red,
-                          ),
-                        );*/
-                        return FancyShimmerImage(
-                          imageUrl: productsModel!.images![index].toString(),
-                          boxFit: BoxFit.contain,
+                        return Image.network(
+                          productsModel!.images![index].toString(),
+                          fit: BoxFit.fitWidth,
+                          width: double.infinity,
                         );
                       },
                       autoplay: false,
@@ -1230,6 +1106,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ],
                           ),
                         ),
+
                         Container(
                           child: CarouselSlider(
                             items: imageSliders2,
@@ -1333,164 +1210,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   }
 }
 
-class AnimatedSearchBar extends StatefulWidget {
-  @override
-  _AnimatedSearchBarState createState() => _AnimatedSearchBarState();
-}
-
-class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
-  bool _folded = true;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    if(size.width > 600) {
-      return AnimatedContainer(
-        duration: Duration(milliseconds: 400),
-        width: _folded ? 60 : 400,
-        height: 56,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: _folded ? Color.fromRGBO(16, 69, 114, 1) : Colors.white,
-          boxShadow: kElevationToShadow[5],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 0),
-                child: !_folded
-                    ? TextField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                    border: InputBorder.none,
-                    hintText: "Search",
-                    prefixIcon: Icon(
-                        IconlyLight.search,
-                        color: Colors.green,
-                        size: 28
-                    ),
-                  ),
-                  onSubmitted: (String str) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              FeedsScreen(target: str, itemSearch: 'true')
-                      ),
-                    );
-                  },
-                )
-                    : null,
-              ),
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 400),
-              child: Material(
-                type: MaterialType.transparency,
-                child: InkWell(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(_folded ? 28 : 0),
-                    topRight: Radius.circular(28),
-                    bottomLeft: Radius.circular(_folded ? 28 : 0),
-                    bottomRight: Radius.circular(28),
-                  ),
-                  child: Padding(
-                    padding: _folded
-                        ? const EdgeInsets.only(top: 11, bottom: 10, left: 10)
-                        : const EdgeInsets.only(top: 11, bottom: 10, left: 5, right: 5),
-                    child: Icon(
-                        _folded ? Icons.search : Icons.close,
-                        color: Colors.lightGreen,
-                        size: 35
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _folded = !_folded;
-                    });
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return AnimatedContainer(
-        duration: Duration(milliseconds: 400),
-        width: _folded ? 60 : 250,
-        height: 56,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: _folded ? Color.fromRGBO(16, 69, 114, 1) : Colors.white,
-          boxShadow: kElevationToShadow[5],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 0),
-                child: !_folded
-                    ? TextField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(vertical: 15.0),
-                    border: InputBorder.none,
-                    hintText: "Search",
-                    prefixIcon: Icon(
-                      IconlyLight.search,
-                      color: Colors.green,
-                    ),
-                  ),
-                  onSubmitted: (String str) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              FeedsScreen(target: str, itemSearch: 'true')
-                      ),
-                    );
-                  },
-
-                )
-                    : null,
-              ),
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 400),
-              child: Material(
-                type: MaterialType.transparency,
-                child: InkWell(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(_folded ? 28 : 0),
-                    topRight: Radius.circular(28),
-                    bottomLeft: Radius.circular(_folded ? 28 : 0),
-                    bottomRight: Radius.circular(28),
-                  ),
-                  child: Padding(
-                    padding: _folded
-                        ? const EdgeInsets.only(top: 11, bottom: 10, left: 10)
-                        : const EdgeInsets.only(top: 11, bottom: 10, left: 5),
-                    child: Icon(
-                      _folded ? Icons.search : Icons.close,
-                      color: Colors.lightGreen,
-                      size: 30,
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      _folded = !_folded;
-                    });
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-}
 
 class ItemBottomNavBar extends StatefulWidget {
   const ItemBottomNavBar({Key? key, required this.price, required this.sku, required this.qty, required this.sprice, required this.width}) : super(key: key);
@@ -1655,7 +1374,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 children: <Widget>[
                                   IconButton(
                                     icon: const Icon(
-                                      IconlyLight.search,
+                                      Icons.search,
                                       color: Colors.green,
                                     ),
                                     onPressed: () async {
@@ -1901,7 +1620,7 @@ class _ItemBottomNavBarState extends State<ItemBottomNavBar> {
                                 children: <Widget>[
                                   IconButton(
                                     icon: const Icon(
-                                      IconlyLight.search,
+                                      Icons.search,
                                       color: Colors.green,
                                     ),
                                     onPressed: () async {
@@ -2335,7 +2054,6 @@ Widget specInfo({required String title, required List<String> specList, required
 
 Widget specInfoCont({required List<String> specinfo, required double width}){
   return ListView.builder(
-    physics: NeverScrollableScrollPhysics(),
     shrinkWrap: true,
     itemCount: specinfo!.length,
     itemBuilder: (BuildContext context, int index){
@@ -2395,4 +2113,5 @@ void _scrollToSelectedContent({required GlobalKey expansionTileKey}) {
       Scrollable.ensureVisible(keyContext,duration: Duration(milliseconds: 200));
     });
   }
-}
+}*/
+

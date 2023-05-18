@@ -1,14 +1,6 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
-// import '../consts/global_colors.dart';
-import '../Model/category_model.dart';
 import '../Screens/Common/category_feeds_screen.dart';
-import '../Screens/Common/feeds_screen.dart';
-import '../Screens/Common/guest_page.dart';
-import '../Utils/routers.dart';
 import 'appbar_widget.dart';
 
 class CategoryWidget extends StatelessWidget {

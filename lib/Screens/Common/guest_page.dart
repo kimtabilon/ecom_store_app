@@ -1,14 +1,15 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
+import '../../Widgets/bottom_appbar.dart';
 import '../../Widgets/feeds_grid.dart';
-import '../../Widgets/sale_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
+import '../../Widgets/home_banner_widget.dart';
 import '../../Widgets/search_field.dart';
 
 
@@ -39,9 +40,6 @@ class _GuestPageState extends State<GuestPage> {
             child: Column(
               children: [
                 const SearchFieldWidget(),
-                const SizedBox(
-                  height: 18,
-                ),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(children: [
@@ -50,7 +48,7 @@ class _GuestPageState extends State<GuestPage> {
                         child: Swiper(
                           itemCount: 3,
                           itemBuilder: (ctx, index) {
-                            return SaleWidget(i: index);
+                            return HomeBannerWidget(i: index);
                           },
                           autoplay: true,
                           pagination: const SwiperPagination(
@@ -65,49 +63,9 @@ class _GuestPageState extends State<GuestPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           children: [
-                            if(size.width > 600) ...[
+
                               const Text(
-                                "On Sale!",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 30,
-                                ),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: const FeedsScreen(
-                                                target: 'All Products',
-                                                itemSearch: 'false')));
-                                  },
-                                  icon: Icon(
-                                      IconlyBold.arrowRight2,
-                                    color: Colors.lightGreen,
-                                    size: 35,
-                                    shadows: kElevationToShadow[6],
-                                  ),
-                              ),
-                              /*
-                              AppBarIcons(
-                                  function: () {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: const FeedsScreen(
-                                                target: 'All Products',
-                                                itemSearch: 'false')));
-                                  },
-                                  icon: IconlyBold.arrowRight2,
-                              ),
-                              */
-                            ] else ...[
-                              const Text(
-                                "On Sale!",
+                                "HP Products",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 18,
@@ -124,31 +82,29 @@ class _GuestPageState extends State<GuestPage> {
                                                 target: 'All Products',
                                                 itemSearch: 'false')));
                                   },
-                                  icon: IconlyBold.arrowRight2),
-                            ],
+                                  icon: Icons.arrow_forward),
+
                           ],
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
                           future: ProductProvider.getOnSaleProducts(limit: "4"),
                           builder: ((context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else if (snapshot.hasError) {
-                              Center(
+                              return Center(
                                 child:
                                     Text("An error occured ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
-                              const Center(
+                              return const Center(
                                 child: Text("No products has been added yet"),
                               );
                             }
-                            return FeedsGridWidget(
-                                productsList: snapshot.data!);
+                            return FeedsGridWidget(productsList: snapshot.data!);
                           })),
                       const Divider(color: Colors.white10),
                       Padding(
@@ -156,48 +112,8 @@ class _GuestPageState extends State<GuestPage> {
                             horizontal: 8.0, vertical: 20.0),
                         child: Row(
                           children: [
-                            if(size.width > 600) ...[
                               const Text(
-                                "Best Seller",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 30,
-                                ),
-                              ),
-                              const Spacer(),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: const FeedsScreen(
-                                                target: 'All Products',
-                                                itemSearch: 'false')));
-                                  },
-                                  icon: Icon(
-                                      IconlyBold.arrowRight2,
-                                    color: Colors.lightGreen,
-                                    size: 35,
-                                    shadows: kElevationToShadow[5],
-                                  )
-                              ),
-                              /*
-                              AppBarIcons(
-                                  function: () {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: const FeedsScreen(
-                                                target: 'All Products',
-                                                itemSearch: 'false')));
-                                  },
-                                  icon: IconlyBold.arrowRight2),
-                              */
-                            ] else ...[
-                              const Text(
-                                "Best Seller",
+                                "Lexmark Go Line",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 18,
@@ -214,39 +130,40 @@ class _GuestPageState extends State<GuestPage> {
                                                 target: 'All Products',
                                                 itemSearch: 'false')));
                                   },
-                                  icon: IconlyBold.arrowRight2),
-                            ]
+                                  icon: Icons.arrow_forward),
                           ],
                         ),
                       ),
                       FutureBuilder<List<ProductModel>>(
-                          future:
-                              ProductProvider.getBestSellerProducts(limit: "4"),
+                          future: ProductProvider.getBestSellerProducts(limit: "4"),
                           builder: ((context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else if (snapshot.hasError) {
-                              Center(
+                              return Center(
                                 child:
                                     Text("An error occured ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
-                              const Center(
+                              return const Center(
                                 child: Text("No products has been added yet"),
                               );
                             }
-                            return FeedsGridWidget(
-                                productsList: snapshot.data!);
+                            return FeedsGridWidget(productsList: snapshot.data!);
+
                           }))
                     ]),
                   ),
                 )
               ],
             ),
-          )),
+          ),
+        bottomNavigationBar: const BottomAppBar(
+          child: GuestBottomAppbarWidget(),
+        ),
+      ),
     );
   }
 }

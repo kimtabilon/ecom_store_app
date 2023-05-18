@@ -61,8 +61,6 @@ class _SearchFeedsScreenState extends State<SearchFeedsScreen> {
       );
     }
 
-
-    // print(productsList);
     setState(() {});
   }
 
