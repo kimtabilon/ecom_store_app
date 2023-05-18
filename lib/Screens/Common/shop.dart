@@ -28,15 +28,33 @@ class _ShopScreenState extends State<ShopScreen> {
         const SizedBox(height: 20,),
         Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
         Container(
-          child: Text(label,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(label,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: CategoryFeedsScreen(target: label,itemSearch: 'false'),
+                    ),
+                  );
+                },
+                child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
+              )
+            ],
           ),
           color: bg,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         ),
         const SizedBox(height: 20,),
         FutureBuilder<List<ProductModel>>(

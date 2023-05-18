@@ -33,7 +33,7 @@ class SearchFeedsWidget extends StatelessWidget {
                 PageTransition(
                   type: PageTransitionType.fade,
                   //child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                    child: ProductView(product: productsModelProvider, id:'')
+                    child: ProductView(product: productsModelProvider)
                 ),
               );
             },

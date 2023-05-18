@@ -6,7 +6,6 @@ import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
-import '../../Widgets/bottom_appbar.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/home_banner_widget.dart';
@@ -32,7 +31,7 @@ class _GuestPageState extends State<GuestPage> {
       },
       child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(60.0),
+              preferredSize: const Size.fromHeight(60.0),
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
@@ -97,7 +96,7 @@ class _GuestPageState extends State<GuestPage> {
                             } else if (snapshot.hasError) {
                               return Center(
                                 child:
-                                    Text("An error occured ${snapshot.error}"),
+                                    Text("An error occurred ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
                               return const Center(
@@ -144,7 +143,7 @@ class _GuestPageState extends State<GuestPage> {
                             } else if (snapshot.hasError) {
                               return Center(
                                 child:
-                                    Text("An error occured ${snapshot.error}"),
+                                    Text("An error occurred ${snapshot.error}"),
                               );
                             } else if (snapshot.data == null) {
                               return const Center(

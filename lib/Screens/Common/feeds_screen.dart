@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
+import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_widget.dart';
+import '../../Widgets/search_field.dart';
 
 class FeedsScreen extends StatefulWidget {
   const FeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
@@ -71,19 +73,27 @@ class _FeedsScreenState extends State<FeedsScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        // elevation: 4,
-        title: Text(widget.target),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          // child: AppbarWidget(title: widget.target, leadingButton: 'back',)
+          child: AppbarWidget(title: '', leadingButton: '',)
       ),
-      body: productsList.isEmpty
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
-            GridView.builder(
+            const SearchFieldWidget(),
+            Container(
+              padding: const EdgeInsets.all(2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const BackButton(),
+                  Text(widget.target, style: const TextStyle(fontSize: 14),)
+                ],
+              ),
+            ),
+            productsList.isEmpty ? const Center( child: CircularProgressIndicator(), ) : GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: productsList.length,

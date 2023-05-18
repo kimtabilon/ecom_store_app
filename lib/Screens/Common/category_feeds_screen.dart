@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -80,17 +81,25 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
-          child: AppbarWidget(title: widget.target, leadingButton: 'back',)
+          // child: AppbarWidget(title: widget.target, leadingButton: 'back',)
+          child: AppbarWidget(title: '', leadingButton: '',)
       ),
-      body: productsList.isEmpty
-          ? const Center(
-        child: CircularProgressIndicator(),
-      )
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
-            GridView.builder(
+            const SearchFieldWidget(),
+            Container(
+              padding: const EdgeInsets.all(2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const BackButton(),
+                  Text(widget.target, style: const TextStyle(fontSize: 14),)
+                ],
+              ),
+            ),
+            productsList.isEmpty ? const Center( child: CircularProgressIndicator(), ) : GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: productsList.length,
@@ -99,11 +108,11 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 0.0,
                     mainAxisSpacing: 0.0,
-                    childAspectRatio: 0.6),
+                    childAspectRatio: 0.7),
                 itemBuilder: (ctx, index) {
                   return ChangeNotifierProvider.value(
                       value: productsList[index],
-                      child: const CategoryFeedsWidget());
+                      child: const FeedsWidget());
                 }
             ),
             if (_isLoading)

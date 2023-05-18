@@ -2,6 +2,9 @@ import 'package:ecom_store_app/Screens/Common/rma_details.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
+import '../../Model/product_model.dart';
+import '../../Provider/ProductProvider/product_provider.dart';
+import '../Common/product_view.dart';
 import 'Local_widget/cart_image_widget.dart';
 import 'home_page.dart';
 import '../../Provider/RMA/rma_provider.dart';
@@ -99,19 +102,33 @@ class _ProductDetailsState extends State<OrderDetails> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-                      child: ListTile(
-                        title: Text(item.sku!),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(item.name!),
-                            Text("QTY: ${item.qty_ordered}")
-                          ],
-                        ),
-                        trailing: Text("\$${item.price!}"),
-                        leading: CartItemImageWidget(sku: item.sku!),
-                        // style: ListTitleStyle(),
-                      )
+                    child: ListTile(
+                      title: Text(item.sku!),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(item.name!),
+                          Text("QTY: ${item.qty_ordered}")
+                        ],
+                      ),
+                      trailing: Text("\$${item.price!}"),
+                      leading: CartItemImageWidget(sku: item.sku!),
+                      onTap: () async {
+                        try {
+                          ProductModel product = await ProductProvider.getProductById(id: item.sku!);
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                type: PageTransitionType.fade,
+                                child: ProductView(product: product,)
+                            ),
+                          );
+                        } catch (error) {
+
+                        }
+
+                      },
+                    ),
                   )
                 )
               ).toList(),

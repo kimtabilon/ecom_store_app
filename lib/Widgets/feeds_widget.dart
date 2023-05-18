@@ -36,8 +36,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 PageTransition(
                   type: PageTransitionType.fade,
                   // child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                  // child: ProductView(product: productsModelProvider, id:''),
-                  child: ProductView(product: ProductModel(), id:productsModelProvider.id!.toString()),
+                  child: ProductView(product: productsModelProvider),
                 ),
               );
             },
