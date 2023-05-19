@@ -93,7 +93,14 @@ class _StorePageState extends State<StorePage> {
                                   visitStoreButton(
                                     text: 'VISIT STORE',
                                     tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                      PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                          "HP STORE",
+                                          "Welcome to HP Store. Build your ideal with workstation at home or office with HP's high-end line of computers and the latest advancements in business and technology.",
+                                          "hp_store_banner",
+                                          "hp_logo",
+                                          "Shop now and enjoy our limited-time offers and exclusive deals.",
+                                          "HP"
+                                      ));
                                     },
                                     context: context,
                                   ),
@@ -102,7 +109,7 @@ class _StorePageState extends State<StorePage> {
                             ),
                           ),
                         ),
-                        Padding(
+                        Padding (
                           padding: const EdgeInsets.all(5.0),
                           child: Container(
                             decoration: const BoxDecoration(
@@ -128,7 +135,14 @@ class _StorePageState extends State<StorePage> {
                                   visitStoreButton(
                                     text: 'VISIT STORE',
                                     tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                      PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                          "BROTHER STORE",
+                                          "Welcome to Brother Store and discover exceptional digital printing equipment and supplies made with you in mind. Boost your productivity with our easy-to-use line of home, office, and business printers.",
+                                          "brother_store_banner",
+                                          "brother_logo",
+                                          "Shop now and enjoy our limited-time offers and exclusive deals.",
+                                          "BROTHER"
+                                      ));
                                     },
                                     context: context,
                                   ),
@@ -173,7 +187,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "LEXMARK STORE",
+                                            "Welcome to Lexmark Store where you can find superior picture quality products and experience the new level of creativity with Information Display Signage.",
+                                            "lexmark_store_banner",
+                                            "lex_logo",
+                                            "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
+                                            "LEXMARK"
+                                        ));
                                       },
                                       context: context,
                                     ),
@@ -218,7 +239,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "LG STORE",
+                                            "Welcome to LG Store where you can find superior picture quality products and experience the new level of creativity with Information Display Signage.",
+                                            "lg_store_banner",
+                                            "lg_logo",
+                                            "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
+                                            "LG"
+                                        ));
                                       },
                                       context: context,
                                     ),
@@ -253,7 +281,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "EPSON STORE",
+                                            "Welcome to Epson Store! Epson offers you the best printer for your home and office. Designed for simplicity and ease, get incredible results for all your printing, copying, and scanning needs",
+                                            "epson_store_banner",
+                                            "epson_logo",
+                                            "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
+                                            "EPSON"
+                                        ));
                                       },
                                       context: context,
                                     ),
@@ -298,7 +333,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "CANON STORE",
+                                            "Welcome to Canon Store where you can find a wide of printers for a variety of use. Whether for home or office, colored or not, compact or large-format, Canon has a printer that will suit your needs",
+                                            "canon_store_banner",
+                                            "canon_logo",
+                                            "Shop now and enjoy our limited-time offers and exclusive deals.",
+                                            "CANON"
+                                        ));
                                       },
                                       context: context,
                                     ),
@@ -333,7 +375,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "XEROX STORE",
+                                            "Welcome to Xerox Store and discover exceptional digital printing equipment and supplies made with you in mind. Boost your productivity with our easy-to-use line of home, office, and business printers.",
+                                            "xerox_store_banner",
+                                            "xerox_logo",
+                                            "Shop now and enjoy our limited-time offers and exclusive deals.",
+                                            "XEROX"
+                                        ));
                                       },
                                       context: context,
                                     ),
@@ -378,7 +427,14 @@ class _StorePageState extends State<StorePage> {
                                     visitStoreButton(
                                       text: 'VISIT STORE',
                                       tap: () {
-                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
+                                        PageNavigator(ctx: context).nextPage(page: const StoresInnerPage(
+                                            "LENOVO STORE",
+                                            "Welcome to Lenovo Store. Build your ideal with workstation at home or office with Lenovo’s high-end line of computers and the latest advancements in business and technology.",
+                                            "lenovo_store_banner",
+                                            "lenovo_logo",
+                                            "Shop now and enjoy our limited-time offers and exclusive deals.",
+                                            "LENOVO"
+                                        ));
                                       },
                                       context: context,
                                     ),

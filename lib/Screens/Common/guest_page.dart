@@ -80,7 +80,7 @@ class _GuestPageState extends State<GuestPage> {
                                           type: PageTransitionType.fade,
                                           child: const FeedsScreen(
                                               target: 'All Products',
-                                              itemSearch: 'false')));
+                                              itemSearch: 'false', store: '',)));
                                 },
                                 icon: Icons.arrow_forward),
 
@@ -129,7 +129,7 @@ class _GuestPageState extends State<GuestPage> {
                                           type: PageTransitionType.fade,
                                           child: const FeedsScreen(
                                               target: 'All Products',
-                                              itemSearch: 'false')));
+                                              itemSearch: 'false', store: '',)));
                                 },
                                 icon: Icons.arrow_forward),
                         ],

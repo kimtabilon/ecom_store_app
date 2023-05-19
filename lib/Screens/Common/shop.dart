@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -22,11 +24,39 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
 
-  Widget BannerWidget(image,label, bg) {
+  Widget BannerWidget(image,label, bg,desc) {
     return Column(
       children: [
         const SizedBox(height: 20,),
-        Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
+
+
+        Container(
+          width: double.infinity,
+          decoration:  BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/shop_"+image+".png"),
+                fit: BoxFit.cover),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                customTextStores(
+                  description: desc,
+                  context: context,
+                  textAlign: TextAlign.start,
+                  align: Alignment.centerLeft,
+                  axis: CrossAxisAlignment.start,
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +74,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     context,
                     PageTransition(
                       type: PageTransitionType.fade,
-                      child: CategoryFeedsScreen(target: label,itemSearch: 'false'),
+                      child: CategoryFeedsScreen(target: label,itemSearch: 'false', store: '',),
                     ),
                   );
                 },
@@ -124,7 +154,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                         type: PageTransitionType.fade,
                                         child: const FeedsScreen(
                                             target: 'All Products',
-                                            itemSearch: 'false')));
+                                            itemSearch: 'false', store: '',)));
                               },
                               icon: Icons.arrow_forward),
 
@@ -151,14 +181,16 @@ class _ShopScreenState extends State<ShopScreen> {
                           return FeedsGridWidget(productsList: snapshot.data!);
                         })),
                     const Divider(color: Colors.white10),
-                    BannerWidget('printers','PRINTERS',const Color.fromRGBO(255,165,0,1)),
-                    BannerWidget('laptops','LAPTOPS',const Color.fromRGBO(242,0,0,1)),
-                    BannerWidget('desktops','DESKTOP',const Color.fromRGBO(255,0,153,1)),
-                    BannerWidget('monitors','MONITORS',const Color.fromRGBO(0,106,166,1)),
-                    BannerWidget('scanners','SCANNERS',const Color.fromRGBO(0,166,136,1)),
-                    BannerWidget('projectors','PROJECTORS',const Color.fromRGBO(36,0,255,1)),
-                    BannerWidget('audio','AUDIO',const Color.fromRGBO(255,230,0,1)),
-                    BannerWidget('peripherals','PERIPHERALS',const Color.fromRGBO(235,0,255,1)),
+
+                    BannerWidget('printers','PRINTERS',const Color.fromRGBO(255,165,0,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                    BannerWidget('laptops','LAPTOPS',const Color.fromRGBO(242,0,0,1),'From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all.'),
+                    BannerWidget('desktops','DESKTOP',const Color.fromRGBO(255,0,153,1),'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
+                    BannerWidget('monitors','MONITORS',const Color.fromRGBO(0,106,166,1),'Find the perfect Monitor for your needs and budget'),
+                    BannerWidget('scanners','SCANNERS',const Color.fromRGBO(0,166,136,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                    BannerWidget('projectors','PROJECTORS',const Color.fromRGBO(36,0,255,1),'Bring the big screen home with our high-quality projectors'),
+                    BannerWidget('audio','AUDIO',const Color.fromRGBO(255,230,0,1),'Bring the big screen home with our high-quality projectors'),
+                    BannerWidget('peripherals','PERIPHERALS',const Color.fromRGBO(235,0,255,1),'Discover the latest in ergonomic solutions for improved productivity'),
+
                   ]),
                 ),
               )
@@ -170,5 +202,44 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
       ),
     );
+  }
+}
+
+Widget customTextStores(
+    {String? title,
+      TextAlign? textAlign,
+      AlignmentGeometry? align,
+      String? description,
+      required CrossAxisAlignment axis,
+      BuildContext? context}) {
+  return Column(
+    crossAxisAlignment: axis,
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          alignment: align,
+          width: 200,
+          child: Text(
+            description!,
+            textAlign: textAlign,
+            textScaleFactor: ScaleSize.textScaleFactor(context!),
+            style: const TextStyle(
+              fontSize: 12,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 1400) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
   }
 }

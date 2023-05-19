@@ -66,7 +66,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              FeedsScreen(target: str, itemSearch: 'true')
+                              FeedsScreen(target: str, itemSearch: 'true', store: '',)
                       ),
                     );
                   },
@@ -137,7 +137,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              FeedsScreen(target: str, itemSearch: 'true')
+                              FeedsScreen(target: str, itemSearch: 'true', store: '',)
                       ),
                     );
                   },

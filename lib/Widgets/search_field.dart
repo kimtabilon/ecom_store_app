@@ -70,7 +70,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                           MaterialPageRoute(
                               builder: (context) => FeedsScreen(
                                   target: _searchText.text.trim(),
-                                  itemSearch: 'true')),
+                                  itemSearch: 'true', store: '',)),
                         );
                       },
                     ),
@@ -84,7 +84,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                 MaterialPageRoute(
                     builder: (context) => FeedsScreen(
                         target: _searchText.text.trim(),
-                        itemSearch: 'true')),
+                        itemSearch: 'true', store: '',)),
               );
             },
           ),

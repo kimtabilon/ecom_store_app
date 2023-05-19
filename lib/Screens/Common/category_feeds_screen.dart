@@ -13,8 +13,8 @@ import '../../Widgets/guest_bottom_appbar.dart';
 import 'guest_page.dart';
 
 class CategoryFeedsScreen extends StatefulWidget {
-  const CategoryFeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
-
+  const CategoryFeedsScreen({Key? key, required this.target,required this.store, required this.itemSearch}) : super(key: key);
+  final String store;
   final String target;
   final String itemSearch;
   @override
@@ -65,6 +65,7 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
       );
     }else{
       productsList = await ProductProvider.getAllProducts(
+        store: widget.store,
         target: widget.target,
         limit: limit.toString(),
       );

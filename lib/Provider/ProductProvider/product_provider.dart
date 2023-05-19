@@ -32,7 +32,7 @@ class ProductProvider {
   }
 
   static Future<List<dynamic>> getData(
-      {required String target, String? limit}) async {
+      {required String target, String? limit, String? store}) async {
     try {
       var uri = Uri.https(
           AppUrl.consoleUrl,
@@ -40,7 +40,20 @@ class ProductProvider {
           {
             "offset": "0",
             "limit": limit,
+            "category": '',
+            "store": store,
           });
+
+      // var uri = Uri.https(
+      //     AppUrl.consoleUrl,
+      //     "api/v1/products/$target/$limit/0/null/$store",
+      //     {
+      //       "offset": "0",
+      //       "limit": limit,
+      //       "category": '',
+      //       "store": store,
+      //     });
+
 
       var response = await http.get(uri);
       var data = jsonDecode(response.body);
@@ -117,9 +130,10 @@ class ProductProvider {
 
 
   static Future<List<ProductModel>> getAllProducts(
-      {required String target, required String limit}) async {
+      {required String target, required String limit,String? store}) async {
     List temp = await getData(
       target: target,
+      store: store,
       limit: limit,
     );
     return ProductModel.productsFromSnapshot(temp);
@@ -237,6 +251,17 @@ class ProductProvider {
     );
     return ProductModel.productsFromSnapshot(temp);
   }
+
+  static Future<List<ProductModel>> getBestSellerProductsStore(
+      {required String store,required String limit}) async {
+    List temp = await getData(
+      target: "best-seller-store",
+      limit: limit,
+      store: store,
+    );
+    return ProductModel.productsFromSnapshot(temp);
+  }
+
 
 
   static Future<List> getAllCategories() async {
