@@ -18,10 +18,21 @@ class CategoriesScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     List pages = [
-      { 'title': 'Help Center', 'widget': const HelpCenterPage() },
-      { 'title': 'About Us', 'widget': const AboutUsPage() },
-      { 'title': 'EBP Guarantee', 'widget': const EbpGuaranteePage() },
-      { 'title': 'Job Opportunities', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'HELP CENTER', 'widget': const HelpCenterPage() },
+      { 'title': 'ABOUT US', 'widget': const AboutUsPage() },
+      { 'title': 'EBP GUARANTEE', 'widget': const EbpGuaranteePage() },
+      { 'title': 'JOB OPPORTUNITIES', 'widget': const JobOpportunitiesPage() },
+    ];
+
+    List stores = [
+      { 'title': 'HP', 'widget': const HelpCenterPage() },
+      { 'title': 'BROTHER', 'widget': const AboutUsPage() },
+      { 'title': 'LEXMARK', 'widget': const EbpGuaranteePage() },
+      { 'title': 'LG', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'EPSON', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'CANON', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'XEROX', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'LENOVO', 'widget': const JobOpportunitiesPage() },
     ];
 
     return Scaffold(
@@ -49,25 +60,22 @@ class CategoriesScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Wrap(
                 children: [
-                  Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-                        child: Text(
-                          "Catalog",
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.shopping_cart),
+                        Text(
+                          "Shop",
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                    height: 1,
-                    color: Colors.black,
-                  ),
+                  const Divider(),
                   Padding(
                     padding: EdgeInsets.only(left: 15),
                     child: ListView.builder(
@@ -107,12 +115,50 @@ class CategoriesScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsetsDirectional.only(start: 15.0, end: 15.0),
-                    height: 1,
-                    color: Colors.black,
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.shopping_basket),
+                        Text(
+                          "Stores",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    ),
                   ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListView.builder(
+                        primary: false,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: stores.length,
+                        itemBuilder: (context, index) {
+                          var store = stores[index];
+                          return ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: store['widget'],
+                                ),
+                              );
+                            },
+                            title: Text(store['title'],),
+                            trailing: const Icon(Icons.arrow_forward),
+                          );
+                        }
 
+                    ),
+                  ),
+                  const Divider(),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListView.builder(
@@ -138,37 +184,6 @@ class CategoriesScreen extends StatelessWidget {
                         }
 
                     ),
-                    /*child: Column(
-                      children: [
-                        ListTile(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const AboutUsPage(),
-                              ),
-                            );
-                          },
-                          title: const Text('About Us', style: TextStyle(fontWeight: FontWeight.bold),),
-                          trailing: const Icon(Icons.arrow_forward),
-                        ),
-                        ListTile(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: const HelpCenterPage(),
-                              ),
-                            );
-                          },
-                          title: const Text('Help Center', style: TextStyle(fontWeight: FontWeight.bold),),
-                          trailing: const Icon(Icons.arrow_forward),
-                        ),
-
-                      ],
-                    ),*/
                   ),
 
                 ],

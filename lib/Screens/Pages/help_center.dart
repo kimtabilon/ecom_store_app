@@ -41,7 +41,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
                         Container(
@@ -63,7 +63,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                         const Text("What do you want to know more about?", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                         GridView.builder(
                             shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: list.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
