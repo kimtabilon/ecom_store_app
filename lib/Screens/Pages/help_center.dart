@@ -33,7 +33,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
       },
       child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(60.0),
+              preferredSize: const Size.fromHeight(60.0),
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(

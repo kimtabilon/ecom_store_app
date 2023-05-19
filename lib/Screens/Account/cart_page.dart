@@ -7,6 +7,8 @@ import '../../Model/cart_model.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Provider/StoreProvider/guest_cart_provider.dart';
+import '../../Widgets/appbar_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 import 'Local_widget/cart_item_list.dart';
 
 class CartPage extends StatefulWidget {
@@ -22,37 +24,15 @@ class _CartPageState extends State<CartPage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: size.width > 600
-            ? const Text(
-                'Shopping Cart',
-                style: TextStyle(
-                  fontSize: 35
-                ),
-              )
-            : const Text('Shopping Cart'),
-        centerTitle: true,
-        leading: size.width > 600
-            ? IconButton(
-          icon: Icon(
-              Icons.arrow_back,
-            size: 35,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const HomePage()
-                  )
-              );
-            },
-          )
-            : const BackButton(),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppbarWidget(title: '', leadingButton: '',)
       ),
       body: Container(
           padding: const EdgeInsets.all(20),
           child: Column(children: [
+            const Text('SHOPPING CART', style: TextStyle(fontWeight: FontWeight.bold),),
+            const SizedBox(height: 15,),
             FutureBuilder<List<CartItem>>(
                 future: CartProvider.getCartItems(context),
                 builder: (context, snapshot) {
@@ -74,45 +54,7 @@ class _CartPageState extends State<CartPage> {
                   // print(snapshot.data);
                   return CartItemListWidget(itemList: snapshot.data!);
                 }),
-            /*FutureBuilder<List<CartItem>>(
-                future: CartProvider.getCartItems(context),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child:
-                      Text("An error occured ${snapshot.error}"),
-                    );
-                  } else if (snapshot.data!.length == 0) {
-                    return const Center(
-                      child: Text(""),
-                    );
-                  }
-                  // print(snapshot.data);
-                  return Expanded(
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
-                              );
-                            },
-                            child: const Text('Checkout'),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromRGBO(16,69,114,1),
-                                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                                textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.normal)
-                            ),
-                          )
-                      )
-                  );
-                }),*/
+
             Consumer<CartProvider>(
             builder: (context, cart, child) {
               return cart.cart_total_items != '' && cart.cart_total_items != '0'
@@ -145,13 +87,9 @@ class _CartPageState extends State<CartPage> {
           ]
           )
       ),
-      /*floatingActionButton: FloatingActionButton(
-        mini: true,
-        onPressed: () {
-          PageNavigator(ctx: context).nextPage(page: const CreateCartPage());
-        },
-        child: const Icon(Icons.add_shopping_cart),
-      ),*/
+      bottomNavigationBar: const BottomAppBar(
+        child: GuestBottomAppbarWidget(),
+      ),
     );
   }
 }

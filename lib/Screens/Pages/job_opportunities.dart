@@ -22,7 +22,7 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
       },
       child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(60.0),
+              preferredSize: const Size.fromHeight(60.0),
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
@@ -33,32 +33,32 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
                 // const SizedBox(height: 18, ),
                 Expanded(
                   child: SingleChildScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.fromLTRB(100, 20, 10, 20),
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/images/job_opportunities_b1.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Column(
-                                children: const [
-                                  Text("Grow Your Career with EBP", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
-                                  Text("Explore available job opportunities that suit your skills and experience.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-                                ]
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.fromLTRB(100, 20, 10, 20),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/job_opportunities_b1.png"),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          const SizedBox(height: 20,),
-                          const Text("Join Our Team", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
-                          const SizedBox(height: 20,),
-                          const Text("EcommerceBusinessPrime, Inc. is looking for people to join the team who are as excited as we are to help build, control, and maintain one of today’s fastest growing e-commerce platform. Grow your career with us as we partner with the most trusted brands in tech in delivering top quality products and customer service.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
-                          const SizedBox(height: 20,),
-                        ],
-                      )
+                          child: Column(
+                              children: const [
+                                Text("Grow Your Career with EBP", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+                                Text("Explore available job opportunities that suit your skills and experience.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                              ]
+                          ),
+                        ),
+                        const SizedBox(height: 20,),
+                        const Text("Join Our Team", style: TextStyle(fontSize: 30), textAlign: TextAlign.center,),
+                        const SizedBox(height: 20,),
+                        const Text("EcommerceBusinessPrime, Inc. is looking for people to join the team who are as excited as we are to help build, control, and maintain one of today’s fastest growing e-commerce platform. Grow your career with us as we partner with the most trusted brands in tech in delivering top quality products and customer service.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                        const SizedBox(height: 20,),
+                      ],
+                    )
                   ),
                 )
               ],

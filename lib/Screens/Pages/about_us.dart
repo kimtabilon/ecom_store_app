@@ -61,7 +61,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       },
       child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(60.0),
+              preferredSize: const Size.fromHeight(60.0),
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(

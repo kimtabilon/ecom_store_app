@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../Provider/Database/db_provider.dart';
+import '../../Widgets/appbar_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 import 'login.dart';
 import '../Account/home_page.dart';
 import '../../Utils/routers.dart';
@@ -21,18 +23,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(16,69,114,1),
-        title: const Text('Customer Account',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 20
-          ),
-        ),
-        centerTitle: true,
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppbarWidget(title: '', leadingButton: '',)
       ),
       body: const Center(
         child: CircularProgressIndicator(),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        child: GuestBottomAppbarWidget(),
       ),
     );
   }

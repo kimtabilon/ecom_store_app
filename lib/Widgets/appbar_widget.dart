@@ -40,30 +40,12 @@ class AppbarWidget extends StatelessWidget {
       ),
       title: Text(title!),
       leadingWidth: leadingButton=='' ? 140 : 30,
-      actions: [
-        InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  child: const SplashScreen(),
-                ),
-              );
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(
-                Icons.person,
-                size: 28,
-                color: Colors.lightGreen,
-              ),
-            )),
-        const Padding(
+      actions: const [
+        Padding(
           padding: EdgeInsets.all(8.0),
           child: HelpDropdown(),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(8.0),
           child: CartIconWidget(),
         ),
