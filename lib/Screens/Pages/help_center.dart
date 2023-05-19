@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
+import '../../Widgets/search_field.dart';
 import 'help_center_form.dart';
 
 class HelpCenterPage extends StatefulWidget {
@@ -39,6 +40,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                const SearchFieldWidget(),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),

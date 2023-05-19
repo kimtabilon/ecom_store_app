@@ -3,6 +3,7 @@ import '../../Widgets/appbar_widget.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../Widgets/guest_bottom_appbar.dart';
+import '../../Widgets/search_field.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                // const SearchFieldWidget(),
+                const SearchFieldWidget(),
                 // const SizedBox(height: 18, ),
                 Expanded(
                   child: SingleChildScrollView(

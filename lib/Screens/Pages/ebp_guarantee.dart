@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
+import '../../Widgets/search_field.dart';
 
 class EbpGuaranteePage extends StatefulWidget {
   const EbpGuaranteePage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _EbpGuaranteePageState extends State<EbpGuaranteePage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                // const SearchFieldWidget(),
+                const SearchFieldWidget(),
                 // const SizedBox(height: 18, ),
                 Expanded(
                   child: SingleChildScrollView(
