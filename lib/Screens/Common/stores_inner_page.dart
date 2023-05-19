@@ -464,3 +464,34 @@ class ScaleSize {
     return max(1, min(val, maxTextScaleFactor));
   }
 }
+
+Widget customTextStoreBanner(
+    {
+      TextAlign? textAlign,
+      AlignmentGeometry? align,
+      String? description,
+      required CrossAxisAlignment axis,
+      BuildContext? context}) {
+  return Column(
+    crossAxisAlignment: axis,
+    children: [
+
+      Padding(
+        padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+        child: Container(
+          alignment: align,
+          child: Text(
+            description!,
+            textAlign: textAlign,
+            textScaleFactor: ScaleSize.textScaleFactor(context!),
+            style: const TextStyle(
+              fontSize: 12,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
