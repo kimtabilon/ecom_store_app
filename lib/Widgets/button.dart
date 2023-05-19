@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecom_store_app/Widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import '../Styles/colors.dart';
@@ -61,4 +63,12 @@ Widget visitStoreButton(
       ),
     ),
   );
+}
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 1400) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
+  }
 }
