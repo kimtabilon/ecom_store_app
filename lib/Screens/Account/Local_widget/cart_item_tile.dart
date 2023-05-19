@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../../Model/cart_model.dart';
 import '../../../Model/product_model.dart';
+import '../../../Provider/ProductProvider/product_provider.dart';
 import '../../../Provider/StoreProvider/cart_provider.dart';
 import '../../Common/product_details.dart';
 import '../../Common/product_view.dart';
@@ -67,18 +68,23 @@ class _CartItemTileWidgetState extends State<CartItemTileWidget> {
         ],
       ),
       trailing: Text(
-        "\$ s${widget.item.price!}",
+        "\$ ${widget.item.price!}",
         style: const TextStyle(fontSize: 25 ),
       ),
       leading: CartItemImageWidget(sku: widget.item.sku!),
-      onTap: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            child: ProductView(product: ProductModel(), id: widget.item.id.toString(),)
-          ),
-        );
+      onTap: () async {
+        try {
+          ProductModel product = await ProductProvider.getProductById(id: widget.item.sku!);
+          Navigator.push(
+            context,
+            PageTransition(
+                type: PageTransitionType.fade,
+                child: ProductView(product: product,)
+            ),
+          );
+        } catch (error) {
+
+        }
       },
       // style: ListTitleStyle(),
     )) : SizedBox(height: 1,);

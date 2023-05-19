@@ -1,12 +1,12 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
 import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
-import '../../Widgets/bottom_appbar.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/home_banner_widget.dart';
@@ -26,6 +26,7 @@ class _GuestPageState extends State<GuestPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    DatabaseProvider().saveData('activeBottomAppbar','0');
 
     return GestureDetector(
       onTap: () {
@@ -33,7 +34,7 @@ class _GuestPageState extends State<GuestPage> {
       },
       child: Scaffold(
           appBar: PreferredSize(
-              preferredSize: Size.fromHeight(60.0),
+              preferredSize: const Size.fromHeight(60.0),
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Column(
@@ -90,19 +91,20 @@ class _GuestPageState extends State<GuestPage> {
                           }
                           return FeedsGridWidget(productsList: snapshot.data!);
                         })),
-                    const Divider(color: Colors.white10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 20.0),
-                      child: Row(
-                        children: [
-                            const Text(
-                              "Lexmark Go Line",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
+
+                      const Divider(color: Colors.white10),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 20.0),
+                        child: Row(
+                          children: [
+                              const Text(
+                                "Lexmark Go Line",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
                             const Spacer(),
                             AppBarIcons(
                                 function: () {
@@ -136,7 +138,6 @@ class _GuestPageState extends State<GuestPage> {
                             );
                           }
                           return FeedsGridWidget(productsList: snapshot.data!);
-
                         }))
                   ]),
                 ),

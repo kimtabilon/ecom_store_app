@@ -12,26 +12,29 @@ class ContentDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichTextWidget("SKU", product!.sku),
-            RichTextWidget("Manufacturer", product!.manufacturer),
-            RichTextWidget("UPC", product!.upc),
-            RichTextWidget("Product Condition", product!.condition),
-            RichTextWidget("Availability", product!.instock),
-          ],
-        ),
-        Image.network(
-          product.manuflogo!.replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
-          fit: BoxFit.contain,
-          width: 100,
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichTextWidget("SKU", product!.sku),
+              RichTextWidget("Manufacturer", product!.manufacturer),
+              RichTextWidget("UPC", product!.upc),
+              RichTextWidget("Product Condition", product!.condition),
+              RichTextWidget("Availability", product!.instock),
+            ],
+          ),
+          Image.network(
+            product.manuflogo!.replaceAll('/stores/mobile-icons/icon', '/stores/logo'),
+            fit: BoxFit.contain,
+            width: 100,
+          )
+        ],
+      ),
     );
   }
 
