@@ -65,6 +65,47 @@ Widget visitStoreButton(
   );
 }
 
+
+Widget shopNowButton(
+    {VoidCallback? tap,
+      String? text,
+      BuildContext? context}) {
+  return Padding(
+    padding: const EdgeInsets.all(3.0),
+    child: Container(
+      // width: 150.0,
+      child: OutlinedButton(
+        onPressed: tap,
+        style: OutlinedButton.styleFrom(
+          // padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          backgroundColor: Color(0XFF212845),
+          foregroundColor: Colors.white,
+          // side:  const BorderSide(
+          //     color: Colors.white,
+          //     width: 1.0,
+          //     style: BorderStyle.solid),
+          shape:
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0)
+          ),
+        ), child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(text!,
+              textScaleFactor: ScaleSize.textScaleFactor(context!),
+              style: const TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 8,
+              )),
+            Icon(Icons.arrow_right_alt_outlined),
+          ],
+        ),
+
+      ),
+    ),
+  );
+}
+
 class ScaleSize {
   static double textScaleFactor(BuildContext context, {double maxTextScaleFactor = 2}) {
     final width = MediaQuery.of(context).size.width;
