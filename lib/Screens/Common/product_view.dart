@@ -78,7 +78,7 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
                 itemBuilder: (BuildContext context, int index) {
                   return Image.network(
                     widget.product.images![index].toString(),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.contain,
                     width: double.infinity,
                   );
                 },
