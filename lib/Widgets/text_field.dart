@@ -63,7 +63,7 @@ Widget customTextStores(
       ),
       Container(
         alignment: align,
-        width: 180,
+        width: 200,
         child: Text(
           description!,
           textAlign: textAlign,
@@ -79,6 +79,38 @@ Widget customTextStores(
   );
 }
 
+
+
+Widget customTextStoreBanner(
+    {
+      TextAlign? textAlign,
+      AlignmentGeometry? align,
+      String? description,
+      required CrossAxisAlignment axis,
+      BuildContext? context}) {
+  return Column(
+    crossAxisAlignment: axis,
+    children: [
+
+      Padding(
+        padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+        child: Container(
+          alignment: align,
+          child: Text(
+            description!,
+            textAlign: textAlign,
+            textScaleFactor: ScaleSize.textScaleFactor(context!),
+            style: const TextStyle(
+              fontSize: 12,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
 
 
 class ScaleSize {
