@@ -63,7 +63,7 @@ class CategoryWidget extends StatelessWidget {
                           PageTransition(
                             type: PageTransitionType.fade,
                             child: cat['sub'].length==0
-                                ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false')
+                                ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',)
                                 : CategoryWidget(sub: cat['sub'], name: cat['name']),
                           ),
                         );
@@ -74,7 +74,7 @@ class CategoryWidget extends StatelessWidget {
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,
-                          child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false'),
+                          child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',),
                         ),
                       );
                     },

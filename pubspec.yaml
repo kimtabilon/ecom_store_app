@@ -127,6 +127,14 @@ flutter:
     - assets/images/stores/xerox_banner.png
     - assets/images/stores/xerox_logo.png
     - assets/images/stores/xerox_store_banner.png
+    - assets/images/stores/shop_page_audio.png
+    - assets/images/stores/shop_page_desktops.png
+    - assets/images/stores/shop_page_laptops.png
+    - assets/images/stores/shop_page_monitors.png
+    - assets/images/stores/shop_page_peripherals.png
+    - assets/images/stores/shop_page_printer.png
+    - assets/images/stores/shop_page_projectors.png
+    - assets/images/stores/shoppage_scanners.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

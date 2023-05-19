@@ -10,8 +10,8 @@ import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/search_field.dart';
 
 class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({Key? key, required this.target, required this.itemSearch}) : super(key: key);
-
+  const FeedsScreen({Key? key, required this.target,required this.store, required this.itemSearch}) : super(key: key);
+  final String store;
   final String target;
   final String itemSearch;
   @override
@@ -59,6 +59,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
       );
     }else{
       productsList = await ProductProvider.getAllProducts(
+        store: widget.store,
         target: widget.target,
         limit: limit.toString(),
       );

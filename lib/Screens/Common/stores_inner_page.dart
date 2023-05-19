@@ -17,16 +17,117 @@ import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/home_banner_widget.dart';
 import '../../Widgets/search_field.dart';
 import '../../Widgets/text_field.dart';
+import 'category_feeds_screen.dart';
 
 
 class StoresInnerPage extends StatefulWidget {
-  const StoresInnerPage({Key? key}) : super(key: key);
+  final String brand;
+  final String description;
+  final String imageName;
+  final String logoName;
+  final String logoDesc;
+  final String keyword;
+  const StoresInnerPage(
+      this.brand,
+      this.description,
+      this.imageName,
+      this.logoName,
+      this.logoDesc,
+      this.keyword,
+      {Key? key}) : super(key: key);
 
   @override
   State<StoresInnerPage> createState() => _StoresInnerPageState();
 }
 
 class _StoresInnerPageState extends State<StoresInnerPage> {
+
+  Widget BannerWidget(image,label, bg,desc) {
+    return Column(
+      children: [
+        const SizedBox(height: 20,),
+
+    Container(
+      width: double.infinity,
+    decoration:  BoxDecoration(
+    image: DecorationImage(
+    image: AssetImage("assets/images/stores/"+image+".png"),
+    fit: BoxFit.cover),
+    ),
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            customTextStores(
+              description: desc,
+              context: context,
+              textAlign: TextAlign.start,
+              align: Alignment.centerLeft,
+              axis: CrossAxisAlignment.start,
+            ),
+          ],
+        ),
+      ),
+    ),
+
+        // Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(label,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18
+                ),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: CategoryFeedsScreen(target: label,itemSearch: 'false', store: widget.keyword,),
+                    ),
+                  );
+                },
+                child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
+              )
+            ],
+          ),
+          color: bg,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        ),
+        const SizedBox(height: 20,),
+        FutureBuilder<List<ProductModel>>(
+            future: ProductProvider.getAllProducts(store:widget.keyword,target:label ,limit: "4"),
+            builder: ((context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: LinearProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child:
+                  Text("An error occured ${snapshot.error}"),
+                );
+              } else if (snapshot.data == null) {
+                return const Center(
+                  child: Text("No products has been added yet"),
+                );
+              }
+              return FeedsGridWidget(productsList: snapshot.data!);
+
+            })),
+      ],
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +155,9 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         clipBehavior: Clip.none,
                         children: <Widget>[
                           Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/hp_store_banner.png"),
+                                  image: AssetImage("assets/images/stores/"+widget.imageName+".png"),
                                   fit: BoxFit.cover),
                             ),
                             child: Padding(
@@ -67,7 +168,8 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   customTextStoreBanner(
-                                    description: "Welcome to HP Store. Build your ideal with workstation at home or office with HP's high-end line of computers and the latest advancements in business and technology.",
+                                    // description: "Welcome to HP Store. Build your ideal with workstation at home or office with HP's high-end line of computers and the latest advancements in business and technology.",
+                                     description: widget.description,
                                     context: context,
                                     textAlign: TextAlign.center,
                                     align: Alignment.center,
@@ -89,9 +191,9 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                                     maxWidth:  size.width * .18,
                                   ),
                                   child: Container(
-                                    decoration: const BoxDecoration(color: Colors.white,
+                                    decoration: BoxDecoration(color: Colors.white,
                                         image:DecorationImage(
-                                            image: AssetImage("assets/images/stores/hp_logo.png"),
+                                            image: AssetImage("assets/images/stores/"+widget.logoName+".png"),
                                             fit: BoxFit.cover),),
                                   ),
                                 ),
@@ -113,17 +215,22 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("HP STORE",
+                                          Text(widget.brand,
                                               textScaleFactor: ScaleSize.textScaleFactor(context!),
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                               )),
                                           const SizedBox(height: 5),
-                                          Text("Shop now and enjoy our limited-time offers and exclusive deals!.",
+                                          // Text("Shop now and enjoy our limited-time offers and exclusive deals!.",
+                                          //     textScaleFactor: ScaleSize.textScaleFactor(context!),
+                                          //     style: const TextStyle(
+                                          //       fontSize: 9,
+                                          //     )),
+                                          Text(widget.logoDesc,
                                               textScaleFactor: ScaleSize.textScaleFactor(context!),
                                               style: const TextStyle(
-                                                fontSize: 9,
+                                                fontSize: 8,
                                               )),
                                         ],
                                       ),
@@ -147,31 +254,31 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                       child: Row(
                         children: [
 
-                            const Text(
-                              "HP Products",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18,
-                              ),
+                          const Text(
+                            "BEST SELLER",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
                             ),
-                            const Spacer(),
-                            AppBarIcons(
-                                function: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const FeedsScreen(
-                                              target: 'All Products',
-                                              itemSearch: 'false')));
-                                },
-                                icon: Icons.arrow_forward),
+                          ),
+                          const Spacer(),
+                          AppBarIcons(
+                              function: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child:  FeedsScreen(
+                                            target: 'All Products',
+                                            itemSearch: 'false', store: widget.keyword ,)));
+                              },
+                              icon: Icons.arrow_forward),
 
                         ],
                       ),
                     ),
                     FutureBuilder<List<ProductModel>>(
-                        future: ProductProvider.getOnSaleProducts(limit: "4"),
+                        future: ProductProvider.getBestSellerProductsStore(store:widget.keyword,limit: "4"),
                         builder: ((context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return const Center(
@@ -180,7 +287,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                           } else if (snapshot.hasError) {
                             return Center(
                               child:
-                                  Text("An error occured ${snapshot.error}"),
+                              Text("An error occured ${snapshot.error}"),
                             );
                           } else if (snapshot.data == null) {
                             return const Center(
@@ -189,260 +296,15 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                           }
                           return FeedsGridWidget(productsList: snapshot.data!);
                         })),
-
-                      const Divider(color: Colors.white10),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 20.0),
-                        child: Row(
-                          children: [
-                              const Text(
-                                "Lexmark Go Line",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            const Spacer(),
-                            AppBarIcons(
-                                function: () {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const FeedsScreen(
-                                              target: 'All Products',
-                                              itemSearch: 'false')));
-                                },
-                                icon: Icons.arrow_forward),
-                        ],
-                      ),
-                    ),
-                    FutureBuilder<List<ProductModel>>(
-                        future: ProductProvider.getBestSellerProducts(limit: "4"),
-                        builder: ((context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child:
-                                  Text("An error occured ${snapshot.error}"),
-                            );
-                          } else if (snapshot.data == null) {
-                            return const Center(
-                              child: Text("No products has been added yet"),
-                            );
-                          }
-                          return FeedsGridWidget(productsList: snapshot.data!);
-                        })),
-
-                    // Column(
-                    //   children: [
-                    //     Text("Trusted by Top Brands",
-                    //         textScaleFactor: ScaleSize.textScaleFactor(context!),
-                    //         style: const TextStyle(
-                    //           fontSize: 20,
-                    //           fontWeight: FontWeight.bold,
-                    //         )),
-                    //     StaggeredGrid.count(
-                    //       crossAxisCount: 2,
-                    //       mainAxisSpacing: 2,
-                    //       crossAxisSpacing: 2,
-                    //       children:   [
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         StaggeredGridTile.count(
-                    //           crossAxisCellCount: 1,
-                    //           mainAxisCellCount: 1,
-                    //           child: Padding(
-                    //             padding: const EdgeInsets.all(5.0),
-                    //             child: Container(
-                    //               decoration: const BoxDecoration(
-                    //                 image: DecorationImage(
-                    //                     image: AssetImage("images/stores/HP_banner.png"),
-                    //                     fit: BoxFit.cover),
-                    //               ),
-                    //               child: Padding(
-                    //                 padding: EdgeInsets.all(8.0),
-                    //                 child: Column(
-                    //                   crossAxisAlignment: CrossAxisAlignment.center,
-                    //                   mainAxisSize: MainAxisSize.max,
-                    //                   mainAxisAlignment: MainAxisAlignment.end,
-                    //                   children: [
-                    //                     shopNowButton(
-                    //                       text: 'SHOP NOW',
-                    //                       tap: () {
-                    //                         PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
-                    //                       },
-                    //                       context: context,
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // )
-
-
+                    const Divider(color: Colors.white10),
+                    BannerWidget('shop_page_printer','PRINTERS',const Color.fromRGBO(255,165,0,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                    BannerWidget('shop_page_laptops','LAPTOPS',const Color.fromRGBO(242,0,0,1),'From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all.'),
+                    BannerWidget('shop_page_desktops','DESKTOP',const Color.fromRGBO(255,0,153,1),'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
+                    BannerWidget('shop_page_monitors','MONITORS',const Color.fromRGBO(0,106,166,1),'Find the perfect Monitor for your needs and budget'),
+                    BannerWidget('shoppage_scanners','SCANNERS',const Color.fromRGBO(0,166,136,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                    BannerWidget('shop_page_projectors','PROJECTORS',const Color.fromRGBO(36,0,255,1),'Bring the big screen home with our high-quality projectors'),
+                    BannerWidget('shop_page_audio','AUDIO',const Color.fromRGBO(255,230,0,1),'Bring the big screen home with our high-quality projectors'),
+                    BannerWidget('shop_page_peripherals','PERIPHERALS',const Color.fromRGBO(235,0,255,1),'Discover the latest in ergonomic solutions for improved productivity'),
 
                   ]),
                 ),
@@ -480,6 +342,38 @@ Widget customTextStoreBanner(
         padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
         child: Container(
           alignment: align,
+          child: Text(
+            description!,
+            textAlign: textAlign,
+            textScaleFactor: ScaleSize.textScaleFactor(context!),
+            style: const TextStyle(
+              fontSize: 12,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+
+Widget customTextStores(
+    {String? title,
+      TextAlign? textAlign,
+      AlignmentGeometry? align,
+      String? description,
+      required CrossAxisAlignment axis,
+      BuildContext? context}) {
+  return Column(
+    crossAxisAlignment: axis,
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          alignment: align,
+          width: 200,
           child: Text(
             description!,
             textAlign: textAlign,
