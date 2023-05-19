@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:ecom_store_app/Screens/Common/stores_inner_page.dart';
 import 'package:ecom_store_app/Styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -84,7 +85,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -123,7 +124,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -162,7 +163,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                           },
                                         context: context,
                                       ),
@@ -201,7 +202,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -240,7 +241,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -279,7 +280,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -318,7 +319,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),
@@ -357,7 +358,7 @@ class _StorePageState extends State<StorePage> {
                                       visitStoreButton(
                                         text: 'VISIT STORE',
                                         tap: () {
-                                          PageNavigator(ctx: context).nextPage(page: const GuestPage());
+                                          PageNavigator(ctx: context).nextPage(page: const StoresInnerPage());
                                         },
                                         context: context,
                                       ),

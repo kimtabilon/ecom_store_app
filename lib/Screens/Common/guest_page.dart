@@ -43,7 +43,22 @@ class _GuestPageState extends State<GuestPage> {
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(children: [
-
+                    SizedBox(
+                      height: size.height * 0.25,
+                      child: Swiper(
+                        itemCount: 3,
+                        itemBuilder: (ctx, index) {
+                          return HomeBannerWidget(i: index);
+                        },
+                        autoplay: true,
+                        pagination: const SwiperPagination(
+                            alignment: Alignment.bottomCenter,
+                            builder: DotSwiperPaginationBuilder(
+                                color: Colors.white,
+                                activeColor: Colors.red)),
+                        // control: const SwiperControl(),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
