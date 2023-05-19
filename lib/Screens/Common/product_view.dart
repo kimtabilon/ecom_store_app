@@ -118,7 +118,7 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
                 ContentInfoWidget(product: widget.product),
               ][_tabIndex],
             ),
-            SimilarProductsWidget(product: widget.product,),
+            widget.product.related_products!.isNotEmpty ? SimilarProductsWidget(product: widget.product,) : const SizedBox(width: 1,),
             const SizedBox(height: 200,),
           ],
         ),

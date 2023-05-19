@@ -153,7 +153,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     const Divider(color: Colors.white10),
                     BannerWidget('printers','PRINTERS',const Color.fromRGBO(255,165,0,1)),
                     BannerWidget('laptops','LAPTOPS',const Color.fromRGBO(242,0,0,1)),
-                    BannerWidget('desktops','DESKTOPS',const Color.fromRGBO(255,0,153,1)),
+                    BannerWidget('desktops','DESKTOP',const Color.fromRGBO(255,0,153,1)),
                     BannerWidget('monitors','MONITORS',const Color.fromRGBO(0,106,166,1)),
                     BannerWidget('scanners','SCANNERS',const Color.fromRGBO(0,166,136,1)),
                     BannerWidget('projectors','PROJECTORS',const Color.fromRGBO(36,0,255,1)),
