@@ -133,11 +133,6 @@ class CategoryFeedsWidget extends StatelessWidget {
                                 size: 35,
                               ),
                             ),
-                            // Image.network(
-                            //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                            //   color: Colors.lightGreen,
-                            //   width: 30,
-                            // ),
                           ],
                         ),
                       ] else ...[
@@ -176,11 +171,6 @@ class CategoryFeedsWidget extends StatelessWidget {
                                 color: Colors.lightGreen,
                               ),
                             ),
-                            // Image.network(
-                            //   'https://ecommercebusinessprime.com/pub/media/wysiwyg/V2/stores/mobile-icons/wishlist.png',
-                            //   color: Colors.lightGreen,
-                            //   width: 28,
-                            // ),
                           ],
                         ),
                       ],

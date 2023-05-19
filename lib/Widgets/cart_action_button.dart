@@ -28,6 +28,7 @@ class _CartActionButtonState extends State<CartActionButton> {
   String estimatedDay = "";
   bool locationLoading = false;
   bool isChangeZip = false;
+  bool _isAddingCart = false;
 
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
@@ -36,7 +37,7 @@ class _CartActionButtonState extends State<CartActionButton> {
       Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
       geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
     }catch(e){
-      print(e);
+
     }
 
     List getDays = await ProductProvider.getDelivery(
@@ -71,6 +72,7 @@ class _CartActionButtonState extends State<CartActionButton> {
     super.didChangeDependencies();
   }
 
+  @override
   void initState() {
     _getCurrentLocation();
     super.initState();
@@ -80,237 +82,234 @@ class _CartActionButtonState extends State<CartActionButton> {
     final MyController a = Get.put(MyController());
     final token = DatabaseProvider().getData('token');
 
-    return Container(
-      height: 150,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 10,
-              offset: Offset(0, 3)),
-        ]
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              if (widget.product.sprice != 'null' && widget.product.sprice != '0' && widget.product.sprice != widget.product.price) ...[
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: RichText(
-                    text: TextSpan(
-                        text: 'You Pay: \$' + widget.product.sprice!,
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: '\$' + widget.product.price!,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.lineThrough,
-                                  fontStyle: FontStyle.italic)),
-                        ]),
-                  ),
-                ),
-              ] else ...[
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: RichText(
-                    text: TextSpan(
-                        text: 'You Pay: \$',
-                        style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: widget.product.price,
-                              style: TextStyle(color: Colors.black)),
-                        ]),
-                  ),
-                ),
-              ],
-              locationLoading ?
-              isChangeZip ?
-              Flexible(
-                fit: FlexFit.tight,
-                child: TextField(
-                  controller: _zipText,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      borderSide: BorderSide(width: 0.8),
-                    ),
-                    hintText: "ZIP",
-                    suffixIcon: Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // added line
-                      mainAxisSize: MainAxisSize.min, // added line
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(
-                            Icons.search,
-                            color: Colors.green,
-                          ),
-                          onPressed: () async {
-                            setState(() {
-                              locationLoading = false;
-                              isChangeZip = false;
-                            });
-
-                            List getDays = await ProductProvider.getDelivery(
-                              sku: widget.product.sku!,
-                              qty: widget.product.qty!,
-                              lat: '0',
-                              lng: '0',
-                              state: '0',
-                              postal: _zipText.text.toString(),
-                            );
-
-                            setState(() {
-                              estimatedDay = getDays[0]['date'].toString();
-                              locationLoading = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  onSubmitted: (String str) async {
-
-                    setState(() {
-                      locationLoading = false;
-                      isChangeZip = false;
-                    });
-
-                    List getDays = await ProductProvider.getDelivery(
-                      sku: widget.product.sku!,
-                      qty: widget.product.qty!,
-                      lat: '0',
-                      lng: '0',
-                      state: '0',
-                      postal: _zipText.text.toString(),
-                    );
-                    setState(() {
-                      estimatedDay = getDays[0]['date'].toString();
-                      locationLoading = true;
-                    });
-                  },
-                ),
-              ):
-              Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      RichText(
-                        textAlign: TextAlign.right,
-                        text: TextSpan(
-                          text: "Estimated Delivery Date:\n"+estimatedDay.toString(),
+    return Align(
+      alignment: const Alignment(2, 0.84),
+      child: Container(
+        height: 150,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        decoration: BoxDecoration(
+            color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (widget.product.sprice != 'null' && widget.product.sprice != '0' && widget.product.sprice != widget.product.price) ...[
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: RichText(
+                      text: TextSpan(
+                          text: 'You Pay: \$' + widget.product.sprice!,
                           style: const TextStyle(
                               fontSize: 14,
-                              color: Colors.black
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: '\$' + widget.product.price!,
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontStyle: FontStyle.italic)),
+                          ]),
+                    ),
+                  ),
+                ] else ...[
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: RichText(
+                      text: TextSpan(
+                          text: 'You Pay: \$',
+                          style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: widget.product.price,
+                                style: const TextStyle(color: Colors.black)),
+                          ]),
+                    ),
+                  ),
+                ],
+                locationLoading ?
+                isChangeZip ?
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: TextField(
+                    controller: _zipText,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: const BorderSide(width: 0.8),
+                      ),
+                      hintText: "ZIP",
+                      suffixIcon: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween, // added line
+                        mainAxisSize: MainAxisSize.min, // added line
+                        children: <Widget>[
+                          IconButton(
+                            icon: const Icon(
+                              Icons.search,
+                              color: Colors.green,
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                locationLoading = false;
+                                isChangeZip = false;
+                              });
+
+                              List getDays = await ProductProvider.getDelivery(
+                                sku: widget.product.sku!,
+                                qty: widget.product.qty!,
+                                lat: '0',
+                                lng: '0',
+                                state: '0',
+                                postal: _zipText.text.toString(),
+                              );
+
+                              setState(() {
+                                estimatedDay = getDays[0]['date'].toString();
+                                locationLoading = true;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    onSubmitted: (String str) async {
+
+                      setState(() {
+                        locationLoading = false;
+                        isChangeZip = false;
+                      });
+
+                      List getDays = await ProductProvider.getDelivery(
+                        sku: widget.product.sku!,
+                        qty: widget.product.qty!,
+                        lat: '0',
+                        lng: '0',
+                        state: '0',
+                        postal: _zipText.text.toString(),
+                      );
+                      setState(() {
+                        estimatedDay = getDays[0]['date'].toString();
+                        locationLoading = true;
+                      });
+                    },
+                  ),
+                ):
+                Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        RichText(
+                          textAlign: TextAlign.right,
+                          text: TextSpan(
+                            text: "Estimated Delivery Date:\n"+estimatedDay.toString(),
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black
+                            ),
                           ),
                         ),
+                        RichText(
+                            text: TextSpan(
+                                style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.blueAccent
+                                ),
+                                text: 'Change your Location',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = (){
+                                    setState(() {
+                                      isChangeZip = true;
+                                    });
+                                  }
+                            )
+                        ),
+                      ],
+                    )
+                  ],
+                ): const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.fromLTRB(8, 1, 5, 1),
+                  decoration: const BoxDecoration(
+                    color: Colors.lightGreen,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        bottomLeft: Radius.circular(5)),
+                  ),
+                  child: Row(
+                    children: const [
+                      Text(
+                        'QTY: ',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      RichText(
-                          text: TextSpan(
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.blueAccent
-                              ),
-                              text: 'Change your Location',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = (){
-                                  setState(() {
-                                    isChangeZip = true;
-                                  });
-                                }
-                          )
+                      DropdownQTY(),
+                    ],
+                  ),
+                ),
+                // Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                Flexible(
+                  child: Stack(
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: () async {
+                          setState(() { _isAddingCart=true; });
+                          bool _isAdded = false;
+                          if(token=='') {
+                            _isAdded = await GuestCartProvider.addToCart(widget.product.sku, a.qty.value, context);
+                          } else {
+                            _isAdded = await CartProvider().addToCart(widget.product.sku, a.qty.value, context);
+                          }
+                          if(_isAdded) {
+                            setState(() { _isAddingCart=false; });
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.add_shopping_cart,
+                          color: Colors.white,
+                        ),
+                        label: _isAddingCart
+                          ? const Text(
+                            'Adding...', style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),)
+                          : const Text(
+                            "Add To Cart",
+                            style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                        style: OutlinedButton.styleFrom(
+                            minimumSize: const Size.fromHeight(20),
+                            backgroundColor: Colors.lightGreen,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 13, horizontal: 15),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5)))),
                       ),
                     ],
-                  )
-                ],
-              ): Center(
-                child: CircularProgressIndicator(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(8, 1, 5, 1),
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5),
-                      bottomLeft: Radius.circular(5)),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      'QTY: ',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                    DropdownQTY(),
-                  ],
-                ),
-              ),
-              // Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-              Flexible(
-                child: Stack(
-                  children: [
-                    OutlinedButton.icon(
-                      onPressed: () {
-                        print(token);
-                        if(token=='') {
-                          GuestCartProvider.addToCart(widget.product.sku, a.qty.value, context);
-                        } else {
-                          CartProvider().addToCart(widget.product.sku, a.qty.value, context);
-                        }
-                        print(a.qty.value);
-                      },
-                      icon: const Icon(
-                        Icons.add_shopping_cart,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        "Add To Cart",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                          minimumSize: const Size.fromHeight(20),
-                          backgroundColor: Colors.lightGreen,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 13, horizontal: 15),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5)))),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ],
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
 

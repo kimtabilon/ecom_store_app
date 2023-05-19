@@ -9,6 +9,7 @@ import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_feeds_widget.dart';
 import '../../Widgets/feeds_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 import 'guest_page.dart';
 
 class CategoryFeedsScreen extends StatefulWidget {
@@ -121,6 +122,9 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
               ),
           ],
         ),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        child: GuestBottomAppbarWidget(),
       ),
     );
 

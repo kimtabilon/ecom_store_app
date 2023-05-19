@@ -2,11 +2,7 @@ import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
 
 import '../Provider/Database/db_provider.dart';
-import '../Screens/Account/account_page.dart';
-import '../Screens/Account/cart_page.dart';
-import '../Screens/Account/rewards_page.dart';
 import '../Screens/Authentication/splash.dart';
-import '../Screens/Common/feeds_screen.dart';
 import '../Screens/Common/guest_page.dart';
 import '../Screens/Common/shop.dart';
 import '../Screens/Common/stores_page.dart';
@@ -20,7 +16,21 @@ class GuestBottomAppbarWidget extends StatefulWidget {
 }
 
 class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
+  String _selectedIndex = '0';
 
+  Future<void> getSelectedIndex() async {
+    try {
+      _selectedIndex = await DatabaseProvider().getData('activeBottomAppbar');
+    } catch (error) { }
+
+    setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    getSelectedIndex();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +41,11 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         InkWell(
             onTap: () {
               PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              DatabaseProvider().saveData('activeBottomAppbar','0');
             },
-            child: Padding(
-              padding: EdgeInsets.all(10),
+            child: Container(
+              color: _selectedIndex=='0'||_selectedIndex=='' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
+              padding: const EdgeInsets.all(10),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children:const [
@@ -44,14 +56,13 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
             )
         ),
 
-        // IconButton(icon: Icon(Icons.menu), onPressed: () {},),
-        // IconButton(icon: Icon(Icons.logout), onPressed: () {},),
-
         InkWell(
             onTap: () {
               PageNavigator(ctx: context).nextPage(page: const ShopScreen());
+              DatabaseProvider().saveData('activeBottomAppbar','1');
             },
-            child: Padding(
+            child: Container(
+              color: _selectedIndex=='1' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
               padding: EdgeInsets.all(10),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -65,8 +76,10 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         InkWell(
             onTap: () {
               PageNavigator(ctx: context).nextPage(page: const StorePage());
+              DatabaseProvider().saveData('activeBottomAppbar','2');
             },
-            child: Padding(
+            child: Container(
+              color: _selectedIndex=='2' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
               padding: EdgeInsets.all(10),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -80,13 +93,15 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         InkWell(
             onTap: () {
               PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+              DatabaseProvider().saveData('activeBottomAppbar','3');
             },
-            child: Padding(
+            child: Container(
+              color: _selectedIndex=='3' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
               padding: EdgeInsets.all(10),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children:const [
-                    Icon(Icons.settings_applications_outlined, color: Colors.grey),
+                    Icon(Icons.construction_outlined, color: Colors.grey),
                     Text("Help Center")
                   ]
               ),
@@ -95,9 +110,11 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         InkWell(
             onTap: () {
               PageNavigator(ctx: context).nextPage(page: const SplashScreen());
+              DatabaseProvider().saveData('activeBottomAppbar','4');
             },
-            child: Padding(
-              padding: EdgeInsets.all(10),
+            child: Container(
+              color: _selectedIndex=='4' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
+              padding: const EdgeInsets.all(10),
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children:const [

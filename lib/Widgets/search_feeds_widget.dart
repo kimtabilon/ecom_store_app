@@ -142,7 +142,7 @@ class SearchFeedsWidget extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10,),
-                            const Icon(Icons.heart_broken, color: Colors.lightGreen, size: 40),
+                            const Icon(Icons.favorite, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ] else ...[
@@ -182,7 +182,7 @@ class SearchFeedsWidget extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10,),
-                            const Icon(Icons.heart_broken, color: Colors.lightGreen, size: 40),
+                            const Icon(Icons.favorite, color: Colors.lightGreen, size: 40),
                           ],
                         ),
                       ],

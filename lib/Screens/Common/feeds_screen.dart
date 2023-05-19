@@ -6,6 +6,7 @@ import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/search_field.dart';
 
 class FeedsScreen extends StatefulWidget {
@@ -112,6 +113,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
               const Center(child: CircularProgressIndicator()),
           ],
         ),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        child: GuestBottomAppbarWidget(),
       ),
     );
 

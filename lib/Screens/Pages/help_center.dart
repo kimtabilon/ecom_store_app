@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 import 'help_center_form.dart';
 
 class HelpCenterPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
       child: Scaffold(
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(60.0),
-              child: AppbarWidget(title: '', leadingButton: 'close',)
+              child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -116,7 +117,11 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                 )
               ],
             ),
-          )),
+          ),
+          bottomNavigationBar: const BottomAppBar(
+                child: GuestBottomAppbarWidget(),
+          ),
+      ),
     );
   }
 }

@@ -11,6 +11,7 @@ import '../../Widgets/content_details.dart';
 import '../../Widgets/content_info.dart';
 import '../../Widgets/content_spec.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
+import '../../Widgets/similar_products.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({
@@ -117,114 +118,12 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
                 ContentInfoWidget(product: widget.product),
               ][_tabIndex],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              color: const Color.fromRGBO(244,244,244,1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(' SIMILAR PRODUCTS'),
-                  const SizedBox(height: 10,),
-                  ...widget.product.related_products!.map((item) =>
-                      Card(
-                        child: ListTile(
-                          dense:true,
-                          title: Text(item.sku!, style: const TextStyle(fontWeight: FontWeight.bold),),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RichText(
-                                overflow: TextOverflow.ellipsis,
-                                strutStyle: StrutStyle(fontSize: 12.0),
-                                text: TextSpan(
-                                    style: TextStyle(color: Colors.black),
-                                    text: item.title!),
-                              ),
-                              Text("\$${item.price!}", style: const TextStyle(fontSize: 16),)
-                            ],
-                          ),
-                          trailing: IconButton(
-                              onPressed: () async {
-                                Future<bool> isAdded = CartProvider().addToCart(item.sku!, "1", context);
-                              },
-                              icon: const Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.lightGreen,
-                              )
-                          ),
-                          leading: Image.network(item.images!),
-                          onTap: () async {
-                            try {
-                              ProductModel product = await ProductProvider.getProductById(id: item.sku!);
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: ProductView(product: product,)
-                                ),
-                              );
-                            } catch (error) {
-
-                            }
-
-                          },
-                        ),
-                      )
-                  ).toList(),
-                ],
-              ),
-            ),
-
+            SimilarProductsWidget(product: widget.product,),
             const SizedBox(height: 200,),
-            /*Container(
-              padding: const EdgeInsets.all(15),
-              color: Colors.white,
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20,),
-                  ContentDetailsWidget(product: widget.product,),
-                  const SizedBox(height: 20,),
-                  DefaultTabController(
-                      length: 3, // length of tabs
-                      initialIndex: 0,
-                      child: Column(children: <Widget>[
-                        Container(
-                          color: Colors.grey,
-                          child: const TabBar(
-                            labelColor: Colors.white,
-                            unselectedLabelColor: Colors.black,
-                            indicatorColor: Colors.white,
-                            isScrollable: true,
-                            tabs: [
-                              Tab(icon: Icon(Icons.list), text: 'Description'),
-                              Tab(icon: Icon(Icons.note_alt_outlined), text: 'Specification',),
-                              Tab(icon: Icon(Icons.info_outline), text: 'Information',),
-                            ],
-                          ),
-                        ),
-                        Container(
-                            height: 200,
-                            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 0),
-                            child: TabBarView(
-                              children: <Widget>[
-                                ContentDescWidget(product: widget.product),
-                                ContentSpecWidget(product: widget.product),
-                                ContentInfoWidget(product: widget.product),
-                              ]
-                            )
-                        )
-                      ])
-                  ),
-                  const SizedBox(height: 200,),
-                ],
-              ),
-            )*/
           ],
         ),
         floatingActionButton: CartActionButton(product: widget.product,),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
         bottomNavigationBar: const BottomAppBar(
           child: GuestBottomAppbarWidget(),
         ),
