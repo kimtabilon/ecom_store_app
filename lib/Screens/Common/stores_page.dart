@@ -72,7 +72,7 @@ class _StorePageState extends State<StorePage> {
 
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("images/stores/HP_banner.png"),
+                                  image: AssetImage("assets/images/stores/HP_banner.png"),
                                   fit: BoxFit.cover),
                             ),
                             child: Padding(
@@ -107,7 +107,7 @@ class _StorePageState extends State<StorePage> {
                           child: Container(
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("images/stores/brother_banner.png"),
+                                  image: AssetImage("assets/images/stores/brother_banner.png"),
                                   fit: BoxFit.cover),
                             ),
                             child: Padding(
@@ -152,7 +152,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/Lexmark_banner.png"),
+                                    image: AssetImage("assets/images/stores/Lexmark_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(
@@ -197,7 +197,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/LG_banner.png"),
+                                    image: AssetImage("assets/images/stores/LG_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(
@@ -232,7 +232,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/epson_banner.png"),
+                                    image: AssetImage("assets/images/stores/epson_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(
@@ -277,7 +277,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/canon_banner.png"),
+                                    image: AssetImage("assets/images/stores/canon_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(
@@ -312,7 +312,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/xerox_banner.png"),
+                                    image: AssetImage("assets/images/stores/xerox_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(
@@ -357,7 +357,7 @@ class _StorePageState extends State<StorePage> {
                             child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage("images/stores/lenovo_banner.png"),
+                                    image: AssetImage("assets/images/stores/lenovo_banner.png"),
                                     fit: BoxFit.cover),
                               ),
                               child: Padding(

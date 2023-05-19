@@ -56,7 +56,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                           Container(
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("images/stores/hp_store_banner.png"),
+                                  image: AssetImage("assets/images/stores/hp_store_banner.png"),
                                   fit: BoxFit.cover),
                             ),
                             child: Padding(
@@ -91,7 +91,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                                   child: Container(
                                     decoration: const BoxDecoration(color: Colors.white,
                                         image:DecorationImage(
-                                            image: AssetImage("images/stores/hp_logo.png"),
+                                            image: AssetImage("assets/images/stores/hp_logo.png"),
                                             fit: BoxFit.cover),),
                                   ),
                                 ),
