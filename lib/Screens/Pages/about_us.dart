@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../Widgets/guest_bottom_appbar.dart';
+
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({Key? key}) : super(key: key);
 
@@ -59,7 +61,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
       child: Scaffold(
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(60.0),
-              child: AppbarWidget(title: '', leadingButton: 'close',)
+              child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -136,42 +138,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
                               fit: BoxFit.fill,
                             ),
                           ),
-                          /*InkWell(
-                            onTap: () {
-                              setState(() {
-                                // If the video is playing, pause it.
-                                if (_controller.value.isPlaying) {
-                                  _controller.pause();
-                                } else {
-                                  // If the video is paused, play it.
-                                  _controller.play();
-                                }
-                              });
-                            },
-                            child: FutureBuilder(
-                              future: _initializeVideoPlayerFuture,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.done) {
-                                  // If the VideoPlayerController has finished initialization, use
-                                  // the data it provides to limit the aspect ratio of the video.
-                                  return AspectRatio(
-                                    aspectRatio: _controller.value.aspectRatio,
-                                    // Use the VideoPlayer widget to display the video.
-                                    child: VideoPlayer(_controller),
-                                  );
-                                } else {
-                                  // If the VideoPlayerController is still initializing, show a
-                                  // loading spinner.
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                              },
-                            ),
-                          ),*/
                           const SizedBox(height: 30,),
                           const Text("Our Company", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-                          SizedBox(height: 15,),
+                          const SizedBox(height: 15,),
                           const Text("Founded in 2014, EcommerceBusinessPrime, Inc. is an exclusive online store in partnership with the leading brands in IT and office electronics. Our curated selection of brands and manufacturers of IT and office electronics have over 1 million products to choose from.", style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                           const SizedBox(height: 30,),
                           Container(
@@ -193,7 +162,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
                           ),
                           const SizedBox(height: 30,),
                           const Text("Conquering Vertical Markets", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           const Text("EcommerceBusinessPrime caters to both retail and wholesale buyers providing comprehensive IT solutions in key vertical markets: education, government, health, and corporate sectors.", style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                           const SizedBox(height: 30,),
                           Image.network(
@@ -217,11 +186,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
                             ),),
                           const SizedBox(height: 30,),
                           const Text("Our EBP Guarantee High Quality. Speedy. Trustworthy.", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
-                          SizedBox(height: 10,),
+                          const SizedBox(height: 10,),
                           const Text("We take pride in our customer service team of US-based niche experts. With unrivaled commitment to customer satisfaction, EcommerceBusinessPrime is here to assist you before, during, and after your every transaction.", style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                           GridView.builder(
                               shrinkWrap: true,
-                              physics: const AlwaysScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: list.length,
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
@@ -264,7 +233,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 )
               ],
             ),
-          )),
+          ),
+        bottomNavigationBar: const BottomAppBar(
+          child: GuestBottomAppbarWidget(),
+        ),
+      ),
     );
   }
 }

@@ -83,12 +83,12 @@ class _CartActionButtonState extends State<CartActionButton> {
     final token = DatabaseProvider().getData('token');
 
     return Align(
-      alignment: const Alignment(2, 0.84),
+      alignment: const Alignment(2, 0.85),
       child: Container(
         height: 150,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
         ),
         child: Column(

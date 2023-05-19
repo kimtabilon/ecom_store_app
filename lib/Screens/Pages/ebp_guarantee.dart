@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
+import '../../Widgets/guest_bottom_appbar.dart';
 
 class EbpGuaranteePage extends StatefulWidget {
   const EbpGuaranteePage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _EbpGuaranteePageState extends State<EbpGuaranteePage> {
       child: Scaffold(
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(60.0),
-              child: AppbarWidget(title: '', leadingButton: 'close',)
+              child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -157,7 +158,11 @@ class _EbpGuaranteePageState extends State<EbpGuaranteePage> {
                 )
               ],
             ),
-          )),
+          ),
+        bottomNavigationBar: const BottomAppBar(
+          child: GuestBottomAppbarWidget(),
+        ),
+      ),
     );
   }
 }
