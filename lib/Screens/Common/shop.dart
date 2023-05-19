@@ -153,8 +153,8 @@ class _ShopScreenState extends State<ShopScreen> {
                                     PageTransition(
                                         type: PageTransitionType.fade,
                                         child: const FeedsScreen(
-                                            target: 'All Products',
-                                            itemSearch: 'false', store: '',)));
+                                          target: 'All Products',
+                                          itemSearch: 'false', store: '',)));
                               },
                               icon: Icons.arrow_forward),
 

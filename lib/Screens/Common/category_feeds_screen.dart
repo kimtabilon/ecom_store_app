@@ -40,16 +40,16 @@ class _CategoryFeedsScreenState extends State<CategoryFeedsScreen> {
     _scrollController.addListener(() async {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         // print(_isLoading);
-          _isLoading = true;
-          print("_isLoading $_isLoading");
-          limit += 30;
-          if(!mounted) {
-            super.dispose();
-          } else {
-            await getProducts();
-          }
-          _isLoading = false;
-          print("limit $limit");
+        _isLoading = true;
+        print("_isLoading $_isLoading");
+        limit += 30;
+        if(!mounted) {
+          super.dispose();
+        } else {
+          await getProducts();
+        }
+        _isLoading = false;
+        print("limit $limit");
       }
     });
 
