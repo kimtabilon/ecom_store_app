@@ -13,14 +13,14 @@ class HelpCenterPage extends StatefulWidget {
 
 class _HelpCenterPageState extends State<HelpCenterPage> {
   List list=[
-    {'title':'Payment', 'icon':Icons.credit_card},
-    {'title':'Shipping Policy', 'icon':Icons.local_shipping_outlined},
-    {'title':'Return Policy', 'icon':Icons.assignment_return_outlined},
-    {'title':'Refund Policy', 'icon':Icons.energy_savings_leaf_outlined},
-    {'title':'Privacy Policy', 'icon':Icons.verified_user_outlined},
-    {'title':'Terms and Condition', 'icon':Icons.library_books_sharp},
-    {'title':'Disclaimer', 'icon':Icons.warning_amber_outlined},
-    {'title':'FAQs', 'icon':Icons.help_center_outlined},
+    {'title':'Payment', 'icon':'payment'},
+    {'title':'Shipping Policy', 'icon':'shipping'},
+    {'title':'Return Policy', 'icon':'return'},
+    {'title':'Refund Policy', 'icon':'refund'},
+    {'title':'Privacy Policy', 'icon':'privacy'},
+    {'title':'Terms and Condition', 'icon':'terms'},
+    {'title':'Disclaimer', 'icon':'disclaimer'},
+    {'title':'FAQs', 'icon':'faqs'},
   ];
 
   @override
@@ -37,7 +37,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
               child: AppbarWidget(title: '', leadingButton: '',)
           ),
           body: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 const SearchFieldWidget(),
@@ -45,74 +45,82 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                   child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-                            decoration: const BoxDecoration(
-                              color: Colors.black12,
-                              image: DecorationImage(
-                                image: AssetImage("assets/images/banner-bg-help-center-mobile.webp"),
-                                fit: BoxFit.cover,
-                              ),
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/static/help_center/banner.png"),
+                              fit: BoxFit.cover,
                             ),
-                            child: Column(children: const [
-                                Text("Help Center", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-                                Text("Get instant answers to EBP’s most common questions", style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                            ])
+                          ),
+                          child: Column(
+                              children: const [
+                                Text("Help Center", style: TextStyle(fontSize: 20, color: Color.fromRGBO(247,193,0,1), fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                                Text("Get instant answers to EBP’s most common questions", style: TextStyle(fontSize: 15,color: Colors.white), textAlign: TextAlign.center,),
+                              ]
+                          ),
                         ),
                         const SizedBox(height: 30,),
-                        const Text("What do you want to know more about?", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                        const Text("What do you want to know more about?", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                         GridView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: list.length,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
+                                crossAxisCount: 4,
                                 crossAxisSpacing: 0.0,
                                 mainAxisSpacing: 0.0),
                             itemBuilder: (ctx, i) {
                               return Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Card(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(list[i]['icon'], size: 60, color: Color.fromRGBO(141,207,39,1), weight: 0.1),
-                                        SizedBox(height: 10),
-                                        Text(list[i]['title'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                                      ],
-                                    ),
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      //Icon(list[i]['icon'], size: 60, color: Color.fromRGBO(141,207,39,1), weight: 0.1),
+                                      Image.asset('assets/images/static/help_center/'+list[i]['icon']+'.png'),
+                                      const SizedBox(height: 10),
+                                      Flexible(child: Text(list[i]['title'], style: const TextStyle(fontSize: 10), textAlign: TextAlign.center,)),
+                                    ],
                                   ),
                                 ),
                               );
                             }),
                         const SizedBox(height: 20,),
-                        const Text("Get In Touch", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                        const Text("Get In Touch", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                         const SizedBox(height: 10,),
-                        const Text("Still have questions? You may reach us through the given channels or send us a direct message here.", style: TextStyle(fontSize: 18), textAlign: TextAlign.center,),
+                        const Text("Still have questions? You may reach us through the given channels or send us a direct message here.", style: TextStyle(fontSize: 13), textAlign: TextAlign.center,),
+                        const SizedBox(height: 20,),
                         const HelpCenterForm(),
                         const SizedBox(height: 20,),
-                        const Text("Store Hours", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                        const Text("Monday thru Friday - 8:30AM to 5PM PST", style: TextStyle(fontSize: 15,)),
-                        const SizedBox(height: 20,),
-                        const Text("Contact Number", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                        const Text("310-228-3181", style: TextStyle(fontSize: 15,)),
-                        const SizedBox(height: 20,),
-                        const Text("Email", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                        const Text("Sale Inquiry:", style: TextStyle(fontSize: 15,)),
-                        const Text("sales@ecommercebusinessprime.com", style: TextStyle(fontSize: 15,)),
-                        const SizedBox(height: 20,),
-                        const Text("Customer Support::", style: TextStyle(fontSize: 15,)),
-                        const Text("customerservice@ecommercebusinessprime.com", style: TextStyle(fontSize: 15,)),
-                        const SizedBox(height: 20,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text("Store Hours", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
+                            Text("Monday thru Friday - 8:30AM to 5PM PST", style: TextStyle(fontSize: 13,)),
+                            SizedBox(height: 20,),
+                            Text("Contact Number", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
+                            Text("310-228-3181", style: TextStyle(fontSize: 13,)),
+                            SizedBox(height: 20,),
+                            Text("Email", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                            Text("Sale Inquiry:", style: TextStyle(fontSize: 13,)),
+                            Text("sales@ecommercebusinessprime.com", style: TextStyle(fontSize: 13,)),
+                            SizedBox(height: 20,),
+                            Text("Customer Support::", style: TextStyle(fontSize: 13,)),
+                            Text("customerservice@ecommercebusinessprime.com", style: TextStyle(fontSize: 13,)),
+                            SizedBox(height: 20,),
+                            Text("Address", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
+                            Text("21540 Prairie St STE F, Chatsworth CA 91311", style: TextStyle(fontSize: 13,)),
+                            SizedBox(height: 50,),
+                          ],
+                        )
 
-                        const Text("Address", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                        const Text("21540 Prairie St STE F, Chatsworth CA 91311", style: TextStyle(fontSize: 15,)),
-                        const SizedBox(height: 50,),
                       ],
                     )
                   ),

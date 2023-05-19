@@ -112,27 +112,13 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
           ),
         ),
         Container(
-          height: 44.0,
-          decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.pink, Colors.green])),
           child: ElevatedButton(
             onPressed: () { send; },
-            style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
-            child: Text('Send'),
+            style: ElevatedButton.styleFrom(shadowColor: Colors.transparent, backgroundColor: Color.fromRGBO(43,102,145,1)),
+            child: Text('Submit'),
           ),
         )
-        /*CheckboxListTile(
-          contentPadding:
-          EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
-          title: Text('HTML'),
-          onChanged: (bool? value) {
-            if (value != null) {
-              setState(() {
-                isHTML = value;
-              });
-            }
-          },
-          value: isHTML,
-        ),*/
+
 
       ],
     );

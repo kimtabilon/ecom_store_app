@@ -127,6 +127,35 @@ flutter:
     - assets/images/stores/xerox_banner.png
     - assets/images/stores/xerox_logo.png
     - assets/images/stores/xerox_store_banner.png
+    - assets/images/static/about/about_banner.png
+    - assets/images/static/about/our_service_center.png
+    - assets/images/static/about/vertical_market_section.png
+    - assets/images/static/about/expert.png
+    - assets/images/static/about/hastle_free.png
+    - assets/images/static/about/multiple.png
+    - assets/images/static/about/multiple_shipping.png
+    - assets/images/static/about/no_monthly.png
+    - assets/images/static/about/no_sales_tax.png
+    - assets/images/static/about/order.png
+    - assets/images/static/about/orders.png
+    - assets/images/static/about/quality.png
+    - assets/images/static/about/realtime.png
+    - assets/images/static/ebp_guarantee/banner.png
+    - assets/images/static/ebp_guarantee/30.png
+    - assets/images/static/ebp_guarantee/fast.png
+    - assets/images/static/ebp_guarantee/full.png
+    - assets/images/static/ebp_guarantee/one.png
+    - assets/images/static/ebp_guarantee/our_ebp.png
+    - assets/images/static/help_center/banner.png
+    - assets/images/static/help_center/disclaimer.png
+    - assets/images/static/help_center/faqs.png
+    - assets/images/static/help_center/payment.png
+    - assets/images/static/help_center/privacy.png
+    - assets/images/static/help_center/refund.png
+    - assets/images/static/help_center/return.png
+    - assets/images/static/help_center/shipping.png
+    - assets/images/static/help_center/terms.png
+    - assets/images/static/careers.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
