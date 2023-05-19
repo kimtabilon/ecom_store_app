@@ -18,10 +18,10 @@ class CategoriesScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     List pages = [
-      { 'title': 'HELP CENTER', 'widget': const HelpCenterPage() },
-      { 'title': 'ABOUT US', 'widget': const AboutUsPage() },
-      { 'title': 'EBP GUARANTEE', 'widget': const EbpGuaranteePage() },
-      { 'title': 'JOB OPPORTUNITIES', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'ABOUT US', 'widget': const AboutUsPage(), 'icon': Icons.help },
+      { 'title': 'HELP CENTER', 'widget': const HelpCenterPage(), 'icon': Icons.construction },
+      { 'title': 'EBP GUARANTEE', 'widget': const EbpGuaranteePage(), 'icon': Icons.add_moderator },
+      { 'title': 'JOB OPPORTUNITIES', 'widget': const JobOpportunitiesPage(), 'icon': Icons.diversity_1 },
     ];
 
     List stores = [
@@ -65,6 +65,7 @@ class CategoriesScreen extends StatelessWidget {
                     child: Row(
                       children: const [
                         Icon(Icons.shopping_cart),
+                        SizedBox(width: 10,),
                         Text(
                           "Shop",
                           style: TextStyle(
@@ -121,6 +122,7 @@ class CategoriesScreen extends StatelessWidget {
                     child: Row(
                       children: const [
                         Icon(Icons.shopping_basket),
+                        SizedBox(width: 10,),
                         Text(
                           "Stores",
                           style: TextStyle(
@@ -160,7 +162,7 @@ class CategoriesScreen extends StatelessWidget {
                   ),
                   const Divider(),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: ListView.builder(
                         primary: false,
                         scrollDirection: Axis.vertical,
@@ -178,7 +180,13 @@ class CategoriesScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            title: Text(page['title'], style: TextStyle(fontWeight: FontWeight.bold),),
+                            title: Row(
+                              children: [
+                                Icon(page['icon'], color: Colors.black,),
+                                const SizedBox(width: 10,),
+                                Text(page['title'], style: TextStyle(fontWeight: FontWeight.bold),),
+                              ],
+                            ),
                             trailing: const Icon(Icons.arrow_forward),
                           );
                         }
