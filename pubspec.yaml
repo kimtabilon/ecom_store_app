@@ -102,6 +102,31 @@ flutter:
     - assets/images/shop_printers.png
     - assets/images/shop_projectors.png
     - assets/images/shop_scanners.png
+    - assets/images/stores/brother_banner.png
+    - assets/images/stores/brother_logo.png
+    - assets/images/stores/brother_store_banner.png
+    - assets/images/stores/canon_banner.png
+    - assets/images/stores/canon_logo.png
+    - assets/images/stores/canon_store_banner.png
+    - assets/images/stores/epson_banner.png
+    - assets/images/stores/epson_logo.png
+    - assets/images/stores/epson_store_banner.png
+    - assets/images/stores/HP_banner.png
+    - assets/images/stores/hp_logo.png
+    - assets/images/stores/hp_store_banner.png
+    - assets/images/stores/lenovo_banner.png
+    - assets/images/stores/lenovo_logo.png
+    - assets/images/stores/lenovo_store_banner.png
+    - assets/images/stores/lex_logo.png
+    - assets/images/stores/Lexmark_banner.png
+    - assets/images/stores/lexmark_store_banner.png
+    - assets/images/stores/LG_banner.png
+    - assets/images/stores/lg_logo.png
+    - assets/images/stores/lg_monitors.png
+    - assets/images/stores/lg_store_banner.png
+    - assets/images/stores/xerox_banner.png
+    - assets/images/stores/xerox_logo.png
+    - assets/images/stores/xerox_store_banner.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
