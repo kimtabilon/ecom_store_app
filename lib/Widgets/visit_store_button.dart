@@ -10,7 +10,7 @@ class VisitStoreButtonWidget extends StatelessWidget {
 
   int storeIndex;
   String buttonText;
-  // outline, elevated
+  // outline, elevated, icon
   String type;
 
   List<Map> stores = [
@@ -123,7 +123,7 @@ class VisitStoreButtonWidget extends StatelessWidget {
                 fontSize: 8,
               )),
         )
-        : ElevatedButton(
+        : type=='elevated' ? ElevatedButton(
           style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
           onPressed: () {
             PageNavigator(ctx: context).nextPage(page: StoresInnerPage(
@@ -136,7 +136,17 @@ class VisitStoreButtonWidget extends StatelessWidget {
             ));
           },
           child: Text(buttonText, style: TextStyle(color: Colors.white),),
-        ),
+        )
+        : IconButton(onPressed: () {
+          PageNavigator(ctx: context).nextPage(page: StoresInnerPage(
+            store["label"],
+            store["description"],
+            store["banner"],
+            store["logo"],
+            store["short"],
+            store["brand"],
+          ));
+        }, icon: const Icon(Icons.arrow_forward),),
       ),
     );
   }

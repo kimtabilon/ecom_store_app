@@ -8,6 +8,7 @@ import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
+import '../../Widgets/visit_store_button.dart';
 import 'category_feeds_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -25,14 +26,14 @@ class CategoriesScreen extends StatelessWidget {
     ];
 
     List stores = [
-      { 'title': 'HP', 'widget': const HelpCenterPage() },
-      { 'title': 'BROTHER', 'widget': const AboutUsPage() },
-      { 'title': 'LEXMARK', 'widget': const EbpGuaranteePage() },
-      { 'title': 'LG', 'widget': const JobOpportunitiesPage() },
-      { 'title': 'EPSON', 'widget': const JobOpportunitiesPage() },
-      { 'title': 'CANON', 'widget': const JobOpportunitiesPage() },
-      { 'title': 'XEROX', 'widget': const JobOpportunitiesPage() },
-      { 'title': 'LENOVO', 'widget': const JobOpportunitiesPage() },
+      { 'title': 'HP', 'page': 0 },
+      { 'title': 'BROTHER', 'page': 1 },
+      { 'title': 'LEXMARK', 'page': 2 },
+      { 'title': 'LG', 'page': 3 },
+      { 'title': 'EPSON', 'page': 4 },
+      { 'title': 'CANON', 'page': 5 },
+      { 'title': 'XEROX', 'page': 6 },
+      { 'title': 'LENOVO', 'page': 7 },
     ];
 
     return Scaffold(
@@ -154,7 +155,7 @@ class CategoriesScreen extends StatelessWidget {
                               );
                             },
                             title: Text(store['title'],),
-                            trailing: const Icon(Icons.arrow_forward),
+                            trailing: VisitStoreButtonWidget(storeIndex: store['page'], buttonText: 'Shop Now', type: 'icon'),
                           );
                         }
 

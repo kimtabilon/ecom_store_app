@@ -160,9 +160,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
                           const Text("Choose from a wide range of IT products from our partner stores and the biggest brands in the industry.", style: TextStyle(fontSize: 13), textAlign: TextAlign.center,),
                           const SizedBox(height: 30,),
 
-                          LogoWidget('hp_logo',1,'brother_logo',2),
-                          LogoWidget('lex_logo',3,'epson_logo',4),
-                          LogoWidget('lenovo_logo',5,'xerox_logo',6),
+                          LogoWidget('hp_logo',0,'brother_logo',1),
+                          LogoWidget('lex_logo',2,'epson_logo',4),
+                          LogoWidget('lenovo_logo',7,'xerox_logo',6),
 
                           const Text("Conquering Vertical Markets", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 10,),
