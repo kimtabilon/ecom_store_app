@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/search_field.dart';
+import '../../Widgets/visit_store_button.dart';
 import '../Common/category_feeds_screen.dart';
 import '../Common/guest_page.dart';
 
@@ -19,14 +20,14 @@ class AboutUsPage extends StatefulWidget {
 class _AboutUsPageState extends State<AboutUsPage> {
   List list=[
     {'title':'Quality Name-Brand Products', 'icon':'quality'},
-    {'title':'Order and Shipment Tracking', 'icon':'quality'},
-    {'title':'Expert Client Support', 'icon':'quality'},
-    {'title':'Hassle-Free Returns and Exchanges', 'icon':'quality'},
-    {'title':'Orders Delivered within 3 Business Days', 'icon':'quality'},
-    {'title':'No Monthly Subscription & Service Fees', 'icon':'quality'},
-    {'title':'Real-Time Inventory Status', 'icon':'quality'},
-    {'title':'Multiple Shipping Options', 'icon':'quality'},
-    {'title':'No Sales Tax in Most States', 'icon':'quality'},
+    {'title':'Order and Shipment Tracking', 'icon':'order'},
+    {'title':'Expert Client Support', 'icon':'expert'},
+    {'title':'Hassle-Free Returns and Exchanges', 'icon':'hastle_free'},
+    {'title':'Orders Delivered within 3 Business Days', 'icon':'orders'},
+    {'title':'No Monthly Subscription & Service Fees', 'icon':'no_monthly'},
+    {'title':'Real-Time Inventory Status', 'icon':'realtime'},
+    {'title':'Multiple Shipping Options', 'icon':'multiple_shipping'},
+    {'title':'No Sales Tax in Most States', 'icon':'no_sales_tax'},
   ];
 
   late VideoPlayerController _controller;
@@ -158,9 +159,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
                           const Text("Trusted by the Top Brands", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
                           const Text("Choose from a wide range of IT products from our partner stores and the biggest brands in the industry.", style: TextStyle(fontSize: 13), textAlign: TextAlign.center,),
                           const SizedBox(height: 30,),
-                          LogoWidget('hp_logo','','brother_logo',''),
-                          LogoWidget('lex_logo','','epson_logo',''),
-                          LogoWidget('lenovo_logo','','xerox_logo',''),
+
+                          LogoWidget('hp_logo',1,'brother_logo',2),
+                          LogoWidget('lex_logo',3,'epson_logo',4),
+                          LogoWidget('lenovo_logo',5,'xerox_logo',6),
+
                           const Text("Conquering Vertical Markets", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                           const SizedBox(height: 10,),
                           const Text("EcommerceBusinessPrime caters to both retail and wholesale buyers providing comprehensive IT solutions in key vertical markets: education, government, health, and corporate sectors.", style: TextStyle(fontSize: 13,), textAlign: TextAlign.center,),
@@ -269,37 +272,13 @@ class _AboutUsPageState extends State<AboutUsPage> {
             Column(
               children: [
                 SizedBox(height:120, child: Image.asset('assets/images/stores/'+logo1+'.png')),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: const GuestPage(),
-                      ),
-                    );
-                  },
-                  child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
-                )
+                VisitStoreButtonWidget(storeIndex: page1,buttonText: 'Shop Now',type: 'elevated'),
               ],
             ),
             Column(
               children: [
                 SizedBox(height:120, child: Image.asset('assets/images/stores/'+logo2+'.png')),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.fade,
-                        child: GuestPage(),
-                      ),
-                    );
-                  },
-                  child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
-                )
+                VisitStoreButtonWidget(storeIndex: page2,buttonText: 'Shop Now',type: 'elevated'),
               ],
             ),
           ],
