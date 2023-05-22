@@ -263,6 +263,17 @@ class ProductProvider {
   }
 
 
+  static Future<List<ProductModel>> getProductCategory(
+      {required String store,required String limit}) async {
+    List temp = await getData(
+      target: "manufacturer-category",
+      limit: limit,
+      store: store,
+    );
+    return ProductModel.productsFromSnapshot(temp);
+  }
+
+
 
   static Future<List> getAllCategories() async {
     try {

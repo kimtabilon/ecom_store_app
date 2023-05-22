@@ -26,7 +26,12 @@ class StoresInnerPage extends StatefulWidget {
   final String logoName;
   final String logoDesc;
   final String keyword;
-  const StoresInnerPage(this.brand, this.description, this.imageName,
+
+
+
+
+
+   StoresInnerPage(this.brand, this.description, this.imageName,
       this.logoName, this.logoDesc, this.keyword,
       {Key? key})
       : super(key: key);
@@ -36,6 +41,9 @@ class StoresInnerPage extends StatefulWidget {
 }
 
 class _StoresInnerPageState extends State<StoresInnerPage> {
+
+
+
   Widget BannerWidget(image, label, bg, desc) {
     return Column(
       children: [
@@ -135,6 +143,206 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> brandCategory = <String>[];
+
+
+      Map categoryDescription = {
+
+        "epson_printers": "Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.",
+        "canon_printers": "Create stunning professional prints with Canon's, easy-to-use imaging technology for home or work.",
+        "xerox_printers": "Create stunning professional prints with Xerox's, easy-to-use imaging technology for home or work.",
+        "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
+        "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
+        "hp_printers": "Get the best deals on top-rated printers and multifunction devices",
+        "epson_printers": "Get the best deals on top-rated printers and multifunction devices",
+        "canon_printers": "Get the best deals on top-rated printers and multifunction devices",
+        "xerox_printers": "Get the best deals on top-rated printers and multifunction devices",
+
+        "hp_laptops": "Find the perfect laptop for your needs and budget",
+        "laptops": "Find the perfect laptop for your needs and budget",
+        "lg_laptops": "Find the perfect laptop for your needs and budget",
+        "lenovo_laptops": "Find the perfect laptop for your needs and budget",
+
+        "hp_desktops": "Expand your point of view with HP products and technology where you can see more and do more, clearly.",
+        "desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
+        "lg_desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
+        "lenovo_desktops": "Expand your point of view with Lenovo products and technology where you can see more and do more, clearly.",
+
+
+        "hp_monitors": "Find the perfect Monitor for your needs and budget",
+        "monitors": "Find the perfect Monitor for your needs and budget",
+
+        "projectors": "Bring the big screen home with our high-quality projectors",
+        "hp_projectors": "Bring the big screen home with our high-quality projectors",
+        "lg_projectors": "Bring the big screen home with our high-quality projectors",
+        "epson_projectors": "Bring the big screen home with our high-quality projectors",
+
+        "hp_audio": "",
+        "audio": "",
+        "canon_audio": "",
+
+        "peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "hp_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "lexmark_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "lg_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "epson_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "canon_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "lenovo_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+
+        "hp_networking": "Stay connected with our range of reliable and high-speed networking devices",
+        "networking": "Stay connected with our range of reliable and high-speed networking devices",
+        "epson_networking": "Stay connected with our range of reliable and high-speed networking devices",
+        "lenovo_networking": "Stay connected with our range of reliable and high-speed networking devices",
+
+        "scanners": "Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.",
+        "hp_scanners": "Create stunning professional prints with HP’s dynamic, easy-to-use imaging technology for home or work.",
+        "epson_scanners": "Create stunning professional prints with EPSON’s dynamic, easy-to-use imaging technology for home or work.",
+        "canon_scanners": "Create stunning professional prints with CANON’s dynamic, easy-to-use imaging technology for home or work.",
+        "brother_scanners": "Create stunning professional prints with BROTHER’s dynamic, easy-to-use imaging technology for home or work.",
+
+
+        "software": "Unlock new possibilities with our powerful software solutions",
+        "hp_software": "Unlock new possibilities with our powerful software solutions",
+        "lg_software": "Unlock new possibilities with our powerful software solutions",
+        "lenovo_software": "Unlock new possibilities with our powerful software solutions",
+
+
+        "storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+        "hp_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+        "lg_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+        "lenovo_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+
+
+        "supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
+        "hp_supplies_&_accessories": "Print, secure and manage your business information with HP’s innovative imaging solutions.",
+        "lexmark_supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
+        "xerox_supplies_&_accessories": "Print, secure and manage your business information with Xerox’s innovative imaging solutions.",
+        "brother_supplies_&_accessories": "Print, secure and manage your business information with BROTHER’s innovative imaging solutions.",
+
+
+        "inkjet_printers": "Find the perfect printer for your needs and budget",
+        "lexmark_inkjet_printers": "Find the perfect printer for your needs and budget",
+        "hp_inkjet_printers": "Find the perfect printer for your needs and budget",
+
+        "laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
+        "lexmark_laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
+        "hp_laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
+
+        "monitors_and_display": "Experience stunning clarity and color with our LG monitors",
+        "lg_monitors_and_display": "Experience stunning clarity and color with our LG monitors",
+        "lenovo_monitors_and_display": "Experience stunning clarity and color with our Lenovo monitors",
+
+        "xerox_flatbed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
+        "xerox_sheetfed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
+      };
+
+    Map categoryColor = {
+      "printers": const Color.fromRGBO(255, 165, 0, 1),
+      "laptops": const Color.fromRGBO(242, 0, 0, 1),
+      "desktops": const Color.fromRGBO(255, 0, 153, 1),
+      "monitors": const Color.fromRGBO(0, 166, 136, 1),
+      "projectors": const Color.fromRGBO(36, 0, 255, 1),
+      "audio": const Color.fromRGBO(255, 230, 0, 1),
+      "peripherals": const Color.fromRGBO(235, 0, 255, 1),
+      "networking": const Color.fromRGBO(0, 107, 202, 1),
+      "scanners": const Color.fromRGBO(4, 202, 131, 1),
+      "software": const Color.fromRGBO(255, 153, 0, 1),
+      "storage_&_drives": const Color.fromRGBO(168, 7, 224, 1),
+      "supplies_&_accessories": const Color.fromRGBO(0, 205, 119, 1),
+      "inkjet_printers": const Color.fromRGBO(129, 124, 108, 1),
+      "laserjet_printers": const Color.fromRGBO(0, 133, 255, 1),
+      "monitors_and_display": const Color.fromRGBO(255, 199, 0, 1),
+      "flatbed_scanners": const Color.fromRGBO(4, 202, 131, 1),
+      "sheetfed_scanners": const Color.fromRGBO(4, 202, 131, 1),
+    };
+
+    if(widget.keyword == "HP"){
+      brandCategory = <String>[
+        "Audio",
+        "Peripherals",
+        "Desktops",
+        "Laptops",
+        "Monitors",
+        "Networking",
+        "Printers",
+        "Projectors",
+        "Scanners",
+        "Software",
+        "Storage & Drives",
+        "Supplies & Accessories"
+      ];
+    }
+    if(widget.keyword == "LEXMARK"){
+      brandCategory = <String>[
+        "Supplies & Accessories",
+        "InkJet Printers",
+        "LaserJet Printers",
+        "Peripherals"
+      ];
+    }
+
+    if(widget.keyword == "LG"){
+      brandCategory = <String>[
+        "Desktops",
+        "Laptops",
+        "Monitors and Display",
+        "Software",
+        "Storage & Drives",
+        "Projectors",
+        "Peripherals",
+      ];
+    }
+
+    if(widget.keyword == "EPSON"){
+      brandCategory = <String>[
+        "Scanners",
+        "Printers",
+        "Networking",
+        "Projectors",
+        "Peripherals",
+      ];
+    }
+
+    if(widget.keyword == "CANON"){
+      brandCategory = <String>[
+        "Scanners",
+        "Printers",
+        "Audio",
+        "Peripherals",
+      ];
+    }
+
+    if(widget.keyword == "XEROX"){
+      brandCategory = <String>[
+        "Flatbed Scanners",
+        "Sheetfed Scanners",
+        "Printers",
+        "Supplies & Accessories"
+      ];
+    }
+
+    if(widget.keyword == "LENOVO"){
+      brandCategory = <String>[
+        "Laptops",
+        "Storage & Drives",
+        "Peripherals",
+        "Networking",
+        "Laptops",
+        "Desktops",
+        "Monitors and Display",
+        "Storage & Drives",
+        "Software",
+      ];
+    }
+
+    if(widget.keyword == "BROTHER"){
+      brandCategory = <String>[
+        "Scanners",
+        "Printers",
+        "Supplies & Accessories"
+      ];
+    }
+
     Size size = MediaQuery.of(context).size;
     DatabaseProvider().saveData('activeBottomAppbar', '0');
 
@@ -316,46 +524,73 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         return FeedsGridWidget(productsList: snapshot.data!);
                       })),
                   const Divider(color: Colors.white10),
-                  BannerWidget(
-                      'shop_page_printer',
-                      'PRINTERS',
-                      const Color.fromRGBO(255, 165, 0, 1),
-                      'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
-                  BannerWidget(
-                      'shop_page_laptops',
-                      'LAPTOPS',
-                      const Color.fromRGBO(242, 0, 0, 1),
-                      'From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all.'),
-                  BannerWidget(
-                      'shop_page_desktops',
-                      'DESKTOP',
-                      const Color.fromRGBO(255, 0, 153, 1),
-                      'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
-                  BannerWidget(
-                      'shop_page_monitors',
-                      'MONITORS',
-                      const Color.fromRGBO(0, 106, 166, 1),
-                      'Find the perfect Monitor for your needs and budget'),
-                  BannerWidget(
-                      'shoppage_scanners',
-                      'SCANNERS',
-                      const Color.fromRGBO(0, 166, 136, 1),
-                      'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
-                  BannerWidget(
-                      'shop_page_projectors',
-                      'PROJECTORS',
-                      const Color.fromRGBO(36, 0, 255, 1),
-                      'Bring the big screen home with our high-quality projectors'),
-                  BannerWidget(
-                      'shop_page_audio',
-                      'AUDIO',
-                      const Color.fromRGBO(255, 230, 0, 1),
-                      'Bring the big screen home with our high-quality projectors'),
-                  BannerWidget(
-                      'shop_page_peripherals',
-                      'PERIPHERALS',
-                      const Color.fromRGBO(235, 0, 255, 1),
-                      'Discover the latest in ergonomic solutions for improved productivity'),
+
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(8),
+                          itemCount: brandCategory.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            // print(widget.hpCategory[index]);
+
+                            return BannerWidget(
+                                widget.keyword.toLowerCase()+'_shop_page_'+brandCategory[index].replaceAll(" ", "_").toString().toLowerCase(),
+                                brandCategory[index],
+                                categoryColor[brandCategory[index].replaceAll(" ", "_").toString().toLowerCase()],
+                                categoryDescription[widget.keyword.toLowerCase()+"_"+brandCategory[index].replaceAll(" ", "_").toString().toLowerCase()]);
+
+                            // return Container(
+                            //   height: 50,
+                            //   child: Center(child: Text('Entry ${widget.hpCategory[index]}')),
+                            // );
+                          }
+                      ),
+                    ],
+                  ),
+
+                  // BannerWidget(
+                  //     'shop_page_printer',
+                  //     'PRINTERS',
+                  //     const Color.fromRGBO(255, 165, 0, 1),
+                  //     'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                  // BannerWidget(
+                  //     'shop_page_laptops',
+                  //     'LAPTOPS',
+                  //     const Color.fromRGBO(242, 0, 0, 1),
+                  //     'From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all.'),
+                  // BannerWidget(
+                  //     'shop_page_desktops',
+                  //     'DESKTOP',
+                  //     const Color.fromRGBO(255, 0, 153, 1),
+                  //     'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
+                  // BannerWidget(
+                  //     'shop_page_monitors',
+                  //     'MONITORS',
+                  //     const Color.fromRGBO(0, 106, 166, 1),
+                  //     'Find the perfect Monitor for your needs and budget'),
+                  // BannerWidget(
+                  //     'shoppage_scanners',
+                  //     'SCANNERS',
+                  //     const Color.fromRGBO(0, 166, 136, 1),
+                  //     'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
+                  // BannerWidget(
+                  //     'shop_page_projectors',
+                  //     'PROJECTORS',
+                  //     const Color.fromRGBO(36, 0, 255, 1),
+                  //     'Bring the big screen home with our high-quality projectors'),
+                  // BannerWidget(
+                  //     'shop_page_audio',
+                  //     'AUDIO',
+                  //     const Color.fromRGBO(255, 230, 0, 1),
+                  //     'Bring the big screen home with our high-quality projectors'),
+                  // BannerWidget(
+                  //     'shop_page_peripherals',
+                  //     'PERIPHERALS',
+                  //     const Color.fromRGBO(235, 0, 255, 1),
+                  //     'Discover the latest in ergonomic solutions for improved productivity'),
                 ]),
               ),
             )
