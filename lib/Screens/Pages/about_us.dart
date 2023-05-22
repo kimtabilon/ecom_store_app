@@ -1,6 +1,7 @@
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../../Widgets/appbar_widget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,6 +33,18 @@ class _AboutUsPageState extends State<AboutUsPage> {
 
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+
+  late final YoutubePlayerController _yotubeController =
+  YoutubePlayerController.fromVideoId(
+    videoId: YoutubePlayerController.convertUrlToId(
+        'https://youtube.com/embed/gT477pdGGTA')!,
+    autoPlay: false,
+    params: const YoutubePlayerParams(
+      mute: false,
+      showControls: false,
+      showFullscreenButton: false,
+    ),
+  );
 
   @override
   void initState() {
@@ -80,6 +93,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
+
+
                           Container(
                               width: double.infinity,
                               padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
@@ -97,52 +112,63 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                   ]
                               )
                           ),
-                          Align(
-                            alignment: const Alignment(0,-3),
-                            child: SizedBox(
-                              width:300,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    // If the video is playing, pause it.
-                                    if (_controller.value.isPlaying) {
-                                      _controller.pause();
-                                    } else {
-                                      // If the video is paused, play it.
-                                      _controller.play();
-                                    }
-                                  });
-                                },
-                                child: _controller.value.isPlaying
-                                    ? FutureBuilder(
-                                        future: _initializeVideoPlayerFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.done) {
-                                            // If the VideoPlayerController has finished initialization, use
-                                            // the data it provides to limit the aspect ratio of the video.
-                                            return AspectRatio(
-                                              aspectRatio: _controller.value.aspectRatio,
-                                              // Use the VideoPlayer widget to display the video.
-                                              child: VideoPlayer(_controller),
-                                            );
-                                          } else {
-                                            // If the VideoPlayerController is still initializing, show a
-                                            // loading spinner.
-                                            return const Center(
-                                              child: CircularProgressIndicator(),
-                                            );
-                                          }
-                                        },
-                                      )
-                                    : Image.network(
-                                  // height: double.infinity,
-                                  "https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/about-us/about-video-preview.webp",
-                                  width: double.infinity,
-                                  fit: BoxFit.fill,
-                                ),
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 2, 15, 2),
+                            child: Container(
+                              child: YoutubePlayer(
+                                controller: _yotubeController,
+                                aspectRatio: 16 / 9,
                               ),
                             ),
                           ),
+
+                          // Align(
+                          //   alignment: const Alignment(0,-3),
+                          //   child: SizedBox(
+                          //     width:300,
+                          //     child: InkWell(
+                          //       onTap: () {
+                          //         setState(() {
+                          //           // If the video is playing, pause it.
+                          //           if (_controller.value.isPlaying) {
+                          //             _controller.pause();
+                          //           } else {
+                          //             // If the video is paused, play it.
+                          //             _controller.play();
+                          //           }
+                          //         });
+                          //       },
+                          //       child: _controller.value.isPlaying
+                          //           ? FutureBuilder(
+                          //               future: _initializeVideoPlayerFuture,
+                          //               builder: (context, snapshot) {
+                          //                 if (snapshot.connectionState == ConnectionState.done) {
+                          //                   // If the VideoPlayerController has finished initialization, use
+                          //                   // the data it provides to limit the aspect ratio of the video.
+                          //                   return AspectRatio(
+                          //                     aspectRatio: _controller.value.aspectRatio,
+                          //                     // Use the VideoPlayer widget to display the video.
+                          //                     child: VideoPlayer(_controller),
+                          //                   );
+                          //                 } else {
+                          //                   // If the VideoPlayerController is still initializing, show a
+                          //                   // loading spinner.
+                          //                   return const Center(
+                          //                     child: CircularProgressIndicator(),
+                          //                   );
+                          //                 }
+                          //               },
+                          //             )
+                          //           : Image.network(
+                          //         // height: double.infinity,
+                          //         "https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/about-us/about-video-preview.webp",
+                          //         width: double.infinity,
+                          //         fit: BoxFit.fill,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(height: 30,),
                           Container(
                             color: const Color.fromRGBO(37,37,37,1),
