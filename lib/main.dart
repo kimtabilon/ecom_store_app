@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:provider/provider.dart';
 import 'Provider/AuthProvider/auth_provider.dart';
+import 'Provider/CheckoutProvider/checkout_provider.dart';
 import 'Provider/Database/db_provider.dart';
 import 'Provider/StoreProvider/cart_provider.dart';
 import 'Screens/Common/guest_page.dart';
@@ -22,7 +23,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => DatabaseProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
-        // ChangeNotifierProvider(create: (_) => CheckoutProvider()),
+        ChangeNotifierProvider(create: (_) => CheckoutProvider()),
         // ChangeNotifierProvider(create: (_) => CategoryModel()),
         // ChangeNotifierProvider(create: (_) => DeleteCartProvider()),
       ],

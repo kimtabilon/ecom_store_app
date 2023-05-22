@@ -25,28 +25,36 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
   final _contactController = TextEditingController(text: '');
   final _emailController = TextEditingController(text: '');
   final _bodyController = TextEditingController(
-    text: 'Write your message here',
+    text: '',
   );
 
   Future<void> send() async {
-    final Email email = Email(
-      body: "From: "+_fnameController.text+" - Email: "+_emailController.text+" - Message: "+_bodyController.text,
-      subject: 'Job Opportunities',
-      recipients: [_recipientController.text],
-      attachmentPaths: attachments,
-      isHTML: isHTML,
-    );
-
     String platformResponse;
+    if(_fnameController.text.isEmpty
+    || _contactController.text.isEmpty
+    ||_emailController.text.isEmpty
+    ||_bodyController.text.isEmpty){
+      platformResponse = "All fields are required.";
+    }else{
+      final Email email = Email(
+        body: "From: "+_fnameController.text+" - Email: "+_emailController.text+" - Message: "+_bodyController.text,
+        subject: 'Job Opportunities',
+        recipients: [_recipientController.text],
+        attachmentPaths: attachments,
+        isHTML: isHTML,
+      );
 
-    try {
-      await FlutterEmailSender.send(email);
-      platformResponse = 'success';
-    } catch (error) {
-      print(error);
-      platformResponse = error.toString();
+
+
+      try {
+        await FlutterEmailSender.send(email);
+        platformResponse = 'success';
+      } catch (error) {
+        print(error);
+        platformResponse = error.toString();
+      }
+
     }
-
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -117,7 +125,10 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Text("Resume"),
               for (var i = 0; i < attachments.length; i++)
                 Row(
                   children: <Widget>[
@@ -134,11 +145,16 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
                     )
                   ],
                 ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: Icon(Icons.attach_file),
-                  onPressed: _openImagePicker,
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey)
+                ),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(Icons.attach_file),
+                    onPressed: _openImagePicker,
+                  ),
                 ),
               ),
               TextButton(
@@ -161,7 +177,7 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
         ),
         Container(
           child: ElevatedButton(
-            onPressed: () { send; },
+            onPressed: send,
             style: ElevatedButton.styleFrom(shadowColor: Colors.transparent, backgroundColor: Color.fromRGBO(43,102,145,1)),
             child: Text('Submit'),
           ),

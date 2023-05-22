@@ -14,35 +14,46 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
   bool isHTML = false;
 
   final _recipientController = TextEditingController(
-    text: 'example@example.com',
+    text: '',
   );
 
-  final _fnameController = TextEditingController(text: 'Enter your firstname');
-  final _lnameController = TextEditingController(text: 'Enter your lastname');
-  final _contactController = TextEditingController(text: 'Enter your contact number');
+  final _fnameController = TextEditingController(text: '');
+  final _lnameController = TextEditingController(text: '');
+  final _contactController = TextEditingController(text: '');
 
   final _bodyController = TextEditingController(
-    text: 'Write your message here',
+    text: '',
   );
 
   Future<void> send() async {
-    final Email email = Email(
-      body: "From: "+_fnameController.text+" "+_lnameController.text+" - Message: "+_bodyController.text,
-      subject: 'Sent from Ecom Store App',
-      recipients: [_recipientController.text],
-      attachmentPaths: attachments,
-      isHTML: isHTML,
-    );
-
     String platformResponse;
+    if(_fnameController.text.isEmpty
+        || _contactController.text.isEmpty
+        ||_lnameController.text.isEmpty
+        ||_bodyController.text.isEmpty
+    ||_recipientController.text.isEmpty){
+      platformResponse = "All fields are required.";
+    }else{
+      final Email email = Email(
+        body: "From: "+_fnameController.text+" "+_lnameController.text+" - Message: "+_bodyController.text,
+        subject: 'Sent from Ecom Store App',
+        recipients: [_recipientController.text],
+        attachmentPaths: attachments,
+        isHTML: isHTML,
+      );
 
-    try {
-      await FlutterEmailSender.send(email);
-      platformResponse = 'success';
-    } catch (error) {
-      print(error);
-      platformResponse = error.toString();
+
+
+      try {
+        await FlutterEmailSender.send(email);
+        platformResponse = 'success';
+      } catch (error) {
+        print(error);
+        platformResponse = error.toString();
+      }
+
     }
+
 
     if (!mounted) return;
 
@@ -113,7 +124,7 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
         ),
         Container(
           child: ElevatedButton(
-            onPressed: () { send; },
+            onPressed: send,
             style: ElevatedButton.styleFrom(shadowColor: Colors.transparent, backgroundColor: Color.fromRGBO(43,102,145,1)),
             child: Text('Submit'),
           ),

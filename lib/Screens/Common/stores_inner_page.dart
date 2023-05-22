@@ -166,6 +166,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "hp_desktops": "Expand your point of view with HP products and technology where you can see more and do more, clearly.",
         "desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
         "lg_desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
+        "lenovo_desktops": "Expand your point of view with Lenovo products and technology where you can see more and do more, clearly.",
 
 
         "hp_monitors": "Find the perfect Monitor for your needs and budget",
@@ -186,10 +187,12 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "lg_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
         "epson_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
         "canon_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+        "lenovo_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
 
         "hp_networking": "Stay connected with our range of reliable and high-speed networking devices",
         "networking": "Stay connected with our range of reliable and high-speed networking devices",
         "epson_networking": "Stay connected with our range of reliable and high-speed networking devices",
+        "lenovo_networking": "Stay connected with our range of reliable and high-speed networking devices",
 
         "scanners": "Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.",
         "hp_scanners": "Create stunning professional prints with HP’s dynamic, easy-to-use imaging technology for home or work.",
@@ -201,6 +204,8 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "software": "Unlock new possibilities with our powerful software solutions",
         "hp_software": "Unlock new possibilities with our powerful software solutions",
         "lg_software": "Unlock new possibilities with our powerful software solutions",
+        "lenovo_software": "Unlock new possibilities with our powerful software solutions",
+
 
         "storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
         "hp_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
@@ -225,6 +230,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
         "monitors_and_display": "Experience stunning clarity and color with our LG monitors",
         "lg_monitors_and_display": "Experience stunning clarity and color with our LG monitors",
+        "lenovo_monitors_and_display": "Experience stunning clarity and color with our Lenovo monitors",
 
         "xerox_flatbed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
         "xerox_sheetfed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
@@ -319,6 +325,13 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       brandCategory = <String>[
         "Laptops",
         "Storage & Drives",
+        "Peripherals",
+        "Networking",
+        "Laptops",
+        "Desktops",
+        "Monitors and Display",
+        "Storage & Drives",
+        "Software",
       ];
     }
 
