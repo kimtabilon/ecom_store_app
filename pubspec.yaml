@@ -105,28 +105,71 @@ flutter:
     - assets/images/stores/brother_banner.png
     - assets/images/stores/brother_logo.png
     - assets/images/stores/brother_store_banner.png
+    - assets/images/stores/brother_shop_page_printers.png
+    - assets/images/stores/brother_shop_page_scanners.png
+    - assets/images/stores/brother_shop_page_supplies_&_accessories.png
     - assets/images/stores/canon_banner.png
     - assets/images/stores/canon_logo.png
     - assets/images/stores/canon_store_banner.png
+    - assets/images/stores/canon_shop_page_scanners.png
+    - assets/images/stores/canon_shop_page_printers.png
+    - assets/images/stores/canon_shop_page_audio.png
+    - assets/images/stores/canon_shop_page_peripherals.png
     - assets/images/stores/epson_banner.png
     - assets/images/stores/epson_logo.png
     - assets/images/stores/epson_store_banner.png
+    - assets/images/stores/epson_shop_page_networking.png
+    - assets/images/stores/epson_shop_page_peripherals.png
+    - assets/images/stores/epson_shop_page_printers.png
+    - assets/images/stores/epson_shop_page_projectors.png
+    - assets/images/stores/epson_shop_page_scanners.png
     - assets/images/stores/HP_banner.png
     - assets/images/stores/hp_logo.png
     - assets/images/stores/hp_store_banner.png
+    - assets/images/stores/hp_shop_page_audio.png
+    - assets/images/stores/hp_shop_page_desktops.png
+    - assets/images/stores/hp_shop_page_laptops.png
+    - assets/images/stores/hp_shop_page_monitors.png
+    - assets/images/stores/hp_shop_page_networking.png
+    - assets/images/stores/hp_shop_page_peripherals.png
+    - assets/images/stores/hp_shop_page_printers.png
+    - assets/images/stores/hp_shop_page_projectors.png
+    - assets/images/stores/hp_shop_page_scanners.png
+    - assets/images/stores/hp_shop_page_software.png
+    - assets/images/stores/hp_shop_page_storage_&_drives.png
+    - assets/images/stores/hp_shop_page_supplies_&_accessories.png
     - assets/images/stores/lenovo_banner.png
     - assets/images/stores/lenovo_logo.png
     - assets/images/stores/lenovo_store_banner.png
+    - assets/images/stores/lenovo_shop_page_laptops.png
+    - assets/images/stores/lenovo_shop_page_monitors.png
+    - assets/images/stores/lenovo_shop_page_supplies_&_accessories.png
+    - assets/images/stores/lenovo_shop_page_storage_&_drives.png
     - assets/images/stores/lex_logo.png
     - assets/images/stores/Lexmark_banner.png
     - assets/images/stores/lexmark_store_banner.png
+    - assets/images/stores/lexmark_shop_page_inkjet_printers.png
+    - assets/images/stores/lexmark_shop_page_laserjet_printers.png
+    - assets/images/stores/lexmark_shop_page_peripherals.png
+    - assets/images/stores/lexmark_shop_page_supplies_&_accessories.png
     - assets/images/stores/LG_banner.png
     - assets/images/stores/lg_logo.png
     - assets/images/stores/lg_monitors.png
     - assets/images/stores/lg_store_banner.png
+    - assets/images/stores/lg_shop_page_desktops.png
+    - assets/images/stores/lg_shop_page_laptops.png
+    - assets/images/stores/lg_shop_page_monitors_and_display.png
+    - assets/images/stores/lg_shop_page_peripherals.png
+    - assets/images/stores/lg_shop_page_projectors.png
+    - assets/images/stores/lg_shop_page_software.png
+    - assets/images/stores/lg_shop_page_storage_&_drives.png
     - assets/images/stores/xerox_banner.png
     - assets/images/stores/xerox_logo.png
     - assets/images/stores/xerox_store_banner.png
+    - assets/images/stores/xerox_shop_page_flatbed_scanners.png
+    - assets/images/stores/xerox_shop_page_printers.png
+    - assets/images/stores/xerox_shop_page_sheetfed_scanners.png
+    - assets/images/stores/xerox_shop_page_supplies_&_accessories.png
     - assets/images/static/about/about_banner.png
     - assets/images/static/about/our_service_center.png
     - assets/images/static/about/vertical_market_section.png
@@ -164,6 +207,7 @@ flutter:
     - assets/images/stores/shop_page_printer.png
     - assets/images/stores/shop_page_projectors.png
     - assets/images/stores/shoppage_scanners.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
