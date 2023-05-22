@@ -6,8 +6,8 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 class JobOpportunitiesForm extends StatefulWidget {
-  const JobOpportunitiesForm({Key? key}) : super(key: key);
-
+  const JobOpportunitiesForm(this.jobName,{Key? key}) : super(key: key);
+  final String jobName;
   @override
   State<JobOpportunitiesForm> createState() => _JobOpportunitiesFormState();
 }
@@ -16,9 +16,9 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
   List<String> attachments = [];
   bool isHTML = false;
 
-  final _recipientController = TextEditingController(
-    text: 'example@example.com',
-  );
+  // final _recipientController = TextEditingController(
+  //   text: '',
+  // );
 
   final _fnameController = TextEditingController(text: '');
   final _lnameController = TextEditingController(text: '');
@@ -37,9 +37,15 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
       platformResponse = "All fields are required.";
     }else{
       final Email email = Email(
-        body: "From: "+_fnameController.text+" - Email: "+_emailController.text+" - Message: "+_bodyController.text,
-        subject: 'Job Opportunities',
-        recipients: [_recipientController.text],
+        body: "From: "+_fnameController.text +" "
+            +" \n Email: "+_emailController.text+" "
+            +" \n Contact No.: "+_contactController.text+" "
+            +" \n Job Position: "+widget.jobName+" "
+            +" \n Message: "+_bodyController.text,
+
+        // body: "From: "+_fnameController.text+" - Email: "+_emailController.text+" - Message: "+_bodyController.text,
+        subject: widget.jobName+' Position',
+        recipients: ["devteam@ecommercebusinessprime.com"],
         attachmentPaths: attachments,
         isHTML: isHTML,
       );

@@ -5,8 +5,9 @@ import '../../Widgets/search_field.dart';
 import 'job_opportunities_form.dart';
 
 class InnerJobOpportunitiesPage extends StatefulWidget {
-  const InnerJobOpportunitiesPage(this.activeJob ,{Key? key}) : super(key: key);
+  const InnerJobOpportunitiesPage(this.activeJob,this.jobName,{Key? key}) : super(key: key);
   final String activeJob;
+  final String jobName;
   @override
   State<InnerJobOpportunitiesPage> createState() => _InnerJobOpportunitiesPageState();
 }
@@ -583,7 +584,7 @@ class _InnerJobOpportunitiesPageState extends State<InnerJobOpportunitiesPage> {
                               const SizedBox(height: 10,),
                               const Text("Still have questions? You may reach us through the given channels or send us a direct message here.", style: TextStyle(fontSize: 13), textAlign: TextAlign.center,),
                               const SizedBox(height: 20,),
-                              const JobOpportunitiesForm(),
+                              JobOpportunitiesForm(widget.jobName),
                               const SizedBox(height: 20,),
                             ],
                           ),

@@ -92,7 +92,7 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
                                           context,
                                           PageTransition(
                                             type: PageTransitionType.fade,
-                                            child: InnerJobOpportunitiesPage('ecommerce'),
+                                            child: InnerJobOpportunitiesPage('ecommerce','E-Commerce Specialist'),
                                           ),
                                         );
                                       },
@@ -108,113 +108,113 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
                                         ),),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   PageTransition(
-                                        //     type: PageTransitionType.fade,
-                                        //     child: InnerJobOpportunitiesPage('ecommerce'),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: Container(
-                                        // width: 50,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.green),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("Full Stack Developer",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                        ),),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   PageTransition(
-                                        //     type: PageTransitionType.fade,
-                                        //     child: InnerJobOpportunitiesPage('ecommerce'),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.green),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("Graphic Designer",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                        ),),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(5.0),
+                                  //   child: InkWell(
+                                  //     onTap: () {
+                                  //       // Navigator.push(
+                                  //       //   context,
+                                  //       //   PageTransition(
+                                  //       //     type: PageTransitionType.fade,
+                                  //       //     child: InnerJobOpportunitiesPage('ecommerce'),
+                                  //       //   ),
+                                  //       // );
+                                  //     },
+                                  //     child: Container(
+                                  //       // width: 50,
+                                  //       decoration: BoxDecoration(
+                                  //           border: Border.all(color: Colors.green),
+                                  //           borderRadius: BorderRadius.all(Radius.circular(10))
+                                  //       ),
+                                  //
+                                  //       child: Padding(
+                                  //         padding: const EdgeInsets.all(8.0),
+                                  //         child: Text("Full Stack Developer",style: TextStyle(fontSize: 10,color: Colors.white)),
+                                  //       ),),
+                                  //   ),
+                                  // ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(5.0),
+                                  //   child: InkWell(
+                                  //     onTap: () {
+                                  //       // Navigator.push(
+                                  //       //   context,
+                                  //       //   PageTransition(
+                                  //       //     type: PageTransitionType.fade,
+                                  //       //     child: InnerJobOpportunitiesPage('ecommerce'),
+                                  //       //   ),
+                                  //       // );
+                                  //     },
+                                  //     child: Container(
+                                  //       decoration: BoxDecoration(
+                                  //           border: Border.all(color: Colors.green),
+                                  //           borderRadius: BorderRadius.all(Radius.circular(10))
+                                  //       ),
+                                  //
+                                  //       child: Padding(
+                                  //         padding: const EdgeInsets.all(8.0),
+                                  //         child: Text("Graphic Designer",style: TextStyle(fontSize: 10,color: Colors.white)),
+                                  //       ),),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   PageTransition(
-                                        //     type: PageTransitionType.fade,
-                                        //     child: InnerJobOpportunitiesPage('ecommerce'),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.green),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("Customer Service Representative",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                        ),),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   PageTransition(
-                                        //     type: PageTransitionType.fade,
-                                        //     child: InnerJobOpportunitiesPage('ecommerce'),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: Container(
-                                        // width: 50,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.green),
-                                            borderRadius: BorderRadius.all(Radius.circular(10))
-                                        ),
-
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("Back End Developer",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                        ),),
-                                    ),
-                                  ),
-
-                                ],
-                              )
+                              // Row(
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Padding(
+                              //       padding: const EdgeInsets.all(5.0),
+                              //       child: InkWell(
+                              //         onTap: () {
+                              //           // Navigator.push(
+                              //           //   context,
+                              //           //   PageTransition(
+                              //           //     type: PageTransitionType.fade,
+                              //           //     child: InnerJobOpportunitiesPage('ecommerce'),
+                              //           //   ),
+                              //           // );
+                              //         },
+                              //         child: Container(
+                              //           decoration: BoxDecoration(
+                              //               border: Border.all(color: Colors.green),
+                              //               borderRadius: BorderRadius.all(Radius.circular(10))
+                              //           ),
+                              //
+                              //           child: Padding(
+                              //             padding: const EdgeInsets.all(8.0),
+                              //             child: Text("Customer Service Representative",style: TextStyle(fontSize: 10,color: Colors.white)),
+                              //           ),),
+                              //       ),
+                              //     ),
+                              //     Padding(
+                              //       padding: const EdgeInsets.all(5.0),
+                              //       child: InkWell(
+                              //         onTap: () {
+                              //           // Navigator.push(
+                              //           //   context,
+                              //           //   PageTransition(
+                              //           //     type: PageTransitionType.fade,
+                              //           //     child: InnerJobOpportunitiesPage('ecommerce'),
+                              //           //   ),
+                              //           // );
+                              //         },
+                              //         child: Container(
+                              //           // width: 50,
+                              //           decoration: BoxDecoration(
+                              //               border: Border.all(color: Colors.green),
+                              //               borderRadius: BorderRadius.all(Radius.circular(10))
+                              //           ),
+                              //
+                              //           child: Padding(
+                              //             padding: const EdgeInsets.all(8.0),
+                              //             child: Text("Back End Developer",style: TextStyle(fontSize: 10,color: Colors.white)),
+                              //           ),),
+                              //       ),
+                              //     ),
+                              //
+                              //   ],
+                              // )
                             ],
                           ),
                         ),

@@ -35,9 +35,13 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
       platformResponse = "All fields are required.";
     }else{
       final Email email = Email(
-        body: "From: "+_fnameController.text+" "+_lnameController.text+" - Message: "+_bodyController.text,
+        body: "From: "+_fnameController.text +" "
+            +_lnameController.text
+            +" \n Email:"+_recipientController.text+" "
+            +" \n Contact No.:"+_contactController.text+" "
+            +" \n Message: "+_bodyController.text,
         subject: 'Sent from Ecom Store App',
-        recipients: [_recipientController.text],
+        recipients: ["devteam@ecommercebusinessprime.com"],
         attachmentPaths: attachments,
         isHTML: isHTML,
       );
