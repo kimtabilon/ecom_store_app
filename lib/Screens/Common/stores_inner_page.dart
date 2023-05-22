@@ -147,9 +147,10 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
 
       Map categoryDescription = {
+
         "epson_printers": "Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.",
-        "canon_printers": "Create stunning professional prints with Canon, easy-to-use imaging technology for home or work.",
-        "xerox_printers": "Create stunning professional prints with Xerox, easy-to-use imaging technology for home or work.",
+        "canon_printers": "Create stunning professional prints with Canon's, easy-to-use imaging technology for home or work.",
+        "xerox_printers": "Create stunning professional prints with Xerox's, easy-to-use imaging technology for home or work.",
         "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
         "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
         "hp_printers": "Get the best deals on top-rated printers and multifunction devices",
