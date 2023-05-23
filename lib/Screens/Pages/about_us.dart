@@ -1,10 +1,10 @@
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
 import 'package:video_player/video_player.dart';
-
 import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/search_field.dart';
 import '../Common/stores_inner_page.dart';
@@ -32,6 +32,18 @@ class _AboutUsPageState extends State<AboutUsPage> {
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
+  late final YoutubePlayerController _yotubeController =
+  YoutubePlayerController.fromVideoId(
+    videoId: YoutubePlayerController.convertUrlToId(
+        'https://youtube.com/embed/gT477pdGGTA')!,
+    autoPlay: false,
+    params: const YoutubePlayerParams(
+      mute: false,
+      showControls: false,
+      showFullscreenButton: false,
+    ),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -57,8 +69,13 @@ class _AboutUsPageState extends State<AboutUsPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
             child: AppbarWidget(title: '', leadingButton: '',)
@@ -74,15 +91,17 @@ class _AboutUsPageState extends State<AboutUsPage> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
+
+
                         Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                             decoration: const BoxDecoration(
-                                color: Colors.black12,
-                                image: DecorationImage(
-                                  image: AssetImage("assets/images/static/about/about_banner.png"),
-                                  fit: BoxFit.cover,
-                                ),
+                              color: Colors.black12,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/static/about/about_banner.png"),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             child: Column(
                                 children: const [
@@ -91,50 +110,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                 ]
                             )
                         ),
-                        Align(
-                          alignment: const Alignment(0,-3),
-                          child: SizedBox(
-                            width:300,
-                            child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  // If the video is playing, pause it.
-                                  if (_controller.value.isPlaying) {
-                                    _controller.pause();
-                                  } else {
-                                    // If the video is paused, play it.
-                                    _controller.play();
-                                  }
-                                });
-                              },
-                              child: _controller.value.isPlaying
-                                  ? FutureBuilder(
-                                      future: _initializeVideoPlayerFuture,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState == ConnectionState.done) {
-                                          // If the VideoPlayerController has finished initialization, use
-                                          // the data it provides to limit the aspect ratio of the video.
-                                          return AspectRatio(
-                                            aspectRatio: _controller.value.aspectRatio,
-                                            // Use the VideoPlayer widget to display the video.
-                                            child: VideoPlayer(_controller),
-                                          );
-                                        } else {
-                                          // If the VideoPlayerController is still initializing, show a
-                                          // loading spinner.
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        }
-                                      },
-                                    )
-                                  : Image.network(
-                                // height: double.infinity,
-                                "https://www.ecommercebusinessprime.com/pub/media/wysiwyg/V3/about-us/about-video-preview.webp",
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
+
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 2, 15, 2),
+                          child: YoutubePlayer(
+                            controller: _yotubeController,
+                            aspectRatio: 16 / 9,
                           ),
                         ),
                         const SizedBox(height: 30,),
@@ -250,8 +231,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
             ],
           ),
         ),
-      bottomNavigationBar: const BottomAppBar(
-        child: GuestBottomAppbarWidget(),
+        bottomNavigationBar: const BottomAppBar(
+          child: GuestBottomAppbarWidget(),
+        ),
       ),
     );
   }
@@ -265,7 +247,6 @@ class _AboutUsPageState extends State<AboutUsPage> {
             Column(
               children: [
                 SizedBox(height:120, child: Image.asset('assets/images/stores/'+logo1+'.png')),
-                //VisitStoreButtonWidget(storeIndex: page1,buttonText: 'Shop Now',type: 'elevated'),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                   onPressed: () {
@@ -278,7 +259,6 @@ class _AboutUsPageState extends State<AboutUsPage> {
             Column(
               children: [
                 SizedBox(height:120, child: Image.asset('assets/images/stores/'+logo2+'.png')),
-                //VisitStoreButtonWidget(storeIndex: page2,buttonText: 'Shop Now',type: 'elevated'),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                   onPressed: () {

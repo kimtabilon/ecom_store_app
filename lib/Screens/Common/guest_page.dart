@@ -58,7 +58,6 @@ class _GuestPageState extends State<GuestPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-
                           const Text(
                             "HP Products",
                             style: TextStyle(
@@ -67,21 +66,18 @@ class _GuestPageState extends State<GuestPage> {
                             ),
                           ),
                           const Spacer(),
-                          AppBarIcons(
-                              function: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: StoresInnerPage("HP")
-                                        /*child: const FeedsScreen(
-                                            target: 'All Products',
-                                            itemSearch: 'false', store: '',
-                                        )*/
-                                    )
-                                );
-                              },
-                              icon: Icons.arrow_forward),
+                          IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            onPressed: () => {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: StoresInnerPage("HP")
+                                  )
+                              )
+                            },
+                          ),
 
                       ],
                     ),
@@ -120,21 +116,18 @@ class _GuestPageState extends State<GuestPage> {
                               ),
                             ),
                           const Spacer(),
-                          AppBarIcons(
-                              function: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: StoresInnerPage("LEXMARK")
-                                        /*child: const FeedsScreen(
-                                            target: 'All Products',
-                                            itemSearch: 'false', store: '',
-                                        )*/
-                                    )
-                                );
-                              },
-                              icon: Icons.arrow_forward),
+                          IconButton(
+                            icon: Icon(Icons.arrow_forward),
+                            onPressed: () => {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: StoresInnerPage("LEXMARK")
+                                  )
+                              )
+                            },
+                          ),
                       ],
                     ),
                   ),

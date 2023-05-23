@@ -358,7 +358,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text("An error occured ${snapshot.error}"),
+                  child: Text("An error occurred ${snapshot.error}"),
                 );
               } else if (snapshot.data == null) {
                 return const Center(
@@ -586,28 +586,14 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
                         "BEST SELLER",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
                         ),
                       ),
-                      const Spacer(),
-                      AppBarIcons(
-                          function: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: FeedsScreen(
-                                      target: 'All Products',
-                                      itemSearch: 'false',
-                                      store: widget.keyword,
-                                    )));
-                          },
-                          icon: Icons.arrow_forward),
                     ],
                   ),
                 ),
@@ -622,7 +608,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         );
                       } else if (snapshot.hasError) {
                         return Center(
-                          child: Text("An error occured ${snapshot.error}"),
+                          child: Text("An error occurred ${snapshot.error}"),
                         );
                       } else if (snapshot.data == null) {
                         return const Center(
@@ -640,15 +626,15 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(8),
-                        itemCount: store['category'].length,
+                        itemCount: store['categories'].length,
                         itemBuilder: (BuildContext context, int index) {
                           // print(widget.hpCategory[index]);
 
                           return BannerWidget(
-                              widget.keyword.toLowerCase()+'_shop_page_'+store['category'][index].replaceAll(" ", "_").toString().toLowerCase(),
-                              store['category'][index],
-                              categoryColor[store['category'][index].replaceAll(" ", "_").toString().toLowerCase()],
-                              categoryDescription[widget.keyword.toLowerCase()+"_"+store['category'][index].replaceAll(" ", "_").toString().toLowerCase()]);
+                              widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase(),
+                              store['categories'][index],
+                              categoryColor[store['categories'][index].replaceAll(" ", "_").toString().toLowerCase()],
+                              categoryDescription[widget.keyword.toLowerCase()+"_"+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase()]);
 
                           // return Container(
                           //   height: 50,

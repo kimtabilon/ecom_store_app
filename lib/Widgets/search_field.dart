@@ -39,7 +39,19 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
               hintText: "Search",
               prefixIcon: Padding(
                 padding: EdgeInsets.only(bottom: 3),
-                child: AppBarIcons(
+                child: IconButton(
+                  icon: Icon(Icons.menu_open),
+                  onPressed: () => {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: CategoriesScreen()
+                        )
+                    )
+                  },
+                ),
+                /*child: AppBarIcons(
                   function: () {
                     Navigator.push(
                       context,
@@ -50,7 +62,7 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                     );
                   },
                   icon: Icons.menu_open,
-                ),
+                ),*/
               ),
               suffixIcon: Row(
                 mainAxisAlignment:
