@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
-import '../../Screens/Authentication/register.dart';
-import '../../Utils/routers.dart';
 import '../../Utils/snack_message.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/button.dart';
@@ -29,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
@@ -58,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                     ///Button
                     Consumer<AuthenticationProvider>(
                         builder: (context, auth, child) {
-                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (auth.resMessage != '') {
                               showMessage(
                                   message: auth.resMessage, context: context);
@@ -90,13 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 10,
                     ),
 
-                    GestureDetector(
-                      onTap: () {
-                        PageNavigator(ctx: context)
-                            .nextPage(page: const RegisterPage());
-                      },
-                      child: const Text('Tap here to Create Account'),
-                    ),
+                    const Text('Tap here to Create Account'),
 
                   ],
                 )),

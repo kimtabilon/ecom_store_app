@@ -51,11 +51,10 @@ dependencies:
   nominatim_geocoding: ^0.0.6
   badges: ^3.0.3
   video_player:
-  flutter_email_sender: ^5.2.0
   dropdown_button2: ^2.0.0
-  flutter_staggered_grid_view: ^0.6.2
   path_provider: ^2.0.15
   image_picker: ^0.8.7+5
+  file_picker: ^5.3.0
 
 dev_dependencies:
   flutter_test:
