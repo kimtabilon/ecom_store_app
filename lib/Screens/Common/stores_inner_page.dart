@@ -200,12 +200,12 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "canon_projectors": "Bring the big screen home with our high-quality projectors",
 
 
-    "hp_audio": "",
-    "audio": "",
-    "canon_audio": "",
-    "lg_audio": "",
-    "epson_audio": "",
-    "lenovo_audio": "",
+    "hp_audio": "Discover the latest in ergonomic solutions for improved productivity",
+    "audio": "Discover the latest in ergonomic solutions for improved productivity",
+    "canon_audio": "Discover the latest in ergonomic solutions for improved productivity",
+    "lg_audio": "Discover the latest in ergonomic solutions for improved productivity",
+    "epson_audio": "Discover the latest in ergonomic solutions for improved productivity",
+    "lenovo_audio": "Discover the latest in ergonomic solutions for improved productivity",
 
     "peripherals": "Discover the latest in ergonomic solutions for improved productivity",
     "hp_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
