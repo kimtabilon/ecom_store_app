@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
 import '../../Widgets/search_field.dart';
 import 'help_center_form.dart';
+import 'inner_help_center.dart';
 
 class HelpCenterPage extends StatefulWidget {
   const HelpCenterPage({Key? key}) : super(key: key);
@@ -71,18 +73,29 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                           itemBuilder: (ctx, i) {
                             return Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    //Icon(list[i]['icon'], size: 60, color: Color.fromRGBO(141,207,39,1), weight: 0.1),
-                                    Image.asset('assets/images/static/help_center/'+list[i]['icon']+'.png'),
-                                    const SizedBox(height: 10),
-                                    Flexible(child: Text(list[i]['title'], style: const TextStyle(fontSize: 10), textAlign: TextAlign.center,)),
-                                  ],
+                              child: GestureDetector(
+                                onTap: (){
+
+                                  Navigator.push(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.fade,
+                                          child: InnerHelpCenterPage(list[i]['icon'])));
+
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 2),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      //Icon(list[i]['icon'], size: 60, color: Color.fromRGBO(141,207,39,1), weight: 0.1),
+                                      Image.asset('assets/images/static/help_center/'+list[i]['icon']+'.png'),
+                                      const SizedBox(height: 10),
+                                      Flexible(child: Text(list[i]['title'], style: const TextStyle(fontSize: 10), textAlign: TextAlign.center,)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );

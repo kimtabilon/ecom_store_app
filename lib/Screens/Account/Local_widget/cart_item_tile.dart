@@ -61,7 +61,7 @@ class _CartItemTileWidgetState extends State<CartItemTileWidget> {
                   _qty = new_qty;
                   setState(() {});
                 },
-                icon: Icon(Icons.delete_outline, color: Colors.red),
+                icon: const Icon(Icons.delete_outline, color: Colors.red),
               )
             ],
           ),
@@ -87,7 +87,7 @@ class _CartItemTileWidgetState extends State<CartItemTileWidget> {
         }
       },
       // style: ListTitleStyle(),
-    )) : SizedBox(height: 1,);
+    )) : const SizedBox(height: 1,);
 
   }
 }

@@ -7,16 +7,21 @@ class AppBarIcons extends StatelessWidget {
   final IconData icon;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Theme.of(context).cardColor,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Icon(icon, color: const Color.fromRGBO(74,166,44,1),),
+    return GestureDetector(
+      onTap: () {
+        function();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Theme.of(context).cardColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(icon, color: const Color.fromRGBO(74,166,44,1),),
+          ),
         ),
       ),
     );

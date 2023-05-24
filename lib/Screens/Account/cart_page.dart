@@ -1,12 +1,8 @@
 import 'package:ecom_store_app/Screens/Account/checkout_cart_page.dart';
-import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Model/cart_model.dart';
-import '../../Provider/Database/db_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
-import '../../Provider/StoreProvider/guest_cart_provider.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
 import 'Local_widget/cart_item_list.dart';
@@ -42,9 +38,9 @@ class _CartPageState extends State<CartPage> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(
+                    return const Center(
                       child:
-                      Text("An error occured ${snapshot.error}"),
+                      Text("No products has been added yet"),
                     );
                   } else if (snapshot.data!.length == 0) {
                     return const Center(
@@ -82,7 +78,7 @@ class _CartPageState extends State<CartPage> {
                             )
                         )
                     )
-                  : SizedBox(width: 1,);
+                  : const SizedBox(width: 1,);
             }),
           ]
           )

@@ -24,23 +24,23 @@ class _StorePageState extends State<StorePage> {
     final double itemWidth = size.width / 2;
 
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60.0),
-            child: AppbarWidget(title: '', leadingButton: '',)
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SearchFieldWidget(),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60.0),
+          child: AppbarWidget(title: '', leadingButton: '',)
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const SearchFieldWidget(),
 
 
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(children: [
 
-                    GridView.count(
-                      physics: const ScrollPhysics(),
+                  GridView.count(
+                    physics: const ScrollPhysics(),
                     crossAxisCount: 2,
                     childAspectRatio: 1,
                     shrinkWrap: true,
@@ -122,268 +122,268 @@ class _StorePageState extends State<StorePage> {
                     ],
                   ),
 
-                    GridView.count(
-                      physics: const ScrollPhysics(),
-                      crossAxisCount: 1,
-                      childAspectRatio: 2,
-                      shrinkWrap: true,
-                      // padding: const EdgeInsets.all(2.0),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/Lexmark_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'LEXMARK',
-                                    description: "Print, secure and manage your business information with Lexmark's innovative imaging solutions",
-                                    context: context,
-                                    textAlign: TextAlign.end,
-                                    align: Alignment.centerRight,
-                                    axis: CrossAxisAlignment.end,
-                                  ),
-                                  //VisitStoreButtonWidget(storeIndex: 2,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LEXMARK"));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                  GridView.count(
+                    physics: const ScrollPhysics(),
+                    crossAxisCount: 1,
+                    childAspectRatio: 2,
+                    shrinkWrap: true,
+                    // padding: const EdgeInsets.all(2.0),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/Lexmark_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'LEXMARK',
+                                  description: "Print, secure and manage your business information with Lexmark's innovative imaging solutions",
+                                  context: context,
+                                  textAlign: TextAlign.end,
+                                  align: Alignment.centerRight,
+                                  axis: CrossAxisAlignment.end,
+                                ),
+                                //VisitStoreButtonWidget(storeIndex: 2,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LEXMARK"));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                    GridView.count(
-                      physics: const ScrollPhysics(),
-                      crossAxisCount: 2,
-                      childAspectRatio: 1,
-                      shrinkWrap: true,
-                      // padding: const EdgeInsets.all(5.0),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/LG_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'LG',
-                                    description: "Expand your point of view with LG Products and technology where you can see more and do more, clearly",
-                                    context: context,
-                                    textAlign: TextAlign.start,
-                                    align: Alignment.centerLeft,
-                                    axis: CrossAxisAlignment.start,
-                                  ),
-                                  //VisitStoreButtonWidget(storeIndex: 3,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LG"));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                  GridView.count(
+                    physics: const ScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    shrinkWrap: true,
+                    // padding: const EdgeInsets.all(5.0),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/LG_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'LG',
+                                  description: "Expand your point of view with LG Products and technology where you can see more and do more, clearly",
+                                  context: context,
+                                  textAlign: TextAlign.start,
+                                  align: Alignment.centerLeft,
+                                  axis: CrossAxisAlignment.start,
+                                ),
+                                //VisitStoreButtonWidget(storeIndex: 3,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LG"));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/epson_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'EPSON',
-                                    description: "Create stunning professional prints with Epson's dynamic, easy-to-use imaging technology for home or work",
-                                    context: context,
-                                    textAlign: TextAlign.end,
-                                    align: Alignment.centerRight,
-                                    axis: CrossAxisAlignment.end,
-                                  ),
-                                  // VisitStoreButtonWidget(storeIndex: 4,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage("EPSON"));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/epson_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'EPSON',
+                                  description: "Create stunning professional prints with Epson's dynamic, easy-to-use imaging technology for home or work",
+                                  context: context,
+                                  textAlign: TextAlign.end,
+                                  align: Alignment.centerRight,
+                                  axis: CrossAxisAlignment.end,
+                                ),
+                                // VisitStoreButtonWidget(storeIndex: 4,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("EPSON"));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                    GridView.count(
-                      physics: const ScrollPhysics(),
-                      crossAxisCount: 2,
-                      childAspectRatio: 1,
-                      shrinkWrap: true,
-                      // padding: const EdgeInsets.all(5.0),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/canon_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'CANON',
-                                    description: "Experience customized and advanced professional and consumer imaging equipment from Canon",
-                                    context: context,
-                                    textAlign: TextAlign.start,
-                                    align: Alignment.centerLeft,
-                                    axis: CrossAxisAlignment.start,
-                                  ),
-                                  //VisitStoreButtonWidget(storeIndex: 5,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage("CANON"));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                  GridView.count(
+                    physics: const ScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
+                    shrinkWrap: true,
+                    // padding: const EdgeInsets.all(5.0),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/canon_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'CANON',
+                                  description: "Experience customized and advanced professional and consumer imaging equipment from Canon",
+                                  context: context,
+                                  textAlign: TextAlign.start,
+                                  align: Alignment.centerLeft,
+                                  axis: CrossAxisAlignment.start,
+                                ),
+                                //VisitStoreButtonWidget(storeIndex: 5,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("CANON"));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/xerox_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'XEROX',
-                                    description: "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox",
-                                    context: context,
-                                    textAlign: TextAlign.end,
-                                    align: Alignment.centerRight,
-                                    axis: CrossAxisAlignment.end,
-                                  ),
-                                  // VisitStoreButtonWidget(storeIndex: 6,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage('XEROX'));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/xerox_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'XEROX',
+                                  description: "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox",
+                                  context: context,
+                                  textAlign: TextAlign.end,
+                                  align: Alignment.centerRight,
+                                  axis: CrossAxisAlignment.end,
+                                ),
+                                // VisitStoreButtonWidget(storeIndex: 6,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage('XEROX'));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                    GridView.count(
-                      physics: const ScrollPhysics(),
-                      crossAxisCount: 1,
-                      childAspectRatio: 2,
-                      shrinkWrap: true,
-                      // padding: const EdgeInsets.all(2.0),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage("assets/images/stores/lenovo_banner.png"),
-                                  fit: BoxFit.cover),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  customTextStores(
-                                    title: 'LENOVO',
-                                    description: "From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all",
-                                    context: context,
-                                    textAlign: TextAlign.left,
-                                    align: Alignment.centerLeft,
-                                    axis: CrossAxisAlignment.start,
-                                  ),
-                                  //VisitStoreButtonWidget(storeIndex: 7,buttonText: 'VISIT STORE',type: 'outlined'),
-                                  visitStoreButton(
-                                    text: 'VISIT STORE',
-                                    tap: () {
-                                      PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LENOVO"));
-                                    },
-                                    context: context,
-                                  ),
-                                ],
-                              ),
+                  GridView.count(
+                    physics: const ScrollPhysics(),
+                    crossAxisCount: 1,
+                    childAspectRatio: 2,
+                    shrinkWrap: true,
+                    // padding: const EdgeInsets.all(2.0),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/stores/lenovo_banner.png"),
+                                fit: BoxFit.cover),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                customTextStores(
+                                  title: 'LENOVO',
+                                  description: "From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all",
+                                  context: context,
+                                  textAlign: TextAlign.left,
+                                  align: Alignment.centerLeft,
+                                  axis: CrossAxisAlignment.start,
+                                ),
+                                //VisitStoreButtonWidget(storeIndex: 7,buttonText: 'VISIT STORE',type: 'outlined'),
+                                visitStoreButton(
+                                  text: 'VISIT STORE',
+                                  tap: () {
+                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LENOVO"));
+                                  },
+                                  context: context,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
 
-                  ]),
-                ),
-              )
-            ],
-          ),
+                ]),
+              ),
+            )
+          ],
         ),
+      ),
       bottomNavigationBar: const BottomAppBar(
         child: GuestBottomAppbarWidget(),
       ),

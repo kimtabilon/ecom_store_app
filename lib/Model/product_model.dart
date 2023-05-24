@@ -53,7 +53,7 @@ class ProductModel with ChangeNotifier {
     description = json['description'];
     category = json['category'];
     images = json['images'].cast<String>();
-    upc = 'test';
+    upc = json['upc'];
     manufacturer = json['manufacturer'];
     qty = json['quantity'];
     condition = json['pcondition'] == "new"
