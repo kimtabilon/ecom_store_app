@@ -198,9 +198,17 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
 
       if(getData[0]['addresses'].length>0) {
         _company.text = getData[0]['addresses'][0]!['company'] ?? "";
-        _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
-        _address2.text = getData[0]['addresses'][0]!['street'][1] ?? "";
-        _address3.text = getData[0]['addresses'][0]!['street'][2] ?? "";
+
+        if(getData[0]['addresses'][0]!['street'].length > 1){
+          _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
+          _address2.text = getData[0]['addresses'][0]!['street'][1] ?? "";
+          _address3.text = getData[0]['addresses'][0]!['street'][2] ?? "";
+        }else{
+          _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
+          _address2.text = "";
+          _address3.text = "";
+        }
+
         _province.text = getData[0]['addresses'][0]!['region']['region'] ?? "";
         _provinceCode.text = getData[0]['addresses'][0]!['region']['region_id'].toString() ?? "";
         _city.text = getData[0]['addresses'][0]!['city'] ?? "";
