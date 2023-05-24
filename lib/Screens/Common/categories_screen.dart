@@ -1,14 +1,15 @@
+import 'package:ecom_store_app/Screens/Common/stores_inner_page.dart';
 import 'package:ecom_store_app/Screens/Pages/about_us.dart';
 import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
-import '../../Widgets/visit_store_button.dart';
 import 'category_feeds_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -16,7 +17,6 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
 
     List pages = [
       { 'title': 'ABOUT US', 'widget': const AboutUsPage(), 'icon': Icons.help },
@@ -38,48 +38,48 @@ class CategoriesScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: PreferredSize(
-            preferredSize: Size.fromHeight(60.0),
+            preferredSize: const Size.fromHeight(60.0),
             child: AppbarWidget(title: 'Menu', leadingButton: 'close',)
         ),
-        body: FutureBuilder<List>(
-          future: ProductProvider.getAllCategories(),
-          builder: ((context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              Center(
-                child: Text("An error occurred ${snapshot.error}"),
-              );
-            } else if (snapshot.data == null) {
-              const Center(
-                child: Text("No products has been added yet"),
-              );
-            }
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Wrap(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.shopping_cart),
-                        SizedBox(width: 10,),
-                        Text(
-                          "Shop",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Wrap(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
+                child: Row(
+                  children: const [
+                    Icon(Icons.shopping_cart),
+                    SizedBox(width: 10,),
+                    Text(
+                      "Shop",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const Divider(),
+              FutureBuilder<List>(
+                future: ProductProvider.getAllCategories(),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    Center(
+                      child: Text("An error occurred ${snapshot.error}"),
+                    );
+                  } else if (snapshot.data == null) {
+                    const Center(
+                      child: Text("No products has been added yet"),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 15),
                     child: ListView.builder(
                       primary: false,
                       scrollDirection: Axis.vertical,
@@ -91,7 +91,7 @@ class CategoriesScreen extends StatelessWidget {
                         return ListTile(
                           title: Text(cat['name']),
                           trailing: IconButton(
-                            icon: Icon(Icons.arrow_forward),
+                            icon: const Icon(Icons.arrow_forward),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -116,90 +116,96 @@ class CategoriesScreen extends StatelessWidget {
                         );
                       },
                     ),
-                  ),
-                  const SizedBox(height: 20,),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
-                    child: Row(
-                      children: const [
-                        Icon(Icons.shopping_basket),
-                        SizedBox(width: 10,),
-                        Text(
-                          "Stores",
-                          style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: ListView.builder(
-                        primary: false,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: stores.length,
-                        itemBuilder: (context, index) {
-                          var store = stores[index];
-                          return ListTile(
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: store['widget'],
-                                ),
-                              );
-                            },
-                            title: Text(store['title'],),
-                            trailing: VisitStoreButtonWidget(storeIndex: store['page'], buttonText: 'Shop Now', type: 'icon'),
-                          );
-                        }
-
-                    ),
-                  ),
-                  const Divider(),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: ListView.builder(
-                        primary: false,
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: pages.length,
-                        itemBuilder: (context, index) {
-                          var page = pages[index];
-                          return ListTile(
-                            onTap: (){
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: page['widget'],
-                                ),
-                              );
-                            },
-                            title: Row(
-                              children: [
-                                Icon(page['icon'], color: Colors.black,),
-                                const SizedBox(width: 10,),
-                                Text(page['title'], style: TextStyle(fontWeight: FontWeight.bold),),
-                              ],
-                            ),
-                            trailing: const Icon(Icons.arrow_forward),
-                          );
-                        }
-
-                    ),
-                  ),
-
-                ],
+                  );
+                }),
               ),
-            );
-          }),
-        )
+
+              const SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
+                child: Row(
+                  children: const [
+                    Icon(Icons.shopping_basket),
+                    SizedBox(width: 10,),
+                    Text(
+                      "Stores",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ListView.builder(
+                    primary: false,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: stores.length,
+                    itemBuilder: (context, index) {
+                      var store = stores[index];
+                      return ListTile(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: store['widget'],
+                            ),
+                          );
+                        },
+                        title: Text(store['title'],),
+                        trailing: IconButton(
+                          onPressed: () {
+                            PageNavigator(ctx: context).nextPage(page: StoresInnerPage(store['title']));
+                          },
+                          icon: const Icon(Icons.arrow_forward),
+                        ),
+                      );
+                    }
+
+                ),
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ListView.builder(
+                    primary: false,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: pages.length,
+                    itemBuilder: (context, index) {
+                      var page = pages[index];
+                      return ListTile(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.fade,
+                              child: page['widget'],
+                            ),
+                          );
+                        },
+                        title: Row(
+                          children: [
+                            Icon(page['icon'], color: Colors.black,),
+                            const SizedBox(width: 10,),
+                            Text(page['title'], style: const TextStyle(fontWeight: FontWeight.bold),),
+                          ],
+                        ),
+                        trailing: const Icon(Icons.arrow_forward),
+                      );
+                    }
+
+                ),
+              ),
+
+            ],
+          ),
+        ),
 
     );
   }

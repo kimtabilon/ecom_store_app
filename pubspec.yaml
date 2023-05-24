@@ -51,11 +51,10 @@ dependencies:
   nominatim_geocoding: ^0.0.6
   badges: ^3.0.3
   video_player:
-  flutter_email_sender: ^5.2.0
   dropdown_button2: ^2.0.0
-  flutter_staggered_grid_view: ^0.6.2
   path_provider: ^2.0.15
   image_picker: ^0.8.7+5
+  file_picker: ^5.3.0
   youtube_player_iframe: ^4.0.4
   webview_flutter: ^4.2.1
 
@@ -99,7 +98,7 @@ flutter:
     - assets/images/job_opportunities_b1.png
     - assets/images/banner-bg-help-center-mobile.webp
     - assets/images/shop_audio.png
-    - assets/images/shop_desktops.png
+    - assets/images/shop_desktop.png
     - assets/images/shop_laptops.png
     - assets/images/shop_monitors.png
     - assets/images/shop_peripherals.png
@@ -131,7 +130,7 @@ flutter:
     - assets/images/stores/hp_logo.png
     - assets/images/stores/hp_store_banner.png
     - assets/images/stores/hp_shop_page_audio.png
-    - assets/images/stores/hp_shop_page_desktops.png
+    - assets/images/stores/hp_shop_page_desktop.png
     - assets/images/stores/hp_shop_page_laptops.png
     - assets/images/stores/hp_shop_page_monitors.png
     - assets/images/stores/hp_shop_page_networking.png
@@ -160,7 +159,7 @@ flutter:
     - assets/images/stores/lg_logo.png
     - assets/images/stores/lg_monitors.png
     - assets/images/stores/lg_store_banner.png
-    - assets/images/stores/lg_shop_page_desktops.png
+    - assets/images/stores/lg_shop_page_desktop.png
     - assets/images/stores/lg_shop_page_laptops.png
     - assets/images/stores/lg_shop_page_monitors_and_display.png
     - assets/images/stores/lg_shop_page_peripherals.png
@@ -204,7 +203,7 @@ flutter:
     - assets/images/static/help_center/terms.png
     - assets/images/static/careers.png
     - assets/images/stores/shop_page_audio.png
-    - assets/images/stores/shop_page_desktops.png
+    - assets/images/stores/shop_page_desktop.png
     - assets/images/stores/shop_page_laptops.png
     - assets/images/stores/shop_page_monitors.png
     - assets/images/stores/shop_page_peripherals.png

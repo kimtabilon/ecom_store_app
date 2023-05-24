@@ -55,7 +55,7 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
                 context,
                 PageTransition(
                     type: PageTransitionType.fade,
-                    child: const CartPage()
+                    child: const HomePage()
                 )
             );
           },

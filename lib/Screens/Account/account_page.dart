@@ -1,7 +1,5 @@
-import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
 import '../../Provider/Database/db_provider.dart';
@@ -107,7 +105,7 @@ class _AccountPageState extends State<AccountPage> {
                           }
                         }
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     customTextField(
                       title: 'Email',
                       controller: _email,
@@ -122,7 +120,7 @@ class _AccountPageState extends State<AccountPage> {
                     ///Button
                     Consumer<AuthenticationProvider>(
                         builder: (context, auth, child) {
-                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (auth.resMessage != '') {
                               showMessage(
                                   message: auth.resMessage, context: context);
@@ -160,14 +158,6 @@ class _AccountPageState extends State<AccountPage> {
                     const SizedBox(
                       height: 10,
                     ),
-
-                    /*GestureDetector(
-                      onTap: () {
-                        PageNavigator(ctx: context)
-                            .nextPage(page: const LoginPage());
-                      },
-                      child: const Text('Login Instead'),
-                    )*/
                   ],
                 )),
           )

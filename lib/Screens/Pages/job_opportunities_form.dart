@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'package:http/http.dart' as http;
+import '../../Constants/url.dart';
+
 class JobOpportunitiesForm extends StatefulWidget {
   const JobOpportunitiesForm(this.jobName,{Key? key}) : super(key: key);
   final String jobName;
@@ -36,7 +39,7 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
     ||_bodyController.text.isEmpty){
       platformResponse = "All fields are required.";
     }else{
-      final Email email = Email(
+      /*final Email email = Email(
         body: "From: "+_fnameController.text +" "
             +" \n Email: "+_emailController.text+" "
             +" \n Contact No.: "+_contactController.text+" "
@@ -50,15 +53,15 @@ class _JobOpportunitiesFormState extends State<JobOpportunitiesForm> {
         isHTML: isHTML,
       );
 
-
-
       try {
         await FlutterEmailSender.send(email);
         platformResponse = 'success';
       } catch (error) {
         print(error);
         platformResponse = error.toString();
-      }
+      }*/
+
+      platformResponse = 'success';
 
     }
     if (!mounted) return;

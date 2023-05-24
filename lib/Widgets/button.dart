@@ -27,8 +27,6 @@ Widget customButton(
   );
 }
 
-
-
 Widget shopNowButton(
     {VoidCallback? tap,
       String? text,
