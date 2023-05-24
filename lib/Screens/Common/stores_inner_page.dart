@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Provider/Database/db_provider.dart';
-import '../../Screens/Common/feeds_screen.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
-import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
@@ -46,7 +44,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'categories': [
         "Audio",
         "Peripherals",
-        "Desktops",
+        "Desktop",
         "Laptops",
         "Monitors",
         "Networking",
@@ -93,7 +91,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'lg_logo',
       'short': "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
       'categories': [
-        "Desktops",
+        "Desktop",
         "Laptops",
         "Monitors and Display",
         "Software",
@@ -158,7 +156,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "Peripherals",
         "Networking",
         "Laptops",
-        "Desktops",
+        "Desktop",
         "Monitors and Display",
         "Storage & Drives",
         "Software",
@@ -172,19 +170,16 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "xerox_printers": "Create stunning professional prints with Xerox's, easy-to-use imaging technology for home or work.",
     "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
     "hp_printers": "Get the best deals on top-rated printers and multifunction devices",
-    "epson_printers": "Get the best deals on top-rated printers and multifunction devices",
-    "canon_printers": "Get the best deals on top-rated printers and multifunction devices",
-    "xerox_printers": "Get the best deals on top-rated printers and multifunction devices",
 
     "hp_laptops": "Find the perfect laptop for your needs and budget",
     "laptops": "Find the perfect laptop for your needs and budget",
     "lg_laptops": "Find the perfect laptop for your needs and budget",
     "lenovo_laptops": "Find the perfect laptop for your needs and budget",
 
-    "hp_desktops": "Expand your point of view with HP products and technology where you can see more and do more, clearly.",
-    "desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
-    "lg_desktops": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
-    "lenovo_desktops": "Expand your point of view with Lenovo products and technology where you can see more and do more, clearly.",
+    "hp_desktop": "Expand your point of view with HP products and technology where you can see more and do more, clearly.",
+    "desktop": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
+    "lg_desktop": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
+    "lenovo_desktop": "Expand your point of view with Lenovo products and technology where you can see more and do more, clearly.",
 
 
     "hp_monitors": "Find the perfect Monitor for your needs and budget",
@@ -257,7 +252,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
   Map categoryColor = {
     "printers": const Color.fromRGBO(255, 165, 0, 1),
     "laptops": const Color.fromRGBO(242, 0, 0, 1),
-    "desktops": const Color.fromRGBO(255, 0, 153, 1),
+    "desktop": const Color.fromRGBO(255, 0, 153, 1),
     "monitors": const Color.fromRGBO(0, 166, 136, 1),
     "projectors": const Color.fromRGBO(36, 0, 255, 1),
     "audio": const Color.fromRGBO(255, 230, 0, 1),
@@ -629,6 +624,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         itemCount: store['categories'].length,
                         itemBuilder: (BuildContext context, int index) {
                           // print(widget.hpCategory[index]);
+                          print(widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase());
 
                           return BannerWidget(
                               widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase(),
