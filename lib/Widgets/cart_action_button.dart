@@ -71,6 +71,8 @@ class _CartActionButtonState extends State<CartActionButton> {
       if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
         return null;
         // return Future.error('Location Permissions are denied');
+      }else{
+        return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       }
     }else{
       return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);

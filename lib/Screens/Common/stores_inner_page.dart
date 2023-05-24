@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
+import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
@@ -43,16 +44,16 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'short': "Shop now and enjoy our limited-time offers and exclusive deals.",
       'categories': [
         "Audio",
-        "Peripherals",
         "Desktop",
         "Laptops",
         "Monitors",
         "Networking",
         "Printers",
-        "Projectors",
+        // "Projectors",
         "Scanners",
         "Software",
-        "Storage & Drives",
+        "Peripherals",
+        "Storage and Drives",
         "Supplies & Accessories"
       ]
     },
@@ -77,10 +78,10 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'lex_logo',
       'short': "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
       'categories': [
-        "Supplies & Accessories",
         "InkJet Printers",
-        "LaserJet Printers",
-        "Peripherals"
+        "Laser Printers",
+        "Peripherals",
+        "Supplies & Accessories",
       ]
     },
     {
@@ -91,11 +92,12 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'lg_logo',
       'short': "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
       'categories': [
+        "Audio",
         "Desktop",
         "Laptops",
         "Monitors and Display",
-        "Software",
-        "Storage & Drives",
+        // "Software",
+        // "Storage and Drives",
         "Projectors",
         "Peripherals",
       ]
@@ -108,10 +110,13 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'epson_logo',
       'short': "Advertise anywhere and revolutionize the way you conduct business. Shop now and enjoy our limited-time offers and exclusive deals!",
       'categories': [
+        // "Audio",
         "Scanners",
         "Printers",
         "Networking",
         "Projectors",
+        // "Software",
+        "Supplies & Accessories",
         "Peripherals",
       ]
     },
@@ -123,9 +128,12 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'canon_logo',
       'short': "Shop now and enjoy our limited-time offers and exclusive deals.",
       'categories': [
+        "Audio",
         "Scanners",
         "Printers",
-        "Audio",
+        // "Projectors",
+        // "Software",
+        "Supplies & Accessories",
         "Peripherals",
       ]
     },
@@ -151,15 +159,15 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
       'logo': 'lenovo_logo',
       'short': "Shop now and enjoy our limited-time offers and exclusive deals.",
       'categories': [
-        "Laptops",
-        "Storage & Drives",
-        "Peripherals",
-        "Networking",
+        "Audio",
         "Laptops",
         "Desktop",
         "Monitors and Display",
-        "Storage & Drives",
+        "Storage and Drives",
         "Software",
+        "Networking",
+        "Peripherals",
+        "Supplies & Accessories",
       ]
     },
   ];
@@ -189,10 +197,15 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "hp_projectors": "Bring the big screen home with our high-quality projectors",
     "lg_projectors": "Bring the big screen home with our high-quality projectors",
     "epson_projectors": "Bring the big screen home with our high-quality projectors",
+    "canon_projectors": "Bring the big screen home with our high-quality projectors",
+
 
     "hp_audio": "",
     "audio": "",
     "canon_audio": "",
+    "lg_audio": "",
+    "epson_audio": "",
+    "lenovo_audio": "",
 
     "peripherals": "Discover the latest in ergonomic solutions for improved productivity",
     "hp_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
@@ -218,12 +231,13 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "hp_software": "Unlock new possibilities with our powerful software solutions",
     "lg_software": "Unlock new possibilities with our powerful software solutions",
     "lenovo_software": "Unlock new possibilities with our powerful software solutions",
+    "epson_software": "Unlock new possibilities with our powerful software solutions",
+    "canon_software": "Unlock new possibilities with our powerful software solutions",
 
-
-    "storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
-    "hp_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
-    "lg_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
-    "lenovo_storage_&_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+    "storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+    "hp_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+    "lg_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+    "lenovo_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
 
 
     "supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
@@ -231,15 +245,18 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "lexmark_supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
     "xerox_supplies_&_accessories": "Print, secure and manage your business information with Xerox’s innovative imaging solutions.",
     "brother_supplies_&_accessories": "Print, secure and manage your business information with BROTHER’s innovative imaging solutions.",
+    "epson_supplies_&_accessories": "Print, secure and manage your business information with EPSON’s innovative imaging solutions.",
+    "canon_supplies_&_accessories": "Print, secure and manage your business information with Canon’s innovative imaging solutions.",
+    "lenovo_supplies_&_accessories": "Print, secure and manage your business information with Lenovo’s innovative imaging solutions.",
 
 
     "inkjet_printers": "Find the perfect printer for your needs and budget",
     "lexmark_inkjet_printers": "Find the perfect printer for your needs and budget",
     "hp_inkjet_printers": "Find the perfect printer for your needs and budget",
 
-    "laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
-    "lexmark_laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
-    "hp_laserjet_printers": "Experience lightning-fast performance with our laser jet printers",
+    "laser_printers": "Experience lightning-fast performance with our laser jet printers",
+    "lexmark_laser_printers": "Experience lightning-fast performance with our laser jet printers",
+    "hp_laser_printers": "Experience lightning-fast performance with our laser jet printers",
 
     "monitors_and_display": "Experience stunning clarity and color with our LG monitors",
     "lg_monitors_and_display": "Experience stunning clarity and color with our LG monitors",
@@ -260,10 +277,10 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "networking": const Color.fromRGBO(0, 107, 202, 1),
     "scanners": const Color.fromRGBO(4, 202, 131, 1),
     "software": const Color.fromRGBO(255, 153, 0, 1),
-    "storage_&_drives": const Color.fromRGBO(168, 7, 224, 1),
+    "storage_and_drives": const Color.fromRGBO(168, 7, 224, 1),
     "supplies_&_accessories": const Color.fromRGBO(0, 205, 119, 1),
     "inkjet_printers": const Color.fromRGBO(129, 124, 108, 1),
-    "laserjet_printers": const Color.fromRGBO(0, 133, 255, 1),
+    "laser_printers": const Color.fromRGBO(0, 133, 255, 1),
     "monitors_and_display": const Color.fromRGBO(255, 199, 0, 1),
     "flatbed_scanners": const Color.fromRGBO(4, 202, 131, 1),
     "sheetfed_scanners": const Color.fromRGBO(4, 202, 131, 1),
@@ -581,14 +598,31 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: const [
-                      Text(
+                    children:  [
+                      const Text(
                         "BEST SELLER",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
                         ),
                       ),
+                      const Spacer(),
+                      AppBarIcons(
+                          function: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: CategoryFeedsScreen(
+                                  target: 'All Products',
+                                  itemSearch: 'false',
+                                  store: widget.keyword,
+                                ),
+                              ),
+                            );
+                          },
+                          icon: Icons.arrow_forward),
+
                     ],
                   ),
                 ),
