@@ -41,6 +41,15 @@ class CheckoutResultPage extends StatefulWidget {
 
 class _CheckoutResultPageState extends State<CheckoutResultPage> {
 
+@override
+  void initState() {
+  setState(() {
+    
+  });
+  // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

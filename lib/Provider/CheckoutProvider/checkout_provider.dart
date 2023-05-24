@@ -13,6 +13,7 @@ import '../../Screens/Authentication/login.dart';
 import '../../Screens/Account/home_page.dart';
 import '../../Utils/routers.dart';
 import '../AuthProvider/auth_provider.dart';
+import '../StoreProvider/cart_provider.dart';
 
 class CheckoutProvider extends ChangeNotifier {
   ///Base Url
@@ -352,7 +353,19 @@ class CheckoutProvider extends ChangeNotifier {
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
                 String filteredString = response.body.replaceAll('"', '');
-                PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+
+                final isGuest = await DatabaseProvider().getData('is_guest');
+
+                if(isGuest == 'yes'){
+                  await AuthenticationProvider().initateGuest();
+                  CartProvider.getCartId();
+                  DatabaseProvider().setCartTotal(0, context);
+                }else{
+                  CartProvider.getCartId();
+                  DatabaseProvider().setCartTotal(0, context);
+                }
+
+                PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
                   firstName,
                   lastName,
                   email,
@@ -425,7 +438,18 @@ class CheckoutProvider extends ChangeNotifier {
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
                 String filteredString = response.body.replaceAll('"', '');
-                PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+
+                final isGuest = await DatabaseProvider().getData('is_guest');
+
+                if(isGuest == 'yes'){
+                  await AuthenticationProvider().initateGuest();
+                  CartProvider.getCartId();
+                  DatabaseProvider().setCartTotal(0, context);
+                }else{
+                  CartProvider.getCartId();
+                  DatabaseProvider().setCartTotal(0, context);
+                }
+                PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
                   firstName,
                   lastName,
                   email,
@@ -515,7 +539,17 @@ class CheckoutProvider extends ChangeNotifier {
             _resMessage = "Your order has been placed!";
             notifyListeners();
             String filteredString = response.body.replaceAll('"', '');
-            PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+
+            final isGuest = await DatabaseProvider().getData('is_guest');
+            if(isGuest == 'yes'){
+              await AuthenticationProvider().initateGuest();
+              CartProvider.getCartId();
+              DatabaseProvider().setCartTotal(0, context);
+            }else{
+              CartProvider.getCartId();
+              DatabaseProvider().setCartTotal(0, context);
+            }
+            PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
               firstName,
               lastName,
               email,
@@ -576,7 +610,17 @@ class CheckoutProvider extends ChangeNotifier {
             _resMessage = "Your order has been placed!";
             notifyListeners();
             String filteredString = response.body.replaceAll('"', '');
-            PageNavigator(ctx: context).nextPageOnly(page: CheckoutResultPage(
+
+            final isGuest = await DatabaseProvider().getData('is_guest');
+            if(isGuest == 'yes'){
+              await AuthenticationProvider().initateGuest();
+              CartProvider.getCartId();
+              DatabaseProvider().setCartTotal(0, context);
+            }else{
+              CartProvider.getCartId();
+              DatabaseProvider().setCartTotal(0, context);
+            }
+            PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
               firstName,
               lastName,
               email,
