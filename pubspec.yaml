@@ -148,6 +148,11 @@ flutter:
     - assets/images/stores/lenovo_shop_page_monitors.png
     - assets/images/stores/lenovo_shop_page_supplies_&_accessories.png
     - assets/images/stores/lenovo_shop_page_storage_&_drives.png
+    - assets/images/stores/lenovo_shop_page_monitors_and_display.png
+    - assets/images/stores/lenovo_shop_page_software.png
+    - assets/images/stores/lenovo_shop_page_peripherals.png
+    - assets/images/stores/lenovo_shop_page_desktop.png
+    - assets/images/stores/lenovo_shop_page_networking.png
     - assets/images/stores/lex_logo.png
     - assets/images/stores/Lexmark_banner.png
     - assets/images/stores/lexmark_store_banner.png
