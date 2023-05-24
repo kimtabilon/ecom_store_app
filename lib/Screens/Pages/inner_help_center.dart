@@ -141,8 +141,6 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
-
-
                           if (hide_Content['hide_shipping'] == false) Expanded(
                             flex: 6,
                             child:
@@ -210,8 +208,6 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
-
-
                           if (hide_Content['hide_return'] == false) Expanded(
                             flex: 6,
                             child:
@@ -295,7 +291,6 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
-
                           if (hide_Content['hide_refund'] == false) Expanded(
                             flex: 6,
                             child:
@@ -339,7 +334,6 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
-
                           if (hide_Content['hide_privacy'] == false) Expanded(
                             flex: 6,
                             child:
@@ -516,7 +510,6 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
-
                           if (hide_Content['hide_terms'] == false) Expanded(
                             flex: 6,
                             child:
@@ -1106,6 +1099,7 @@ setState(() {
                               ),
                             ),
                           ) else Container(),
+
                           Expanded(
                             flex: 4,
                             child: SizedBox(
@@ -1127,11 +1121,8 @@ setState(() {
                                             setState(() {
                                               hide_Content['hide_'+widget.activeList] = true;
                                               hide_Content.forEach((key, value) {
-
                                                   hide_Content[key] = true;
-
                                               });
-
                                               hide_Content['hide_'+list[index]['icon']] = false;
                                             });
                                           },
