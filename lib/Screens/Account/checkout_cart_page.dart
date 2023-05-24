@@ -197,7 +197,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
       _lastName.text = getData[0]['lastname']!;
 
       if(getData[0]['addresses'].length>0) {
-        _company.text = getData[0]['addresses'][0]!['company'] ?? "";
+        _company.text = getData[0]['addresses'][0]!['company'] ?? " ";
 
         if(getData[0]['addresses'][0]!['street'].length > 1){
           _address1.text = getData[0]['addresses'][0]!['street'][0] ?? "";
