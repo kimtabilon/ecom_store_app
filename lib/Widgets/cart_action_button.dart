@@ -31,39 +31,53 @@ class _CartActionButtonState extends State<CartActionButton> {
   bool _isAddingCart = false;
 
   void _getCurrentLocation() async {
-    Position position = await _determinePosition();
+    Position? position = await _determinePosition();
 
-    try{
-      Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
-      geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-    }catch(e){
 
+    if(position == null){
+      setState(() {
+        estimatedDay = "Location Permissions are denied";
+        locationLoading = true;
+      });
+    }else{
+      try{
+        Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
+        geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+      }catch(e){
+
+      }
+
+      List getDays = await ProductProvider.getDelivery(
+        sku: widget.product.sku!,
+        qty: widget.product.qty!,
+        lat: position.latitude.toString(),
+        lng: position.longitude.toString(),
+        state: geoCoding.address.state.toString(),
+        postal: geoCoding.address.postalCode.toString(),
+      );
+      setState(() {
+        estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
+        locationLoading = true;
+      });
     }
 
-    List getDays = await ProductProvider.getDelivery(
-      sku: widget.product.sku!,
-      qty: widget.product.qty!,
-      lat: position.latitude.toString(),
-      lng: position.longitude.toString(),
-      state: geoCoding.address.state.toString(),
-      postal: geoCoding.address.postalCode.toString(),
-    );
-    setState(() {
-      estimatedDay = getDays[0]['date'].toString();
-      locationLoading = true;
-    });
 
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position?> _determinePosition() async {
     permission = await Geolocator.checkPermission();
-    if(permission == LocationPermission.denied) {
+    if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
       permission = await Geolocator.requestPermission();
-      if(permission == LocationPermission.denied) {
-        return Future.error('Location Permissions are denied');
+      if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        return null;
+        // return Future.error('Location Permissions are denied');
       }
+    }else{
+      return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // print(permission);
+    // return null;
+    // return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   @override
@@ -176,7 +190,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                               );
 
                               setState(() {
-                                estimatedDay = getDays[0]['date'].toString();
+                                estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                                 locationLoading = true;
                               });
                             },
@@ -200,7 +214,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                         postal: _zipText.text.toString(),
                       );
                       setState(() {
-                        estimatedDay = getDays[0]['date'].toString();
+                        estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                         locationLoading = true;
                       });
                     },
@@ -214,7 +228,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                         RichText(
                           textAlign: TextAlign.right,
                           text: TextSpan(
-                            text: "Estimated Delivery Date:\n"+estimatedDay.toString(),
+                            text: estimatedDay.toString(),
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black

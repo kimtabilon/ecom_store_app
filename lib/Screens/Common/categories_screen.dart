@@ -153,7 +153,7 @@ class CategoriesScreen extends StatelessWidget {
                             context,
                             PageTransition(
                               type: PageTransitionType.fade,
-                              child: store['widget'],
+                              child: StoresInnerPage(store['title']),
                             ),
                           );
                         },

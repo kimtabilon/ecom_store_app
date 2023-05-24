@@ -178,7 +178,7 @@ class _ShopScreenState extends State<ShopScreen> {
 
                   BannerWidget('printers','PRINTERS',const Color.fromRGBO(255,165,0,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
                   BannerWidget('laptops','LAPTOPS',const Color.fromRGBO(242,0,0,1),'From PCs and tablets, to phones and smart devices, Lenovo offers smarter technology for all.'),
-                  BannerWidget('desktops','DESKTOP',const Color.fromRGBO(255,0,153,1),'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
+                  BannerWidget('desktop','DESKTOP',const Color.fromRGBO(255,0,153,1),'Expand your point of view with LG products and technology where you can see more and do more, clearly.'),
                   BannerWidget('monitors','MONITORS',const Color.fromRGBO(0,106,166,1),'Find the perfect Monitor for your needs and budget'),
                   BannerWidget('scanners','SCANNERS',const Color.fromRGBO(0,166,136,1),'Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.'),
                   BannerWidget('projectors','PROJECTORS',const Color.fromRGBO(36,0,255,1),'Bring the big screen home with our high-quality projectors'),
