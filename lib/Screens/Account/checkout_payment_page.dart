@@ -624,7 +624,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                               ),
                             )
                         ),
-                        customButton(
+                        /*customButton(
                           text: 'NEW ADDRESS',
                           tap: () {
                             setState(() {
@@ -640,7 +640,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                             });
                           },
                           context: context,
-                        ),
+                        ),*/
 
 
                       ],
