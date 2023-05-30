@@ -173,13 +173,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
     _zipcode.text = widget.zip;
     _number.text = widget.phone;
     //cardNumber = DatabaseProvider().getData('card');
-  }
 
-  @override
-  void setState(fn) {
-    if(mounted) {
-      super.setState(fn);
-    }
+    getBilling();
   }
 
   final SelectCards = {
@@ -202,6 +197,39 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
         for(var i=0; i<result.length; i++) {
           SelectCards[i.toString()]=result[i]['selection'];
           Cards[i.toString()]=result[i];
+        }
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+    }
+
+  }
+
+  final SelectBilling = {
+    'sameShipping':'My Billing and shipping are the same',
+    'newAddress':'New Address',
+  };
+  final Billings = {};
+  var UseBilling={};
+  String DefaultBilling = 'sameShipping';
+
+  Future<void> getBilling() async {
+    var customerId = await DatabaseProvider().getData('user_id');
+    if(customerId!=null) {
+      // var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=cards&customer_id='+customerId));
+      var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=billing&customer_id=294'));
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = jsonDecode(await response.stream.bytesToString());
+
+        for(var i=0; i<result.length; i++) {
+          SelectBilling[i.toString()]=result[i]['full'];
+          Billings[i.toString()]=result[i];
+        }
+        if (mounted) {
+          setState(() {});
         }
       }
       else {
@@ -328,12 +356,49 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                         },
                       )
                     ],) : const SizedBox(height: 1,),
-
-                    newAddress ? Column(
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child:  DropdownButton(
+                        isExpanded: true,
+                        elevation: 1,
+                        isDense: true,
+                        items: SelectBilling.entries
+                            .map<DropdownMenuItem<String>>(
+                                (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                              value: e.key,
+                              child: Text(e.value),
+                            ))
+                            .toList(),
+                        onChanged: (Value) {
+                          setState(() {
+                            if(Value!= "newAddress" && Value != "sameShipping"){
+                              UseBilling = Billings[Value];
+                              _email.text = Billings[Value]['email'];
+                              _firstName.text = Billings[Value]['firstname'];
+                              _lastName.text = Billings[Value]['lastname'];
+                              _address1.text = Billings[Value]['street'];
+                              _country.text = Billings[Value]['country_id'];
+                              _province.text = Billings[Value]['region'];
+                              _provinceCode.text = Billings[Value]['region_id'];
+                              _city.text = Billings[Value]['city'];
+                              _zipcode.text = Billings[Value]['postcode'];
+                              _number.text = Billings[Value]['telephone'];
+                            }
+                            print(Value);
+                            DefaultBilling = Value.toString();
+                          });
+                        },
+                        value: DefaultBilling,
+                      ),
+                    ),
+                    DefaultBilling=='newAddress' ? Column(
                       children: [
-
                         const SizedBox(height: 20),
-
                         Container(
                             alignment: Alignment.centerLeft,
                             child: Text("BILLING ADDRESS:",
