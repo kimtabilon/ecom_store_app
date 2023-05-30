@@ -657,19 +657,11 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         padding: const EdgeInsets.all(8),
                         itemCount: store['categories'].length,
                         itemBuilder: (BuildContext context, int index) {
-                          // print(widget.hpCategory[index]);
-                          print(widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase());
-
                           return BannerWidget(
                               widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase(),
                               store['categories'][index],
                               categoryColor[store['categories'][index].replaceAll(" ", "_").toString().toLowerCase()],
                               categoryDescription[widget.keyword.toLowerCase()+"_"+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase()]);
-
-                          // return Container(
-                          //   height: 50,
-                          //   child: Center(child: Text('Entry ${widget.hpCategory[index]}')),
-                          // );
                         }
                     ),
                   ],

@@ -50,37 +50,6 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
       print(response.reasonPhrase);
     }
     return 'success';
-    /*try {
-      var uri = Uri.https(
-          AppUrl.consoleUrl,
-          "api/v1/mailer/help-center/"
-      );
-      var response = await http.post(
-        uri,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'from': from,
-          'fname': fname,
-          'lname': lname,
-          'number': number,
-          'message': message,
-        }),
-      );
-
-      //var response = await http.get(uri);
-
-      var data = jsonDecode(response.body);
-
-      if (response.statusCode != 200) {
-        throw data["message"];
-      }
-      return data["image"];
-    } catch (error) {
-      log("An error occured $error");
-      throw error.toString();
-    }*/
   }
 
   Future<void> send() async {
@@ -92,17 +61,7 @@ class _HelpCenterFormState extends State<HelpCenterForm> {
     ||_recipientController.text.isEmpty){
       platformResponse = "All fields are required.";
     }else{
-      /*final Email email = Email(
-        body: "From: "+_fnameController.text +" "
-            +_lnameController.text
-            +" \n Email:"+_recipientController.text+" "
-            +" \n Contact No.:"+_contactController.text+" "
-            +" \n Message: "+_bodyController.text,
-        subject: 'Sent from Ecom Store App',
-        recipients: ["devteam@ecommercebusinessprime.com"],
-        attachmentPaths: attachments,
-        isHTML: isHTML,
-      );*/
+
       try {
         await mailer(_recipientController.text, _fnameController.text, _lnameController.text, _contactController.text, _bodyController.text);
         // await FlutterEmailSender.send(email);

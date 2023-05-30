@@ -5,7 +5,6 @@ import 'package:page_transition/page_transition.dart';
 import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Model/product_model.dart';
-import '../../Widgets/appbar_icons.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/feeds_grid.dart';
 import '../../Widgets/guest_bottom_appbar.dart';

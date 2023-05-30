@@ -1,24 +1,18 @@
+import 'dart:convert';
+
 import 'package:credit_card_form/credit_card_form.dart';
-import 'package:ecom_store_app/Screens/Account/home_page.dart';
-import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import '../../Model/cart_model.dart';
 import '../../Provider/CheckoutProvider/checkout_provider.dart';
 import '../../Provider/Database/db_provider.dart';
-import '../../Provider/StoreProvider/cart_provider.dart';
-import '../../Screens/Account/Local_widget/cart_view_container.dart';
-import '../../Screens/Account/add_cart_page.dart';
 import '../../Styles/colors.dart';
-import '../../Utils/routers.dart';
 import '../../Utils/snack_message.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
-import '../Authentication/splash.dart';
-import 'Local_widget/cart_item_list.dart';
 import 'cart_page.dart';
-import 'dart:io';
+import 'package:http/http.dart' as http;
+import '../../Constants/url.dart';
 
 
 class CheckoutPaymentPage extends StatefulWidget {
@@ -90,7 +84,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   final countryOption = {
     'US': 'United States',
   };
-
 
   final RegionId = {
     '0': 'Select State/Province',
@@ -164,23 +157,57 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   String? zipField;
   String? stateField;
 
-
   @override
   initState() {
+    super.initState();
+    _email.text = widget.email;
+    _firstName.text = widget.firstName;
+    _lastName.text = widget.lastName;
+    _address1.text = widget.address1;
+    _address2.text = widget.address2;
+    _address3.text = widget.address3;
+    _country.text = widget.country;
+    _province.text = widget.province;
+    _provinceCode.text = widget.provinceCode;
+    _city.text = widget.city;
+    _zipcode.text = widget.zip;
+    _number.text = widget.phone;
+    //cardNumber = DatabaseProvider().getData('card');
+  }
 
-      _email.text = widget.email;
-      _firstName.text = widget.firstName;
-      _lastName.text = widget.lastName;
-      _address1.text = widget.address1;
-      _address2.text = widget.address2;
-      _address3.text = widget.address3;
-      _country.text = widget.country;
-      _province.text = widget.province;
-      _provinceCode.text = widget.provinceCode;
-      _city.text = widget.city;
-      _zipcode.text = widget.zip;
-      _number.text = widget.phone;
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
 
+  final SelectCards = {
+    'newcard':'Add New Card'
+  };
+  final Cards = {};
+  var UseCard={};
+  String DefaultCard = 'newcard';
+
+  Future<void> getCards() async {
+    var customerId = await DatabaseProvider().getData('user_id');
+    if(customerId!=null) {
+      // var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=cards&customer_id='+customerId));
+      var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=cards&customer_id=294'));
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        var result = jsonDecode(await response.stream.bytesToString());
+
+        for(var i=0; i<result.length; i++) {
+          SelectCards[i.toString()]=result[i]['selection'];
+          Cards[i.toString()]=result[i];
+        }
+      }
+      else {
+        print(response.reasonPhrase);
+      }
+    }
 
   }
 
@@ -191,7 +218,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
         title: const Text('Shopping Cart'),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
                 context,
@@ -236,50 +263,76 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                               child: Text(e.value),
                             ))
                             .toList(),
-                        onChanged: (Value) {
-                          print(Value);
-                          setState(() {
-                            if(Value.toString() == "authnetcim"){
-                              creditOpt = true;
-                            }else{
-                              creditOpt = false;
-                            }
+                        onChanged: (Value) async {
+                          PayOption = Value.toString();
+                          setState(() { });
 
-                            PayOption = Value.toString();
-                          });
+                          if(Value.toString() == "authnetcim"){
+                            await getCards();
+                            creditOpt = true;
+                          }else{
+                            creditOpt = false;
+                          }
+                          setState(() { });
                         },
                         value: PayOption,
                       ),
                     ),
 
+                    creditOpt ? Column(children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child:  DropdownButton(
+                          isExpanded: true,
+                          items: SelectCards.entries
+                              .map<DropdownMenuItem<String>>(
+                                  (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                                value: e.key,
+                                child: Text(e.value),
+                              ))
+                              .toList(),
+                          onChanged: (Value) {
+                            setState(() {
+                              if(Value.toString() != "newcard"){
+                                UseCard = Cards[Value];
+                              }
 
-                    creditOpt ? CreditCardForm(
-                      theme: CreditCardLightTheme(),
-                      onChanged: (CreditCardResult result) {
-                        // print(result.cardNumber);
-                        // print(result.cardHolderName);
-                        // print(result.expirationMonth);
-                        // print(result.expirationYear);
-                        // print(result.cardType);
-                        // print(result.cvc);
-                        setState(() {
-                          cardNumber = result.cardNumber;
-                          expMonth = result.expirationMonth;
-                          expYear = result.expirationYear;
-                          cardCode = result.cvc;
-                          cardType = result.cardType.toString();
-                        });
-                      },
-                    ): Container(),
+                              DefaultCard = Value.toString();
+                            });
+                          },
+                          value: DefaultCard,
+                        ),
+                      ),
+                      CreditCardForm(
+                        cardNumberLabel: UseCard['cc_last_4']!=null ? 'XXXX-'+UseCard['cc_last_4'] : 'Card Number',
+                        cardHolderLabel: UseCard['cc_last_4']!=null ? UseCard['customer_firstname']+' '+UseCard['customer_lastname'] : 'Card Holder',
+                        expiredDateLabel: UseCard['cc_last_4']!=null ? UseCard['cc_exp_month']+'/'+UseCard['cc_exp_year'] : 'MM/YYYY',
+                        theme: CreditCardLightTheme(),
+                        onChanged: (CreditCardResult result) {
+                          DatabaseProvider().saveData('card',result.cardNumber);
 
+                          print(result.cardNumber);
 
-                    newAddress ?
+                          setState(() {
+                            cardNumber = result.cardNumber;
+                            expMonth = result.expirationMonth;
+                            expYear = result.expirationYear;
+                            cardCode = result.cvc;
+                            cardType = result.cardType.toString();
+                          });
+                        },
+                      )
+                    ],) : const SizedBox(height: 1,),
 
-
-                    Column(
+                    newAddress ? Column(
                       children: [
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
                         Container(
                             alignment: Alignment.centerLeft,
@@ -289,7 +342,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                   color: black,
                                   fontSize: 20,
                                 ))),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         customTextField(
                           title: 'Email Address',
@@ -321,12 +374,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           controller: _address3,
                           // hint: 'Enter your First Name',
                         ),
-                        // customTextField(
-                        //   title: 'Country',
-                        //   controller: _country,
-                        //   hint: 'Enter Country',
-                        // ),
-
                         Container(
                             alignment: Alignment.centerLeft,
                             child: Text("Country",
@@ -361,13 +408,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                             value: _country.text,
                           ),
                         ),
-
-                        // customTextField(
-                        //   title: 'State/Province',
-                        //   controller: _province,
-                        //   hint: 'Enter State/Province',
-                        // ),
-
                         Container(
                             alignment: Alignment.centerLeft,
                             child: Text("State/Province",
@@ -410,12 +450,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           controller: _city,
                           hint: 'Enter City',
                         ),
-                        // TextField(
-                        //   title: 'Zip/Postal Code',
-                        //   controller: _zipcode,
-                        //   hint: 'Enter Zip',
-                        //   onChanged: (value) => updateButtonState(value),
-                        // ),
                         Column(
                           children: [
                             Container(
@@ -438,7 +472,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                               child: TextFormField(
                                 controller: _zipcode,
                                 maxLines: 1,
-                                decoration: InputDecoration(hintText: 'Enter Zip', border: InputBorder.none),
+                                decoration: const InputDecoration(hintText: 'Enter Zip', border: InputBorder.none),
                                 onChanged: (value){
                                   setState(() {
                                     zipField = value.toString();
@@ -449,9 +483,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                             )
                           ],
                         ),
-
-
-
                         customTextField(
                           title: 'Phone Number',
                           controller: _number,
@@ -471,7 +502,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                   color: black,
                                   fontSize: 20,
                                 ))),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
 
                         RichText(
                             textAlign: TextAlign.left,
@@ -548,15 +579,12 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
 
                       ],
-                    )
-                    ,
-
-
+                    ),
 
                     ///Button
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
-                          WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (auth.resMessage != '') {
                               showMessage(
                                   message: auth.resMessage, context: context);
@@ -568,104 +596,96 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           return customButton(
                             text: 'PLACE ORDER',
                             tap: () {
-                                  if (PayOption == "authnetcim") {
+                              if (PayOption == "authnetcim") {
 
 
-                                    if (cardNumber.toString().isEmpty ||
-                                        expMonth.toString().isEmpty ||
-                                        expYear.toString().isEmpty ||
-                                        cardCode.toString().isEmpty ||
-                                        cardType.toString().isEmpty ||
-                                        _email.text.isEmpty ||
-                                        _firstName.text.isEmpty ||
-                                        _lastName.text.isEmpty ||
-                                        _country.text.isEmpty ||
-                                        _province.text.isEmpty ||
-                                        _provinceCode.text == '0' ||
-                                        _number.text.isEmpty ||
-                                        _address1.text.isEmpty ||
-                                        _city.text.isEmpty ||
-                                        _zipcode.text.isEmpty) {
+                                if (cardNumber.toString().isEmpty ||
+                                    expMonth.toString().isEmpty ||
+                                    expYear.toString().isEmpty ||
+                                    cardCode.toString().isEmpty ||
+                                    cardType.toString().isEmpty ||
+                                    _email.text.isEmpty ||
+                                    _firstName.text.isEmpty ||
+                                    _lastName.text.isEmpty ||
+                                    _country.text.isEmpty ||
+                                    _province.text.isEmpty ||
+                                    _provinceCode.text == '0' ||
+                                    _number.text.isEmpty ||
+                                    _address1.text.isEmpty ||
+                                    _city.text.isEmpty ||
+                                    _zipcode.text.isEmpty) {
 
-                                        showMessage(
-                                            message: "All fields are required",
-                                            context: context);
+                                  showMessage(
+                                      message: "All fields are required",
+                                      context: context);
 
-                                    }else{
+                                }else{
 
-                                      auth.paymentInfo(
-                                          firstName: _firstName.text.trim(),
-                                          lastName: _lastName.text.trim(),
-                                          email: _email.text.trim(),
-                                          address1: _address1.text.trim(),
-                                          address2: _address2.text.trim(),
-                                          address3: _address3.text.trim(),
-                                          country: _country.text.trim(),
-                                          province: _province.text.trim(),
-                                          provinceCode: _provinceCode.text.trim(),
-                                          city: _city.text.trim(),
-                                          zip: _zipcode.text.trim(),
-                                          phone : _number.text.trim(),
-                                          paymentOption : PayOption.trim(),
-                                          cardNumber: cardNumber,
-                                          expMonth: expMonth,
-                                          expYear: expYear,
-                                          cardCode: cardCode,
-                                          cardType: cardType,
-                                          context: context);
+                                  auth.paymentInfo(
+                                      firstName: _firstName.text.trim(),
+                                      lastName: _lastName.text.trim(),
+                                      email: _email.text.trim(),
+                                      address1: _address1.text.trim(),
+                                      address2: _address2.text.trim(),
+                                      address3: _address3.text.trim(),
+                                      country: _country.text.trim(),
+                                      province: _province.text.trim(),
+                                      provinceCode: _provinceCode.text.trim(),
+                                      city: _city.text.trim(),
+                                      zip: _zipcode.text.trim(),
+                                      phone : _number.text.trim(),
+                                      paymentOption : PayOption.trim(),
+                                      cardNumber: cardNumber,
+                                      expMonth: expMonth,
+                                      expYear: expYear,
+                                      cardCode: cardCode,
+                                      cardType: cardType,
+                                      context: context);
+                                }
 
+                              } else {
 
+                                if (
+                                _email.text.isEmpty ||
+                                    _firstName.text.isEmpty ||
+                                    _lastName.text.isEmpty ||
+                                    _country.text.isEmpty ||
+                                    _province.text.isEmpty ||
+                                    _provinceCode.text == '0' ||
+                                    _number.text.isEmpty ||
+                                    _address1.text.isEmpty ||
+                                    _city.text.isEmpty ||
+                                    _zipcode.text.isEmpty) {
 
-                                    }
+                                  showMessage(
+                                      message: "All fields are required",
+                                      context: context);
 
-
-
-
-                                  } else {
-
-                                    if (
-                                        _email.text.isEmpty ||
-                                        _firstName.text.isEmpty ||
-                                        _lastName.text.isEmpty ||
-                                        _country.text.isEmpty ||
-                                        _province.text.isEmpty ||
-                                        _provinceCode.text == '0' ||
-                                        _number.text.isEmpty ||
-                                        _address1.text.isEmpty ||
-                                        _city.text.isEmpty ||
-                                        _zipcode.text.isEmpty) {
-
-                                      showMessage(
-                                          message: "All fields are required",
-                                          context: context);
-
-                                    }else{
-                                      auth.paymentInfo(
-
-
-                                          firstName: _firstName.text.trim(),
-                                          lastName: _lastName.text.trim(),
-                                          email: _email.text.trim(),
-                                          address1: _address1.text.trim(),
-                                          address2: _address2.text.trim(),
-                                          address3: _address3.text.trim(),
-                                          country: _country.text.trim(),
-                                          province: _province.text.trim(),
-                                          provinceCode: _provinceCode.text.trim(),
-                                          city: _city.text.trim(),
-                                          zip: _zipcode.text.trim(),
-                                          phone : _number.text.trim(),
-                                          paymentOption : PayOption.trim(),
-                                          cardNumber: cardNumber,
-                                          expMonth: expMonth,
-                                          expYear: expYear,
-                                          cardCode: cardCode,
-                                          cardType: cardType,
-                                          context: context);
-                                    }
+                                }else{
+                                  auth.paymentInfo(
+                                      firstName: _firstName.text.trim(),
+                                      lastName: _lastName.text.trim(),
+                                      email: _email.text.trim(),
+                                      address1: _address1.text.trim(),
+                                      address2: _address2.text.trim(),
+                                      address3: _address3.text.trim(),
+                                      country: _country.text.trim(),
+                                      province: _province.text.trim(),
+                                      provinceCode: _provinceCode.text.trim(),
+                                      city: _city.text.trim(),
+                                      zip: _zipcode.text.trim(),
+                                      phone : _number.text.trim(),
+                                      paymentOption : PayOption.trim(),
+                                      cardNumber: cardNumber,
+                                      expMonth: expMonth,
+                                      expYear: expYear,
+                                      cardCode: cardCode,
+                                      cardType: cardType,
+                                      context: context);
+                                }
 
 
-                                  }
+                              }
 
 
                             },
@@ -688,4 +708,6 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
       ),*/
     );
   }
+
+
 }

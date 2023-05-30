@@ -52,20 +52,21 @@ class _FeedsScreenState extends State<FeedsScreen> {
 
   Future<void> getProducts() async {
     productsList = [];
+    _isLoading=true;
     if(widget.itemSearch == "true"){
       productsList = await ProductProvider.searchProducts(
         target: widget.target,
         limit: limit.toString(),
       );
+      _isLoading=false;
     }else{
       productsList = await ProductProvider.getAllProducts(
         store: widget.store,
         target: widget.target,
         limit: limit.toString(),
       );
+      _isLoading=false;
     }
-
-
     // print(productsList);
     setState(() {});
   }
@@ -95,7 +96,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 ],
               ),
             ),
-            productsList.isEmpty ? const Center( child: CircularProgressIndicator(), ) : GridView.builder(
+            _isLoading ? const Center(child: CircularProgressIndicator()) : productsList.isEmpty ? const Center( child: Text('Product not found.'), ) : GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: productsList.length,
@@ -110,8 +111,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         value: productsList[index],
                         child: const FeedsWidget());
                   }),
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator()),
+
           ],
         ),
       ),
