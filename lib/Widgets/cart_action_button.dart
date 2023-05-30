@@ -26,13 +26,14 @@ class _CartActionButtonState extends State<CartActionButton> {
   late Geocoding geoCoding;
   final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
+  String estQTY = "1";
   bool locationLoading = false;
   bool isChangeZip = false;
   bool _isAddingCart = false;
 
-  void _getCurrentLocation() async {
+  void getCurrentLocation(int count) async {
     Position? position = await _determinePosition();
-
+    widget.product.qty = count.toString();
     if(await DatabaseProvider().getData('eta') != ""){
       String etaText = await DatabaseProvider().getData('eta');
       setState(() {
@@ -64,7 +65,7 @@ class _CartActionButtonState extends State<CartActionButton> {
         DatabaseProvider().saveData('lat',position!.latitude.toString());
         DatabaseProvider().saveData('long',position!.longitude.toString());
         DatabaseProvider().saveData('eta_sku',widget.product.sku!);
-        DatabaseProvider().saveData('eta_qty',widget.product.qty!);
+        DatabaseProvider().saveData('eta_qty','1');
         List getDays = await ProductProvider.getDelivery(
           sku: widget.product.sku!,
           qty: widget.product.qty!,
@@ -73,6 +74,7 @@ class _CartActionButtonState extends State<CartActionButton> {
           state: '0',
           postal: '0',
         );
+        print("updated");
         DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
         setState(() {
           estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
@@ -117,12 +119,13 @@ class _CartActionButtonState extends State<CartActionButton> {
 
   @override
   void initState() {
-    _getCurrentLocation();
+    getCurrentLocation(1);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
+
     final token = DatabaseProvider().getData('token');
 
     return Align(
@@ -211,7 +214,7 @@ class _CartActionButtonState extends State<CartActionButton> {
 
                               List getDays = await ProductProvider.getDelivery(
                                 sku: widget.product.sku!,
-                                qty: widget.product.qty!,
+                                qty: '1',
                                 lat: '0',
                                 lng: '0',
                                 state: '0',
@@ -236,7 +239,7 @@ class _CartActionButtonState extends State<CartActionButton> {
 
                       List getDays = await ProductProvider.getDelivery(
                         sku: widget.product.sku!,
-                        qty: widget.product.qty!,
+                        qty: '1',
                         lat: '0',
                         lng: '0',
                         state: '0',
@@ -301,12 +304,12 @@ class _CartActionButtonState extends State<CartActionButton> {
                         bottomLeft: Radius.circular(5)),
                   ),
                   child: Row(
-                    children: const [
+                    children:  [
                       Text(
                         'QTY: ',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      DropdownQTY(),
+                      DropdownQTY(getCurrentLocation),
                     ],
                   ),
                 ),
