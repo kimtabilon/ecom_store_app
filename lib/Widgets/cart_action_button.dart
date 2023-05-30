@@ -31,9 +31,12 @@ class _CartActionButtonState extends State<CartActionButton> {
   bool _isAddingCart = false;
 
   void _getCurrentLocation() async {
+    Position? position = await _determinePosition();
 
-    if(await DatabaseProvider().getData('eta') == "") {
-      Position? position = await _determinePosition();
+    if(await DatabaseProvider().getData('eta') == ""
+    || await DatabaseProvider().getData('lat') != position!.latitude.toString()
+        || await DatabaseProvider().getData('long') != position!.longitude.toString()) {
+      // Position? position = await _determinePosition();
 
 
       if(position == null){
@@ -48,7 +51,8 @@ class _CartActionButtonState extends State<CartActionButton> {
         }catch(e){
 
         }
-
+        DatabaseProvider().saveData('lat',position!.latitude.toString());
+        DatabaseProvider().saveData('long',position!.longitude.toString());
         List getDays = await ProductProvider.getDelivery(
           sku: widget.product.sku!,
           qty: widget.product.qty!,
