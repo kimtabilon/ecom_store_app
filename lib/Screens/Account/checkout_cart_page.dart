@@ -377,10 +377,12 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                                     message: "All fields are required",
                                     context: context);
                               } else {
+                                if (mounted) {
+                                  setState(() {
+                                    isButtonDisabled = true;
+                                  });
+                                }
 
-                                setState(() {
-                                  isButtonDisabled = true;
-                                });
 
                                 auth.shippingAndBillingInfo(
                                     firstName: _firstName.text.trim(),
@@ -522,13 +524,15 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                             ))
                             .toList(),
                         onChanged: (Value) {
-                          setState(() {
-                            _province.text = RegionId[Value].toString();
-                            _provinceCode.text = Value.toString();
+                          if (mounted) {
+                            setState(() {
+                              _province.text = RegionId[Value].toString();
+                              _provinceCode.text = Value.toString();
 
-                            stateField = RegionId[Value].toString();
-                            _getCurrentLocation();
-                          });
+                              stateField = RegionId[Value].toString();
+                              _getCurrentLocation();
+                            });
+                          }
                         },
                         value: _provinceCode.text,
 
