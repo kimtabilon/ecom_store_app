@@ -1139,12 +1139,15 @@ setState(() {
                                             ),
                                           ),
 
-                                          label:Text(list[index]['title'].toString(),
-                                              // textScaleFactor: ScaleSize.textScaleFactor(context!),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 10,
-                                              )),
+                                          label:Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(list[index]['title'].toString(),
+                                                // textScaleFactor: ScaleSize.textScaleFactor(context!),
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 10,
+                                                )),
+                                          ),
 
                                           // label: Image.asset('assets/images/static/help_center/'+list[index]['icon']+'.png'),
                                         ),

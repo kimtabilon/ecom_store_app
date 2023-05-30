@@ -31,35 +31,46 @@ class _CartActionButtonState extends State<CartActionButton> {
   bool _isAddingCart = false;
 
   void _getCurrentLocation() async {
-    Position? position = await _determinePosition();
+
+    if(await DatabaseProvider().getData('eta') == "") {
+      Position? position = await _determinePosition();
 
 
-    if(position == null){
-      setState(() {
-        estimatedDay = "Location Permissions are denied";
-        locationLoading = true;
-      });
-    }else{
-      try{
-        Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
-        geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-      }catch(e){
+      if(position == null){
+        setState(() {
+          estimatedDay = "Location Permissions are denied";
+          locationLoading = true;
+        });
+      }else{
+        try{
+          // Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
+          // geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+        }catch(e){
 
+        }
+
+        List getDays = await ProductProvider.getDelivery(
+          sku: widget.product.sku!,
+          qty: widget.product.qty!,
+          lat: position.latitude.toString(),
+          lng: position.longitude.toString(),
+          state: '0',
+          postal: '0',
+        );
+        DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
+        setState(() {
+          estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
+          locationLoading = true;
+        });
       }
-
-      List getDays = await ProductProvider.getDelivery(
-        sku: widget.product.sku!,
-        qty: widget.product.qty!,
-        lat: position.latitude.toString(),
-        lng: position.longitude.toString(),
-        state: geoCoding.address.state.toString(),
-        postal: geoCoding.address.postalCode.toString(),
-      );
+    }else{
+      String etaText = await DatabaseProvider().getData('eta');
       setState(() {
-        estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
+        estimatedDay = "Estimated Delivery Date:\n"+ etaText;
         locationLoading = true;
       });
     }
+
 
 
   }

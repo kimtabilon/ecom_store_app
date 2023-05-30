@@ -289,95 +289,105 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
   Widget BannerWidget(image, label, bg, desc) {
     return Column(
       children: [
-        const SizedBox(
-          height: 20,
-        ),
 
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/stores/" + image + ".png"),
-                fit: BoxFit.cover),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                customTextStores(
-                  description: desc,
-                  context: context,
-                  textAlign: TextAlign.start,
-                  align: Alignment.centerLeft,
-                  axis: CrossAxisAlignment.start,
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        // Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(color: Colors.white, fontSize: 18),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  onSurface: Colors.red,
-                  backgroundColor: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: CategoryFeedsScreen(
-                        target: label,
-                        itemSearch: 'false',
-                        store: widget.keyword,
-                      ),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Shop Now',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-            ],
-          ),
-          color: bg,
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
         FutureBuilder<List<ProductModel>>(
             future: ProductProvider.getAllProducts(
                 store: widget.keyword, target: label, limit: "4"),
             builder: ((context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: LinearProgressIndicator(),
+                // return const Center(
+                //   child: LinearProgressIndicator(),
+                // );
+                return  Center(
+                  child: Container(
+                  ),
                 );
               } else if (snapshot.hasError) {
                 return Center(
                   child: Text("An error occurred ${snapshot.error}"),
                 );
-              } else if (snapshot.data == null) {
-                return const Center(
-                  child: Text("No products has been added yet"),
+              } else if (snapshot.data!.isEmpty) {
+                return  Center(
+                  child: Container(
+                  ),
                 );
               }
-              return FeedsGridWidget(productsList: snapshot.data!);
+              return Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/stores/" + image + ".png"),
+                          fit: BoxFit.cover),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          customTextStores(
+                            description: desc,
+                            context: context,
+                            textAlign: TextAlign.start,
+                            align: Alignment.centerLeft,
+                            axis: CrossAxisAlignment.start,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Image.asset("assets/images/shop_"+image+".png",width: double.infinity, fit: BoxFit.fill,),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          label,
+                          style: const TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            onSurface: Colors.red,
+                            backgroundColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: CategoryFeedsScreen(
+                                  target: label,
+                                  itemSearch: 'false',
+                                  store: widget.keyword,
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Shop Now',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                    color: bg,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  FeedsGridWidget(productsList: snapshot.data!),
+                ],
+              );
             })),
       ],
     );
@@ -595,37 +605,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children:  [
-                      const Text(
-                        "BEST SELLER",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                      ),
-                      const Spacer(),
-                      AppBarIcons(
-                          function: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: CategoryFeedsScreen(
-                                  target: 'All Products',
-                                  itemSearch: 'false',
-                                  store: widget.keyword,
-                                ),
-                              ),
-                            );
-                          },
-                          icon: Icons.arrow_forward),
 
-                    ],
-                  ),
-                ),
                 FutureBuilder<List<ProductModel>>(
                     future: ProductProvider.getBestSellerProductsStore(
                         store: widget.keyword, limit: "4"),
@@ -639,12 +619,48 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         return Center(
                           child: Text("An error occurred ${snapshot.error}"),
                         );
-                      } else if (snapshot.data == null) {
+                      } else if (snapshot.data!.isEmpty) {
                         return const Center(
                           child: Text("No products has been added yet"),
                         );
+                      }else{
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children:  [
+                                  const Text(
+                                    "BEST SELLER",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  AppBarIcons(
+                                      function: () {
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: CategoryFeedsScreen(
+                                              target: 'All Products',
+                                              itemSearch: 'false',
+                                              store: widget.keyword,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icons.arrow_forward),
+
+                                ],
+                              ),
+                            ),
+                            FeedsGridWidget(productsList: snapshot.data!)
+                          ],
+                        );
                       }
-                      return FeedsGridWidget(productsList: snapshot.data!);
                     })),
                 const Divider(color: Colors.white10),
 
@@ -657,6 +673,9 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
                         padding: const EdgeInsets.all(8),
                         itemCount: store['categories'].length,
                         itemBuilder: (BuildContext context, int index) {
+                          if(true){
+
+                          }
                           return BannerWidget(
                               widget.keyword.toLowerCase()+'_shop_page_'+store['categories'][index].replaceAll(" ", "_").toString().toLowerCase(),
                               store['categories'][index],
