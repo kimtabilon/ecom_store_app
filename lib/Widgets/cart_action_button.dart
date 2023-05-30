@@ -33,9 +33,19 @@ class _CartActionButtonState extends State<CartActionButton> {
   void _getCurrentLocation() async {
     Position? position = await _determinePosition();
 
+    if(await DatabaseProvider().getData('eta') != ""){
+      String etaText = await DatabaseProvider().getData('eta');
+      setState(() {
+        estimatedDay = "Estimated Delivery Date:\n"+ etaText;
+        locationLoading = true;
+      });
+    }
+
     if(await DatabaseProvider().getData('eta') == ""
     || await DatabaseProvider().getData('lat') != position!.latitude.toString()
-        || await DatabaseProvider().getData('long') != position!.longitude.toString()) {
+        || await DatabaseProvider().getData('long') != position!.longitude.toString()
+        || await DatabaseProvider().getData('eta_sku') != widget.product.sku!
+        || await DatabaseProvider().getData('eta_qty') != widget.product.qty!) {
       // Position? position = await _determinePosition();
 
 
@@ -53,6 +63,8 @@ class _CartActionButtonState extends State<CartActionButton> {
         }
         DatabaseProvider().saveData('lat',position!.latitude.toString());
         DatabaseProvider().saveData('long',position!.longitude.toString());
+        DatabaseProvider().saveData('eta_sku',widget.product.sku!);
+        DatabaseProvider().saveData('eta_qty',widget.product.qty!);
         List getDays = await ProductProvider.getDelivery(
           sku: widget.product.sku!,
           qty: widget.product.qty!,
