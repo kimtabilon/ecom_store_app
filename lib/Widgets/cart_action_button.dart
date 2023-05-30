@@ -65,7 +65,7 @@ class _CartActionButtonState extends State<CartActionButton> {
         DatabaseProvider().saveData('lat',position!.latitude.toString());
         DatabaseProvider().saveData('long',position!.longitude.toString());
         DatabaseProvider().saveData('eta_sku',widget.product.sku!);
-        DatabaseProvider().saveData('eta_qty','1');
+        DatabaseProvider().saveData('eta_qty',widget.product.qty!);
         List getDays = await ProductProvider.getDelivery(
           sku: widget.product.sku!,
           qty: widget.product.qty!,
@@ -214,7 +214,7 @@ class _CartActionButtonState extends State<CartActionButton> {
 
                               List getDays = await ProductProvider.getDelivery(
                                 sku: widget.product.sku!,
-                                qty: '1',
+                                qty: widget.product.qty!,
                                 lat: '0',
                                 lng: '0',
                                 state: '0',
@@ -239,7 +239,7 @@ class _CartActionButtonState extends State<CartActionButton> {
 
                       List getDays = await ProductProvider.getDelivery(
                         sku: widget.product.sku!,
-                        qty: '1',
+                        qty: widget.product.qty!,
                         lat: '0',
                         lng: '0',
                         state: '0',
