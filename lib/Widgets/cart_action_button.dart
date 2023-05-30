@@ -201,7 +201,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                                 state: '0',
                                 postal: _zipText.text.toString(),
                               );
-
+                              DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
                               setState(() {
                                 estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                                 locationLoading = true;
@@ -226,6 +226,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                         state: '0',
                         postal: _zipText.text.toString(),
                       );
+                      DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
                       setState(() {
                         estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                         locationLoading = true;
