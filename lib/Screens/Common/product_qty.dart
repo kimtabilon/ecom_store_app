@@ -50,7 +50,8 @@ class MyController extends GetxController {
 }
 
 class DropdownQTY extends StatefulWidget {
-  const DropdownQTY({Key? key}) : super(key: key);
+  final ValueChanged<int> update;
+  const DropdownQTY(this.update,{Key? key}) : super(key: key);
   @override
   State<DropdownQTY> createState() => _DropdownQTYState();
 }
@@ -98,6 +99,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
               unitCodeCtrlFocusNode.requestFocus();
+              widget.update(newQTY);
             });
           },
         );
@@ -129,6 +131,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
               unitCodeCtrlFocusNode.requestFocus();
+              widget.update(newQTY);
             },
           ),
         );
@@ -165,6 +168,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
               int newQTY = int.parse(newValue!);
               c.qty.value = newQTY;
               unitCodeCtrlFocusNode.requestFocus();
+              widget.update(newQTY);
             });
           },
         );
@@ -188,6 +192,20 @@ class _DropdownQTYState extends State<DropdownQTY> {
                     color: Colors.white
                 )
             ),
+            onChanged: (String str) {
+
+              int newQTY = int.parse(str!);
+              c.qty.value = newQTY;
+              widget.update(newQTY);
+
+              if(int.parse(str) > 9){
+                setState(() {
+                  dropdownValue = str;
+                });
+                unitCodeCtrlFocusNode.requestFocus();
+              }
+
+            },
             onSubmitted: (String str) {
               setState(() {
                 dropdownValue = str;
@@ -195,6 +213,7 @@ class _DropdownQTYState extends State<DropdownQTY> {
               unitCodeCtrlFocusNode.requestFocus();
               int newQTY = int.parse(str!);
               c.qty.value = newQTY;
+              widget.update(newQTY);
             },
           ),
         );

@@ -26,40 +26,69 @@ class _CartActionButtonState extends State<CartActionButton> {
   late Geocoding geoCoding;
   final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
+  String estQTY = "1";
   bool locationLoading = false;
   bool isChangeZip = false;
   bool _isAddingCart = false;
 
-  void _getCurrentLocation() async {
+  void getCurrentLocation(int count) async {
     Position? position = await _determinePosition();
-
-
-    if(position == null){
+    widget.product.qty = count.toString();
+    if(await DatabaseProvider().getData('eta') != ""){
+      String etaText = await DatabaseProvider().getData('eta');
       setState(() {
-        estimatedDay = "Location Permissions are denied";
-        locationLoading = true;
-      });
-    }else{
-      try{
-        Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
-        geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
-      }catch(e){
-
-      }
-
-      List getDays = await ProductProvider.getDelivery(
-        sku: widget.product.sku!,
-        qty: widget.product.qty!,
-        lat: position.latitude.toString(),
-        lng: position.longitude.toString(),
-        state: geoCoding.address.state.toString(),
-        postal: geoCoding.address.postalCode.toString(),
-      );
-      setState(() {
-        estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
+        estimatedDay = "Estimated Delivery Date:\n"+ etaText;
         locationLoading = true;
       });
     }
+
+    if(await DatabaseProvider().getData('eta') == ""
+    || await DatabaseProvider().getData('lat') != position!.latitude.toString()
+        || await DatabaseProvider().getData('long') != position!.longitude.toString()
+        || await DatabaseProvider().getData('eta_sku') != widget.product.sku!
+        || await DatabaseProvider().getData('eta_qty') != widget.product.qty!) {
+      // Position? position = await _determinePosition();
+
+
+      if(position == null){
+        setState(() {
+          estimatedDay = "Location Permissions are denied";
+          locationLoading = true;
+        });
+      }else{
+        try{
+          // Coordinate coordinate = Coordinate(latitude: position.latitude, longitude: position.longitude);
+          // geoCoding = await NominatimGeocoding.to.reverseGeoCoding(coordinate);
+        }catch(e){
+
+        }
+        DatabaseProvider().saveData('lat',position!.latitude.toString());
+        DatabaseProvider().saveData('long',position!.longitude.toString());
+        DatabaseProvider().saveData('eta_sku',widget.product.sku!);
+        DatabaseProvider().saveData('eta_qty',widget.product.qty!);
+        List getDays = await ProductProvider.getDelivery(
+          sku: widget.product.sku!,
+          qty: widget.product.qty!,
+          lat: position.latitude.toString(),
+          lng: position.longitude.toString(),
+          state: '0',
+          postal: '0',
+        );
+        print("updated");
+        DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
+        setState(() {
+          estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
+          locationLoading = true;
+        });
+      }
+    }else{
+      String etaText = await DatabaseProvider().getData('eta');
+      setState(() {
+        estimatedDay = "Estimated Delivery Date:\n"+ etaText;
+        locationLoading = true;
+      });
+    }
+
 
 
   }
@@ -90,12 +119,13 @@ class _CartActionButtonState extends State<CartActionButton> {
 
   @override
   void initState() {
-    _getCurrentLocation();
+    getCurrentLocation(1);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     final MyController a = Get.put(MyController());
+
     final token = DatabaseProvider().getData('token');
 
     return Align(
@@ -190,7 +220,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                                 state: '0',
                                 postal: _zipText.text.toString(),
                               );
-
+                              DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
                               setState(() {
                                 estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                                 locationLoading = true;
@@ -215,6 +245,7 @@ class _CartActionButtonState extends State<CartActionButton> {
                         state: '0',
                         postal: _zipText.text.toString(),
                       );
+                      DatabaseProvider().saveData('eta',getDays[0]['date'].toString());
                       setState(() {
                         estimatedDay = "Estimated Delivery Date:\n"+getDays[0]['date'].toString();
                         locationLoading = true;
@@ -273,12 +304,12 @@ class _CartActionButtonState extends State<CartActionButton> {
                         bottomLeft: Radius.circular(5)),
                   ),
                   child: Row(
-                    children: const [
+                    children:  [
                       Text(
                         'QTY: ',
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
-                      DropdownQTY(),
+                      DropdownQTY(getCurrentLocation),
                     ],
                   ),
                 ),
