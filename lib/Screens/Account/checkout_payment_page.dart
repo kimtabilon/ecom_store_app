@@ -187,8 +187,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   Future<void> getCards() async {
     var customerId = await DatabaseProvider().getData('user_id');
     if(customerId!=null) {
-      // var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=cards&customer_id='+customerId));
-      var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=cards&customer_id=294'));
+      var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=cards&customer_id='+customerId));
+      // var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=cards&customer_id=294'));
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
@@ -217,8 +217,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   Future<void> getBilling() async {
     var customerId = await DatabaseProvider().getData('user_id');
     if(customerId!=null) {
-      // var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=cards&customer_id='+customerId));
-      var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=billing&customer_id=294'));
+      var request = http.Request('GET', Uri.parse('https://'+AppUrl.storeUrl+'/pub/app/api.php?request=billing&customer_id='+customerId));
+      // var request = http.Request('GET', Uri.parse('https://ecommercebusinessprime.com/pub/app/api.php?request=billing&customer_id=294'));
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
