@@ -182,6 +182,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   };
   final Cards = {};
   var UseCard={};
+  bool saveCard = false;
   String DefaultCard = 'newcard';
 
   Future<void> getCards() async {
@@ -354,6 +355,16 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                             cardType = result.cardType.toString();
                           });
                         },
+                      ),
+                      CheckboxListTile(
+                        title: const Text("Save Card for next time"),
+                        value: saveCard,
+                        onChanged: (newValue) {
+                          setState(() {
+                            saveCard = newValue!;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
                       )
                     ],) : const SizedBox(height: 1,),
                     Container(
@@ -388,6 +399,19 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                               _city.text = Billings[Value]['city'];
                               _zipcode.text = Billings[Value]['postcode'];
                               _number.text = Billings[Value]['telephone'];
+                            } else {
+                              _email.text = widget.email;
+                              _firstName.text = widget.firstName;
+                              _lastName.text = widget.lastName;
+                              _address1.text = widget.address1;
+                              _address2.text = widget.address2;
+                              _address3.text = widget.address3;
+                              _country.text = widget.country;
+                              _province.text = widget.province;
+                              _provinceCode.text = widget.provinceCode;
+                              _city.text = widget.city;
+                              _zipcode.text = widget.zip;
+                              _number.text = widget.phone;
                             }
                             print(Value);
                             DefaultBilling = Value.toString();
@@ -705,6 +729,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                       expYear: expYear,
                                       cardCode: cardCode,
                                       cardType: cardType,
+                                      saveCard: saveCard,
                                       context: context);
                                 }
 

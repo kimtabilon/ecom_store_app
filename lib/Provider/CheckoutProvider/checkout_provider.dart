@@ -252,6 +252,7 @@ class CheckoutProvider extends ChangeNotifier {
     String? expYear,
     String? cardCode,
     String? cardType,
+    bool? saveCard,
     BuildContext? context,
   }) async {
     _isLoading = true;
@@ -323,7 +324,7 @@ class CheckoutProvider extends ChangeNotifier {
                     "cc_exp_year": "20"+expYear.toString(),
                     "cc_last_4": last_4,
                     "cc_type": cardType,
-                    "save": false
+                    "save": saveCard
                   }
                 },
                 "billing_address": {
@@ -408,7 +409,7 @@ class CheckoutProvider extends ChangeNotifier {
                     "cc_exp_year": "20"+expYear.toString(),
                     "cc_last_4": last_4,
                     "cc_type": cardType,
-                    "save": false
+                    "save": saveCard
                   }
                 },
                 "billing_address": {

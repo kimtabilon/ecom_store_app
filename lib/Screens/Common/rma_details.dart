@@ -99,6 +99,7 @@ class _RMADetailsState extends State<RMADetails> {
                 int idx = widget.order.items!.indexOf(item);
                 return_items[idx]['sku'] = item.sku;
                 return_items[idx]['name'] = item.name;
+                return_items[idx]['ordered_qty'] = item.qty_ordered.toString();
                 return_items[idx]['order'] = widget.order.id;
                 return Padding(
                     padding: const EdgeInsets.all(8.0),
