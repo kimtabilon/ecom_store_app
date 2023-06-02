@@ -215,6 +215,15 @@ flutter:
     - assets/images/static/help_center/shipping.png
     - assets/images/static/help_center/terms.png
     - assets/images/static/careers.png
+    - assets/images/static/rewards/be-a-member.png
+    - assets/images/static/rewards/make-a-purchase.png
+    - assets/images/static/rewards/refer-a-friend.png
+    - assets/images/static/rewards/EBP-Rewards-Banner.png
+    - assets/images/static/rewards/platinum.png
+    - assets/images/static/rewards/gold.png
+    - assets/images/static/rewards/bronse.png
+    - assets/images/static/rewards/silver.png
+    - assets/images/static/rewards/Registered.png
     - assets/images/stores/shop_page_audio.png
     - assets/images/stores/shop_page_desktop.png
     - assets/images/stores/shop_page_laptops.png

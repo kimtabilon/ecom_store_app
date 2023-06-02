@@ -1,3 +1,4 @@
+import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,6 @@ import 'Provider/AuthProvider/auth_provider.dart';
 import 'Provider/CheckoutProvider/checkout_provider.dart';
 import 'Provider/Database/db_provider.dart';
 import 'Provider/StoreProvider/cart_provider.dart';
-import 'Screens/Common/guest_page.dart';
 import 'Styles/colors.dart';
 
 Future<void> main() async {

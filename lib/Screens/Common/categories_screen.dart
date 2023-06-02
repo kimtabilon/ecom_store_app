@@ -3,6 +3,7 @@ import 'package:ecom_store_app/Screens/Pages/about_us.dart';
 import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
+import 'package:ecom_store_app/Screens/Pages/rewards.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Utils/routers.dart';
@@ -23,6 +24,7 @@ class CategoriesScreen extends StatelessWidget {
       { 'title': 'HELP CENTER', 'widget': const HelpCenterPage(), 'icon': Icons.construction },
       { 'title': 'EBP GUARANTEE', 'widget': const EbpGuaranteePage(), 'icon': Icons.add_moderator },
       { 'title': 'JOB OPPORTUNITIES', 'widget': const JobOpportunitiesPage(), 'icon': Icons.diversity_1 },
+      { 'title': 'REWARDS', 'widget': const RewardsPage(), 'icon': Icons.verified_outlined },
     ];
 
     List stores = [

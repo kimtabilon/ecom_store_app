@@ -2,7 +2,7 @@ import 'package:ecom_store_app/Model/order_model.dart';
 import 'package:ecom_store_app/Provider/StoreProvider/cart_provider.dart';
 import 'package:ecom_store_app/Provider/StoreProvider/reward_provider.dart';
 import 'package:ecom_store_app/Screens/Account/account_page.dart';
-import 'package:ecom_store_app/Screens/Account/rewards_page.dart';
+import 'package:ecom_store_app/Screens/Account/my_rewards_page.dart';
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
 import 'package:flutter/material.dart';
 import '../../Provider/Database/db_provider.dart';

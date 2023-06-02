@@ -10,14 +10,14 @@ import '../../Utils/snack_message.dart';
 import '../../Widgets/button.dart';
 import '../../Widgets/text_field.dart';
 
-class RewardsPage extends StatefulWidget {
-  const RewardsPage({Key? key}) : super(key: key);
+class MyRewardsPage extends StatefulWidget {
+  const MyRewardsPage({Key? key}) : super(key: key);
 
   @override
-  State<RewardsPage> createState() => _RewardsPageState();
+  State<MyRewardsPage> createState() => _RewardsPageState();
 }
 
-class _RewardsPageState extends State<RewardsPage> {
+class _RewardsPageState extends State<MyRewardsPage> {
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Provider/Database/db_provider.dart';
 import '../Screens/Account/account_page.dart';
 import '../Screens/Account/cart_page.dart';
-import '../Screens/Account/rewards_page.dart';
+import '../Screens/Account/my_rewards_page.dart';
 import '../Screens/Common/guest_page.dart';
 import '../Utils/routers.dart';
 
@@ -73,7 +73,7 @@ class _BottomAppbarState extends State<BottomAppbarWidget> {
         ),
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const RewardsPage());
+              PageNavigator(ctx: context).nextPage(page: const MyRewardsPage());
             },
             child: Padding(
               padding: EdgeInsets.all(10),
