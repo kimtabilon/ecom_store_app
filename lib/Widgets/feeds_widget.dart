@@ -105,24 +105,53 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RichText(
-                          text: TextSpan(
-                              text: "\$",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(
-                                    0, 0, 0, 1.0
-                                ),
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: "${productsModelProvider.price}",
-                                    style: const TextStyle(
-                                        color: Color(0xff324558),
-                                        fontWeight: FontWeight.w600)
-                                ),
-                              ])
+
+
+                  if (productsModelProvider.sprice != 'null' && productsModelProvider.sprice != '0' && productsModelProvider.sprice != productsModelProvider.price) ...[
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: RichText(
+                        text: TextSpan(
+                            text: '\$' + productsModelProvider.sprice.toString() + ' ',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: '\$' + productsModelProvider.price.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
+                                      fontStyle: FontStyle.italic)),
+                            ]),
                       ),
+                    ),
+
+                  ] else ...[
+                    RichText(
+                        text: TextSpan(
+                            text: "\$",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Color.fromRGBO(
+                                  0, 0, 0, 1.0
+                              ),
+                            ),
+                            children: <TextSpan>[
+
+                              TextSpan(
+                                  text: "${productsModelProvider.price}",
+                                  style: const TextStyle(
+                                      color: Color(0xff324558),
+                                      fontWeight: FontWeight.w600)
+                              ),
+
+
+                            ])
+                    ),
+                  ],
+
                       Row(
                         children: [
                           IconButton(
