@@ -107,25 +107,55 @@ class SearchFeedsWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if(size.width > 600) ...[
-                        Flexible(
-                          child: RichText(
+
+                        if (productsModelProvider.sprice != 'null' && productsModelProvider.sprice != '0' && productsModelProvider.sprice != productsModelProvider.price) ...[
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: RichText(
                               text: TextSpan(
-                                  text: "\$",
+                                  text: '\$' + productsModelProvider.sprice.toString() + ' ',
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                    fontSize: 27
-                                  ),
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: "${productsModelProvider.price}",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600)
-                                    ),
-                                  ])
+                                        text: '\$' + productsModelProvider.price.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.grey,
+                                            decoration: TextDecoration.lineThrough,
+                                            fontStyle: FontStyle.italic)),
+                                  ]),
+                            ),
                           ),
-                        ),
+
+                        ] else ...[
+                          Flexible(
+                            child: RichText(
+                                text: TextSpan(
+                                    text: "\$",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color.fromRGBO(
+                                          0, 0, 0, 1.0
+                                      ),
+                                    ),
+                                    children: <TextSpan>[
+
+                                      TextSpan(
+                                          text: "${productsModelProvider.price}",
+                                          style: const TextStyle(
+                                              color: Color(0xff324558),
+                                              fontWeight: FontWeight.w600)
+                                      ),
+
+
+                                    ])
+                            ),
+                          ),
+                        ],
+
+
                         Row(
                           children: [
                             InkWell(
