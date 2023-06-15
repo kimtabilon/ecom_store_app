@@ -1,5 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/product_model.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
@@ -113,9 +115,15 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
             Container(
               padding: const EdgeInsets.all(10),
               child: [
-                ContentDescWidget(product: widget.product),
-                ContentSpecWidget(product: widget.product),
-                ContentInfoWidget(product: widget.product),
+                widget.product.hpcap!.toString() == "Yes"
+                  ? Html(data: widget.product.new_description)
+                  : ContentDescWidget(product: widget.product),
+                widget.product.hpcap!.toString() == "Yes"
+                    ? Html(data: widget.product.new_specification)
+                    : ContentSpecWidget(product: widget.product),
+                widget.product.hpcap!.toString() == "Yes"
+                    ? Html(data: widget.product.new_information)
+                    : ContentInfoWidget(product: widget.product),
               ][_tabIndex],
             ),
             widget.product.related_products!.isNotEmpty ? SimilarProductsWidget(product: widget.product,) : const SizedBox(width: 1,),

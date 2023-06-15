@@ -21,6 +21,10 @@ class ProductModel with ChangeNotifier {
   List<String>? specinfocontent;
   String? sprice;
   List<RelatedProductModel>? related_products;
+  String? new_information;
+  String? new_specification;
+  String? new_description;
+  String? hpcap;
 
   ProductModel({
     this.id,
@@ -43,6 +47,10 @@ class ProductModel with ChangeNotifier {
     this.specinfocontent,
     this.sprice,
     this.related_products,
+    this.new_information,
+    this.new_specification,
+    this.new_description,
+    this.hpcap,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -70,6 +78,10 @@ class ProductModel with ChangeNotifier {
     specinfocontent = json['spec_info_content']!=null ? json['spec_info_content'].cast<String>() : [''];
     sprice = json['sprice'] == "0" ? "null" : json['sprice'];
     related_products = List<RelatedProductModel>.from(json["related_products"].map((x) => RelatedProductModel.fromJson(x)));
+    new_information = json['new_information'] != null ? json['new_information'] : "";
+    new_specification = json['new_specification'] != null ? json['new_specification'] : "";
+    new_description = json['new_description'] != null ? json['new_description'] : "";
+    hpcap = json['hpcap'];
   }
   static List<ProductModel> productsFromSnapshot(List productSnaphot) {
     return productSnaphot.map((data) {
