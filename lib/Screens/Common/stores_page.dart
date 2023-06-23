@@ -41,8 +41,8 @@ class _StorePageState extends State<StorePage> {
 
                   GridView.count(
                     physics: const ScrollPhysics(),
-                    crossAxisCount: 2,
-                    childAspectRatio: 1,
+                    crossAxisCount: 1,
+                    childAspectRatio: 2,
                     shrinkWrap: true,
                     // padding: const EdgeInsets.all(5.0),
                     children: [
@@ -82,7 +82,8 @@ class _StorePageState extends State<StorePage> {
                             ),
                           ),
                         ),
-                      ),
+                      )
+                      /*
                       Padding (
                         padding: const EdgeInsets.all(5.0),
                         child: Container(
@@ -119,6 +120,7 @@ class _StorePageState extends State<StorePage> {
                           ),
                         ),
                       ),
+                      */
                     ],
                   ),
 

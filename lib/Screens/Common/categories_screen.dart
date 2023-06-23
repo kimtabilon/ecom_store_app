@@ -29,7 +29,7 @@ class CategoriesScreen extends StatelessWidget {
 
     List stores = [
       { 'title': 'HP', 'page': 0 },
-      { 'title': 'BROTHER', 'page': 1 },
+      /*{ 'title': 'BROTHER', 'page': 1 },*/
       { 'title': 'LEXMARK', 'page': 2 },
       { 'title': 'LG', 'page': 3 },
       { 'title': 'EPSON', 'page': 4 },
