@@ -106,12 +106,12 @@ flutter:
     - assets/images/shop_printers.png
     - assets/images/shop_projectors.png
     - assets/images/shop_scanners.png
-    - assets/images/stores/brother_banner.png
-    - assets/images/stores/brother_logo.png
-    - assets/images/stores/brother_store_banner.png
-    - assets/images/stores/brother_shop_page_printers.png
-    - assets/images/stores/brother_shop_page_scanners.png
-    - assets/images/stores/brother_shop_page_supplies_&_accessories.png
+    - assets/images/stores/samsung_banner.png
+    - assets/images/stores/samsung_logo.png
+    - assets/images/stores/samsung_store_banner.png
+    - assets/images/stores/samsung_shop_page_printers.png
+    - assets/images/stores/samsung_shop_page_scanners.png
+    - assets/images/stores/samsung_shop_page_supplies_&_accessories.png
     - assets/images/stores/canon_banner.png
     - assets/images/stores/canon_logo.png
     - assets/images/stores/canon_store_banner.png
