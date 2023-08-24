@@ -176,11 +176,11 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
     _city.text = widget.city;
     _zipcode.text = widget.zip;
     _number.text = widget.phone;
-    // if(int.parse(widget.points) > 400){
+    if(int.parse(widget.points) > 400){
         setState(() {
           enoughPoints = true;
         });
-    // }
+    }
     _points.text = widget.points;
     //cardNumber = DatabaseProvider().getData('card');
     getBilling();
@@ -801,6 +801,13 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                       return;
                                     }
 
+                                    if(n! > int.parse(widget.points)){
+                                      showMessage(
+                                          message: "Maximum of "+widget.points.toString()+" Points",
+                                          context: context);
+                                      return;
+                                    }
+
                                   }
 
                                   auth.paymentInfo(
@@ -864,6 +871,13 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                     if(n! < 400){
                                       showMessage(
                                           message: "Minimum of 400 Points",
+                                          context: context);
+                                      return;
+                                    }
+
+                                    if(n! > int.parse(widget.points)){
+                                      showMessage(
+                                          message: "Maximum of "+widget.points.toString()+" Points",
                                           context: context);
                                       return;
                                     }
