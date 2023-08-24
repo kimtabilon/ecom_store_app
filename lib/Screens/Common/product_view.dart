@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/product_model.dart';
+import '../../Provider/Database/db_provider.dart';
 import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -30,7 +31,7 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
 
   late TabController _tabController;
   int _tabIndex = 0;
-
+  String itemReward = '0';
   @override
   void dispose() {
     _tabController.dispose();

@@ -28,6 +28,7 @@ class CheckoutPaymentPage extends StatefulWidget {
   final String city;
   final String zip;
   final String phone;
+  final String points;
   const CheckoutPaymentPage(
       this.email,
       this.firstName,
@@ -41,6 +42,7 @@ class CheckoutPaymentPage extends StatefulWidget {
       this.city,
       this.zip,
       this.phone,
+      this.points,
       {Key? key}) : super(key: key);
 
   @override
@@ -54,6 +56,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   String? cardCode;
   String? cardType;
   bool creditOpt = false;
+  bool enoughPoints = false;
   bool newAddress = false;
   String PayOption = 'banktransfer';
 
@@ -62,6 +65,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
     'authnetcim': 'Credit Card (Authorize.Net CIM)',
   };
 
+  final TextEditingController _points = TextEditingController(text:'0');
   final TextEditingController _email = TextEditingController();
   final TextEditingController _firstName = TextEditingController();
   final TextEditingController _lastName = TextEditingController();
@@ -172,8 +176,13 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
     _city.text = widget.city;
     _zipcode.text = widget.zip;
     _number.text = widget.phone;
+    // if(int.parse(widget.points) > 400){
+        setState(() {
+          enoughPoints = true;
+        });
+    // }
+    _points.text = widget.points;
     //cardNumber = DatabaseProvider().getData('card');
-
     getBilling();
   }
 
@@ -211,6 +220,13 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
     'sameShipping':'My Billing and shipping are the same',
     'newAddress':'New Address',
   };
+
+  final SelectPoints = {
+    'false' : 'Do not use Reward Points',
+    'true' : 'Use Reward Points',
+  };
+  String defaultPoints = 'false';
+
   final Billings = {};
   var UseBilling={};
   String DefaultBilling = 'sameShipping';
@@ -670,6 +686,61 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                       ],
                     ),
 
+                    enoughPoints ?
+
+
+
+
+                    Column(
+                      children: [
+                        Divider(),
+                        const SizedBox(height: 20),
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text("You have "+ widget.points.toString()+" EBP Reward Points available.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: black,
+                                  fontSize: 15,
+                                ))),
+                        const SizedBox(height: 10),
+
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child:  DropdownButton(
+                            isExpanded: true,
+                            elevation: 1,
+                            isDense: true,
+                            items: SelectPoints.entries
+                                .map<DropdownMenuItem<String>>(
+                                    (MapEntry<String, String> e) => DropdownMenuItem<String>(
+                                  value: e.key,
+                                  child: Text(e.value),
+                                ))
+                                .toList(),
+                            onChanged: (Value) {
+                              setState(() {
+                                print(Value);
+                                defaultPoints = Value.toString();
+                              });
+                            },
+                            value: defaultPoints,
+                          ),
+                        ),
+
+                        defaultPoints=='true' ? customNumberField(
+                          title: 'Enter your Reward Points (Minimum Points: 400)',
+                          controller: _points,
+                          hint: 'Enter your Reward Points',
+                        ): Container(),
+                      ],
+                    ): Container(),
+
                     ///Button
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
@@ -710,6 +781,28 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
                                 }else{
 
+                                  if(defaultPoints == "false"){
+                                    enoughPoints = false;
+                                  }
+
+                                  if(enoughPoints == true){
+
+                                    final n = num.tryParse(_points.text);
+                                    if(n == null) {
+                                      showMessage(
+                                          message: "Reward Points Number Only",
+                                          context: context);
+                                      return;
+                                    }
+                                    if(n! < 400){
+                                      showMessage(
+                                          message: "Minimum of 400 Points",
+                                          context: context);
+                                      return;
+                                    }
+
+                                  }
+
                                   auth.paymentInfo(
                                       firstName: _firstName.text.trim(),
                                       lastName: _lastName.text.trim(),
@@ -730,6 +823,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                       cardCode: cardCode,
                                       cardType: cardType,
                                       saveCard: saveCard,
+                                      enoughPoints: enoughPoints,
+                                      points: _points.text.trim(),
                                       context: context);
                                 }
 
@@ -752,6 +847,30 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                       context: context);
 
                                 }else{
+
+                                  if(defaultPoints == "false"){
+                                    enoughPoints = false;
+                                  }
+
+                                  if(enoughPoints == true){
+
+                                    final n = num.tryParse(_points.text);
+                                    if(n == null) {
+                                      showMessage(
+                                          message: "Reward Points Number Only",
+                                          context: context);
+                                      return;
+                                    }
+                                    if(n! < 400){
+                                      showMessage(
+                                          message: "Minimum of 400 Points",
+                                          context: context);
+                                      return;
+                                    }
+
+                                  }
+
+
                                   auth.paymentInfo(
                                       firstName: _firstName.text.trim(),
                                       lastName: _lastName.text.trim(),
@@ -771,6 +890,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                       expYear: expYear,
                                       cardCode: cardCode,
                                       cardType: cardType,
+                                      enoughPoints: enoughPoints,
+                                      points: _points.text.trim(),
                                       context: context);
                                 }
 
