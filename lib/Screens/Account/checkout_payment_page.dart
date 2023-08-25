@@ -761,55 +761,110 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                             //   child: Text("No products has been added yet"),
                             // );
                           }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text('SUMMARY', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const AlwaysScrollableScrollPhysics(),
-                                  itemCount: snapshot.data['items'].length,
-                                  itemBuilder: (ctx, index) {
-                                    var item = snapshot.data['items'][index];
+
+                          return Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  // color: Colors.pink[800], // Set border color
+                                    width: 1.0),   // Set border width
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(3.0)), // Set rounded corner radius
+                                boxShadow: [BoxShadow(blurRadius: 3,color: Colors.black,offset: Offset(1,3))] // Make rounded corner of border
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text('SUMMARY', style: TextStyle(fontWeight: FontWeight.bold),),
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    itemCount: snapshot.data['items'].length,
+                                    itemBuilder: (ctx, index) {
+                                      var item = snapshot.data['items'][index];
 
                                       return Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(item['name'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
-                                          Text("Quantity: "+item['qty'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
-                                          Text("Price: "+item['price'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(child: Text("Item Name")),
+                                              Flexible(child: Text(item['name'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(child: Text("Quantity:")),
+                                              Flexible(child: Text(item['qty'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(child: Text("Price:")),
+                                              Flexible(child: Text(item['price'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                            ],
+                                          ),
                                         ],
                                       );
 
 
 
 
-                                    return Container();
-                                  }),
-                              Divider(),
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const AlwaysScrollableScrollPhysics(),
-                                  itemCount: snapshot.data['total_segments'].length,
-                                  itemBuilder: (ctx, index) {
-                                    var item = snapshot.data['total_segments'][index];
 
-                                    if(item['code'].toString() == "rewards-total"){
-                                      return Text(item['title'].toString()+"     "+item['value'].toString()+" EBP Points", style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
-                                    }
+                                      return Container();
+                                    }),
+                                Divider(),
 
-                                    if(item['code'].toString() == "subtotal"
-                                        || item['code'].toString() == "shipping"
-                                        || item['code'].toString() == "tax"
-                                        || item['code'].toString() == "grand_total"){
-                                      return Text(item['title'].toString()+"     "+'\$'+item['value'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
-                                    }
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    itemCount: snapshot.data['total_segments'].length,
+                                    itemBuilder: (ctx, index) {
+                                      var item = snapshot.data['total_segments'][index];
 
-                                    return Container();
-                                  }),
-                            ],
+                                      if(item['code'].toString() == "rewards-total"){
+
+
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(child: Text(item['title'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                            Flexible(child: Text(item['value'].toString()+" EBP Points"))
+                                          ],
+                                        );
+                                      }
+
+                                      if(item['code'].toString() == "subtotal"
+                                          || item['code'].toString() == "shipping"
+                                          || item['code'].toString() == "tax"
+                                          || item['code'].toString() == "grand_total"){
+
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Flexible(child: Text(item['title'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                            Flexible(child: Text('\$'+item['value'].toString()))
+                                          ],
+                                        );
+
+
+                                      }
+
+                                      return Container();
+                                    }),
+                              ],
+                            ),
                           );
-
 
 
                         }),
