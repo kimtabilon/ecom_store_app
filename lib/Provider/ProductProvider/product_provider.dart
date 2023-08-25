@@ -7,8 +7,79 @@ import '../../Constants/url.dart';
 import '../../Model/category_model.dart';
 import '../../Model/product_model.dart';
 import '../../Model/user_model.dart';
+import '../AuthProvider/auth_provider.dart';
+import '../Database/db_provider.dart';
 
 class ProductProvider {
+
+
+  static Future getUserReward() async {
+
+    var customerId = await DatabaseProvider().getData('user_id');
+    String token = await DatabaseProvider().getData('admin_token');
+    try {
+
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+
+      var request = http.Request('GET',
+          Uri.parse('https://${AppUrl.storeUrl}/rest/default/V1/rewards/balances/$customerId'));
+      request.headers.addAll(headers);
+
+
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return response.stream.bytesToString();
+      }
+
+
+    } catch (error) {
+      // log("An error occured $error");
+      // throw error.toString();
+    }
+  }
+
+  static Future getReward(
+      {required String sku,required String price}) async {
+
+
+
+    String token = await DatabaseProvider().getData('admin_token');
+    try {
+
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+
+
+      var request = http.Request('POST',
+          Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/rewards/products/points/get'));
+      request.body = json.encode({
+          "sku": sku,
+          "price": price,
+          "customerId" : '1',
+          "websiteId": '0',
+          "tierId": '0',
+      });
+      request.headers.addAll(headers);
+
+
+      http.StreamedResponse response = await request.send();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return response.stream.bytesToString();
+      }
+
+
+    } catch (error) {
+      // log("An error occured $error");
+      // throw error.toString();
+    }
+  }
+
   static Future<String> getImage(
       {required String sku}) async {
     try {

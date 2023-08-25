@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 
 import '../Model/product_model.dart';
+import '../Provider/AuthProvider/auth_provider.dart';
 import '../Provider/Database/db_provider.dart';
 import '../Provider/ProductProvider/product_provider.dart';
 import '../Provider/StoreProvider/cart_provider.dart';
@@ -27,6 +28,7 @@ class _CartActionButtonState extends State<CartActionButton> {
   final TextEditingController _zipText = TextEditingController();
   String estimatedDay = "";
   String estQTY = "1";
+  String rewardPoints = "0";
   bool locationLoading = false;
   bool isChangeZip = false;
   bool _isAddingCart = false;
@@ -111,6 +113,9 @@ class _CartActionButtonState extends State<CartActionButton> {
     // return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
+
+
+
   @override
   void didChangeDependencies() {
 
@@ -119,6 +124,7 @@ class _CartActionButtonState extends State<CartActionButton> {
 
   @override
   void initState() {
+    // getReward();
     getCurrentLocation(1);
     super.initState();
   }
@@ -148,40 +154,108 @@ class _CartActionButtonState extends State<CartActionButton> {
                 if (widget.product.sprice != 'null' && widget.product.sprice != '0' && widget.product.sprice != widget.product.price) ...[
                   Flexible(
                     fit: FlexFit.tight,
-                    child: RichText(
-                      text: TextSpan(
-                          text: 'You Pay: \$' + widget.product.sprice!,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: '\$' + widget.product.price!,
-                                style: const TextStyle(
-                                    color: Colors.grey,
-                                    decoration: TextDecoration.lineThrough,
-                                    fontStyle: FontStyle.italic)),
-                          ]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              text: 'You Pay: \$' + widget.product.sprice!,
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: '\$' + widget.product.price!,
+                                    style: const TextStyle(
+                                        color: Colors.grey,
+                                        decoration: TextDecoration.lineThrough,
+                                        fontStyle: FontStyle.italic)),
+                              ]),
+                        ),
+                        SizedBox(height: 5),
+                        FutureBuilder(
+                            future: ProductProvider.getReward(sku:  widget.product.sku!, price: widget.product.sprice!),
+                            builder: (context, snapshot) {
+
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                // Center(
+                                //   child:
+                                //   Text("An error occured ${snapshot.error}"),
+                                // );
+                              } else if (snapshot.data == null) {
+                                return const SizedBox();
+                              }
+                              return RichText(
+                                text: TextSpan(
+                                    text: 'Get ' + snapshot.data.toString() + ' Cashback w/ EBP Rewards',
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.bold)),
+                              );
+                            }
+                        ),
+                      ],
                     ),
                   ),
                 ] else ...[
                   Flexible(
                     fit: FlexFit.tight,
-                    child: RichText(
-                      text: TextSpan(
-                          text: 'You Pay: \$',
-                          style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: widget.product.price,
-                                style: const TextStyle(color: Colors.black)),
-                          ]),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              text: 'You Pay: \$',
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: widget.product.price,
+                                    style: const TextStyle(color: Colors.black)),
+
+                              ]),
+                        ),
+                        SizedBox(height: 5),
+                       FutureBuilder(
+                           future: ProductProvider.getReward(sku:  widget.product.sku!, price: widget.product.price!),
+                           builder: (context, snapshot) {
+
+                             if (snapshot.connectionState ==
+                                 ConnectionState.waiting) {
+                               return const Center(
+                                 child: CircularProgressIndicator(),
+                               );
+                             } else if (snapshot.hasError) {
+                               // Center(
+                               //   child:
+                               //   Text("An error occured ${snapshot.error}"),
+                               // );
+                             } else if (snapshot.data == null) {
+                               return const SizedBox();
+                             }
+                           return RichText(
+                                    text: TextSpan(
+                                    text: 'Get ' + snapshot.data.toString() + ' Cashback w/ EBP Rewards',
+                                    style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.bold)),
+                          );
+                         }
+                       ),
+                      ],
                     ),
                   ),
+
                 ],
                 locationLoading ?
                 isChangeZip ?

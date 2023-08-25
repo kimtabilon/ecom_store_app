@@ -47,10 +47,10 @@ class CheckoutProvider extends ChangeNotifier {
     notifyListeners();
 
     String token = await DatabaseProvider().getData('token');
-    String adminToken = await DatabaseProvider().getData('admin token');
+    String adminToken = await DatabaseProvider().getData('admin_token');
     var masked_id = await DatabaseProvider().getData('masked_id');
     var qoute_id = await DatabaseProvider().getData('qoute_id');
-
+    var customerId = await DatabaseProvider().getData('user_id');
 
 
 
@@ -105,6 +105,10 @@ class CheckoutProvider extends ChangeNotifier {
         var streamedResponse = await request.send();
         var response = await http.Response.fromStream(streamedResponse);
         if (response.statusCode == 200) {
+
+
+
+
           _isLoading = false;
           _resMessage = "Shipping Info saved!";
           notifyListeners();
@@ -121,6 +125,7 @@ class CheckoutProvider extends ChangeNotifier {
             city,
             zip,
             phone,
+            '0',
           ));
         }
         else {
@@ -193,6 +198,24 @@ class CheckoutProvider extends ChangeNotifier {
         var response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 200) {
+
+
+          var headers = {
+            'Authorization': 'Bearer $adminToken',
+          };
+
+          var requestReward = http.Request('GET',
+              Uri.parse('https://${AppUrl.storeUrl}/rest/default/V1/rewards/balances/$customerId'));
+          requestReward.headers.addAll(headers);
+
+
+          var streamedResponseReward = await requestReward.send();
+          var responseReward = await http.Response.fromStream(streamedResponseReward);
+          if (responseReward.statusCode == 200 || responseReward.statusCode == 201) {
+            // return response.stream.bytesToString();
+          }
+
+
           _isLoading = false;
           _resMessage = "Shipping Info saved!";
           notifyListeners();
@@ -209,6 +232,7 @@ class CheckoutProvider extends ChangeNotifier {
             city,
             zip,
             phone,
+            responseReward.body.toString(),
           ));
         }
         else {
@@ -253,16 +277,59 @@ class CheckoutProvider extends ChangeNotifier {
     String? cardCode,
     String? cardType,
     bool? saveCard,
+    bool? enoughPoints,
+    String? points,
     BuildContext? context,
   }) async {
     _isLoading = true;
     notifyListeners();
 
     String token = await DatabaseProvider().getData('token');
-    String adminToken = await DatabaseProvider().getData('admin token');
+    String adminToken = await DatabaseProvider().getData('admin_token');
 
     var masked_id = await DatabaseProvider().getData('masked_id');
     var qoute_id = await DatabaseProvider().getData('qoute_id');
+
+
+
+    if(enoughPoints == true){
+
+      try {
+        var headers = {
+          'Authorization': 'Bearer $adminToken',
+          'Content-Type': 'application/json'
+        };
+        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/default/V1/rewards/$qoute_id/apply/$points'));
+
+        request.headers.addAll(headers);
+
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        if (response.statusCode == 200) {
+
+        }
+        else {
+          _resMessage = response.body.toString();
+          _isLoading = false;
+          notifyListeners();
+        }
+
+      } on SocketException catch (_) {
+        _isLoading = false;
+        _resMessage = "Internet connection is not available`";
+        notifyListeners();
+      } catch (e) {
+        _isLoading = false;
+        _resMessage = "Please try again";
+        notifyListeners();
+
+      }
+
+    }
+
+
+
 
 
     if(paymentOption == "authnetcim"){
@@ -536,6 +603,11 @@ class CheckoutProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
+
+
+
+
+
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
@@ -607,6 +679,9 @@ class CheckoutProvider extends ChangeNotifier {
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
+
+
+
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();

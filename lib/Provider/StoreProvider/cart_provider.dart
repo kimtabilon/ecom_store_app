@@ -210,4 +210,38 @@ class CartProvider extends ChangeNotifier {
 
     return false;
   }
+
+  static Future<dynamic> getCartTotal() async {
+
+
+    final token = await DatabaseProvider().getData('token');
+
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/totals-information'));
+    request.body = json.encode({
+      "addressInformation": {
+        "address": {
+          "countryId": "US",
+          "postcode": null,
+        },
+        "shipping_carrier_code": "freeshipping",
+        "shipping_method_code": "freeshipping"
+      }
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    var body = await response.stream.bytesToString();
+    if (response.statusCode == 200) {
+      var _orderDetails = json.decode(body);
+      return _orderDetails;
+    }
+
+    return [];
+  }
+
 }
