@@ -59,24 +59,24 @@ class _RewardsPageState extends State<MyRewardsPage> {
                             children: [
                               FutureBuilder(
                                   future: ProductProvider.getUserReward(),
-                                  builder: (context, snapshot) {
+                                  builder: (context, snapshotReward) {
 
-                                    if (snapshot.connectionState ==
+                                    if (snapshotReward.connectionState ==
                                         ConnectionState.waiting) {
                                       return const Center(
                                         child: CircularProgressIndicator(),
                                       );
-                                    } else if (snapshot.hasError) {
+                                    } else if (snapshotReward.hasError) {
                                       // Center(
                                       //   child:
                                       //   Text("An error occured ${snapshot.error}"),
                                       // );
-                                    } else if (snapshot.data == null) {
+                                    } else if (snapshotReward.data == null) {
                                       return const SizedBox();
                                     }
                                     return RichText(
                                       text: TextSpan(
-                                          text: 'You currently have ' + snapshot.data.toString() + ' Reward Points',
+                                          text: 'You currently have ' + snapshotReward.data.toString() + ' Reward Points',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
@@ -92,8 +92,8 @@ class _RewardsPageState extends State<MyRewardsPage> {
                                   itemBuilder: (ctx, index) {
                                     var reward = snapshot.data![index];
                                     return Card(child: ListTile(
-                                      title: Text(reward['comment']),
-                                      subtitle: Text(reward['code']),
+                                      title: Text(reward['comment'].toString()),
+                                      subtitle: Text(reward['code'].toString()),
                                       trailing: Text('+'+reward['amount'].toString(), style: const TextStyle(color: Colors.green, fontSize: 30, fontWeight: FontWeight.normal),),
                                       leading: const Icon(Icons.verified_outlined, size: 40),
                                       // style: ListTitleStyle(),

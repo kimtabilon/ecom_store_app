@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/CheckoutProvider/checkout_provider.dart';
 import '../../Provider/Database/db_provider.dart';
+import '../../Provider/StoreProvider/cart_provider.dart';
 import '../../Styles/colors.dart';
 import '../../Utils/snack_message.dart';
 import '../../Widgets/button.dart';
@@ -741,7 +742,80 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                       ],
                     ): Container(),
 
-                    ///Button
+                    Divider(),
+                    FutureBuilder<dynamic>(
+                        future: CartProvider.getCartTotal(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            // return const Center(
+                            //   child:
+                            //   Text("No products has been added yet"),
+                            // );
+                          } else if (snapshot.data!.length == 0) {
+                            // return const Center(
+                            //   child: Text("No products has been added yet"),
+                            // );
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text('SUMMARY', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  itemCount: snapshot.data['items'].length,
+                                  itemBuilder: (ctx, index) {
+                                    var item = snapshot.data['items'][index];
+
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(item['name'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
+                                          Text("Quantity: "+item['qty'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
+                                          Text("Price: "+item['price'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),),
+                                        ],
+                                      );
+
+
+
+
+                                    return Container();
+                                  }),
+                              Divider(),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const AlwaysScrollableScrollPhysics(),
+                                  itemCount: snapshot.data['total_segments'].length,
+                                  itemBuilder: (ctx, index) {
+                                    var item = snapshot.data['total_segments'][index];
+
+                                    if(item['code'].toString() == "rewards-total"){
+                                      return Text(item['title'].toString()+"     "+item['value'].toString()+" EBP Points", style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
+                                    }
+
+                                    if(item['code'].toString() == "subtotal"
+                                        || item['code'].toString() == "shipping"
+                                        || item['code'].toString() == "tax"
+                                        || item['code'].toString() == "grand_total"){
+                                      return Text(item['title'].toString()+"     "+'\$'+item['value'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
+                                    }
+
+                                    return Container();
+                                  }),
+                            ],
+                          );
+
+
+
+                        }),
+
+
+        ///Button
                     Consumer<CheckoutProvider>(
                         builder: (context, auth, child) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {

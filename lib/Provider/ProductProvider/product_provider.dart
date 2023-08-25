@@ -57,7 +57,7 @@ class ProductProvider {
 
 
       var request = http.Request('POST',
-          Uri.parse('https://${AppUrl.storeUrl}/rest/default/V1/rewards/products/points/get'));
+          Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/rewards/products/points/get'));
       request.body = json.encode({
           "sku": sku,
           "price": price,

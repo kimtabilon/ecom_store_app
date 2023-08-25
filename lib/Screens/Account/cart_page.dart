@@ -18,7 +18,6 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
@@ -29,8 +28,33 @@ class _CartPageState extends State<CartPage> {
           child: Column(children: [
             const Text('SHOPPING CART', style: TextStyle(fontWeight: FontWeight.bold),),
             const SizedBox(height: 15,),
-            FutureBuilder<List<CartItem>>(
-                future: CartProvider.getCartItems(context),
+            Container(
+              height: 400,
+              child: FutureBuilder<List<CartItem>>(
+                  future: CartProvider.getCartItems(context),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child:
+                        Text("No products has been added yet"),
+                      );
+                    } else if (snapshot.data!.length == 0) {
+                      return const Center(
+                        child: Text("No products has been added yet"),
+                      );
+                    }
+                    // print(snapshot.data);
+                    return CartItemListWidget(itemList: snapshot.data!);
+                  }),
+            ),
+
+            FutureBuilder<dynamic>(
+                future: CartProvider.getCartTotal(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState ==
                       ConnectionState.waiting) {
@@ -38,19 +62,46 @@ class _CartPageState extends State<CartPage> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
-                    return const Center(
-                      child:
-                      Text("No products has been added yet"),
-                    );
+                    // return const Center(
+                    //   child:
+                    //   Text("No products has been added yet"),
+                    // );
                   } else if (snapshot.data!.length == 0) {
-                    return const Center(
-                      child: Text("No products has been added yet"),
-                    );
+                    // return const Center(
+                    //   child: Text("No products has been added yet"),
+                    // );
                   }
-                  // print(snapshot.data);
-                  return CartItemListWidget(itemList: snapshot.data!);
-                }),
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('SUMMARY', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
 
+                      ListView.builder(
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: snapshot.data['total_segments'].length,
+                          itemBuilder: (ctx, index) {
+                            var item = snapshot.data['total_segments'][index];
+
+                            if(item['code'].toString() == "rewards-total"){
+                              return Text(item['title'].toString()+"     "+item['value'].toString()+" EBP Points", style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
+                            }
+
+                            if(item['code'].toString() == "subtotal"
+                                || item['code'].toString() == "shipping"
+                                || item['code'].toString() == "tax"
+                                || item['code'].toString() == "grand_total"){
+                              return Text(item['title'].toString()+"     "+'\$'+item['value'].toString(), style: TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),);
+                            }
+
+                            return Container();
+                          }),
+                    ],
+                  );
+
+
+
+                }),
             Consumer<CartProvider>(
             builder: (context, cart, child) {
               return cart.cart_total_items != '' && cart.cart_total_items != '0'
