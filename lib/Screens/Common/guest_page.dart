@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:ecom_store_app/Screens/Common/stores_inner_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Provider/Database/db_provider.dart';
@@ -25,6 +26,7 @@ class _GuestPageState extends State<GuestPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     DatabaseProvider().saveData('activeBottomAppbar','0');
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
         appBar: PreferredSize(
@@ -67,14 +69,22 @@ class _GuestPageState extends State<GuestPage> {
                           const Spacer(),
                           IconButton(
                             icon: Icon(Icons.arrow_forward),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: StoresInnerPage("HP")
-                                  )
-                              )
+                            onPressed: () {
+                              var storeHandler = Handler(
+                                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                  return StoresInnerPage("HP");
+                                }
+                              );
+                              String storeURL = "/stores/hp-store";
+                              router.define(storeURL, handler: storeHandler);
+                              router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
+                              // Navigator.push(
+                              //     context,
+                              //     PageTransition(
+                              //         type: PageTransitionType.fade,
+                              //         child: StoresInnerPage("HP")
+                              //     )
+                              // )
                             },
                           ),
 
@@ -117,14 +127,22 @@ class _GuestPageState extends State<GuestPage> {
                           const Spacer(),
                           IconButton(
                             icon: Icon(Icons.arrow_forward),
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: StoresInnerPage("LEXMARK")
-                                  )
-                              )
+                            onPressed: () {
+                              var storeHandler = Handler(
+                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                    return StoresInnerPage("LEXMARK");
+                                  }
+                              );
+                              String storeURL = "/stores/lexmark-store";
+                              router.define(storeURL, handler: storeHandler);
+                              router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
+                              // Navigator.push(
+                              //     context,
+                              //     PageTransition(
+                              //         type: PageTransitionType.fade,
+                              //         child: StoresInnerPage("LEXMARK")
+                              //     )
+                              // )
                             },
                           ),
                       ],

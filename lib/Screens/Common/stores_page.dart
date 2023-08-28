@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:ecom_store_app/Screens/Common/stores_inner_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/routers.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -22,6 +23,7 @@ class _StorePageState extends State<StorePage> {
     /*24 is for notification bar on Android*/
     final double itemHeight = size.height/ 3.5;
     final double itemWidth = size.width / 2;
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -41,8 +43,8 @@ class _StorePageState extends State<StorePage> {
 
                   GridView.count(
                     physics: const ScrollPhysics(),
-                    crossAxisCount: 1,
-                    childAspectRatio: 2,
+                    crossAxisCount: 2,
+                    childAspectRatio: 1,
                     shrinkWrap: true,
                     // padding: const EdgeInsets.all(5.0),
                     children: [
@@ -74,7 +76,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("HP"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("HP"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("HP");
+                                        }
+                                    );
+                                    String storeURL = "/stores/hp-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -82,14 +92,13 @@ class _StorePageState extends State<StorePage> {
                             ),
                           ),
                         ),
-                      )
-                      /*
+                      ),
                       Padding (
                         padding: const EdgeInsets.all(5.0),
                         child: Container(
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("assets/images/stores/brother_banner.png"),
+                                image: AssetImage("assets/images/stores/samsung_banner.png"),
                                 fit: BoxFit.cover),
                           ),
                           child: Padding(
@@ -100,8 +109,8 @@ class _StorePageState extends State<StorePage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 customTextStores(
-                                  title: 'BROTHER',
-                                  description: "Create stunning professional prints with Brother dynamic, easy-to-use imaging technology for home or work",
+                                  title: 'SAMSUNG',
+                                  description: "Create stunning professional prints with Samsung dynamic, easy-to-use imaging technology for home or work",
                                   context: context,
                                   textAlign: TextAlign.end,
                                   align: Alignment.centerRight,
@@ -111,7 +120,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("BROTHER"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("SAMSUNG"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("SAMSUNG");
+                                        }
+                                    );
+                                    String storeURL = "/stores/samsung-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -119,8 +136,7 @@ class _StorePageState extends State<StorePage> {
                             ),
                           ),
                         ),
-                      ),
-                      */
+                      )
                     ],
                   ),
 
@@ -158,7 +174,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LEXMARK"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LEXMARK"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("LEXMARK");
+                                        }
+                                    );
+                                    String storeURL = "/stores/lexmark-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -204,7 +228,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LG"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LG"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("LG");
+                                        }
+                                    );
+                                    String storeURL = "/stores/lg-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -240,7 +272,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("EPSON"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("EPSON"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("EPSON");
+                                        }
+                                    );
+                                    String storeURL = "/stores/epson-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -286,7 +326,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("CANON"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("CANON"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("CANON");
+                                        }
+                                    );
+                                    String storeURL = "/stores/canon-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -322,7 +370,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage('XEROX'));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage('XEROX'));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("XEROX");
+                                        }
+                                    );
+                                    String storeURL = "/stores/xerox-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
@@ -368,7 +424,15 @@ class _StorePageState extends State<StorePage> {
                                 visitStoreButton(
                                   text: 'VISIT STORE',
                                   tap: () {
-                                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LENOVO"));
+                                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage("LENOVO"));
+                                    var storeHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return StoresInnerPage("LENOVO");
+                                        }
+                                    );
+                                    String storeURL = "/stores/lenovo-store";
+                                    router.define(storeURL, handler: storeHandler);
+                                    router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
                                 ),
