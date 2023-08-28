@@ -61,7 +61,8 @@ class _ProductViewState extends State<ProductView> with SingleTickerProviderStat
             routes: {
               '/products': (context, state, data) {
                 return BeamPage(
-                    child: Scaffold(
+                  type: BeamPageType.scaleTransition,
+                  child: Scaffold(
                       resizeToAvoidBottomInset: false,
                       appBar: PreferredSize(
                           preferredSize: const Size.fromHeight(60.0),
