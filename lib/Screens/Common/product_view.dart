@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
