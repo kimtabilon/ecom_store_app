@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -15,14 +16,11 @@ class FeedsWidget extends StatefulWidget {
 }
 
 class _FeedsWidgetState extends State<FeedsWidget> {
-
   bool _isLoading=false;
-
 
   @override
   Widget build(BuildContext context) {
     final productsModelProvider = Provider.of<ProductModel>(context);
-
 
     Size size = MediaQuery.of(context).size;
 
@@ -34,7 +32,6 @@ class _FeedsWidgetState extends State<FeedsWidget> {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-
               Navigator.push(
                 context,
                 PageTransition(
