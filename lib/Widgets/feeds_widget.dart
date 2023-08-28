@@ -1,4 +1,5 @@
-import 'package:beamer/beamer.dart';
+import 'package:ecom_store_app/Screens/Pages/about_us.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
   @override
   Widget build(BuildContext context) {
     final productsModelProvider = Provider.of<ProductModel>(context);
+    final FluroRouter router = FluroRouter();
 
     Size size = MediaQuery.of(context).size;
 
@@ -32,14 +34,27 @@ class _FeedsWidgetState extends State<FeedsWidget> {
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  // child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                  child: ProductView(product: productsModelProvider),
-                ),
+              var productHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    return ProductView(product: productsModelProvider);
+                  }
               );
+              String productURL = "/product/"+productsModelProvider!.id!.toString()+"/"+productsModelProvider!.title!.toString();
+              router.define(productURL, handler: productHandler);
+              router.navigateTo(
+                  context,
+                  productURL,
+                  transition: TransitionType.fadeIn
+              );
+
+              // Navigator.push(
+              //   context,
+              //   PageTransition(
+              //     type: PageTransitionType.fade,
+              //     // child: ProductDetails(id: productsModelProvider!.id!.toString()),
+              //     child: ProductView(product: productsModelProvider),
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
+import 'package:ecom_store_app/Screens/Pages/about_us.dart';
 import 'package:flutter/material.dart';
 import 'package:nominatim_geocoding/nominatim_geocoding.dart';
 import 'package:provider/provider.dart';
