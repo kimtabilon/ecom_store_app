@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 import '../Provider/Database/db_provider.dart';
@@ -34,14 +35,24 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
+
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              // PageNavigator(ctx: context).nextPage(page: const GuestPage());
+              var homeHandler = Handler(
+                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                  return GuestPage();
+                }
+              );
+              String homeURL = "/";
+              router.define(homeURL, handler: homeHandler);
               DatabaseProvider().saveData('activeBottomAppbar','0');
+              router.navigateTo(context, homeURL, transition: TransitionType.fadeIn);
             },
             child: Container(
               color: _selectedIndex=='0'||_selectedIndex=='' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
@@ -58,8 +69,16 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
 
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const ShopScreen());
+              // PageNavigator(ctx: context).nextPage(page: const ShopScreen());
+              var shopHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    return ShopScreen();
+                  }
+              );
+              String shopURL = "/shop";
+              router.define(shopURL, handler: shopHandler);
               DatabaseProvider().saveData('activeBottomAppbar','1');
+              router.navigateTo(context, shopURL, transition: TransitionType.fadeIn);
             },
             child: Container(
               color: _selectedIndex=='1' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
@@ -75,8 +94,16 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         ),
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const StorePage());
+              // PageNavigator(ctx: context).nextPage(page: const StorePage());
+              var storesHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    return StorePage();
+                  }
+              );
+              String storesURL = "/stores";
+              router.define(storesURL, handler: storesHandler);
               DatabaseProvider().saveData('activeBottomAppbar','2');
+              router.navigateTo(context, storesURL, transition: TransitionType.fadeIn);
             },
             child: Container(
               color: _selectedIndex=='2' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
@@ -92,8 +119,16 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
         ),
         InkWell(
             onTap: () {
-              PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+              // PageNavigator(ctx: context).nextPage(page: const HelpCenterPage());
+              var helpCenterHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    return HelpCenterPage();
+                  }
+              );
+              String helpCenterURL = "/help-center";
+              router.define(helpCenterURL, handler: helpCenterHandler);
               DatabaseProvider().saveData('activeBottomAppbar','3');
+              router.navigateTo(context, helpCenterURL, transition: TransitionType.fadeIn);
             },
             child: Container(
               color: _selectedIndex=='3' ? const Color.fromRGBO(244,244,244,1) : Colors.white,
