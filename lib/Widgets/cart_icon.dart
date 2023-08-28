@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Provider/StoreProvider/cart_provider.dart';
@@ -26,10 +27,19 @@ class _CartIconWidgetState extends State<CartIconWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
 
     return InkWell(
         onTap: () {
-          PageNavigator(ctx: context).nextPage(page: const CartPage());
+          // PageNavigator(ctx: context).nextPage(page: const CartPage());
+          var cartHandler = Handler(
+            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+              return CartPage();
+            }
+          );
+          String cartURL = "/checkout/cart";
+          router.define(cartURL, handler: cartHandler);
+          router.navigateTo(context, cartURL, transition: TransitionType.fadeIn);
         },
         child: Consumer<CartProvider>(
             builder: (context, cart, child) {

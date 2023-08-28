@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -17,6 +18,7 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
         appBar: PreferredSize(
@@ -80,13 +82,21 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
                                   padding: const EdgeInsets.all(5.0),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const InnerJobOpportunitiesPage('ecommerce','E-Commerce Specialist'),
-                                        ),
+                                      var jobOpsHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          return InnerJobOpportunitiesPage('ecommerce','E-Commerce Specialist');
+                                        }
                                       );
+                                      String jobOpsURL = "/job-opportunities";
+                                      router.define(jobOpsURL, handler: jobOpsHandler);
+                                      router.navigateTo(context, jobOpsURL, transition: TransitionType.fadeIn);
+                                      // Navigator.push(
+                                      //   context,
+                                      //   PageTransition(
+                                      //     type: PageTransitionType.fade,
+                                      //     child: const InnerJobOpportunitiesPage('ecommerce','E-Commerce Specialist'),
+                                      //   ),
+                                      // );
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

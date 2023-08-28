@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Authentication/register.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/appbar_widget.dart';
@@ -17,6 +18,7 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -136,13 +138,21 @@ class _RewardsPageState extends State<RewardsPage> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: const RegisterPage(),
-                                    ),
+                                  var createAccountHandler = Handler(
+                                    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                      return RegisterPage();
+                                    }
                                   );
+                                  String createAccountURL = "/create-account";
+                                  router.define(createAccountURL, handler: createAccountHandler);
+                                  router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   PageTransition(
+                                  //     type: PageTransitionType.fade,
+                                  //     child: const RegisterPage(),
+                                  //   ),
+                                  // );
                                 },
                                 child: const Text('Sign Up Now', style: TextStyle(color: Colors.white),),
                               ),
@@ -311,13 +321,21 @@ class _RewardsPageState extends State<RewardsPage> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: const RegisterPage(),
-                                    ),
+                                  var createAccountHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        return RegisterPage();
+                                      }
                                   );
+                                  String createAccountURL = "/create-account";
+                                  router.define(createAccountURL, handler: createAccountHandler);
+                                  router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   PageTransition(
+                                  //     type: PageTransitionType.fade,
+                                  //     child: const RegisterPage(),
+                                  //   ),
+                                  // );
                                 },
                                 child: const Text('Sign Up Now', style: TextStyle(color: Colors.white),),
                               ),

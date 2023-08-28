@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
@@ -70,6 +71,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
 
     return GestureDetector(
       onTap: () {
@@ -210,13 +212,21 @@ class _AboutUsPageState extends State<AboutUsPage> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: const Color.fromRGBO(43,102,145,1),),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: const HelpCenterPage(),
-                                    ),
+                                  var helpCenterHandler = Handler(
+                                    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                      return HelpCenterPage();
+                                    }
                                   );
+                                  String helpCenterURL = "/help-center";
+                                  router.define(helpCenterURL, handler: helpCenterHandler);
+                                  router.navigateTo(context, helpCenterURL, transition: TransitionType.fadeIn);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   PageTransition(
+                                  //     type: PageTransitionType.fade,
+                                  //     child: const HelpCenterPage(),
+                                  //   ),
+                                  // );
                                 },
                                 child: const Text('Visit Help Center', style: TextStyle(color: Colors.white),),
                               )
@@ -239,6 +249,8 @@ class _AboutUsPageState extends State<AboutUsPage> {
   }
 
   Widget LogoWidget(logo1,brand1,logo2,brand2) {
+    final FluroRouter router2 = FluroRouter();
+
     return Column(
       children: [
         Row(
@@ -250,7 +262,15 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                   onPressed: () {
-                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage(brand1));
+                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage(brand1));
+                    var storeHandler = Handler(
+                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                          return StoresInnerPage(brand1);
+                        }
+                    );
+                    String storeURL = "/stores/"+brand1;
+                    router2.define(storeURL, handler: storeHandler);
+                    router2.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                   },
                   child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
                 )
@@ -262,7 +282,15 @@ class _AboutUsPageState extends State<AboutUsPage> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                   onPressed: () {
-                    PageNavigator(ctx: context).nextPage(page: StoresInnerPage(brand2));
+                    // PageNavigator(ctx: context).nextPage(page: StoresInnerPage(brand2));
+                    var storeHandler = Handler(
+                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                          return StoresInnerPage(brand2);
+                        }
+                    );
+                    String storeURL = "/stores/"+brand2;
+                    router2.define(storeURL, handler: storeHandler);
+                    router2.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                   },
                   child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
                 )

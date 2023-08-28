@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -14,15 +15,25 @@ class AppbarWidget extends StatelessWidget {
   String? leadingButton;
 
   Widget CloseButton(context) {
+    final FluroRouter router = FluroRouter();
+
     return IconButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            child: const GuestPage(),
-          ),
+        var homeHandler = Handler(
+          handlerFunc: (BuildContext? context, Map<String, List<String>> params){
+            return GuestPage();
+          }
         );
+        String homeURL = "/";
+        router.define(homeURL, handler: homeHandler);
+        router.navigateTo(context, homeURL, transition: TransitionType.fadeIn);
+        // Navigator.push(
+        //   context,
+        //   PageTransition(
+        //     type: PageTransitionType.fade,
+        //     child: const GuestPage(),
+        //   ),
+        // );
       },
       icon: const Icon(Icons.close),
     );

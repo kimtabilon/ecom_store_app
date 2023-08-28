@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:credit_card_form/credit_card_form.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -259,6 +260,8 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shopping Cart'),
@@ -266,13 +269,21 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const CartPage()
-                )
+            var cartHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                return CartPage();
+              }
             );
+            String cartURL = "/checkout/cart";
+            router.define(cartURL, handler: cartHandler);
+            router.navigateTo(context, cartURL, transition: TransitionType.fadeIn);
+            // Navigator.push(
+            //     context,
+            //     PageTransition(
+            //         type: PageTransitionType.fade,
+            //         child: const CartPage()
+            //     )
+            // );
           },
         ),
       ),

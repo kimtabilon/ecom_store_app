@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Common/rma_details.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Model/order_model.dart';
@@ -27,6 +28,7 @@ class _ProductDetailsState extends State<OrderDetails> {
     Size size = MediaQuery.of(context).size;
     // print(widget.order.toJson());
     // return Text("Order No.: ${widget.order.id!}",);
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
       appBar: AppBar(
@@ -115,13 +117,21 @@ class _ProductDetailsState extends State<OrderDetails> {
                       onTap: () async {
                         try {
                           ProductModel product = await ProductProvider.getProductById(id: item.sku!);
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.fade,
-                                child: ProductView(product: product,)
-                            ),
+                          var productHandler = Handler(
+                            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                              return ProductView(product: product);
+                            }
                           );
+                          String productURL = "/product/"+item.sku!.toString()+"/"+item.name!.toString();
+                          router.define(productURL, handler: productHandler);
+                          router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
+                          // Navigator.push(
+                          //   context,
+                          //   PageTransition(
+                          //       type: PageTransitionType.fade,
+                          //       child: ProductView(product: product,)
+                          //   ),
+                          // );
                         } catch (error) {
 
                         }

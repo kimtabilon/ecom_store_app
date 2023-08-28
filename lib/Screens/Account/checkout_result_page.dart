@@ -1,6 +1,7 @@
 import 'package:credit_card_form/credit_card_form.dart';
 import 'package:ecom_store_app/Screens/Account/home_page.dart';
 import 'package:ecom_store_app/Screens/Common/guest_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -53,6 +54,8 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
 
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Print Receipt'),
@@ -60,13 +63,21 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition(
-                    type: PageTransitionType.fade,
-                    child: const HomePage()
-                )
+            var profileHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                return HomePage();
+              }
             );
+            String profileURL = "/profile";
+            router.define(profileURL, handler: profileHandler);
+            router.navigateTo(context, profileURL, transition: TransitionType.fadeIn);
+            // Navigator.push(
+            //     context,
+            //     PageTransition(
+            //         type: PageTransitionType.fade,
+            //         child: const HomePage()
+            //     )
+            // );
           },
         ),
       ),
@@ -181,13 +192,21 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = (){
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: const HelpCenterPage(),
-                                      ),
+                                    var helpCenterHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        return HelpCenterPage();
+                                      }
                                     );
+                                    String helpCenterURL = "/help-center";
+                                    router.define(helpCenterURL, handler: helpCenterHandler);
+                                    router.navigateTo(context, helpCenterURL, transition: TransitionType.fadeIn);
+                                    // Navigator.push(
+                                    //   context,
+                                    //   PageTransition(
+                                    //     type: PageTransitionType.fade,
+                                    //     child: const HelpCenterPage(),
+                                    //   ),
+                                    // );
                                   }
                             )
                         ),

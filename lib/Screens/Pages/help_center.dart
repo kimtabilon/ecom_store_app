@@ -1,4 +1,6 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
@@ -27,6 +29,7 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
         appBar: PreferredSize(
@@ -75,12 +78,22 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                               padding: const EdgeInsets.all(10.0),
                               child: GestureDetector(
                                 onTap: (){
+                                  var innerHelpCenterHandler = Handler(
+                                    handlerFunc: (BuildContext? context, Map<String, List<String>> paramse) {
+                                      return InnerHelpCenterPage(list[i]['icon']);
+                                    }
+                                  );
+                                  String innerHelpCenterURL = "/help-center/"+list[i]['icon'].toString();
+                                  router.define(innerHelpCenterURL, handler: innerHelpCenterHandler);
+                                  router.navigateTo(context, innerHelpCenterURL, transition: TransitionType.fadeIn);
 
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: InnerHelpCenterPage(list[i]['icon'])));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     PageTransition(
+                                  //         type: PageTransitionType.fade,
+                                  //         child: InnerHelpCenterPage(list[i]['icon'])
+                                  //     )
+                                  // );
 
                                 },
                                 child: Container(

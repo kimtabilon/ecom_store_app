@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:ecom_store_app/Screens/Pages/about_us.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -10,6 +11,7 @@ class HelpDropdown extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         customButton: const Icon(
@@ -40,15 +42,32 @@ class HelpDropdown extends StatelessWidget {
           ),
         ],
         onChanged: (value) {
-          Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              child: value=='About Us'
-                  ? const AboutUsPage()
-                  : const HelpCenterPage(),
-            ),
+          var transitionHandler = Handler(
+            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+              if(value=='About Us') {
+                return AboutUsPage();
+              } else {
+                return HelpCenterPage();
+              }
+            }
           );
+          String transitionURL = "";
+          if(value=='About Us') {
+            transitionURL = "/about-us";
+          } else {
+            transitionURL = "/help-center";
+          }
+          router.define(transitionURL, handler: transitionHandler);
+          router.navigateTo(context, transitionURL, transition: TransitionType.fadeIn);
+          // Navigator.push(
+          //   context,
+          //   PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: value=='About Us'
+          //         ? const AboutUsPage()
+          //         : const HelpCenterPage(),
+          //   ),
+          // );
         },
         dropdownStyleData: DropdownStyleData(
           width: 160,

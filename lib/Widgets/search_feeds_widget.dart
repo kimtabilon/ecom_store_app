@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,8 @@ class SearchFeedsWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     // print("Height: ${size.height}");
     // print("Width: ${size.width}");
+    final FluroRouter router = FluroRouter();
+
     return Padding(
         padding: size.width > 600
             ? const EdgeInsets.all(5.0)
@@ -28,14 +31,22 @@ class SearchFeedsWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             onTap: () {
               // print(productsModelProvider);
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  //child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                    child: ProductView(product: productsModelProvider)
-                ),
+              var productHandler = Handler(
+                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                  return ProductView(product: productsModelProvider);
+                }
               );
+              String productURL = "/product/"+productsModelProvider!.title!.toString()+"/"+productsModelProvider!.id!.toString();
+              router.define(productURL, handler: productHandler);
+              router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
+              // Navigator.push(
+              //   context,
+              //   PageTransition(
+              //     type: PageTransitionType.fade,
+              //     //child: ProductDetails(id: productsModelProvider!.id!.toString()),
+              //       child: ProductView(product: productsModelProvider)
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

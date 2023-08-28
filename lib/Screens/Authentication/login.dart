@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Authentication/register.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Provider/AuthProvider/auth_provider.dart';
@@ -29,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final FluroRouter router = FluroRouter();
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
@@ -91,8 +94,17 @@ class _LoginPageState extends State<LoginPage> {
 
                     GestureDetector(
                       onTap: () {
-                        PageNavigator(ctx: context)
-                            .nextPage(page: const RegisterPage());
+                        var createAccountHandler = Handler(
+                          handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                            return RegisterPage();
+                          }
+                        );
+                        String createAccountURL = "/create-account";
+                        router.define(createAccountURL, handler: createAccountHandler);
+                        router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
+                        // PageNavigator(ctx: context)
+                        //     .nextPage(page: const RegisterPage()
+                        // );
                       },
                       child: const Text('Tap here to Create Account'),
                     ),

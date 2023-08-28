@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../Screens/Common/categories_screen.dart';
@@ -24,6 +25,8 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
+
     return Stack(
       children: <Widget>[
         Padding(
@@ -41,14 +44,22 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                 padding: EdgeInsets.only(bottom: 3),
                 child: IconButton(
                   icon: Icon(Icons.menu_open),
-                  onPressed: () => {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: CategoriesScreen()
-                        )
-                    )
+                  onPressed: () {
+                    var categoriesHandler = Handler(
+                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                        return CategoriesScreen();
+                      }
+                    );
+                    String categoriesURL = "/categories";
+                    router.define(categoriesURL, handler: categoriesHandler);
+                    router.navigateTo(context, categoriesURL, transition: TransitionType.fadeIn);
+                    // Navigator.push(
+                    //     context,
+                    //     PageTransition(
+                    //         type: PageTransitionType.fade,
+                    //         child: CategoriesScreen()
+                    //     )
+                    // )
                   },
                 ),
                 /*child: AppBarIcons(
@@ -77,13 +88,21 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                         color: Colors.green,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FeedsScreen(
-                                  target: _searchText.text.trim(),
-                                  itemSearch: 'true', store: '',)),
+                        var searchHandler = Handler(
+                            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                              return FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true', store: '');
+                            }
                         );
+                        String searchURL = "/search/"+_searchText.text.trim();
+                        router.define(searchURL, handler: searchHandler);
+                        router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => FeedsScreen(
+                        //           target: _searchText.text.trim(),
+                        //           itemSearch: 'true', store: '',)),
+                        // );
                       },
                     ),
                   ),
@@ -91,13 +110,21 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
               ),
             ),
             onSubmitted: (String str) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FeedsScreen(
-                        target: _searchText.text.trim(),
-                        itemSearch: 'true', store: '',)),
+              var searchHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    return FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true', store: '');
+                  }
               );
+              String searchURL = "/search/"+_searchText.text.trim();
+              router.define(searchURL, handler: searchHandler);
+              router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => FeedsScreen(
+              //           target: _searchText.text.trim(),
+              //           itemSearch: 'true', store: '',)),
+              // );
             },
           ),
         ),

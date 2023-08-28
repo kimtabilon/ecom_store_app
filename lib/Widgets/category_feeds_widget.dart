@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Common/product_view.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class CategoryFeedsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsModelProvider = Provider.of<ProductModel>(context);
+    final FluroRouter router = FluroRouter();
 
     Size size = MediaQuery.of(context).size;
     return Padding(
@@ -24,14 +26,22 @@ class CategoryFeedsWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             onTap: () {
               // print(productsModelProvider);
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.fade,
-                  //child: ProductDetails(id: productsModelProvider!.id!.toString()),
-                  child: ProductView(product: productsModelProvider)
-                ),
+              var productHandler = Handler(
+                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                  return ProductView(product: productsModelProvider);
+                }
               );
+              String productURL = "/product/"+productsModelProvider!.id!.toString()+"/"+productsModelProvider!.title!.toString();
+              router.define(productURL, handler: productHandler);
+              router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
+              // Navigator.push(
+              //   context,
+              //   PageTransition(
+              //     type: PageTransitionType.fade,
+              //     //child: ProductDetails(id: productsModelProvider!.id!.toString()),
+              //     child: ProductView(product: productsModelProvider)
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Screens/Common/feeds_screen.dart';
@@ -23,6 +24,8 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
 
   Widget BannerWidget(image,label, bg,desc) {
+    final FluroRouter router = FluroRouter();
+
     return Column(
       children: [
         const SizedBox(height: 20,),
@@ -68,13 +71,21 @@ class _ShopScreenState extends State<ShopScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(onSurface: Colors.red, backgroundColor: Colors.black,),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: CategoryFeedsScreen(target: label,itemSearch: 'false', store: '',),
-                    ),
+                  var searchHandler = Handler(
+                    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                      return CategoryFeedsScreen(target: label,itemSearch: 'false', store: '',);
+                    }
                   );
+                  String searchURL = "/search/"+label;
+                  router.define(searchURL, handler: searchHandler);
+                  router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
+                  // Navigator.push(
+                  //   context,
+                  //   PageTransition(
+                  //     type: PageTransitionType.fade,
+                  //     child: CategoryFeedsScreen(target: label,itemSearch: 'false', store: '',),
+                  //   ),
+                  // );
                 },
                 child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
               )
@@ -112,6 +123,7 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router2 = FluroRouter();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -142,13 +154,23 @@ class _ShopScreenState extends State<ShopScreen> {
                         const Spacer(),
                         AppBarIcons(
                             function: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: const FeedsScreen(
-                                        target: 'All Products',
-                                        itemSearch: 'false', store: '',)));
+                              var searchHandler2 = Handler(
+                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                    return FeedsScreen(target: 'All Products', itemSearch: 'false', store: '',);
+                                  }
+                              );
+                              String searchURL2 = "/all-products";
+                              router2.define(searchURL2, handler: searchHandler2);
+                              router2.navigateTo(context, searchURL2, transition: TransitionType.fadeIn);
+                              // Navigator.push(
+                              //     context,
+                              //     PageTransition(
+                              //         type: PageTransitionType.fade,
+                              //         child: const FeedsScreen(
+                              //           target: 'All Products',
+                              //           itemSearch: 'false', store: '',)
+                              //     )
+                              // );
                             },
                             icon: Icons.arrow_forward),
 

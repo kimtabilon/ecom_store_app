@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -15,6 +16,7 @@ class SimilarProductsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -54,13 +56,21 @@ class SimilarProductsWidget extends StatelessWidget {
                   onTap: () async {
                     try {
                       ProductModel product = await ProductProvider.getProductById(id: item.sku!);
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                            type: PageTransitionType.fade,
-                            child: ProductView(product: product,)
-                        ),
+                      var productHandler = Handler(
+                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                          return ProductView(product: product);
+                        }
                       );
+                      String productURL = "/product/"+item.id!.toString()+"/"+item.title!.toString();
+                      router.define(productURL, handler: productHandler);
+                      router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
+                      // Navigator.push(
+                      //   context,
+                      //   PageTransition(
+                      //       type: PageTransitionType.fade,
+                      //       child: ProductView(product: product,)
+                      //   ),
+                      // );
                     } catch (error) {
 
                     }

@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Account/checkout_cart_page.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Model/cart_model.dart';
@@ -18,6 +19,8 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final FluroRouter router = FluroRouter();
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
@@ -143,10 +146,18 @@ class _CartPageState extends State<CartPage> {
                             alignment: Alignment.bottomCenter,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
+                                var checkoutCartHandler = Handler(
+                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                    return CheckoutCartPage();
+                                  }
                                 );
+                                String checkoutCartURL = "/checkout/cart";
+                                router.define(checkoutCartURL, handler: checkoutCartHandler);
+                                router.navigateTo(context, checkoutCartURL, transition: TransitionType.fadeIn);
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => const CheckoutCartPage()),
+                                // );
                               },
                               child: const Text(
                                 'Checkout',
