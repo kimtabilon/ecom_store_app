@@ -13,9 +13,8 @@ import '../../Widgets/search_field.dart';
 import 'category_feeds_screen.dart';
 
 class StoresInnerPage extends StatefulWidget {
-   StoresInnerPage(this.keyword, {Key? key}) : super(key: key);
-
-   final String keyword;
+  final String keyword;
+  StoresInnerPage(this.keyword, {Key? key}) : super(key: key);
 
   @override
   State<StoresInnerPage> createState() => _StoresInnerPageState();
@@ -25,7 +24,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
   Map<String,int> brand = {
     "HP": 0,
-    "BROTHER": 1,
+    // "SAMSUNG": 1,
     "LEXMARK": 2,
     "LG": 3,
     "EPSON": 4,
@@ -57,19 +56,19 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "Supplies & Accessories"
       ]
     },
-    {
-      'brand': 'BROTHER',
-      'label': 'BROTHER STORE',
-      'description': "Welcome to Brother Store and discover exceptional digital printing equipment and supplies made with you in mind. Boost your productivity with our easy-to-use line of home, office, and business printers.",
-      'banner': 'brother_store_banner',
-      'logo': 'brother_logo',
-      'short': "Shop now and enjoy our limited-time offers and exclusive deals.",
-      'categories': [
-        "Scanners",
-        "Printers",
-        "Supplies & Accessories"
-      ]
-    },
+    // {
+    //   'brand': 'SAMSUNG',
+    //   'label': 'SAMSUNG STORE',
+    //   'description': "Welcome to Samsung Store and discover exceptional digital printing equipment and supplies made with you in mind. Boost your productivity with our easy-to-use line of home, office, and business printers.",
+    //   'banner': 'samsung_store_banner',
+    //   'logo': 'samsung_logo',
+    //   'short': "Shop now and enjoy our limited-time offers and exclusive deals.",
+    //   'categories': [
+    //     "Scanners",
+    //     "Printers",
+    //     "Supplies & Accessories"
+    //   ]
+    // },
     {
       'brand': 'LEXMARK',
       'label': 'LEXMARK STORE',
@@ -176,13 +175,13 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "epson_printers": "Create stunning professional prints with Epson’s dynamic, easy-to-use imaging technology for home or work.",
     "canon_printers": "Create stunning professional prints with Canon's, easy-to-use imaging technology for home or work.",
     "xerox_printers": "Create stunning professional prints with Xerox's, easy-to-use imaging technology for home or work.",
-    "brother_printers": "Get the best deals on top-rated printers and multifunction devices",
     "hp_printers": "Get the best deals on top-rated printers and multifunction devices",
 
     "hp_laptops": "Find the perfect laptop for your needs and budget",
     "laptops": "Find the perfect laptop for your needs and budget",
     "lg_laptops": "Find the perfect laptop for your needs and budget",
     "lenovo_laptops": "Find the perfect laptop for your needs and budget",
+    // "samsung_laptops": "Find the perfect laptop for your needs and budget",
 
     "hp_desktop": "Expand your point of view with HP products and technology where you can see more and do more, clearly.",
     "desktop": "Expand your point of view with LG products and technology where you can see more and do more, clearly.",
@@ -192,12 +191,14 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
     "hp_monitors": "Find the perfect Monitor for your needs and budget",
     "monitors": "Find the perfect Monitor for your needs and budget",
+    // "samsung_monitors": "Find the perfect Monitor for your needs and budget",
 
     "projectors": "Bring the big screen home with our high-quality projectors",
     "hp_projectors": "Bring the big screen home with our high-quality projectors",
     "lg_projectors": "Bring the big screen home with our high-quality projectors",
     "epson_projectors": "Bring the big screen home with our high-quality projectors",
     "canon_projectors": "Bring the big screen home with our high-quality projectors",
+    // "samsung_projectors": "Bring the big screen home with our high-quality projectors",
 
 
     "hp_audio": "Discover the latest in ergonomic solutions for improved productivity",
@@ -214,6 +215,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "epson_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
     "canon_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
     "lenovo_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
+    // "samsung_peripherals": "Discover the latest in ergonomic solutions for improved productivity",
 
     "hp_networking": "Stay connected with our range of reliable and high-speed networking devices",
     "networking": "Stay connected with our range of reliable and high-speed networking devices",
@@ -224,8 +226,6 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "hp_scanners": "Create stunning professional prints with HP’s dynamic, easy-to-use imaging technology for home or work.",
     "epson_scanners": "Create stunning professional prints with EPSON’s dynamic, easy-to-use imaging technology for home or work.",
     "canon_scanners": "Create stunning professional prints with CANON’s dynamic, easy-to-use imaging technology for home or work.",
-    "brother_scanners": "Create stunning professional prints with BROTHER’s dynamic, easy-to-use imaging technology for home or work.",
-
 
     "software": "Unlock new possibilities with our powerful software solutions",
     "hp_software": "Unlock new possibilities with our powerful software solutions",
@@ -238,13 +238,14 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "hp_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
     "lg_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
     "lenovo_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
+    // "samsung_storage_and_drives": "Expand your storage capacity with our reliable drives and storage solutions",
 
 
     "supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
     "hp_supplies_&_accessories": "Print, secure and manage your business information with HP’s innovative imaging solutions.",
     "lexmark_supplies_&_accessories": "Print, secure and manage your business information with Lexmark’s innovative imaging solutions.",
     "xerox_supplies_&_accessories": "Print, secure and manage your business information with Xerox’s innovative imaging solutions.",
-    "brother_supplies_&_accessories": "Print, secure and manage your business information with BROTHER’s innovative imaging solutions.",
+    // "samsung_supplies_&_accessories": "Print, secure and manage your business information with SAMSUNG’s innovative imaging solutions.",
     "epson_supplies_&_accessories": "Print, secure and manage your business information with EPSON’s innovative imaging solutions.",
     "canon_supplies_&_accessories": "Print, secure and manage your business information with Canon’s innovative imaging solutions.",
     "lenovo_supplies_&_accessories": "Print, secure and manage your business information with Lenovo’s innovative imaging solutions.",
@@ -261,6 +262,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
     "monitors_and_display": "Experience stunning clarity and color with our LG monitors",
     "lg_monitors_and_display": "Experience stunning clarity and color with our LG monitors",
     "lenovo_monitors_and_display": "Experience stunning clarity and color with our Lenovo monitors",
+    // "samsung_monitors_and_display": "Experience stunning clarity and color with our Samsung monitors",
 
     "xerox_flatbed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
     "xerox_sheetfed_scanners": "Communicate, connect, and work with workplace solutions and digital printing technologies from Xerox.",
@@ -468,7 +470,7 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
         "Software",
       ];
     }
-    if(widget.keyword == "BROTHER"){
+    if(widget.keyword == "SAMSUNG"){
       brandCategory = <String>[
         "Scanners",
         "Printers",
