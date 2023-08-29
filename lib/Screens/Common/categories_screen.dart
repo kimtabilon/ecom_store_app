@@ -4,6 +4,7 @@ import 'package:ecom_store_app/Screens/Pages/ebp_guarantee.dart';
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
 import 'package:ecom_store_app/Screens/Pages/job_opportunities.dart';
 import 'package:ecom_store_app/Screens/Pages/rewards.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Utils/routers.dart';

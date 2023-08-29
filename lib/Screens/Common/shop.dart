@@ -76,7 +76,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       return CategoryFeedsScreen(target: label,itemSearch: 'false', store: '',);
                     }
                   );
-                  String searchURL = "/search/"+label;
+                  String searchURL = "/shop/"+label;
                   router.define(searchURL, handler: searchHandler);
                   router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
                   // Navigator.push(

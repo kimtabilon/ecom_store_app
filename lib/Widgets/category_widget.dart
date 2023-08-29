@@ -1,4 +1,3 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../Screens/Common/category_feeds_screen.dart';
@@ -14,7 +13,6 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // final categoriesModelProvider = Provider.of<CategoryModel>(context);
-    final FluroRouter router = FluroRouter();
 
     return Scaffold(
         appBar: PreferredSize(
@@ -60,50 +58,25 @@ class CategoryWidget extends StatelessWidget {
                     trailing: IconButton(
                       icon: Icon(Icons.arrow_forward),
                       onPressed: () {
-                        var catHandler = Handler(
-                          handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-                            if(cat['sub'].length==0) {
-                              return CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '');
-                            } else {
-                              return CategoryWidget(sub: cat['sub'], name: cat['name']);
-                            }
-                          }
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: cat['sub'].length==0
+                                ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',)
+                                : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                          ),
                         );
-                        String catURL = "";
-                        if(cat['sub'].length==0) {
-                          catURL = "/categories/"+cat['full'];
-                        } else {
-                          catURL = "/categories/"+cat['sub'];
-                        }
-                        router.define(catURL, handler: catHandler);
-                        router.navigateTo(context, catURL, transition: TransitionType.fadeIn);
-                        // Navigator.push(
-                        //   context,
-                        //   PageTransition(
-                        //     type: PageTransitionType.fade,
-                        //     child: cat['sub'].length==0
-                        //         ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',)
-                        //         : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                        //   ),
-                        // );
                       },
                     ),
                     onTap: () {
-                      var catHandler = Handler(
-                          handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-                            return CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '');
-                          }
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',),
+                        ),
                       );
-                      String catURL = "/categories/"+cat['full'];
-                      router.define(catURL, handler: catHandler);
-                      router.navigateTo(context, catURL, transition: TransitionType.fadeIn);
-                      // Navigator.push(
-                      //   context,
-                      //   PageTransition(
-                      //     type: PageTransitionType.fade,
-                      //     child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',),
-                      //   ),
-                      // );
                     },
                   );
                 },

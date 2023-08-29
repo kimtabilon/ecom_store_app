@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
@@ -52,6 +53,8 @@ setState(() {
     bool showTrailing = false;
 
     NavigationRailLabelType labelType = NavigationRailLabelType.all;
+    final FluroRouter router = FluroRouter();
+
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(60.0),
@@ -1123,6 +1126,14 @@ setState(() {
                                                   hide_Content[key] = true;
                                               });
                                               hide_Content['hide_'+list[index]['icon']] = false;
+                                              var innerHelpHandler = Handler(
+                                                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                                  return InnerHelpCenterPage(list[index]['icon']);
+                                                }
+                                              );
+                                              String innerHelpCenterURL = "/help-center/"+list[index]['icon'];
+                                              router.define(innerHelpCenterURL, handler: innerHelpHandler);
+                                              router.navigateTo(context, innerHelpCenterURL, transition: TransitionType.fadeIn);
                                             });
                                           },
                                           icon: Image.asset('assets/images/static/help_center/'+list[index]['icon']+'.png'),

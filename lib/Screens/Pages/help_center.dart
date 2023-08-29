@@ -83,7 +83,25 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                                       return InnerHelpCenterPage(list[i]['icon']);
                                     }
                                   );
-                                  String innerHelpCenterURL = "/help-center/"+list[i]['icon'].toString();
+                                  String innerHelpCenterURL = "";
+                                  if(i==0) {
+                                    innerHelpCenterURL = "/help-center/payment";
+                                  } else if(i==1) {
+                                    innerHelpCenterURL = "/help-center/shipping-policy";
+                                  } else if(i==2) {
+                                    innerHelpCenterURL = "/help-center/return-policy";
+                                  } else if(i==3) {
+                                    innerHelpCenterURL = "/help-center/refund-policy";
+                                  } else if(i==4) {
+                                    innerHelpCenterURL = "/help-center/privacy-policy";
+                                  } else if(i==5) {
+                                    innerHelpCenterURL = "/help-center/terms-and-condition";
+                                  } else if(i==6) {
+                                    innerHelpCenterURL = "/help-center/disclaimer";
+                                  } else if(i==7) {
+                                    innerHelpCenterURL = "/help-center/faqs";
+                                  }
+
                                   router.define(innerHelpCenterURL, handler: innerHelpCenterHandler);
                                   router.navigateTo(context, innerHelpCenterURL, transition: TransitionType.fadeIn);
 
