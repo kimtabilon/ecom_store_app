@@ -32,6 +32,7 @@ import '../Screens/Common/stores_inner_page.dart';
 import '../Screens/Common/stores_page.dart';
 import '../Screens/Pages/about_us.dart';
 import '../Screens/Pages/help_center.dart';
+import '../Screens/Pages/inner_help_center.dart';
 import '../Screens/Pages/inner_job_opportunities.dart';
 import '../Widgets/feeds_widget.dart';
 
@@ -39,6 +40,7 @@ class Routes {
   static String productURL = "/product/:sku";
   static String homeURL = "/";
   static String helpCenterURL = "/help-center";
+  static String helpCenterInnerURL = "/help-center/:tab";
   static String createAccountURL = "/create-account";
   static String shopURL = "/shop/:label";
   static String shopMainURL = "/shop";
@@ -62,6 +64,54 @@ class Routes {
     var helpCenterHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
           return HelpCenterPage();
+        }
+    );
+    var helpCenterInnerHandler = Handler(
+        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+          List list=[
+            {'title':'Payment', 'icon':'payment'},
+            {'title':'Shipping Policy', 'icon':'shipping'},
+            {'title':'Return Policy', 'icon':'return'},
+            {'title':'Refund Policy', 'icon':'refund'},
+            {'title':'Privacy Policy', 'icon':'privacy'},
+            {'title':'Terms and Condition', 'icon':'terms'},
+            {'title':'Disclaimer', 'icon':'disclaimer'},
+            {'title':'FAQs', 'icon':'faqs'},
+          ];
+      if(params["tab"]![0] == ""){
+        return HelpCenterPage();
+      }else{
+        int i = 0;
+        if(params["tab"]![0]== "payment") {
+          i = 0;
+        }
+        if(params["tab"]![0]== "shipping") {
+          i = 1;
+        }
+        if(params["tab"]![0]== "return") {
+          i = 2;
+        }
+        if(params["tab"]![0]== "refund") {
+          i = 3;
+        }
+        if(params["tab"]![0]== "privacy") {
+          i = 4;
+        }
+        if(params["tab"]![0]== "terms") {
+          i = 5;
+        }
+        if(params["tab"]![0]== "disclaimer") {
+          i = 6;
+        }
+        if(params["tab"]![0]== "faqs") {
+          i = 7;
+        }
+
+        return InnerHelpCenterPage(list[i]['icon']);
+      }
+
+
+
         }
     );
     var createAccountHandler = Handler(
@@ -212,6 +262,7 @@ class Routes {
     router.define(homeURL, handler: homeHandler);
     router.define(createAccountURL, handler: createAccountHandler);
     router.define(helpCenterURL, handler: helpCenterHandler);
+    router.define(helpCenterInnerURL, handler: helpCenterInnerHandler);
     router.define(storesURL, handler: storesHandler);
     router.define(productURL, handler: productHandler);
 

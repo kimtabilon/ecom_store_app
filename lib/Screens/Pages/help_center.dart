@@ -87,15 +87,15 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                                   if(i==0) {
                                     innerHelpCenterURL = "/help-center/payment";
                                   } else if(i==1) {
-                                    innerHelpCenterURL = "/help-center/shipping-policy";
+                                    innerHelpCenterURL = "/help-center/shipping";
                                   } else if(i==2) {
-                                    innerHelpCenterURL = "/help-center/return-policy";
+                                    innerHelpCenterURL = "/help-center/return";
                                   } else if(i==3) {
-                                    innerHelpCenterURL = "/help-center/refund-policy";
+                                    innerHelpCenterURL = "/help-center/refund";
                                   } else if(i==4) {
-                                    innerHelpCenterURL = "/help-center/privacy-policy";
+                                    innerHelpCenterURL = "/help-center/privacy";
                                   } else if(i==5) {
-                                    innerHelpCenterURL = "/help-center/terms-and-condition";
+                                    innerHelpCenterURL = "/help-center/terms";
                                   } else if(i==6) {
                                     innerHelpCenterURL = "/help-center/disclaimer";
                                   } else if(i==7) {
