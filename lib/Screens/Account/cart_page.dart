@@ -65,14 +65,9 @@ class _CartPageState extends State<CartPage> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
-                    // return const Center(
-                    //   child:
-                    //   Text("No products has been added yet"),
-                    // );
+                    return  Container();
                   } else if (snapshot.data!.length == 0) {
-                    // return const Center(
-                    //   child: Text("No products has been added yet"),
-                    // );
+                    return  Container();
                   }
                   return Container(
                     margin: EdgeInsets.all(10),

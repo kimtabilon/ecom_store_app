@@ -39,7 +39,13 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     return ProductView(product: productsModelProvider);
                   }
               );
-              String productURL = "/product/"+productsModelProvider!.id!.toString()+"/"+productsModelProvider!.title!.toString();
+              // String productURL = "/product/"+productsModelProvider!.id!.toString()+"/"+productsModelProvider!.title!.toString();
+
+              String productURL = "/product/"+productsModelProvider!.id!.toString();
+
+              // String productURL = "/product/test?sku="+productsModelProvider!.id!.toString();
+              // String productURL = "/product/test?sku="+productsModelProvider!.id!.toString();
+
               router.define(productURL, handler: productHandler);
               router.notFoundHandler = Handler(
                   handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

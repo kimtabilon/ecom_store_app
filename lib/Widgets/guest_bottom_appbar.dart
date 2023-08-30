@@ -48,9 +48,9 @@ class _GuestBottomAppbarState extends State<GuestBottomAppbarWidget> {
                 handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
                   return GuestPage();
                 }
-              );
-              String homeURL = "/";
+              );       String homeURL = "/";
               router.define(homeURL, handler: homeHandler);
+
               DatabaseProvider().saveData('activeBottomAppbar','0');
               router.navigateTo(context, homeURL, transition: TransitionType.fadeIn);
             },

@@ -390,4 +390,24 @@ class ProductProvider {
       throw error.toString();
     }
   }
+
+
+  static Future<ProductModel> getProductByIdNew({required String id}) async {
+    try {
+      var uri = Uri.https(
+        AppUrl.consoleUrl,
+        "api/v1/productbyid/$id",
+      );
+      var response = await http.get(uri);
+
+      var data = jsonDecode(response.body);
+      if (response.statusCode != 200) {
+        throw data["message"];
+      }
+      return ProductModel.fromJson(data);
+    } catch (error) {
+      log("an error occured while getting product info $error");
+      throw error.toString();
+    }
+  }
 }
