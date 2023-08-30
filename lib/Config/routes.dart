@@ -38,6 +38,8 @@ import '../Widgets/feeds_widget.dart';
 
 class Routes {
   static String productURL = "/product/:sku";
+  static String productMainURL = "/product";
+  static String productMainURL2 = "/product/";
   static String homeURL = "/";
   static String helpCenterURL = "/help-center";
   static String helpCenterInnerURL = "/help-center/:tab";
@@ -260,6 +262,8 @@ class Routes {
     router.define(shopMainURL, handler: shopMainHandler);
     router.define(storesMainURL, handler: storesMainHandler);
     router.define(homeURL, handler: homeHandler);
+    router.define(productMainURL, handler: homeHandler);
+    router.define(productMainURL2, handler: homeHandler);
     router.define(createAccountURL, handler: createAccountHandler);
     router.define(helpCenterURL, handler: helpCenterHandler);
     router.define(helpCenterInnerURL, handler: helpCenterInnerHandler);
