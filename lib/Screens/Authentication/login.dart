@@ -101,6 +101,12 @@ class _LoginPageState extends State<LoginPage> {
                         );
                         String createAccountURL = "/create-account";
                         router.define(createAccountURL, handler: createAccountHandler);
+                        router.notFoundHandler = Handler(
+                            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                              print("ROUTE NOT FOUND!!!");
+                              return;
+                            }
+                        );
                         router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
                         // PageNavigator(ctx: context)
                         //     .nextPage(page: const RegisterPage()

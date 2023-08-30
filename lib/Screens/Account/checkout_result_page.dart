@@ -70,6 +70,12 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
             );
             String profileURL = "/profile";
             router.define(profileURL, handler: profileHandler);
+            router.notFoundHandler = Handler(
+                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                  print("ROUTE NOT FOUND!!!");
+                  return;
+                }
+            );
             router.navigateTo(context, profileURL, transition: TransitionType.fadeIn);
             // Navigator.push(
             //     context,
@@ -199,6 +205,12 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
                                     );
                                     String helpCenterURL = "/help-center";
                                     router.define(helpCenterURL, handler: helpCenterHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, helpCenterURL, transition: TransitionType.fadeIn);
                                     // Navigator.push(
                                     //   context,

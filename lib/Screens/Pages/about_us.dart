@@ -219,6 +219,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
                                   );
                                   String helpCenterURL = "/help-center";
                                   router.define(helpCenterURL, handler: helpCenterHandler);
+                                  router.notFoundHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        print("ROUTE NOT FOUND!!!");
+                                        return;
+                                      }
+                                  );
                                   router.navigateTo(context, helpCenterURL, transition: TransitionType.fadeIn);
                                   // Navigator.push(
                                   //   context,
@@ -270,6 +276,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
                     );
                     String storeURL = "/stores/"+brand1;
                     router2.define(storeURL, handler: storeHandler);
+                    router2.notFoundHandler = Handler(
+                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                          print("ROUTE NOT FOUND!!!");
+                          return;
+                        }
+                    );
                     router2.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                   },
                   child: const Text('Shop Now', style: TextStyle(color: Colors.white),),
@@ -290,6 +302,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
                     );
                     String storeURL = "/stores/"+brand2;
                     router2.define(storeURL, handler: storeHandler);
+                    router2.notFoundHandler = Handler(
+                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                          print("ROUTE NOT FOUND!!!");
+                          return;
+                        }
+                    );
                     router2.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                   },
                   child: const Text('Shop Now', style: TextStyle(color: Colors.white),),

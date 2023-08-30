@@ -124,6 +124,12 @@ class _ProductDetailsState extends State<OrderDetails> {
                           );
                           String productURL = "/product/"+item.sku!.toString()+"/"+item.name!.toString();
                           router.define(productURL, handler: productHandler);
+                          router.notFoundHandler = Handler(
+                              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                print("ROUTE NOT FOUND!!!");
+                                return;
+                              }
+                          );
                           router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
                           // Navigator.push(
                           //   context,

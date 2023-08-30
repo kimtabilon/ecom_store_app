@@ -148,6 +148,12 @@ class _CartPageState extends State<CartPage> {
                                 );
                                 String checkoutCartURL = "/checkout/cart";
                                 router.define(checkoutCartURL, handler: checkoutCartHandler);
+                                router.notFoundHandler = Handler(
+                                    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                      print("ROUTE NOT FOUND!!!");
+                                      return;
+                                    }
+                                );
                                 router.navigateTo(context, checkoutCartURL, transition: TransitionType.fadeIn);
                                 // Navigator.push(
                                 //   context,

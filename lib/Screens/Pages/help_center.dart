@@ -103,6 +103,12 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
                                   }
 
                                   router.define(innerHelpCenterURL, handler: innerHelpCenterHandler);
+                                  router.notFoundHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        print("ROUTE NOT FOUND!!!");
+                                        return;
+                                      }
+                                  );
                                   router.navigateTo(context, innerHelpCenterURL, transition: TransitionType.fadeIn);
 
                                   // Navigator.push(

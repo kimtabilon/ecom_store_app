@@ -51,6 +51,12 @@ class _SplashScreenState extends State<SplashScreen> {
           );
           String loginURL = "/login";
           router.define(loginURL, handler: loginHandler);
+          router.notFoundHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                print("ROUTE NOT FOUND!!!");
+                return;
+              }
+          );
           router.navigateTo(context, loginURL, transition: TransitionType.fadeIn);
         } else {
           // PageNavigator(ctx: context).nextPageOnly(page: const HomePage());
@@ -61,6 +67,12 @@ class _SplashScreenState extends State<SplashScreen> {
           );
           String profileURL = "/profile";
           router.define(profileURL, handler: profileHandler);
+          router.notFoundHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                print("ROUTE NOT FOUND!!!");
+                return;
+              }
+          );
           router.navigateTo(context, profileURL, transition: TransitionType.fadeIn);
         }
       });

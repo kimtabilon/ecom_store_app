@@ -39,6 +39,12 @@ class _CartIconWidgetState extends State<CartIconWidget> {
           );
           String cartURL = "/checkout/cart";
           router.define(cartURL, handler: cartHandler);
+          router.notFoundHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                print("ROUTE NOT FOUND!!!");
+                return;
+              }
+          );
           router.navigateTo(context, cartURL, transition: TransitionType.fadeIn);
         },
         child: Consumer<CartProvider>(

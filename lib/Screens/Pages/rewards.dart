@@ -145,6 +145,12 @@ class _RewardsPageState extends State<RewardsPage> {
                                   );
                                   String createAccountURL = "/create-account";
                                   router.define(createAccountURL, handler: createAccountHandler);
+                                  router.notFoundHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        print("ROUTE NOT FOUND!!!");
+                                        return;
+                                      }
+                                  );
                                   router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
                                   // Navigator.push(
                                   //   context,
@@ -328,6 +334,12 @@ class _RewardsPageState extends State<RewardsPage> {
                                   );
                                   String createAccountURL = "/create-account";
                                   router.define(createAccountURL, handler: createAccountHandler);
+                                  router.notFoundHandler = Handler(
+                                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                        print("ROUTE NOT FOUND!!!");
+                                        return;
+                                      }
+                                  );
                                   router.navigateTo(context, createAccountURL, transition: TransitionType.fadeIn);
                                   // Navigator.push(
                                   //   context,

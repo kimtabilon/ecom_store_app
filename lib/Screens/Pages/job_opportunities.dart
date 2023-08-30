@@ -89,6 +89,12 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
                                       );
                                       String jobOpsURL = "/job-opportunities";
                                       router.define(jobOpsURL, handler: jobOpsHandler);
+                                      router.notFoundHandler = Handler(
+                                          handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                            print("ROUTE NOT FOUND!!!");
+                                            return;
+                                          }
+                                      );
                                       router.navigateTo(context, jobOpsURL, transition: TransitionType.fadeIn);
                                       // Navigator.push(
                                       //   context,

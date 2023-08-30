@@ -84,6 +84,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/hp-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -184,6 +190,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/lexmark-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -238,6 +250,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/lg-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -282,6 +300,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/epson-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -336,6 +360,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/canon-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -380,6 +410,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/xerox-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
@@ -434,6 +470,12 @@ class _StorePageState extends State<StorePage> {
                                     );
                                     String storeURL = "/stores/lenovo-store";
                                     router.define(storeURL, handler: storeHandler);
+                                    router.notFoundHandler = Handler(
+                                        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                          print("ROUTE NOT FOUND!!!");
+                                          return;
+                                        }
+                                    );
                                     router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                                   },
                                   context: context,
