@@ -77,6 +77,12 @@ class _GuestPageState extends State<GuestPage> {
                               );
                               String storeURL = "/stores/hp-store";
                               router.define(storeURL, handler: storeHandler);
+                              router.notFoundHandler = Handler(
+                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                    print("ROUTE NOT FOUND!!!");
+                                    return;
+                                  }
+                              );
                               router.navigateTo(context, storeURL, transition: TransitionType.fadeIn);
                               // Navigator.push(
                               //     context,

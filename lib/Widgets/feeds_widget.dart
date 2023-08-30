@@ -41,6 +41,12 @@ class _FeedsWidgetState extends State<FeedsWidget> {
               );
               String productURL = "/product/"+productsModelProvider!.id!.toString()+"/"+productsModelProvider!.title!.toString();
               router.define(productURL, handler: productHandler);
+              router.notFoundHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    print("ROUTE NOT FOUND!!!");
+                    return;
+                  }
+              );
               router.navigateTo(
                   context,
                   productURL,
