@@ -26,6 +26,12 @@ class AppbarWidget extends StatelessWidget {
         );
         String homeURL = "/";
         router.define(homeURL, handler: homeHandler);
+        router.notFoundHandler = Handler(
+            handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+              print("ROUTE NOT FOUND!!!");
+              return;
+            }
+        );
         router.navigateTo(context, homeURL, transition: TransitionType.fadeIn);
         // Navigator.push(
         //   context,

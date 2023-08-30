@@ -78,6 +78,12 @@ class _ShopScreenState extends State<ShopScreen> {
                   );
                   String searchURL = "/shop/"+label;
                   router.define(searchURL, handler: searchHandler);
+                  router.notFoundHandler = Handler(
+                      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                        print("ROUTE NOT FOUND!!!");
+                        return;
+                      }
+                  );
                   router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
                   // Navigator.push(
                   //   context,
@@ -161,6 +167,12 @@ class _ShopScreenState extends State<ShopScreen> {
                               );
                               String searchURL2 = "/all-products";
                               router2.define(searchURL2, handler: searchHandler2);
+                              router2.notFoundHandler = Handler(
+                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                    print("ROUTE NOT FOUND!!!");
+                                    return;
+                                  }
+                              );
                               router2.navigateTo(context, searchURL2, transition: TransitionType.fadeIn);
                               // Navigator.push(
                               //     context,

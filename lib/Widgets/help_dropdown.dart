@@ -58,6 +58,12 @@ class HelpDropdown extends StatelessWidget {
             transitionURL = "/help-center";
           }
           router.define(transitionURL, handler: transitionHandler);
+          router.notFoundHandler = Handler(
+              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                print("ROUTE NOT FOUND!!!");
+                return;
+              }
+          );
           router.navigateTo(context, transitionURL, transition: TransitionType.fadeIn);
           // Navigator.push(
           //   context,

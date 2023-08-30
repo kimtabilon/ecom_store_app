@@ -63,6 +63,12 @@ class SimilarProductsWidget extends StatelessWidget {
                       );
                       String productURL = "/product/"+item.id!.toString()+"/"+item.title!.toString();
                       router.define(productURL, handler: productHandler);
+                      router.notFoundHandler = Handler(
+                          handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                            print("ROUTE NOT FOUND!!!");
+                            return;
+                          }
+                      );
                       router.navigateTo(context, productURL, transition: TransitionType.fadeIn);
                       // Navigator.push(
                       //   context,

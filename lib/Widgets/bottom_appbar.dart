@@ -36,6 +36,12 @@ class _BottomAppbarState extends State<BottomAppbarWidget> {
               );
               String homeURL = "/";
               router.define(homeURL, handler: homeHandler);
+              router.notFoundHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    print("ROUTE NOT FOUND!!!");
+                    return;
+                  }
+              );
               router.navigateTo(context, homeURL, transition: TransitionType.fadeIn);
             },
             child: Padding(
@@ -62,6 +68,12 @@ class _BottomAppbarState extends State<BottomAppbarWidget> {
               );
               String myAccountURL = "/my-account";
               router.define(myAccountURL, handler: myAccountHandler);
+              router.notFoundHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    print("ROUTE NOT FOUND!!!");
+                    return;
+                  }
+              );
               router.navigateTo(context, myAccountURL, transition: TransitionType.fadeIn);
             },
             child: Padding(
@@ -85,6 +97,12 @@ class _BottomAppbarState extends State<BottomAppbarWidget> {
               );
               String cartURL = "/checkout/cart/";
               router.define(cartURL, handler: cartHandler);
+              router.notFoundHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    print("ROUTE NOT FOUND!!!");
+                    return;
+                  }
+              );
               router.navigateTo(context, cartURL, transition: TransitionType.fadeIn);
             },
             child: Padding(
@@ -108,6 +126,12 @@ class _BottomAppbarState extends State<BottomAppbarWidget> {
               );
               String myRewardsURL = "/my-rewards";
               router.define(myRewardsURL, handler: myRewardsHandler);
+              router.notFoundHandler = Handler(
+                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                    print("ROUTE NOT FOUND!!!");
+                    return;
+                  }
+              );
               router.navigateTo(context, myRewardsURL, transition: TransitionType.fadeIn);
             },
             child: Padding(

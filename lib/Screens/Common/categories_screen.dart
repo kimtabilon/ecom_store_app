@@ -38,6 +38,7 @@ class CategoriesScreen extends StatelessWidget {
       { 'title': 'XEROX', 'page': 6 },
       { 'title': 'LENOVO', 'page': 7 },
     ];
+    final FluroRouter router = FluroRouter();
 
     return Scaffold(
         appBar: PreferredSize(
@@ -96,25 +97,50 @@ class CategoriesScreen extends StatelessWidget {
                           trailing: IconButton(
                             icon: const Icon(Icons.arrow_forward),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: cat['sub'].length==0
-                                      ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',)
-                                      : CategoryWidget(sub: cat['sub'], name: cat['name']),
-                                ),
+                              var catHandler = Handler(
+                                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                  if(cat['sub'].length==0) {
+                                    return CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',);
+                                  } else {
+                                    return CategoryWidget(sub: cat['sub'], name: cat['name']);
+                                  }
+                                }
                               );
+                              String catURL = "";
+                              if(cat['sub'].length==0) {
+                                catURL = "/cateogies/"+cat['full'].toString();
+                              } else {
+                                catURL = "/cateogies/"+cat['sub'].toString();
+                              }
+                              router.define(catURL, handler: catHandler);
+                              router.navigateTo(context, catURL, transition: TransitionType.fadeIn);
+                              // Navigator.push(
+                              //   context,
+                              //   PageTransition(
+                              //     type: PageTransitionType.fade,
+                              //     child: cat['sub'].length==0
+                              //         ? CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',)
+                              //         : CategoryWidget(sub: cat['sub'], name: cat['name']),
+                              //   ),
+                              // );
                             },
                           ),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.fade,
-                                child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',),
-                              ),
+                            var catHandler = Handler(
+                                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                  return CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',);
+                                }
                             );
+                            String catURL = "/cateogies/"+cat['full'].toString();
+                            router.define(catURL, handler: catHandler);
+                            router.navigateTo(context, catURL, transition: TransitionType.fadeIn);
+                            // Navigator.push(
+                            //   context,
+                            //   PageTransition(
+                            //     type: PageTransitionType.fade,
+                            //     child: CategoryFeedsScreen(target: cat['full'],itemSearch: 'false', store: '',),
+                            //   ),
+                            // );
                           },
                         );
                       },
@@ -152,18 +178,34 @@ class CategoriesScreen extends StatelessWidget {
                       var store = stores[index];
                       return ListTile(
                         onTap: (){
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.fade,
-                              child: StoresInnerPage(store['title']),
-                            ),
+                          var storesHandler = Handler(
+                              handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                return StoresInnerPage(store['title']);
+                              }
                           );
+                          String storesURL = "/stores/"+store['title'].toString()+"-store";
+                          router.define(storesURL, handler: storesHandler);
+                          router.navigateTo(context, storesURL, transition: TransitionType.fadeIn);
+                          // Navigator.push(
+                          //   context,
+                          //   PageTransition(
+                          //     type: PageTransitionType.fade,
+                          //     child: StoresInnerPage(store['title']),
+                          //   ),
+                          // );
                         },
                         title: Text(store['title'],),
                         trailing: IconButton(
                           onPressed: () {
-                            PageNavigator(ctx: context).nextPage(page: StoresInnerPage(store['title']));
+                            // PageNavigator(ctx: context).nextPage(page: StoresInnerPage(store['title']));
+                            var storesHandler = Handler(
+                                handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                  return StoresInnerPage(store['title']);
+                                }
+                            );
+                            String storesURL = "/stores/"+store['title'].toString()+"-store";
+                            router.define(storesURL, handler: storesHandler);
+                            router.navigateTo(context, storesURL, transition: TransitionType.fadeIn);
                           },
                           icon: const Icon(Icons.arrow_forward),
                         ),

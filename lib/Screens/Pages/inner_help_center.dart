@@ -1133,6 +1133,12 @@ setState(() {
                                               );
                                               String innerHelpCenterURL = "/help-center/"+list[index]['icon'];
                                               router.define(innerHelpCenterURL, handler: innerHelpHandler);
+                                              router.notFoundHandler = Handler(
+                                                  handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+                                                    print("ROUTE NOT FOUND!!!");
+                                                    return;
+                                                  }
+                                              );
                                               router.navigateTo(context, innerHelpCenterURL, transition: TransitionType.fadeIn);
                                             });
                                           },
