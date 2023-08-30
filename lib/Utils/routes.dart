@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/routes_handler.dart';
 
 class Routes {
+  static String home = "/";
   static String aboutus = "/aboutus";
 
   static void configureRoutes(FluroRouter router) {
@@ -12,6 +13,7 @@ class Routes {
         return;
       }
     );
+    router.define(home, handler: homeHandler);
     router.define(aboutus, handler: aboutUsHandler);
   }
 }
