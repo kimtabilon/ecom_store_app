@@ -754,7 +754,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                     ): Container(),
 
                     Divider(),
-                    /*FutureBuilder<dynamic>(
+                    FutureBuilder<dynamic>(
                         future: CartProvider.getCartTotal(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -878,7 +878,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           );
 
 
-                        }),*/
+                        }),
 
 
         ///Button
