@@ -754,7 +754,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                     ): Container(),
 
                     Divider(),
-                    /*FutureBuilder<dynamic>(
+                    FutureBuilder<dynamic>(
                         future: CartProvider.getCartTotal(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -763,14 +763,9 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                               child: CircularProgressIndicator(),
                             );
                           } else if (snapshot.hasError) {
-                            // return const Center(
-                            //   child:
-                            //   Text("No products has been added yet"),
-                            // );
+                            return  Container();
                           } else if (snapshot.data!.length == 0) {
-                            // return const Center(
-                            //   child: Text("No products has been added yet"),
-                            // );
+                            return  Container();
                           }
 
                           return Container(
@@ -820,9 +815,10 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Flexible(child: Text("Price:")),
-                                              Flexible(child: Text(item['price'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
+                                              Flexible(child: Text('\$'+item['price'].toString(), maxLines: 2, overflow: TextOverflow.ellipsis,)),
                                             ],
                                           ),
+                                          Divider(),
                                         ],
                                       );
 
@@ -832,7 +828,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
                                       return Container();
                                     }),
-                                Divider(),
+                                // Divider(),
 
                                 ListView.builder(
                                     shrinkWrap: true,
@@ -878,7 +874,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
                           );
 
 
-                        }),*/
+                        }),
 
 
         ///Button
