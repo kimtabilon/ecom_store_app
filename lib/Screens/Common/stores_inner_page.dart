@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../Provider/Database/db_provider.dart';
@@ -397,6 +398,12 @@ class _StoresInnerPageState extends State<StoresInnerPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: widget.keyword+' Store Page',
+      screenClassOverride: widget.keyword+'StorePage',
+    );
+
     /*if(widget.keyword == "HP"){
       brandCategory = <String>[
         "Audio",

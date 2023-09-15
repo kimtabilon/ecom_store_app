@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -25,6 +26,12 @@ class _ShopScreenState extends State<ShopScreen> {
 
   Widget BannerWidget(image,label, bg,desc) {
     final FluroRouter router = FluroRouter();
+
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Shop Page',
+      screenClassOverride: 'ShopPage',
+    );
 
     return Column(
       children: [

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -93,6 +94,10 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                               return FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true', store: '');
                             }
                         );
+
+                        FirebaseAnalytics.instance.logViewSearchResults(
+                          searchTerm: _searchText.text.trim(),
+                        );
                         String searchURL = "/search/"+_searchText.text.trim();
                         router.define(searchURL, handler: searchHandler);
                         router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);
@@ -115,6 +120,11 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                     return FeedsScreen(target: _searchText.text.trim(),itemSearch: 'true', store: '');
                   }
               );
+
+              FirebaseAnalytics.instance.logViewSearchResults(
+              searchTerm: _searchText.text.trim(),
+              );
+
               String searchURL = "/search/"+_searchText.text.trim();
               router.define(searchURL, handler: searchHandler);
               router.navigateTo(context, searchURL, transition: TransitionType.fadeIn);

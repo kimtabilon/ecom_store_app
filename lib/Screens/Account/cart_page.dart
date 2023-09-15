@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Account/checkout_cart_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,11 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final FluroRouter router = FluroRouter();
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Shopping Cart Page',
+      screenClassOverride: 'ShoppingCartPage',
+    );
 
     return Scaffold(
       appBar: PreferredSize(

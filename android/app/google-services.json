@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "26182838044",
+    "project_id": "ecomm-app-ef6fd",
+    "storage_bucket": "ecomm-app-ef6fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26182838044:android:5c582af0feb383802b7cd9",
+        "android_client_info": {
+          "package_name": "com.example.rest_api_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOaB9ZTubAAsjN5glegnUZ0hFsQEHiHC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

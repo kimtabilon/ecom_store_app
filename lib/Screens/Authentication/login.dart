@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Authentication/register.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final FluroRouter router = FluroRouter();
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Login Page',
+      screenClassOverride: 'LoginPage',
+    );
 
     return Scaffold(
       appBar: PreferredSize(

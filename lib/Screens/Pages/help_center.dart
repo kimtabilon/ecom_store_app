@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,12 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Help Center Page',
+      screenClassOverride: 'HelpCenterPage',
+    );
+
     final FluroRouter router = FluroRouter();
 
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Pages/help_center.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -70,6 +71,12 @@ class _AboutUsPageState extends State<AboutUsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'About Us Page',
+      screenClassOverride: 'AboutUsPage',
+    );
+
     Size size = MediaQuery.of(context).size;
     final FluroRouter router = FluroRouter();
 

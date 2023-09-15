@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -19,6 +20,11 @@ class _JobOpportunitiesPageState extends State<JobOpportunitiesPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final FluroRouter router = FluroRouter();
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Job Opportunities Page',
+      screenClassOverride: 'JobOpportunitiesPage',
+    );
 
     return Scaffold(
         appBar: PreferredSize(

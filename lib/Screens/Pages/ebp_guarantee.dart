@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/guest_bottom_appbar.dart';
@@ -15,6 +16,11 @@ class _EbpGuaranteePageState extends State<EbpGuaranteePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'EBP Guarantee Page',
+      screenClassOverride: 'EBPGuaranteePage',
+    );
 
     return Scaffold(
         appBar: PreferredSize(

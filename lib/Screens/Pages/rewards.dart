@@ -1,4 +1,5 @@
 import 'package:ecom_store_app/Screens/Authentication/register.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -19,6 +20,11 @@ class _RewardsPageState extends State<RewardsPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final FluroRouter router = FluroRouter();
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Reward Page',
+      screenClassOverride: 'RewardPage',
+    );
 
     return Scaffold(
       appBar: PreferredSize(

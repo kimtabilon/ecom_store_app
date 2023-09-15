@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../Constants/access.dart';
@@ -10,6 +11,7 @@ import '../Database/db_provider.dart';
 import '../../Screens/Authentication/login.dart';
 import '../../Screens/Account/home_page.dart';
 import '../../Utils/routers.dart';
+import '../StoreProvider/cart_provider.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   //Base Url
@@ -56,6 +58,9 @@ class AuthenticationProvider extends ChangeNotifier {
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
+
+        FirebaseAnalytics.instance.logSignUp(signUpMethod: 'SignUp');
+
         _isLoading = false;
         _resMessage = "Account created!";
         notifyListeners();
@@ -95,6 +100,7 @@ class AuthenticationProvider extends ChangeNotifier {
       http.StreamedResponse guestData = await guestRequest.send();
       var body = await guestData.stream.bytesToString();
       if (guestData.statusCode == 200) {
+        FirebaseAnalytics.instance.setUserId(id: json.decode(body)['id'].toString());
         DatabaseProvider().saveData('qoute_id', json.decode(body)['id'].toString());
         return true;
       } else {
@@ -141,6 +147,8 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   void getAdminToken() async {
+
+
     try {
       http.Response adminTokenResponse = await http.post(
           Uri.https(AppUrl.storeUrl, "rest/V1/integration/admin/token"),
@@ -165,6 +173,8 @@ class AuthenticationProvider extends ChangeNotifier {
 
   Future<bool> getUserAccount() async {
     var token = await DatabaseProvider().getData('token');
+
+
     if(token=='') {
       AuthenticationProvider().getUserToken();
       token = await DatabaseProvider().getData('token');
@@ -232,6 +242,11 @@ class AuthenticationProvider extends ChangeNotifier {
           _isLoading = false;
           _resMessage = "Login successfully!";
           notifyListeners();
+
+          FirebaseAnalytics.instance.logLogin(
+              loginMethod: 'login',
+          );
+
           PageNavigator(ctx: context).nextPageOnly(page: const HomePage());
         }
 

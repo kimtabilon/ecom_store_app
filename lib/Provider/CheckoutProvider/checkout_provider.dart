@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../Constants/access.dart';
@@ -148,13 +149,12 @@ class CheckoutProvider extends ChangeNotifier {
     }else{
 
 
-
       try {
         var headers = {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json'
         };
-        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/shipping-information'));
+        var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/carts/mine/shipping-information'));
         request.body = json.encode({
           "addressInformation": {
             "shipping_address": {
@@ -412,11 +412,36 @@ class CheckoutProvider extends ChangeNotifier {
                 }
               });
               request.headers.addAll(headers);
+              var cart = await CartProvider.getCartTotal();
 
               var streamedResponse = await request.send();
               var response = await http.Response.fromStream(streamedResponse);
 
               if (response.statusCode == 200) {
+
+
+
+                List<AnalyticsEventItem> itemlist = [];
+
+                for(var i=0; i<cart['items'].length; i++) {
+                  // print(cart['items'][i]);
+                  itemlist.add(
+                      AnalyticsEventItem(
+                        itemId: cart['items'][i]['item_id'].toString(),
+                        itemName: cart['items'][i]['name'].toString(),
+                        price: cart['items'][i]['base_price'],
+                        currency: 'USD',
+                        quantity: cart['items'][i]['qty'],
+                      )
+                  );
+                }
+                FirebaseAnalytics.instance.logBeginCheckout(
+                  value: cart['grand_total'],
+                  currency: 'USD',
+                  items: itemlist,
+                );
+
+
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
@@ -432,6 +457,7 @@ class CheckoutProvider extends ChangeNotifier {
                   CartProvider.getCartId();
                   DatabaseProvider().setCartTotal(0, context);
                 }
+
 
                 PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
                   firstName,
@@ -463,7 +489,7 @@ class CheckoutProvider extends ChangeNotifier {
                 'Content-Type': 'application/json'
               };
               var last_4 = cardNumber.toString().substring(cardNumber.toString().length - 4);
-              var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/payment-information'));
+              var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/rest/V1/carts/mine/payment-information'));
               request.body = json.encode({
                 "paymentMethod": {
                   "method": paymentOption,
@@ -497,11 +523,34 @@ class CheckoutProvider extends ChangeNotifier {
                 }
               });
               request.headers.addAll(headers);
-
+              var cart = await CartProvider.getCartTotal();
               var streamedResponse = await request.send();
               var response = await http.Response.fromStream(streamedResponse);
 
               if (response.statusCode == 200) {
+
+
+
+                List<AnalyticsEventItem> itemlist = [];
+
+                for(var i=0; i<cart['items'].length; i++) {
+                  // print(cart['items'][i]);
+                  itemlist.add(
+                      AnalyticsEventItem(
+                        itemId: cart['items'][i]['item_id'].toString(),
+                        itemName: cart['items'][i]['name'].toString(),
+                        price: cart['items'][i]['base_price'],
+                        currency: 'USD',
+                        quantity: cart['items'][i]['qty'],
+                      )
+                  );
+                }
+                FirebaseAnalytics.instance.logBeginCheckout(
+                  value: cart['grand_total'],
+                  currency: 'USD',
+                  items: itemlist,
+                );
+
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
@@ -517,6 +566,9 @@ class CheckoutProvider extends ChangeNotifier {
                   CartProvider.getCartId();
                   DatabaseProvider().setCartTotal(0, context);
                 }
+
+
+
                 PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
                   firstName,
                   lastName,
@@ -598,7 +650,7 @@ class CheckoutProvider extends ChangeNotifier {
             }
           });
           request.headers.addAll(headers);
-
+          var cart = await CartProvider.getCartTotal();
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
 
@@ -606,6 +658,25 @@ class CheckoutProvider extends ChangeNotifier {
 
 
 
+            List<AnalyticsEventItem> itemlist = [];
+
+            for(var i=0; i<cart['items'].length; i++) {
+              // print(cart['items'][i]);
+              itemlist.add(
+                  AnalyticsEventItem(
+                    itemId: cart['items'][i]['item_id'].toString(),
+                    itemName: cart['items'][i]['name'].toString(),
+                    price: cart['items'][i]['base_price'],
+                    currency: 'USD',
+                    quantity: cart['items'][i]['qty'],
+                  )
+              );
+            }
+            FirebaseAnalytics.instance.logBeginCheckout(
+              value: cart['grand_total'],
+              currency: 'USD',
+              items: itemlist,
+            );
 
 
             _isLoading = false;
@@ -622,6 +693,10 @@ class CheckoutProvider extends ChangeNotifier {
               CartProvider.getCartId();
               DatabaseProvider().setCartTotal(0, context);
             }
+
+
+
+
             PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
               firstName,
               lastName,
@@ -675,11 +750,33 @@ class CheckoutProvider extends ChangeNotifier {
           });
           request.headers.addAll(headers);
 
+          var cart = await CartProvider.getCartTotal();
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
 
+
+
+            List<AnalyticsEventItem> itemlist = [];
+
+            for(var i=0; i<cart['items'].length; i++) {
+              // print(cart['items'][i]);
+              itemlist.add(
+                  AnalyticsEventItem(
+                    itemId: cart['items'][i]['item_id'].toString(),
+                    itemName: cart['items'][i]['name'].toString(),
+                    price: cart['items'][i]['base_price'].t,
+                    currency: 'USD',
+                    quantity: cart['items'][i]['qty'],
+                  )
+              );
+            }
+            FirebaseAnalytics.instance.logBeginCheckout(
+              value: cart['grand_total'],
+              currency: 'USD',
+              items: itemlist,
+            );
 
 
             _isLoading = false;
@@ -696,6 +793,10 @@ class CheckoutProvider extends ChangeNotifier {
               CartProvider.getCartId();
               DatabaseProvider().setCartTotal(0, context);
             }
+
+
+
+
             PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
               firstName,
               lastName,

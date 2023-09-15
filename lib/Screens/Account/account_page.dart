@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,12 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'My Account Page',
+      screenClassOverride: 'MyAccountPage',
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),

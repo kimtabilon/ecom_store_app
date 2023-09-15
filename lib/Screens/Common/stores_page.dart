@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:ecom_store_app/Screens/Common/stores_inner_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/routers.dart';
@@ -18,6 +19,11 @@ class _StorePageState extends State<StorePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'Store Page',
+      screenClassOverride: 'StorePage',
+    );
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
