@@ -6,10 +6,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../Model/cart_model.dart';
+import '../../Model/order_model.dart';
+import '../../Model/product_model.dart';
 import '../../Provider/CheckoutProvider/checkout_provider.dart';
 import '../../Provider/Database/db_provider.dart';
+import '../../Provider/ProductProvider/product_provider.dart';
 import '../../Provider/StoreProvider/cart_provider.dart';
+import '../../Provider/StoreProvider/order_provider.dart';
 import '../../Screens/Account/Local_widget/cart_view_container.dart';
 import '../../Screens/Account/add_cart_page.dart';
 import '../../Styles/colors.dart';
@@ -22,18 +27,22 @@ import '../Pages/help_center.dart';
 import 'Local_widget/cart_item_list.dart';
 import 'cart_page.dart';
 import 'dart:io';
-
+import 'dart:js' as js;
 
 class CheckoutResultPage extends StatefulWidget {
   final String firstName;
   final String lastName;
   final String email;
   final String orderNumber;
+  final String state;
+  final String zip;
   const CheckoutResultPage(
       this.firstName,
       this.lastName,
       this.email,
       this.orderNumber,
+      this.state,
+      this.zip,
       {Key? key}) : super(key: key);
 
   @override
@@ -41,12 +50,53 @@ class CheckoutResultPage extends StatefulWidget {
 }
 
 class _CheckoutResultPageState extends State<CheckoutResultPage> {
+  var isLoaded = false;
+Future<String> getOrderDetails() async {
+
+  var upcList = [];
+OrderModel orderDetail = await OrderProvider.getSpecificOrder(widget.orderNumber);
+
+
+for (var i = 0; i < orderDetail.items!.length; i++) {
+  // print(orderDetail.items?[i].sku);
+  ProductModel product = await ProductProvider.getProductById(id: orderDetail.items![i].sku!);
+  upcList.add(product.upc);
+}
+  // print(upcList);
+  List getDays = await ProductProvider.getDelivery(
+    sku: orderDetail.items![0].sku.toString(),
+    qty: orderDetail.items![0].qty_ordered.toString(),
+    lat: '0',
+    lng: '0',
+    state:  widget.state.toString(),
+    postal: widget.zip.toString(),
+  );
+    var state = js.context.callMethod('surveyoptin',
+        [orderDetail.id,widget.email,getDays[0]['date_format'].toString(),upcList]);
+
+
+    // if(state == ''){
+      return state.toString();
+    // }else{
+    //   return state;
+    // }
+
+    // print(product.upc);
+    // return product.upc;
+  }
+
+
 
 @override
   void initState() {
-  setState(() {
-    
+
+  getOrderDetails().then((value){
+    setState(() {
+      isLoaded = true;
+    });
+    print("test: "+value.toString());
   });
+
   // TODO: implement initState
     super.initState();
   }
@@ -55,8 +105,13 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
   @override
   Widget build(BuildContext context) {
     final FluroRouter router = FluroRouter();
-
-    return Scaffold(
+    return
+    !isLoaded ?  const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    ) :
+    Scaffold(
       appBar: AppBar(
         title: const Text('Print Receipt'),
         centerTitle: true,
@@ -171,7 +226,8 @@ class _CheckoutResultPageState extends State<CheckoutResultPage> {
                         )
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
+
 
                     Column(
                       children: [

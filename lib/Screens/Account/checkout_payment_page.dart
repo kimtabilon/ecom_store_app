@@ -261,7 +261,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
   @override
   Widget build(BuildContext context) {
     final FluroRouter router = FluroRouter();
-
+    print("ZIP:"+widget.zip.toString());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shopping Cart'),
@@ -755,7 +755,7 @@ class _CheckoutPaymentPageState extends State<CheckoutPaymentPage> {
 
                     Divider(),
                     FutureBuilder<dynamic>(
-                        future: CartProvider.getCartTotal(),
+                        future: CartProvider.getCartTotalCheckOut(widget.zip),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {

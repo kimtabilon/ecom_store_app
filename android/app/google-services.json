@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "26182838044",
-    "project_id": "ecomm-app-ef6fd",
-    "storage_bucket": "ecomm-app-ef6fd.appspot.com"
+    "project_number": "1007184139946",
+    "project_id": "ebp-store-app",
+    "storage_bucket": "ebp-store-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:26182838044:android:5c582af0feb383802b7cd9",
+        "mobilesdk_app_id": "1:1007184139946:android:ee2309a147eae859cb62d3",
         "android_client_info": {
           "package_name": "com.example.rest_api_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCOaB9ZTubAAsjN5glegnUZ0hFsQEHiHC0"
+          "current_key": "AIzaSyCDAR2tWGzzs8cCY5Od423hGECno9Fef0g"
         }
       ],
       "services": {

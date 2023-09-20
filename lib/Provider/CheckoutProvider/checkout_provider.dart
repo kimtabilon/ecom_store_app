@@ -412,7 +412,7 @@ class CheckoutProvider extends ChangeNotifier {
                 }
               });
               request.headers.addAll(headers);
-              var cart = await CartProvider.getCartTotal();
+              var cart = await CartProvider.getCartTotalCheckOut(zip);
 
               var streamedResponse = await request.send();
               var response = await http.Response.fromStream(streamedResponse);
@@ -420,43 +420,43 @@ class CheckoutProvider extends ChangeNotifier {
               if (response.statusCode == 200) {
 
 
+                if(AppUrl.storeUrl == "ecommercebusinessprime.com") {
+                  List<AnalyticsEventItem> itemlist = [];
 
-                List<AnalyticsEventItem> itemlist = [];
-
-                for(var i=0; i<cart['items'].length; i++) {
-                  // print(cart['items'][i]);
-                  itemlist.add(
-                      AnalyticsEventItem(
-                        itemId: cart['items'][i]['item_id'].toString(),
-                        itemName: cart['items'][i]['name'].toString(),
-                        price: cart['items'][i]['base_price'],
-                        currency: 'USD',
-                        quantity: cart['items'][i]['qty'],
-                      )
+                  for (var i = 0; i < cart['items'].length; i++) {
+                    // print(cart['items'][i]);
+                    itemlist.add(
+                        AnalyticsEventItem(
+                          itemId: cart['items'][i]['item_id'].toString(),
+                          itemName: cart['items'][i]['name'].toString(),
+                          price: cart['items'][i]['base_price'],
+                          currency: 'USD',
+                          quantity: cart['items'][i]['qty'],
+                        )
+                    );
+                  }
+                  FirebaseAnalytics.instance.logBeginCheckout(
+                    value: cart['grand_total'],
+                    currency: 'USD',
+                    items: itemlist,
                   );
                 }
-                FirebaseAnalytics.instance.logBeginCheckout(
-                  value: cart['grand_total'],
-                  currency: 'USD',
-                  items: itemlist,
-                );
-
 
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
                 notifyListeners();
                 String filteredString = response.body.replaceAll('"', '');
-
-                final isGuest = await DatabaseProvider().getData('is_guest');
-
-                if(isGuest == 'yes'){
+                print(response.body);
+                // final isGuest = await DatabaseProvider().getData('is_guest');
+                //
+                // if(isGuest == 'yes'){
                   await AuthenticationProvider().initateGuest();
                   CartProvider.getCartId();
                   DatabaseProvider().setCartTotal(0, context);
-                }else{
-                  CartProvider.getCartId();
-                  DatabaseProvider().setCartTotal(0, context);
-                }
+                // }else{
+                //   CartProvider.getCartId();
+                //   DatabaseProvider().setCartTotal(0, context);
+                // }
 
 
                 PageNavigator(ctx: context).nextPage(page: CheckoutResultPage(
@@ -464,6 +464,8 @@ class CheckoutProvider extends ChangeNotifier {
                   lastName,
                   email,
                   filteredString,
+                    provinceCode,
+                  zip
                 ));
               }
               else {
@@ -523,33 +525,34 @@ class CheckoutProvider extends ChangeNotifier {
                 }
               });
               request.headers.addAll(headers);
-              var cart = await CartProvider.getCartTotal();
+              var cart = await CartProvider.getCartTotalCheckOut(zip);
               var streamedResponse = await request.send();
               var response = await http.Response.fromStream(streamedResponse);
 
               if (response.statusCode == 200) {
 
 
+                if(AppUrl.storeUrl == "ecommercebusinessprime.com") {
+                  List<AnalyticsEventItem> itemlist = [];
 
-                List<AnalyticsEventItem> itemlist = [];
-
-                for(var i=0; i<cart['items'].length; i++) {
-                  // print(cart['items'][i]);
-                  itemlist.add(
-                      AnalyticsEventItem(
-                        itemId: cart['items'][i]['item_id'].toString(),
-                        itemName: cart['items'][i]['name'].toString(),
-                        price: cart['items'][i]['base_price'],
-                        currency: 'USD',
-                        quantity: cart['items'][i]['qty'],
-                      )
+                  for (var i = 0; i < cart['items'].length; i++) {
+                    // print(cart['items'][i]);
+                    itemlist.add(
+                        AnalyticsEventItem(
+                          itemId: cart['items'][i]['item_id'].toString(),
+                          itemName: cart['items'][i]['name'].toString(),
+                          price: cart['items'][i]['base_price'],
+                          currency: 'USD',
+                          quantity: cart['items'][i]['qty'],
+                        )
+                    );
+                  }
+                  FirebaseAnalytics.instance.logBeginCheckout(
+                    value: cart['grand_total'],
+                    currency: 'USD',
+                    items: itemlist,
                   );
                 }
-                FirebaseAnalytics.instance.logBeginCheckout(
-                  value: cart['grand_total'],
-                  currency: 'USD',
-                  items: itemlist,
-                );
 
                 _isLoading = false;
                 _resMessage = "Your order has been placed!";
@@ -574,6 +577,8 @@ class CheckoutProvider extends ChangeNotifier {
                   lastName,
                   email,
                   filteredString,
+                    provinceCode,
+                    zip
                 ));
               }
               else {
@@ -587,6 +592,7 @@ class CheckoutProvider extends ChangeNotifier {
               _resMessage = "Internet connection is not available`";
               notifyListeners();
             } catch (e) {
+              print(e.toString());
               _isLoading = false;
               _resMessage = "Please try again";
               notifyListeners();
@@ -650,49 +656,50 @@ class CheckoutProvider extends ChangeNotifier {
             }
           });
           request.headers.addAll(headers);
-          var cart = await CartProvider.getCartTotal();
+          var cart = await CartProvider.getCartTotalCheckOut(zip);
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
 
 
+            if(AppUrl.storeUrl == "ecommercebusinessprime.com") {
+              List<AnalyticsEventItem> itemlist = [];
 
-            List<AnalyticsEventItem> itemlist = [];
-
-            for(var i=0; i<cart['items'].length; i++) {
-              // print(cart['items'][i]);
-              itemlist.add(
-                  AnalyticsEventItem(
-                    itemId: cart['items'][i]['item_id'].toString(),
-                    itemName: cart['items'][i]['name'].toString(),
-                    price: cart['items'][i]['base_price'],
-                    currency: 'USD',
-                    quantity: cart['items'][i]['qty'],
-                  )
+              for (var i = 0; i < cart['items'].length; i++) {
+                // print(cart['items'][i]);
+                itemlist.add(
+                    AnalyticsEventItem(
+                      itemId: cart['items'][i]['item_id'].toString(),
+                      itemName: cart['items'][i]['name'].toString(),
+                      price: cart['items'][i]['base_price'],
+                      currency: 'USD',
+                      quantity: cart['items'][i]['qty'],
+                    )
+                );
+              }
+              FirebaseAnalytics.instance.logBeginCheckout(
+                value: cart['grand_total'],
+                currency: 'USD',
+                items: itemlist,
               );
             }
-            FirebaseAnalytics.instance.logBeginCheckout(
-              value: cart['grand_total'],
-              currency: 'USD',
-              items: itemlist,
-            );
 
 
             _isLoading = false;
             _resMessage = "Your order has been placed!";
             notifyListeners();
             String filteredString = response.body.replaceAll('"', '');
-
-            final isGuest = await DatabaseProvider().getData('is_guest');
-            if(isGuest == 'yes'){
+            print(response.body);
+            // final isGuest = await DatabaseProvider().getData('is_guest');
+            // if(isGuest == 'yes'){
               await AuthenticationProvider().initateGuest();
               CartProvider.getCartId();
               DatabaseProvider().setCartTotal(0, context);
-            }else{
-              CartProvider.getCartId();
-              DatabaseProvider().setCartTotal(0, context);
-            }
+            // }else{
+            //   CartProvider.getCartId();
+            //   DatabaseProvider().setCartTotal(0, context);
+            // }
 
 
 
@@ -702,6 +709,8 @@ class CheckoutProvider extends ChangeNotifier {
               lastName,
               email,
               filteredString,
+                provinceCode,
+                zip
             ));
           }
           else {
@@ -750,33 +759,35 @@ class CheckoutProvider extends ChangeNotifier {
           });
           request.headers.addAll(headers);
 
-          var cart = await CartProvider.getCartTotal();
+          var cart = await CartProvider.getCartTotalCheckOut(zip);
           var streamedResponse = await request.send();
           var response = await http.Response.fromStream(streamedResponse);
 
           if (response.statusCode == 200) {
 
 
+            if(AppUrl.storeUrl == "ecommercebusinessprime.com"){
+              List<AnalyticsEventItem> itemlist = [];
 
-            List<AnalyticsEventItem> itemlist = [];
-
-            for(var i=0; i<cart['items'].length; i++) {
-              // print(cart['items'][i]);
-              itemlist.add(
-                  AnalyticsEventItem(
-                    itemId: cart['items'][i]['item_id'].toString(),
-                    itemName: cart['items'][i]['name'].toString(),
-                    price: cart['items'][i]['base_price'].t,
-                    currency: 'USD',
-                    quantity: cart['items'][i]['qty'],
-                  )
+              for(var i=0; i<cart['items'].length; i++) {
+                // print(cart['items'][i]);
+                itemlist.add(
+                    AnalyticsEventItem(
+                      itemId: cart['items'][i]['item_id'].toString(),
+                      itemName: cart['items'][i]['name'].toString(),
+                      price: cart['items'][i]['base_price'].t,
+                      currency: 'USD',
+                      quantity: cart['items'][i]['qty'],
+                    )
+                );
+              }
+              FirebaseAnalytics.instance.logBeginCheckout(
+                value: cart['grand_total'],
+                currency: 'USD',
+                items: itemlist,
               );
             }
-            FirebaseAnalytics.instance.logBeginCheckout(
-              value: cart['grand_total'],
-              currency: 'USD',
-              items: itemlist,
-            );
+
 
 
             _isLoading = false;
@@ -802,6 +813,8 @@ class CheckoutProvider extends ChangeNotifier {
               lastName,
               email,
               filteredString,
+                provinceCode,
+                zip
             ));
           }
           else {
@@ -815,6 +828,7 @@ class CheckoutProvider extends ChangeNotifier {
           _resMessage = "Internet connection is not available`";
           notifyListeners();
         } catch (e) {
+          print(e.toString());
           _isLoading = false;
           _resMessage = "Please try again";
           notifyListeners();

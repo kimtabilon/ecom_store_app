@@ -12,6 +12,8 @@ import '../../Widgets/appbar_widget.dart';
 import '../../Widgets/category_widget.dart';
 
 import '../../Provider/ProductProvider/product_provider.dart';
+import '../Account/checkout_result_page.dart';
+import '../Account/test_result_page.dart';
 import 'category_feeds_screen.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -24,6 +26,15 @@ class CategoriesScreen extends StatelessWidget {
       { 'title': 'ABOUT US', 'widget': const AboutUsPage(), 'icon': Icons.help },
       { 'title': 'HELP CENTER', 'widget': const HelpCenterPage(), 'icon': Icons.construction },
       { 'title': 'EBP GUARANTEE', 'widget': const EbpGuaranteePage(), 'icon': Icons.add_moderator },
+      // { 'title': 'EBP GUARANTEE', 'widget': const TestResultPage(), 'icon': Icons.add_moderator },
+      // { 'title': 'EBP GUARANTEE', 'widget':  CheckoutResultPage(
+      //   'John',
+      //   'Ocaban',
+      //   'johnreyocaban@yahoo.com',
+      //   '141',
+      //   '12',
+      //   '9005'
+      // ), 'icon': Icons.add_moderator },
       { 'title': 'JOB OPPORTUNITIES', 'widget': const JobOpportunitiesPage(), 'icon': Icons.diversity_1 },
       { 'title': 'REWARDS', 'widget': const RewardsPage(), 'icon': Icons.verified_outlined },
     ];

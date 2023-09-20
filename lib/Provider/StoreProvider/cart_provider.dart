@@ -215,33 +215,129 @@ class CartProvider extends ChangeNotifier {
 
 
     final token = await DatabaseProvider().getData('token');
+    var masked_id = await DatabaseProvider().getData('masked_id');
+    String adminToken = await DatabaseProvider().getData('admin_token');
 
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/totals-information'));
-    request.body = json.encode({
-      "addressInformation": {
-        "address": {
-          "countryId": "US",
-          "postcode": null,
-        },
-        "shipping_carrier_code": "freeshipping",
-        "shipping_method_code": "freeshipping"
+    if(masked_id != '') {
+      var headers = {
+        'Authorization': 'Bearer $adminToken',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id/totals-information'));
+      request.body = json.encode({
+        "addressInformation": {
+          "address": {
+            "countryId": "US",
+            "postcode": null,
+          },
+          "shipping_carrier_code": "freeshipping",
+          "shipping_method_code": "freeshipping"
+        }
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      var body = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var _orderDetails = json.decode(body);
+        return _orderDetails;
       }
-    });
-    request.headers.addAll(headers);
+    }else{
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/totals-information'));
+      request.body = json.encode({
+        "addressInformation": {
+          "address": {
+            "countryId": "US",
+            "postcode": null,
+          },
+          "shipping_carrier_code": "freeshipping",
+          "shipping_method_code": "freeshipping"
+        }
+      });
+      request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send();
 
-    var body = await response.stream.bytesToString();
-    if (response.statusCode == 200) {
-      var _orderDetails = json.decode(body);
-      return _orderDetails;
+      var body = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var _orderDetails = json.decode(body);
+        return _orderDetails;
+      }
     }
+
+
 
     return [];
   }
+
+  static Future<dynamic> getCartTotalCheckOut(zip) async {
+
+
+    final token = await DatabaseProvider().getData('token');
+    var masked_id = await DatabaseProvider().getData('masked_id');
+    String adminToken = await DatabaseProvider().getData('admin_token');
+
+    if(masked_id != '') {
+      var headers = {
+        'Authorization': 'Bearer $adminToken',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/guest-carts/$masked_id/totals-information'));
+      request.body = json.encode({
+        "addressInformation": {
+          "address": {
+            "countryId": "US",
+            "postcode": zip,
+          },
+          "shipping_carrier_code": "freeshipping",
+          "shipping_method_code": "freeshipping"
+        }
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      var body = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var _orderDetails = json.decode(body);
+        return _orderDetails;
+      }
+    }else{
+      var headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      };
+      var request = http.Request('POST', Uri.parse('https://${AppUrl.storeUrl}/index.php/rest/V1/carts/mine/totals-information'));
+      request.body = json.encode({
+        "addressInformation": {
+          "address": {
+            "countryId": "US",
+            "postcode": zip,
+          },
+          "shipping_carrier_code": "freeshipping",
+          "shipping_method_code": "freeshipping"
+        }
+      });
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      var body = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var _orderDetails = json.decode(body);
+        return _orderDetails;
+      }
+    }
+
+
+
+    return [];
+  }
+
 
 }

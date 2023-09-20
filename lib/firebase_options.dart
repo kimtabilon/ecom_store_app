@@ -43,39 +43,76 @@ class DefaultFirebaseOptions {
     }
   }
 
+
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBzwXlUyKBQY9l9HFdl6LPcAUIMrwbEcGs',
-    appId: '1:26182838044:web:c7f9b4f2b2f09f7b2b7cd9',
-    messagingSenderId: '26182838044',
-    projectId: 'ecomm-app-ef6fd',
-    authDomain: 'ecomm-app-ef6fd.firebaseapp.com',
-    storageBucket: 'ecomm-app-ef6fd.appspot.com',
-    measurementId: 'G-YK1YR4RGPR',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    authDomain: '',
+    storageBucket: '',
+    measurementId: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCOaB9ZTubAAsjN5glegnUZ0hFsQEHiHC0',
-    appId: '1:26182838044:android:5c582af0feb383802b7cd9',
-    messagingSenderId: '26182838044',
-    projectId: 'ecomm-app-ef6fd',
-    storageBucket: 'ecomm-app-ef6fd.appspot.com',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAKEC-uLKbC61aWTW95nuc-g4mdB0K4NJU',
-    appId: '1:26182838044:ios:51a66b27a3f28d812b7cd9',
-    messagingSenderId: '26182838044',
-    projectId: 'ecomm-app-ef6fd',
-    storageBucket: 'ecomm-app-ef6fd.appspot.com',
-    iosBundleId: 'com.example.restApiApp',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAKEC-uLKbC61aWTW95nuc-g4mdB0K4NJU',
-    appId: '1:26182838044:ios:51a66b27a3f28d812b7cd9',
-    messagingSenderId: '26182838044',
-    projectId: 'ecomm-app-ef6fd',
-    storageBucket: 'ecomm-app-ef6fd.appspot.com',
-    iosBundleId: 'com.example.restApiApp',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosBundleId: '',
   );
+
+  // static const FirebaseOptions web = FirebaseOptions(
+  //   apiKey: 'AIzaSyDEdnU50Qf66IpRWCCZS41h0GHgXDill_k',
+  //   appId: '1:1007184139946:web:c45a39fa571fb967cb62d3',
+  //   messagingSenderId: '1007184139946',
+  //   projectId: 'ebp-store-app',
+  //   authDomain: 'ebp-store-app.firebaseapp.com',
+  //   storageBucket: 'ebp-store-app.appspot.com',
+  //   measurementId: 'G-NVPGHJZDFS',
+  // );
+  //
+  // static const FirebaseOptions android = FirebaseOptions(
+  //   apiKey: 'AIzaSyCDAR2tWGzzs8cCY5Od423hGECno9Fef0g',
+  //   appId: '1:1007184139946:android:ee2309a147eae859cb62d3',
+  //   messagingSenderId: '1007184139946',
+  //   projectId: 'ebp-store-app',
+  //   storageBucket: 'ebp-store-app.appspot.com',
+  // );
+  //
+  // static const FirebaseOptions ios = FirebaseOptions(
+  //   apiKey: 'AIzaSyCY8Bp88925wxcFicI0-_tnC7kbdcBeNZM',
+  //   appId: '1:1007184139946:ios:7373898581dee381cb62d3',
+  //   messagingSenderId: '1007184139946',
+  //   projectId: 'ebp-store-app',
+  //   storageBucket: 'ebp-store-app.appspot.com',
+  //   iosBundleId: 'com.example.restApiApp',
+  // );
+  //
+  // static const FirebaseOptions macos = FirebaseOptions(
+  //   apiKey: 'AIzaSyCY8Bp88925wxcFicI0-_tnC7kbdcBeNZM',
+  //   appId: '1:1007184139946:ios:7373898581dee381cb62d3',
+  //   messagingSenderId: '1007184139946',
+  //   projectId: 'ebp-store-app',
+  //   storageBucket: 'ebp-store-app.appspot.com',
+  //   iosBundleId: 'com.example.restApiApp',
+  // );
 }
